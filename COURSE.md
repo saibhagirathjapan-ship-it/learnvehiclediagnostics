@@ -212,12 +212,16 @@ only ResponseOnEvent changed.
   animation. All in `_template/render.js` + `blueprint.css`; H1 + hub inherit.
 - **Published to GitHub (2026-07-06):** git root = `wiki/learn/`, branch `main`, public repo. Publish
   a change with `git add -A && commit && push`. See memory `reference-github-repo`.
-- **Done 2026-07-06 — governance + shell UX.** Token-discipline → [[CONVENTIONS]] §10; Current Focus
-  trimmed (history → `wiki/log.md` + git). **Shell UX** (shared `render.js` + `blueprint.css` → H1/H2
-  re-rendered): breadcrumbs (`Course › Foundation › module`) · home-link brand · icon theme toggle
-  (sun/moon) · globe on the 3-way lang toggle · card-level prev/next · **map CSS fix** (inlined
-  blueprint.css). *Debt:* the hand-authored **map + V/M stubs don't inherit the shell** (still text
-  toggles / no breadcrumb) and the map's inlined CSS will drift — fold both into the governance pass.
+- **Done 2026-07-06 — governance + Foundation shell (2 feedback rounds).** Token-discipline →
+  [[CONVENTIONS]] §10; Current Focus trimmed (history → `wiki/log.md` + git). **Shell** (shared
+  `render.js` + `blueprint.css`, re-rendered H1/H2; the hand-authored map patched to match): constant
+  **"Automotive Diagnostics"** home-link brand · `Course › Foundation › module` breadcrumb (trail only)
+  · **single globe** toggle (EN→日本語→EN+JP) + **single theme** toggle (sun↔moon) · **pager — one card
+  at a time** (top strip = always-on, de-boxed, sticky, highlights the current card; Prev/Next + strip +
+  arrow keys drive it; dividers dropped on module pages) · Foundation **map CSS fixed** (self-contained).
+  *Debt:* the V1–V9 / M2–M9 **stub pages** are hand-authored and don't inherit the shell (they get it when
+  built); the map's inlined CSS can drift on future theme edits — best long-term fix is to render the map
+  through the pipeline.
 
 **Next up**
 1. **H3 "What UDS can do & how the ECU decides"** — `uds-foundation/h3-catalog-and-server/` (stub

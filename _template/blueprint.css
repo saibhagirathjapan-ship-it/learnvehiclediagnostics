@@ -202,12 +202,16 @@ td .mono{color:var(--accent);font-weight:600}
 .brand{text-decoration:none}
 .brand:hover .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 42%,transparent)}
 .brand:hover .std{color:color-mix(in srgb,var(--on-chrome) 72%,transparent)}
-/* toggle icons — theme = sun/moon; language = a lead globe glyph */
+/* single-icon toggles — one globe (cycles EN/日本語/EN+JP) + one theme flip (sun↔moon) */
 .tb-seg button{display:inline-flex;align-items:center;gap:5px}
-.tb-ico button{padding:6px 9px}
-.tb-ico .ti{display:block}
-.tb-lang-ic{display:inline-flex;align-items:center;color:color-mix(in srgb,var(--on-chrome) 58%,transparent);flex:none}
-.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.tb-icobtn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 82%,transparent);background:color-mix(in srgb,var(--on-chrome) 8%,transparent);border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);padding:6px 9px;line-height:1}
+.tb-icobtn:hover{border-color:var(--accent);color:var(--on-chrome)}
+.tb-icobtn svg{flex:none;transition:transform .25s ease}
+.tb-icobtn .tb-lc{font-family:"IBM Plex Mono","Noto Sans JP",monospace;font-size:11.5px;min-width:38px;text-align:left}
+.tb-theme .ic-moon{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-sun{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-moon{display:inline-block}
+.tb-theme:hover svg{transform:rotate(30deg)}
 
 /* breadcrumb bar — under the sticky topbar; trail on the left, module prev/next on the right */
 .crumbs{background:var(--bg);border-bottom:1px solid var(--line)}
@@ -240,18 +244,21 @@ td .mono{color:var(--accent);font-weight:600}
 .arc .lbl{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);margin-left:6px}
 
 /* layout: sidebar TOC + stream */
-.layout{max-width:1120px;margin:0 auto;display:flex;gap:26px;padding:0 20px;align-items:flex-start}
+.layout{max-width:820px;margin:0 auto;display:block;padding:0 20px}
+/* pager: one card at a time (each .page = a card + its prev/next) */
+.stream.pager>.page{display:none;scroll-margin-top:calc(var(--tbh,44px) + 60px)}
+.stream.pager>.page.on{display:block}
 .toc{position:sticky;top:70px;width:212px;flex:none;align-self:flex-start;max-height:calc(100vh - 90px);overflow:auto;padding:20px 0;font-size:13px}
 .toc h4{margin:0 0 8px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
 .toc a{display:flex;gap:9px;align-items:baseline;text-decoration:none;color:var(--ink-soft);padding:6px 10px;border-radius:7px;border-left:2px solid transparent;line-height:1.3}
 .toc a .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);flex:none}
 .toc a:hover{background:var(--bg);color:var(--ink)}
 .toc a.on{color:var(--accent);border-left-color:var(--accent);background:var(--chip)}
-.stream{flex:1;min-width:0;padding:22px 0 40px}
+.stream{min-width:0;padding:20px 0 60px}
 
 /* ===== overview strip: this module's cards, in order (sits after the hero) ===== */
-.cardmap-wrap{max-width:1120px;margin:22px auto 2px;padding:0 20px}
-.cardmap{border:1px solid var(--line);background:var(--card);box-shadow:0 1px 4px rgba(20,22,26,.05);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cardmap-wrap{position:sticky;top:var(--tbh,44px);z-index:20;margin-top:18px;padding:9px 20px;background:var(--bg);border-bottom:1px solid var(--line-soft)}
+.cardmap{max-width:1120px;margin:0 auto;border:0;background:transparent;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .cardmap-in{display:flex;align-items:center;gap:2px;padding:11px 13px;width:max-content;min-width:100%}
 .cm-lead{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-right:9px;white-space:nowrap;flex:none}
 .cm-stop{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;text-decoration:none;border:1px solid var(--line);background:var(--bg);white-space:nowrap;flex:none;transition:border-color .13s,background .13s}
@@ -322,7 +329,7 @@ td .mono{color:var(--accent);font-weight:600}
   .tb-seg button{padding:6px 8px}
   #allseg{display:none}          /* Expand/Collapse is least essential on a phone; drop it to fit */
   .fwd{white-space:normal;overflow-wrap:anywhere}   /* let a long pointer pill wrap rather than overflow the card */
-  .cardmap-wrap{position:sticky;top:0;z-index:20;margin-top:0;padding-top:8px;padding-bottom:8px;background:var(--bg)}
+  .cardmap-wrap{top:var(--tbh,40px);margin-top:0;padding-top:8px;padding-bottom:8px}
   .crumbs-in{padding-left:14px;padding-right:14px;gap:8px;flex-wrap:wrap}
   .cr-nav{flex:1 0 100%;order:2}
   .cn{flex:1;max-width:none}

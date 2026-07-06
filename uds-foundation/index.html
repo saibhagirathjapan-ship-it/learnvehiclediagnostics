@@ -213,12 +213,16 @@ td .mono{color:var(--accent);font-weight:600}
 .brand{text-decoration:none}
 .brand:hover .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 42%,transparent)}
 .brand:hover .std{color:color-mix(in srgb,var(--on-chrome) 72%,transparent)}
-/* toggle icons — theme = sun/moon; language = a lead globe glyph */
+/* single-icon toggles — one globe (cycles EN/日本語/EN+JP) + one theme flip (sun↔moon) */
 .tb-seg button{display:inline-flex;align-items:center;gap:5px}
-.tb-ico button{padding:6px 9px}
-.tb-ico .ti{display:block}
-.tb-lang-ic{display:inline-flex;align-items:center;color:color-mix(in srgb,var(--on-chrome) 58%,transparent);flex:none}
-.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.tb-icobtn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 82%,transparent);background:color-mix(in srgb,var(--on-chrome) 8%,transparent);border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);padding:6px 9px;line-height:1}
+.tb-icobtn:hover{border-color:var(--accent);color:var(--on-chrome)}
+.tb-icobtn svg{flex:none;transition:transform .25s ease}
+.tb-icobtn .tb-lc{font-family:"IBM Plex Mono","Noto Sans JP",monospace;font-size:11.5px;min-width:38px;text-align:left}
+.tb-theme .ic-moon{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-sun{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-moon{display:inline-block}
+.tb-theme:hover svg{transform:rotate(30deg)}
 
 /* breadcrumb bar — under the sticky topbar; trail on the left, module prev/next on the right */
 .crumbs{background:var(--bg);border-bottom:1px solid var(--line)}
@@ -251,18 +255,21 @@ td .mono{color:var(--accent);font-weight:600}
 .arc .lbl{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);margin-left:6px}
 
 /* layout: sidebar TOC + stream */
-.layout{max-width:1120px;margin:0 auto;display:flex;gap:26px;padding:0 20px;align-items:flex-start}
+.layout{max-width:820px;margin:0 auto;display:block;padding:0 20px}
+/* pager: one card at a time (each .page = a card + its prev/next) */
+.stream.pager>.page{display:none;scroll-margin-top:calc(var(--tbh,44px) + 60px)}
+.stream.pager>.page.on{display:block}
 .toc{position:sticky;top:70px;width:212px;flex:none;align-self:flex-start;max-height:calc(100vh - 90px);overflow:auto;padding:20px 0;font-size:13px}
 .toc h4{margin:0 0 8px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
 .toc a{display:flex;gap:9px;align-items:baseline;text-decoration:none;color:var(--ink-soft);padding:6px 10px;border-radius:7px;border-left:2px solid transparent;line-height:1.3}
 .toc a .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);flex:none}
 .toc a:hover{background:var(--bg);color:var(--ink)}
 .toc a.on{color:var(--accent);border-left-color:var(--accent);background:var(--chip)}
-.stream{flex:1;min-width:0;padding:22px 0 40px}
+.stream{min-width:0;padding:20px 0 60px}
 
 /* ===== overview strip: this module's cards, in order (sits after the hero) ===== */
-.cardmap-wrap{max-width:1120px;margin:22px auto 2px;padding:0 20px}
-.cardmap{border:1px solid var(--line);background:var(--card);box-shadow:0 1px 4px rgba(20,22,26,.05);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cardmap-wrap{position:sticky;top:var(--tbh,44px);z-index:20;margin-top:18px;padding:9px 20px;background:var(--bg);border-bottom:1px solid var(--line-soft)}
+.cardmap{max-width:1120px;margin:0 auto;border:0;background:transparent;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .cardmap-in{display:flex;align-items:center;gap:2px;padding:11px 13px;width:max-content;min-width:100%}
 .cm-lead{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-right:9px;white-space:nowrap;flex:none}
 .cm-stop{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;text-decoration:none;border:1px solid var(--line);background:var(--bg);white-space:nowrap;flex:none;transition:border-color .13s,background .13s}
@@ -333,7 +340,7 @@ td .mono{color:var(--accent);font-weight:600}
   .tb-seg button{padding:6px 8px}
   #allseg{display:none}          /* Expand/Collapse is least essential on a phone; drop it to fit */
   .fwd{white-space:normal;overflow-wrap:anywhere}   /* let a long pointer pill wrap rather than overflow the card */
-  .cardmap-wrap{position:sticky;top:0;z-index:20;margin-top:0;padding-top:8px;padding-bottom:8px;background:var(--bg)}
+  .cardmap-wrap{top:var(--tbh,40px);margin-top:0;padding-top:8px;padding-bottom:8px}
   .crumbs-in{padding-left:14px;padding-right:14px;gap:8px;flex-wrap:wrap}
   .cr-nav{flex:1 0 100%;order:2}
   .cn{flex:1;max-width:none}
@@ -441,14 +448,19 @@ td .mono{color:var(--accent);font-weight:600}
 
   <header class="topbar">
     <div class="topbar-in">
-      <div class="brand"><span class="dot"></span>UDS Foundation<span class="std">ISO 14229 · 基盤</span></div>
+      <a class="brand" href="../index.html" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a>
       <div class="tb-spacer"></div>
       <div class="tb-ctl">
-        <div class="tb-seg" id="langseg"><button class="on" data-v="en">EN</button><button data-v="jp">日本語</button><button data-v="both">EN+JP</button></div>
-        <div class="tb-seg" id="themeseg"><button class="on" data-v="light">Light</button><button data-v="dark">Dark</button></div>
+        <button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg><span class="tb-lc">EN</span></button>
+        <button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme"><svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg></button>
       </div>
     </div>
   </header>
+
+  <nav class="crumbs" aria-label="Breadcrumb"><div class="crumbs-in"><div class="cr-trail">
+    <a href="../index.html">Course</a><span class="cr-sep" aria-hidden="true">›</span>
+    <span class="cr-cur" aria-current="page"><span class="en">Foundation</span><span class="jp">基盤</span></span>
+  </div></div></nav>
 
   <section class="fhero">
     <div class="kicker">Foundation · 基盤</div>
@@ -552,16 +564,11 @@ document.getElementById('hbar').innerHTML = MODS.filter(function(m){return m.kin
 document.getElementById('vstem').innerHTML = MODS.filter(function(m){return m.kind==='V'}).map(card).join('');
 
 var root = document.querySelector('.stage');
-function seg(id, attr){
-  var s = document.getElementById(id); if(!s) return;
-  s.addEventListener('click', function(e){
-    var b = e.target.closest('button'); if(!b) return;
-    [].forEach.call(s.children, function(x){ x.classList.toggle('on', x === b); });
-    root.setAttribute(attr, b.dataset.v);
-  });
-}
-seg('themeseg', 'data-theme');
-seg('langseg', 'data-lang');
+function setTbh(){var t=document.querySelector('.topbar');if(t)document.documentElement.style.setProperty('--tbh',t.offsetHeight+'px');}
+setTbh();addEventListener('resize',setTbh);
+(function(){var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=document.getElementById('langbtn');
+ if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];});})();
+(function(){var b=document.getElementById('themebtn');if(b)b.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});})();
 </script>
 </body>
 </html>

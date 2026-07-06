@@ -220,36 +220,30 @@ function renderHero(mod){
     (mod.tagline?`<p class="tagline en">${inline(mod.tagline.en)}</p><p class="tagline jp">${inline(mod.tagline.jp)}</p>`:'')+
     `<div class="arc">${dots}<span class="lbl">Module ${a.pos||1} / ${a.total||1}</span></div></section>`;
 }
-function renderTopbar(mod){
-  return `<div class="topbar"><div class="topbar-in"><a class="brand" href="../../index.html" aria-label="Course home · コースのホーム"><span class="dot"></span>${inline(mod.title.en)}<span class="std">${esc(mod.standard||'')}</span></a>`+
-    `<div class="tb-spacer"></div><div class="tb-ctl">`+
-    `<span class="tb-lang-ic" aria-hidden="true" title="Language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg></span>`+
-    `<div class="tb-seg" id="langseg"><button class="on" data-v="en">EN</button><button data-v="jp">日本語</button><button data-v="both">EN+JP</button></div>`+
-    `<div class="tb-seg tb-ico" id="themeseg">`+
-      `<button class="on" data-v="light" aria-label="Light theme" title="Light"><svg class="ti" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><span class="sr">Light</span></button>`+
-      `<button data-v="dark" aria-label="Dark theme" title="Dark"><svg class="ti" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg><span class="sr">Dark</span></button>`+
-    `</div>`+
+// Topbar — constant brand ("Automotive Diagnostics", a home link) + two single-icon toggles.
+// LANG: one globe button cycling EN → 日本語 → EN+JP.  THEME: one button flipping light/dark.
+const IC_GLOBE='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg>';
+const IC_SUN='<svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg>';
+const IC_MOON='<svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg>';
+function topbarCtl(){
+  return `<div class="tb-ctl">`+
+    `<button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language">${IC_GLOBE}<span class="tb-lc">EN</span></button>`+
+    `<button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme">${IC_SUN}${IC_MOON}</button>`+
     `<div class="tb-seg" id="allseg"><button data-a="open">Expand</button><button data-a="close">Collapse</button></div>`+
-    `</div></div></div>`;
+    `</div>`;
 }
-// breadcrumb bar: Course › Foundation › <module> on the left; module prev/next folded in on the right.
-function crumbNav(dir,m){
-  if(!m) return `<span class="cn ${dir} disabled" aria-hidden="true"></span>`;
-  return `<a class="cn ${dir}" href="../${esc(m.id)}/index.html">`+
-    `<span class="cn-d">${dir==='prev'?'← Prev':'Next →'}</span>`+
-    `<span class="cn-t"><span class="en">${inline(m.label.en)}</span><span class="jp">${inline(m.label.jp)}</span></span></a>`;
+function renderTopbar(mod, home){
+  return `<div class="topbar"><div class="topbar-in"><a class="brand" href="${esc(home||'../../index.html')}" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a>`+
+    `<div class="tb-spacer"></div>${topbarCtl()}</div></div>`;
 }
+// breadcrumb: Course › Foundation › <module> (trail only — no module-to-module nav inside an H/V).
 function renderCrumbs(mod){
   const p = mod.parent || { label:'Foundation', href:'../index.html' };
-  const nav = mod.nav || {};
-  return `<nav class="crumbs" aria-label="Breadcrumb"><div class="crumbs-in">`+
-    `<div class="cr-trail">`+
-      `<a href="../../index.html">Course</a><span class="cr-sep" aria-hidden="true">›</span>`+
-      `<a href="${esc(p.href)}">${esc(p.label)}</a><span class="cr-sep" aria-hidden="true">›</span>`+
-      `<span class="cr-cur" aria-current="page"><span class="en">${inline(mod.title.en)}</span><span class="jp">${inline(mod.title.jp)}</span></span>`+
-    `</div>`+
-    `<div class="cr-nav">${crumbNav('prev',nav.prev)}${crumbNav('next',nav.next)}</div>`+
-  `</div></nav>`;
+  return `<nav class="crumbs" aria-label="Breadcrumb"><div class="crumbs-in"><div class="cr-trail">`+
+    `<a href="../../index.html">Course</a><span class="cr-sep" aria-hidden="true">›</span>`+
+    `<a href="${esc(p.href)}">${esc(p.label)}</a><span class="cr-sep" aria-hidden="true">›</span>`+
+    `<span class="cr-cur" aria-current="page"><span class="en">${inline(mod.title.en)}</span><span class="jp">${inline(mod.title.jp)}</span></span>`+
+    `</div></div></nav>`;
 }
 // card-level nav: prev/next between adjacent teaching cards (stops), appended under each card.
 function cardNav(prev,next){
@@ -310,23 +304,46 @@ function renderModNav(mod){
 const FONTS=`<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">`;
 const SCRIPT=`<script>
 var root=document.querySelector('.stage');
-function seg(id,fn){var s=document.getElementById(id);if(!s)return;s.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call(s.children,function(x){x.classList.toggle('on',x===b)});fn(b);});}
-seg('themeseg',function(b){root.setAttribute('data-theme',b.dataset.v)});
-seg('langseg',function(b){root.setAttribute('data-lang',b.dataset.v)});
-seg('allseg',function(b){[].forEach.call(document.querySelectorAll('.leg'),function(l){l.open=(b.dataset.a==='open')})});
-var pr=document.getElementById('progress');
-addEventListener('scroll',function(){var h=document.documentElement,mx=h.scrollHeight-h.clientHeight;pr.style.width=(mx>0?h.scrollTop/mx*100:0)+'%';},{passive:true});
-var links=[].slice.call(document.querySelectorAll('.toc a, .cardmap a'));
-function markActive(id){links.forEach(function(a){var on=a.getAttribute('href')==='#'+id;a.classList.toggle('on',on);if(on){var cm=a.closest('.cardmap');if(cm){var ar=a.getBoundingClientRect(),cr=cm.getBoundingClientRect();cm.scrollLeft+=(ar.left-cr.left)-(cr.width-ar.width)/2;}}});}
-if(window.IntersectionObserver){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){markActive(e.target.id)}})},{rootMargin:'-25% 0px -65% 0px'});
-document.querySelectorAll('.card[id],.brief[id],.concl[id]').forEach(function(d){io.observe(d)});}
+// keep sticky offsets honest: expose the live topbar height as --tbh
+function setTbh(){var t=document.querySelector('.topbar');if(t)document.documentElement.style.setProperty('--tbh',t.offsetHeight+'px');}
+setTbh();addEventListener('resize',setTbh);
+// LANGUAGE — one globe button cycles EN → 日本語 → EN+JP
+(function(){var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=document.getElementById('langbtn');
+ if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];});})();
+// THEME — one button flips light/dark (icon swaps via CSS on [data-theme])
+(function(){var b=document.getElementById('themebtn');if(b)b.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});})();
+// EXPAND/COLLAPSE all legs on the visible card
+(function(){var s=document.getElementById('allseg');if(s)s.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;document.querySelectorAll('.page.on .leg').forEach(function(l){l.open=(b.dataset.a==='open')});});})();
+// PAGER — one card at a time; the top strip is the always-on progress + jump nav
+var pages=[].slice.call(document.querySelectorAll('.stream.pager > .page'));
+var strip=document.querySelector('.cardmap'),links=[].slice.call(document.querySelectorAll('.cardmap a'));
+var pr=document.getElementById('progress'),wrap=document.querySelector('.cardmap-wrap'),idx=-1;
+function show(i,scroll){
+  i=Math.max(0,Math.min(pages.length-1,i));if(i===idx||!pages.length)return;idx=i;
+  pages.forEach(function(p,k){p.classList.toggle('on',k===i)});
+  var id=pages[i].getAttribute('data-id');
+  links.forEach(function(a){var on=a.getAttribute('href')==='#'+id;a.classList.toggle('on',on);
+    if(on&&strip){var ar=a.getBoundingClientRect(),cr=strip.getBoundingClientRect();strip.scrollLeft+=(ar.left-cr.left)-(cr.width-ar.width)/2;}});
+  if(pr)pr.style.width=(pages.length>1?i/(pages.length-1)*100:100)+'%';
+  if(scroll){
+    if(history.replaceState)history.replaceState(null,'','#'+id);
+    if(wrap){var off=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--tbh'))||44;var top=wrap.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo(0,Math.max(0,top));}
+  }
+}
+function jump(id){for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===id){show(k,true);return true}}return false;}
+document.addEventListener('click',function(e){var a=e.target.closest('.cardmap a, .cardnav a');if(!a)return;var h=a.getAttribute('href')||'';if(h.charAt(0)==='#'&&jump(h.slice(1)))e.preventDefault();});
+addEventListener('keydown',function(e){var t=e.target.tagName;if(t==='INPUT'||t==='TEXTAREA')return;if(e.key==='ArrowRight')show(idx+1,true);else if(e.key==='ArrowLeft')show(idx-1,true);});
+var start=(location.hash||'').slice(1),si=0,deep=!!start;
+if(start)for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===start){si=k;break}}
+show(si,deep);
+if(!deep)window.scrollTo(0,0);
 </script>`;
 function page(mod,cards,stops){
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">`+
     `<title>${esc(mod.title.en)} — ${esc(mod.standard||'')}</title>${FONTS}<style>${CSS}</style></head><body>`+
     `<div class="stage" data-theme="light" data-lang="en"><div class="progress" id="progress"></div>`+
     renderTopbar(mod)+renderCrumbs(mod)+renderHero(mod)+renderCardMap(stops)+
-    `<div class="layout">${renderRail(stops)}<main class="stream">${cards}</main></div>`+
+    `<div class="layout"><main class="stream pager">${cards}</main></div>`+
     `</div>${SCRIPT}</body></html>`;
 }
 
@@ -340,12 +357,15 @@ const items = fs.readdirSync(path.join(moduleDir,'content')).filter(f=>f.endsWit
   .sort((a,b)=>((a.meta.order??999)-(b.meta.order??999)) || a.f.localeCompare(b.f));
 const stops = buildStops(items);
 const stopIx = {}; stops.forEach((s,i)=>{ stopIx[s.id]=i; });
+// PAGER: each stop is one page (a card + its prev/next). Dividers are dropped on module pages —
+// the hero + breadcrumb already carry the section identity.
 const cards = items.map(it=>{
-  const html = renderCard(it.meta,it.sections,assetsDir);
   const i = stopIx[String(it.meta.id)];
-  if(i===undefined) return html;                    // dividers aren't stops → no card-level nav
-  return html + cardNav(stops[i-1]||null, stops[i+1]||null);
-}).join('\n');
+  if(i===undefined) return '';                       // skip dividers (not a pager page)
+  const html = renderCard(it.meta,it.sections,assetsDir);
+  const nav = cardNav(stops[i-1]||null, stops[i+1]||null);
+  return `<div class="page" data-id="${esc(it.meta.id)}">${html}${nav}</div>`;
+}).filter(Boolean).join('\n');
 const outName = process.argv[3] || '_preview.html';   // pass 'index.html' when migration is complete
 fs.writeFileSync(path.join(moduleDir,outName), page(mod,cards,stops));
 console.log('rendered', items.length, 'card(s),', stops.length, 'stop(s) →', path.join(moduleDir,outName));

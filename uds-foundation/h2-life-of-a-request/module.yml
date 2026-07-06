@@ -1,0 +1,10 @@
+id: h2-life-of-a-request
+title: { en: "The life of one request", jp: "1つのリクエストの一生" }
+standard: "ISO 14229 · Foundation H2"
+tagline:
+  en: "Follow one single request from the tester's send, into the ECU, and back out as an answer — one exchange, traced end to end."
+  jp: "テスターの送信からECUの中へ、そして答えとなって戻るまで ― たった1つの要求を、端から端まで追いかけます。"
+arc: { pos: 2, total: 12 }
+nav:
+  prev: { id: "h1-landscape", label: { en: "The diagnostics landscape", jp: "診断の全体像" } }
+  next: { id: "h3-catalog-and-server", label: { en: "What UDS can do, and how the ECU decides", jp: "UDSに何ができ、ECUがどう決めるか" } }

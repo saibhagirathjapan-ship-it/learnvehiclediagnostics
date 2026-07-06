@@ -1,0 +1,35 @@
+<svg class="dgm" viewBox="0 0 720 168" role="img" aria-label="A session's life. It starts in the default session, safe and locked. A 10 request opens a non-default session with extra access, held open by periodic 3E messages. An 11 reset or a timeout ends it, returning to the default session with security re-locked.">
+  <text x="360" y="22" text-anchor="middle" class="acc mono-t" font-size="9.5" letter-spacing="1.2">A SESSION'S LIFE · セッションの一生</text>
+
+  <!-- box 1: default (start) -->
+  <rect x="30" y="98" width="118" height="44" rx="8" class="plate ln" stroke-width="1.3"/>
+  <text x="89" y="119" text-anchor="middle" class="ink w7" font-size="12">DEFAULT</text>
+  <text x="89" y="134" text-anchor="middle" class="mut" font-size="9">safe · locked</text>
+
+  <!-- arrow: $10 opens -->
+  <text x="195" y="110" text-anchor="middle" class="acc mono-t" font-size="9.5">$10 opens</text>
+  <path d="M 148 120 H 238 M 237 116 L 244 120 L 237 124" class="ln" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- box 2: non-default session, held open -->
+  <rect x="244" y="86" width="232" height="68" rx="8" class="plate acc-s" stroke-width="1.6"/>
+  <text x="360" y="106" text-anchor="middle" class="acc w7" font-size="11.5">NON-DEFAULT SESSION</text>
+  <text x="360" y="121" text-anchor="middle" class="mut" font-size="9">extra access unlocked</text>
+  <path d="M 314 138 h 92" class="ln" stroke-width="1"/>
+  <path d="M 326 138 l 5 -9 l 5 9" class="acc-s" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 355 138 l 5 -9 l 5 9" class="acc-s" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 384 138 l 5 -9 l 5 9" class="acc-s" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="360" y="151" text-anchor="middle" class="acc mono-t" font-size="9">$3E keep-alive</text>
+
+  <!-- arrow: $11 / timeout -->
+  <text x="508" y="103" text-anchor="middle" class="acc mono-t" font-size="8.5">$11 reset</text>
+  <text x="508" y="113" text-anchor="middle" class="mut mono-t" font-size="8">or timeout</text>
+  <path d="M 476 120 H 534 M 533 116 L 540 120 L 533 124" class="ln" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- box 3: back to default, locked -->
+  <rect x="540" y="98" width="152" height="44" rx="8" class="plate ln" stroke-width="1.3"/>
+  <path d="M 561 118 v-3 a4 4 0 0 1 8 0 v3" class="amb-s" stroke-width="1.5" fill="none"/>
+  <rect x="558" y="118" width="14" height="11" rx="1.5" class="plate amb-s" stroke-width="1.3"/>
+  <circle cx="565" cy="123.5" r="1.3" class="amb"/>
+  <text x="632" y="116" text-anchor="middle" class="ink w7" font-size="12">DEFAULT</text>
+  <text x="632" y="131" text-anchor="middle" class="mut" font-size="9">security re-locked</text>
+</svg>

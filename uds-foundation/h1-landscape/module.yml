@@ -1,0 +1,10 @@
+id: h1-landscape
+title: { en: "The diagnostics landscape", jp: "診断の全体像" }
+standard: "ISO 14229 · Foundation H1"
+tagline:
+  en: "What UDS is, who talks, and where it sits among the standards — the whole subject on one screen, before any hex."
+  jp: "UDSとは何か、誰が話すのか、標準の中でどこに座るのか ― 16進に入る前に、全体像を1画面で。"
+arc: { pos: 1, total: 12 }
+nav:
+  prev: null
+  next: { id: "h2-life-of-a-request", label: { en: "The life of one request", jp: "1つのリクエストの一生" } }

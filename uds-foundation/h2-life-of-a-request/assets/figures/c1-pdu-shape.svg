@@ -1,0 +1,20 @@
+<svg class="dgm" viewBox="0 0 720 140" role="img" aria-label="The shape of any request: one SID byte followed by zero or more parameter bytes. The SID is a single byte; the parameters are the sub-function and or data.">
+  <text x="34" y="25" class="acc mono-t" font-size="10" letter-spacing="1">THE SHAPE OF ANY REQUEST · どの要求も</text>
+
+  <!-- SID cell (accent) then parameter cells (muted) -->
+  <rect x="211" y="40" width="70" height="50" rx="6" class="plate ln" stroke-width="1.5"/>
+  <rect x="211" y="40" width="70" height="3" class="acc"/>
+  <text x="246" y="71" text-anchor="middle" class="acc w7" font-size="15">SID</text>
+  <text x="246" y="112" text-anchor="middle" class="acc mono-t" font-size="9">1 byte</text>
+
+  <rect x="287" y="40" width="70" height="50" rx="6" class="plate ln" stroke-width="1.5"/>
+  <text x="322" y="72" text-anchor="middle" class="mut w7" font-size="15">··</text>
+  <rect x="363" y="40" width="70" height="50" rx="6" class="plate ln" stroke-width="1.5"/>
+  <text x="398" y="72" text-anchor="middle" class="mut w7" font-size="15">··</text>
+  <rect x="439" y="40" width="70" height="50" rx="6" class="plate ln" stroke-width="1.5"/>
+  <text x="474" y="70" text-anchor="middle" class="mut w7" font-size="15">…</text>
+
+  <!-- brace under the parameter cells -->
+  <path d="M 287 100 V 106 H 509 V 100" class="ln" stroke-width="1.2" fill="none"/>
+  <text x="398" y="124" text-anchor="middle" class="mut mono-t" font-size="9.5">parameters — sub-function and/or data · 引数</text>
+</svg>

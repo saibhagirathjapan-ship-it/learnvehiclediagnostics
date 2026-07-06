@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Automotive Diagnostics — From UDS to SOVD</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"><style>/* ============================================================
+   BLUEPRINT — canonical design system for the UDS→SOVD course
+   LOCKED 2026-07-04. Do not restyle per module (see CONVENTIONS §1b–1c).
+   Theme via .stage[data-theme=light|dark]; language via .stage[data-lang].
+   Fonts: Space Grotesk (display) · IBM Plex Sans (body) · IBM Plex Mono
+   (mono) · Noto Sans JP (jp). Bundle as @font-face at module build.
+   ============================================================ */
+*{box-sizing:border-box}
+html,body{margin:0}
+
+.stage{--f-display:"Space Grotesk";--f-body:"IBM Plex Sans";--f-mono:"IBM Plex Mono";--f-jp:"Noto Sans JP";--dt:-.3px;
+  min-height:100vh;background:var(--bg);padding:34px 20px 90px;font-family:var(--f-body)}
+/* Palette "Ochre & Olive" (LOCKED 2026-07-05): warm cream/charcoal neutrals · ochre = key accent ·
+   olive = positive/OK · brick-red = negative/danger · burnt-amber = warn · grey = neutral/disabled.
+   Semantic hues (red/green/grey) OVERRIDE thematic use. Body text meets WCAG AA (≥4.5:1). */
+.stage[data-theme="light"]{--bg:#f4f5f6;--card:#ffffff;--ink:#23262c;--ink-soft:#565b63;--ink-faint:#7a7f88;--line:#dde0e4;--line-soft:#eceef0;
+  --accent:#96650f;--accent-soft:#ecd9ad;--ok:#4f6a24;--neg:#a5352a;--warn:#a5521a;--warn-bg:#f6e7cf;--warn-ln:#ddb57c;
+  --chip:#f0e6cf;--code-bg:#eef0f2;--on-accent:#ffffff;--chrome:#23262c;--on-chrome:#f3f4f5;--shadow:0 1px 2px rgba(20,22,26,.08);
+  --dgm-plate:#f7f8f9;--dgm-ink:#23262c;--dgm-muted:#6a6f77;--dgm-line:#b3b8bf;--dgm-fill:#e7e9ec}
+.stage[data-theme="dark"]{--bg:#14161a;--card:#1c1f24;--ink:#e9ebee;--ink-soft:#9aa0a8;--ink-faint:#6f757d;--line:#2c3037;--line-soft:#1f2228;
+  --accent:#dea945;--accent-soft:#3a2c12;--ok:#a7bd61;--neg:#e68173;--warn:#e59240;--warn-bg:#33280f;--warn-ln:#6b5320;
+  --chip:#38300f;--code-bg:#15171c;--on-accent:#1b160e;--chrome:#262a31;--on-chrome:#e9ebee;--shadow:0 1px 2px rgba(0,0,0,.45);
+  --dgm-plate:#15171c;--dgm-ink:#e9ebee;--dgm-muted:#8b929b;--dgm-line:#3a3f47;--dgm-fill:#1f232a}
+.wrap{max-width:840px;margin:0 auto}
+.stage[data-lang="en"] .jp{display:none}
+.stage[data-lang="jp"] .en{display:none}
+.mono{font-family:var(--f-mono)}
+strong{color:var(--accent);font-weight:600}
+.callout.warn strong{color:var(--warn)}
+em{font-style:italic;color:var(--ink-soft)}
+.jp em{font-style:normal;color:var(--ink)}   /* Japanese doesn't slant; give upright emphasis instead */
+/* forward-pointer pill ({{→ V9 · …}}) — spiral signpost to where a topic is drilled */
+.fwd{font-family:var(--f-mono);font-size:.8em;font-weight:600;color:var(--accent);background:var(--chip);padding:1px 6px;white-space:nowrap;letter-spacing:.01em}
+
+/* ===== concept card (schematic identity) ===== */
+.card{background:var(--card);border:1px solid var(--line);border-top:2px solid var(--accent);
+  border-radius:9px;box-shadow:var(--shadow);padding:0;overflow:hidden}
+.card-in{padding:20px 22px}
+
+/* title-block header */
+.tblock{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:0 0 16px;background:var(--card)}
+.tf{padding:8px 12px;border-right:1px solid var(--line-soft);display:flex;flex-direction:column;justify-content:center}
+.tf:last-child{border-right:0}
+.tf.idx{font-family:var(--f-mono);font-weight:600;font-size:13px;color:var(--accent);background:var(--code-bg);justify-content:center}
+.tf.idx small{color:var(--ink-faint);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.tf.grow{flex:1;min-width:0}
+.tf.grow h3{margin:0;font-family:var(--f-display);font-weight:600;font-size:19px;line-height:1.2;color:var(--ink);letter-spacing:var(--dt)}
+.tf.grow .jp{margin-top:2px;font-family:var(--f-jp);font-size:13.5px;color:var(--ink-soft);font-weight:500}
+.tf.sid{justify-content:center}
+.tf.sid .chip{font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--on-accent);background:var(--ink);padding:5px 9px;border-radius:6px}
+.tf.tgcell{justify-content:center;align-items:center;background:var(--code-bg)}
+
+/* T-glyph */
+.tg{width:34px;height:32px;display:block}
+.tg .bar{fill:var(--dgm-line)} .tg .seg{fill:var(--dgm-line)}
+.tg.barlit .bar{fill:var(--accent)}
+.tg.s1 .g1{fill:var(--accent)} .tg.s2 .g2{fill:var(--accent)} .tg.s3 .g3{fill:var(--accent)} .tg.s4 .g4{fill:var(--accent)}
+.tgmini{width:22px;height:21px;flex:none}
+
+/* high-level bar */
+.barzone .kicker{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.barzone .kicker::after{content:"";height:1px;flex:1;background:var(--line)}
+.card p{margin:0 0 11px;font-size:16px;line-height:1.58;color:var(--ink)}
+.card p.jp{font-family:var(--f-jp);color:var(--ink-soft);line-height:1.82;font-size:15px}
+.card p.lead{font-size:16.5px}
+
+/* bullet list with SEMANTIC markers — normal · {key} · {warn} (conscious icon choice) */
+ul.blist{margin:2px 0 12px;padding:0;list-style:none}
+ul.blist li{position:relative;padding:5px 0 5px 22px;font-size:16px;line-height:1.5;color:var(--ink)}
+ul.blist li::before{content:"";position:absolute;left:2px;top:13px;width:9px;height:2px;background:var(--dgm-line)}          /* normal: understated bar */
+ul.blist li.bl-key{font-weight:500}
+ul.blist li.bl-key::before{left:1px;top:10px;width:7px;height:7px;background:var(--accent);transform:rotate(45deg)}        /* key point: accent diamond */
+ul.blist li.bl-warn::before{left:0;top:8px;width:0;height:2px;background:none;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:7px solid var(--warn)}  /* caution: amber triangle */
+ul.blist.jp li{font-family:var(--f-jp);color:var(--ink-soft);font-size:15px;line-height:1.75}
+.brief ul.blist li,.concl ul.blist li{font-size:15.5px}
+/* numbered steps (ordered list) also carry the lang class */
+.steps.jp li{font-family:var(--f-jp);color:var(--ink-soft)}
+/* concept-card footer (e.g. Further reading at the bottom of a T-card) */
+.card-footer{margin-top:15px}
+
+.fig{margin:15px 0 2px;border:1px solid var(--line);border-radius:8px;background:var(--dgm-plate);padding:15px}
+.fig svg{display:block;width:100%;height:auto}
+.dgm .ink{fill:var(--dgm-ink)} .dgm .mut{fill:var(--dgm-muted)} .dgm .acc{fill:var(--accent)} .dgm .acc-s{stroke:var(--accent)}
+.dgm .grn{fill:var(--ok)} .dgm .grn-s{stroke:var(--ok)} .dgm .ln{stroke:var(--dgm-line)} .dgm .fl{fill:var(--dgm-fill)} .dgm .fl-s{stroke:var(--dgm-fill)}
+.dgm .red{fill:var(--neg)} .dgm .red-s{stroke:var(--neg)} .dgm .plate{fill:var(--card)} .dgm .lnf{fill:var(--dgm-line)}
+.dgm text{font-family:var(--f-body)} .dgm .mono-t{font-family:var(--f-mono);font-weight:600}
+.dgm .amb{fill:var(--warn)} .dgm .amb-s{stroke:var(--warn)} .dgm .w7{font-weight:700} .dgm .w8{font-weight:800}
+figcaption{margin-top:9px;font-size:12px;color:var(--ink-faint);text-align:center;font-family:var(--f-body)}
+
+/* ===== vertical stem = detail legs ===== */
+.stem{margin:24px 0 0}
+.stem-h{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin:0 0 14px 2px;display:flex;align-items:center;gap:10px}
+.stem-h::after{content:"";height:1px;flex:1;background:var(--line-soft)}
+.legs{border-left:2px solid var(--line)}
+.leg{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:0 0 10px 18px;position:relative;overflow:hidden}
+.leg::before{content:"";position:absolute;left:-18px;top:22px;width:18px;height:2px;background:var(--line)}
+.leg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:11px;padding:12px 14px}
+.leg>summary::-webkit-details-marker{display:none}
+.leg .lg-txt{flex:1;min-width:0}
+.lg-txt .en,.lg-txt .jp{display:block}
+.leg .lg-en{font-family:var(--f-display);font-weight:600;font-size:15px;color:var(--ink);letter-spacing:var(--dt)}
+.leg .lg-jp{font-family:var(--f-jp);font-size:12.5px;color:var(--ink-soft);margin-top:1px}
+.leg .chev{color:var(--ink-faint);font-size:13px;transition:transform .16s;flex:none;font-family:var(--f-mono)}
+.leg[open] .chev{transform:rotate(90deg)}
+.leg[open]>summary{border-bottom:1px solid var(--line-soft);background:var(--code-bg)}
+.leg[open] .tgmini .bar{fill:var(--dgm-line)}
+.lg-body{padding:14px 16px 16px}
+.lg-body p{font-size:15px;margin:0 0 10px}
+
+/* cards nested inside a deep leg (a leg may hold up to ~4) */
+.subcard{border:1px solid var(--line-soft);border-radius:7px;padding:13px 15px;margin:12px 0 0;background:var(--dgm-plate)}
+.subcard:first-child{margin-top:2px}
+.subcard .sc-h{display:flex;align-items:center;gap:8px;margin:0 0 7px}
+.subcard .sc-n{font-family:var(--f-mono);font-size:10.5px;font-weight:600;color:var(--accent);background:var(--chip);border-radius:4px;padding:2px 6px;flex:none}
+.subcard .sc-t{font-family:var(--f-display);font-weight:600;font-size:14px;color:var(--ink);letter-spacing:var(--dt)}
+.subcard .sc-jp{font-family:var(--f-jp);font-size:12px;color:var(--ink-soft)}
+.subcard p{margin:0 0 8px}
+
+/* byte-boxes */
+.bytes{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}
+.byte{flex:0 0 auto;min-width:54px;text-align:center;border:1.5px solid var(--line);border-radius:7px;overflow:hidden;background:var(--card)}
+.byte .hex{font-family:var(--f-mono);font-weight:600;font-size:17px;padding:7px 9px;color:var(--ink);background:var(--code-bg)}
+.byte .cap{font-size:10px;padding:4px 5px;color:var(--ink-soft);border-top:1px solid var(--line-soft)}
+.byte.pos .hex{background:var(--ok);color:var(--on-accent)} .byte.sub .hex{background:var(--chip);color:var(--accent)} .byte.neg .hex{background:var(--neg);color:var(--on-accent)} .byte.sid .hex{background:var(--accent);color:var(--on-accent)}
+
+/* numbered steps */
+.steps{list-style:none;counter-reset:s;padding:0;margin:6px 0 4px}
+.steps li{counter-increment:s;position:relative;padding:6px 0 6px 34px;font-size:14.5px;color:var(--ink);border-bottom:1px dashed var(--line-soft)}
+.steps li:last-child{border-bottom:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:6px;width:22px;height:22px;border-radius:5px;background:var(--chip);color:var(--accent);
+  font-family:var(--f-mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+
+/* tables */
+table{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0 2px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink)}
+th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;border-bottom:1.5px solid var(--line);font-family:var(--f-mono)}
+td .mono{color:var(--accent);font-weight:600}
+
+/* callouts */
+.callout{border-radius:8px;padding:12px 14px;margin:12px 0 0;font-size:14px;border:1px solid transparent;line-height:1.5}
+.callout .lbl{font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px;font-family:var(--f-mono)}
+.callout.key{background:var(--chip);border-color:color-mix(in srgb,var(--accent) 34%,transparent)} .callout.key .lbl{color:var(--accent)}
+.callout.warn{background:var(--warn-bg);border-color:var(--warn-ln)} .callout.warn .lbl{color:var(--warn)}
+.callout .en,.callout .jp{display:block} .callout .jp{margin-top:5px}
+.fig figcaption .en,.fig figcaption .jp{display:block}
+
+/* retrieval-practice beat (:::recall) — question shown, answer hidden */
+.recall{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;background:var(--dgm-plate);padding:13px 15px;margin:14px 0 2px}
+.recall .rc-q{font-size:14.5px;color:var(--ink);line-height:1.55}
+.recall .rc-q .lbl{font-family:var(--f-mono);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:5px}
+.recall .rc-a{margin-top:11px}
+.recall .rc-a>summary{list-style:none;cursor:pointer;font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+.recall .rc-a>summary::-webkit-details-marker{display:none}
+.recall .rc-a>summary::before{content:"▸";font-size:10px}
+.recall .rc-a[open]>summary::before{content:"▾"}
+.recall .rc-body{margin-top:11px;font-size:14.5px;color:var(--ink);line-height:1.55}
+/* keep these selectors at <=2 classes so the .stage[data-lang] hide rule (3) still wins */
+.rc-q .en,.rc-q .jp,.rc-body .en,.rc-body .jp{display:block}
+.rc-q .jp,.rc-body .jp{font-family:var(--f-jp);color:var(--ink-soft)}
+.rc-q .jp{margin-top:3px} .rc-body .jp{margin-top:4px}
+
+/* "Further reading" panel (:::reading) — compact; standards get doc + clause */
+.reading{border:1px solid var(--line-soft);border-left:2px solid var(--dgm-line);background:var(--dgm-plate);padding:8px 12px;margin:14px 0 2px}
+.reading .rd-h{font-family:var(--f-mono);font-weight:700;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 5px}
+.reading .rd-list{list-style:none;margin:0;padding:0}
+.reading .rd-list li{padding:4px 0;display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px}
+.rd-doc{font-family:var(--f-mono);font-weight:600;font-size:11.5px;color:var(--ink-soft)}
+.rd-sec{font-family:var(--f-mono);font-size:10.5px;font-weight:600;color:var(--accent)}
+.rd-note{flex:1 1 100%;font-size:11.5px;color:var(--ink-faint);line-height:1.45;margin-top:1px}
+
+/* ============================================================
+   MODULE SHELL — topbar · hero · TOC · dividers · nav
+   ============================================================ */
+.stage{padding:0}
+.progress{position:fixed;left:0;top:0;height:2px;background:var(--accent);width:0;z-index:40}
+
+/* top bar — dark-grey chrome */
+.topbar{position:sticky;top:0;z-index:30;background:var(--chrome);border-bottom:1px solid rgba(0,0,0,.28)}
+.topbar-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:9px 20px}
+.brand{font-family:var(--f-display);font-weight:700;color:var(--on-chrome);font-size:15px;display:flex;align-items:center;gap:9px;min-width:0}
+.brand .dot{width:9px;height:9px;border-radius:2px;background:var(--accent);flex:none}
+.brand .std{font-family:var(--f-mono);font-size:11px;color:color-mix(in srgb,var(--on-chrome) 52%,transparent);font-weight:500;white-space:nowrap}
+.tb-spacer{flex:1}
+.tb-ctl{display:flex;gap:7px;align-items:center}
+.tb-seg{display:inline-flex;border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);border-radius:8px;overflow:hidden;background:color-mix(in srgb,var(--on-chrome) 7%,transparent)}
+.tb-seg button{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 60%,transparent);background:transparent;border:0;padding:6px 10px;line-height:1}
+.tb-seg button.on{background:var(--accent);color:var(--on-accent)}
+
+/* hero */
+.hero{max-width:1120px;margin:0 auto;padding:44px 20px 6px;text-align:center}
+.hero .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1.12;margin:12px 0 6px;color:var(--ink);letter-spacing:-.5px}
+.hero .jp{font-family:var(--f-jp);font-size:19px;color:var(--ink-soft);font-weight:600}
+.hero .tagline{max-width:58ch;margin:16px auto 0;color:var(--ink-soft);font-size:16.5px}
+.hero .tagline.jp{font-family:var(--f-jp)}
+.arc{display:inline-flex;gap:7px;align-items:center;margin:24px auto 0;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+.arc .dot{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.arc .dot.on{background:var(--accent);box-shadow:0 0 0 3px var(--chip)}
+.arc .lbl{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);margin-left:6px}
+
+/* layout: sidebar TOC + stream */
+.layout{max-width:1120px;margin:0 auto;display:flex;gap:26px;padding:0 20px;align-items:flex-start}
+.toc{position:sticky;top:70px;width:212px;flex:none;align-self:flex-start;max-height:calc(100vh - 90px);overflow:auto;padding:20px 0;font-size:13px}
+.toc h4{margin:0 0 8px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.toc a{display:flex;gap:9px;align-items:baseline;text-decoration:none;color:var(--ink-soft);padding:6px 10px;border-radius:7px;border-left:2px solid transparent;line-height:1.3}
+.toc a .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);flex:none}
+.toc a:hover{background:var(--bg);color:var(--ink)}
+.toc a.on{color:var(--accent);border-left-color:var(--accent);background:var(--chip)}
+.stream{flex:1;min-width:0;padding:22px 0 40px}
+
+/* divider — a dark-grey section bar with an ochre rule */
+.divider{background:var(--chrome);border:0;border-left:4px solid var(--accent);border-radius:10px;padding:20px 22px;margin:0 0 18px;scroll-margin-top:72px}
+.divider .sec{font-family:var(--f-mono);font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--accent)}
+.divider h2{margin:7px 0 0;font-family:var(--f-display);font-weight:700;font-size:23px;line-height:1.2;color:var(--on-chrome);letter-spacing:var(--dt)}
+.divider h2 .jp{display:block;font-family:var(--f-jp);font-size:16px;color:color-mix(in srgb,var(--on-chrome) 68%,transparent);font-weight:600;margin-top:3px}
+.divider .sub{margin:11px 0 0;font-size:14.5px;color:color-mix(in srgb,var(--on-chrome) 74%,transparent);max-width:62ch}
+.divider .sub.jp{font-family:var(--f-jp)}
+
+/* brief + conclusion */
+.brief{background:var(--dgm-plate);border:1px dashed var(--line);border-radius:10px;padding:18px 20px;margin:0 0 18px}
+.concl{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:10px;padding:18px 20px;margin:0 0 18px}
+.brief .eyebrow,.concl .eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}
+.brief .eyebrow{color:var(--accent)} .concl .eyebrow{color:var(--ok)}
+.brief .eyebrow,.concl .eyebrow{display:inline-flex;align-items:center;gap:7px}
+.lbl-ic{width:14px;height:14px;flex:none}
+.brief p{font-size:16px;margin:0 0 9px;color:var(--ink)} .concl p{font-size:15.5px;margin:0 0 9px;color:var(--ink)}
+.brief p:last-child,.concl p:last-child{margin-bottom:0}
+.brief p.jp,.concl p.jp{font-family:var(--f-jp);color:var(--ink-soft)}
+
+/* cross-module nav */
+.modnav{max-width:1120px;margin:6px auto 0;padding:24px 20px 64px;display:flex;gap:14px;border-top:1px solid var(--line)}
+.modnav a{flex:1;min-width:0;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:13px 16px;background:var(--card)}
+.modnav a:hover{border-color:var(--accent)}
+.modnav .dir{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em}
+.modnav .t{font-family:var(--f-display);font-weight:600;margin-top:3px;color:var(--ink)}
+.modnav .t .jp{font-family:var(--f-jp);font-weight:500;color:var(--ink-soft);font-size:13px}
+.modnav .jp{display:block}
+.modnav .next{text-align:right}
+.modnav .disabled{opacity:.4;pointer-events:none}
+
+@media(max-width:860px){
+  .toc{display:none}
+  .layout,.hero,.topbar-in,.modnav{padding-left:14px;padding-right:14px}
+  .hero h1{font-size:27px}
+  .brand .std{display:none}
+}
+
+/* ============================================================
+   RECTANGULAR "blueprint sheet" corners (LOCKED 2026-07-04).
+   Sharp panels suit the schematic identity. Tune radii here.
+   ============================================================ */
+.card,.tblock,.tf.idx,.tf.sid .chip,.leg,.subcard,.sc-n,.callout,.byte,
+.fig,.divider,.brief,.concl,.modnav a,.tb-seg,.arc,.modcard,.mc-n,
+.recall,.recall .rc-a>summary,.reading,.rd-sec{border-radius:0}
+
+/* ============================================================
+   COURSE HUB (wiki/learn/index.html) — all modules as cards
+   ============================================================ */
+.hub{max-width:1080px;margin:0 auto;padding:6px 20px 74px}
+.hub-h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:26px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.modcard{display:flex;flex-direction:column;text-decoration:none;background:var(--card);border:1px solid var(--line);border-top:2px solid var(--accent);padding:15px 18px 16px;color:var(--ink);transition:border-color .15s,transform .12s}
+.modcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.modcard.upcoming{border-top-color:var(--line);opacity:.7}
+.mc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mc-n{font-family:var(--f-mono);font-weight:700;font-size:12px;color:var(--on-accent);background:var(--accent);padding:3px 8px}
+.modcard.upcoming .mc-n{color:var(--ink-faint);background:var(--code-bg)}
+.mc-sovd{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em}
+.modcard h3{font-family:var(--f-display);font-weight:600;font-size:17px;margin:13px 0 0;color:var(--ink);letter-spacing:var(--dt)}
+.modcard h3 .jp{display:block;font-family:var(--f-jp);font-size:12.5px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+.mc-scope{font-size:12.5px;color:var(--ink-soft);margin:10px 0 0;line-height:1.5}
+.mc-scope.jp{font-family:var(--f-jp)}
+.mc-thumb{margin:14px 0 2px;border:1px solid var(--line-soft);background:var(--dgm-plate);padding:10px 12px}
+.mc-thumb svg{display:block;width:100%;height:auto}
+.mc-status{margin-top:auto;padding-top:13px;font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--ok)}
+.modcard.upcoming .mc-status{color:var(--ink-faint)}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="stage" data-theme="light" data-lang="both"><div class="topbar"><div class="topbar-in"><div class="brand"><span class="dot"></span>Automotive Diagnostics<span class="std">Learn · 学習</span></div><div class="tb-spacer"></div><div class="tb-ctl"><div class="tb-seg" id="langseg"><button data-v="en">EN</button><button data-v="jp">日本語</button><button class="on" data-v="both">EN+JP</button></div><div class="tb-seg" id="themeseg"><button class="on" data-v="light">Light</button><button data-v="dark">Dark</button></div></div></div></div><section class="hero"><div class="kicker">Automotive Diagnostics · 自動車診断</div><h1>From UDS to SOVD</h1><div class="jp">UDSからSOVDへ</div><p class="tagline en">A hands-on path from the first diagnostic byte to Service-Oriented Vehicle Diagnostics — built one small module at a time.</p><p class="tagline jp">最初の診断バイトから、サービス指向車両診断（SOVD）まで。小さなモジュールを積み上げて手を動かして学びます。</p></section><div class="hub"><div class="hub-h4">9 modules · 全9モジュール</div><div class="grid"><a class="modcard" href="uds-foundation/index.html"><div class="mc-top"><span class="mc-n">M1</span><span class="mc-sovd">→ substrate</span></div><h3>UDS Foundations<span class="jp">UDSの基礎</span></h3><p class="mc-scope en">Why diagnostics · client/server · DCM/DEM · OSI map · message anatomy · sessions · <span class="mono">$10</span> &amp; <span class="mono">$11</span></p><p class="mc-scope jp">診断の意義 · クライアント/サーバー · DCM/DEM · OSI · メッセージ構造 · セッション · <span class="mono">$10</span>・<span class="mono">$11</span></p><div class="mc-thumb"><svg class="dgm" viewBox="0 0 320 128" role="img" aria-label="A tester and an ECU exchange a UDS request and response">
+  <!-- ===== Tester (left) ===== -->
+  <rect x="12" y="33" width="80" height="62" rx="6" class="plate lnf"/>
+  <rect x="12" y="33" width="80" height="62" rx="6" class="ln" fill="none" stroke-width="1.4"/>
+  <rect x="20" y="41" width="64" height="15" rx="2.5" class="fl"/>
+  <circle cx="28" cy="48.5" r="2.4" class="acc"/>
+  <text x="56" y="52" text-anchor="middle" class="mut mono-t" font-size="8">TESTER</text>
+  <text x="24" y="79" class="acc mono-t" font-size="12">&gt;</text>
+  <text x="34" y="79" class="ink mono-t" font-size="12">10</text>
+  <rect x="55" y="70" width="6" height="11" class="acc"/>
+  <text x="52" y="112" text-anchor="middle" class="mut" font-size="10">Tester</text>
+
+  <!-- ===== ECU (right) ===== -->
+  <line x1="240" y1="30" x2="240" y2="36" class="ln" stroke-width="1.8"/>
+  <line x1="264" y1="30" x2="264" y2="36" class="ln" stroke-width="1.8"/>
+  <line x1="288" y1="30" x2="288" y2="36" class="ln" stroke-width="1.8"/>
+  <line x1="240" y1="92" x2="240" y2="98" class="ln" stroke-width="1.8"/>
+  <line x1="264" y1="92" x2="264" y2="98" class="ln" stroke-width="1.8"/>
+  <line x1="288" y1="92" x2="288" y2="98" class="ln" stroke-width="1.8"/>
+  <rect x="228" y="36" width="80" height="56" rx="6" class="plate"/>
+  <rect x="228" y="36" width="80" height="56" rx="6" class="ln" fill="none" stroke-width="1.4"/>
+  <text x="268" y="62" text-anchor="middle" class="ink" font-size="16" font-weight="700">ECU</text>
+  <text x="268" y="79" text-anchor="middle" class="mut mono-t" font-size="8">ISO 14229</text>
+  <text x="268" y="112" text-anchor="middle" class="mut" font-size="10">Vehicle</text>
+
+  <!-- ===== request (accent, top) ===== -->
+  <path d="M96 52 L222 52" class="acc-s" stroke-width="2.2" marker-end="url(#h0_c_ar)"/>
+  <text x="160" y="45" text-anchor="middle" class="acc mono-t" font-size="10.5">10 03</text>
+
+  <!-- ===== response (green, bottom) ===== -->
+  <path d="M224 78 L98 78" class="grn-s" stroke-width="2.2" marker-end="url(#h0_c_ag)"/>
+  <text x="160" y="92" text-anchor="middle" class="grn mono-t" font-size="10.5">50 03 …</text>
+
+  <!-- ===== UDS badge ===== -->
+  <rect x="139" y="55" width="42" height="20" rx="3.5" class="plate acc-s" stroke-width="1.4"/>
+  <text x="160" y="69" text-anchor="middle" class="acc mono-t" font-size="11" font-weight="700">UDS</text>
+
+  <defs>
+    <marker id="h0_c_ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="acc"/></marker>
+    <marker id="h0_c_ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="grn"/></marker>
+  </defs>
+</svg></div><div class="mc-status">✓ ready</div></a><a class="modcard upcoming" href="uds-data/index.html"><div class="mc-top"><span class="mc-n">M2</span><span class="mc-sovd">→ data</span></div><h3>Data &amp; Identification<span class="jp">データと識別</span></h3><p class="mc-scope en"><span class="mono">$22</span> ReadDataByIdentifier · <span class="mono">$2E</span> Write · DIDs · VIN · scaling</p><p class="mc-scope jp"><span class="mono">$22</span> データ読み出し · <span class="mono">$2E</span> 書き込み · DID · VIN · スケーリング</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-dtc/index.html"><div class="mc-top"><span class="mc-n">M3</span><span class="mc-sovd">→ faults</span></div><h3>Fault Memory &amp; DTCs<span class="jp">故障メモリとDTC</span></h3><p class="mc-scope en"><span class="mono">$19</span> ReadDTCInformation · <span class="mono">$14</span> Clear · DTC status byte · snapshots · DEM lifecycle</p><p class="mc-scope jp"><span class="mono">$19</span> DTC読み出し · <span class="mono">$14</span> 消去 · DTCステータス · スナップショット · DEM</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-security/index.html"><div class="mc-top"><span class="mc-n">M4</span><span class="mc-sovd">→ auth</span></div><h3>Security &amp; Access<span class="jp">セキュリティとアクセス</span></h3><p class="mc-scope en"><span class="mono">$27</span> SecurityAccess (seed/key) · <span class="mono">$29</span> Authentication · <span class="mono">$28</span> CommunicationControl</p><p class="mc-scope jp"><span class="mono">$27</span> セキュリティアクセス · <span class="mono">$29</span> 認証 · <span class="mono">$28</span> 通信制御</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-routines/index.html"><div class="mc-top"><span class="mc-n">M5</span><span class="mc-sovd">→ operations</span></div><h3>Routines &amp; I/O Control<span class="jp">ルーチンと入出力制御</span></h3><p class="mc-scope en"><span class="mono">$31</span> RoutineControl · <span class="mono">$2F</span> InputOutputControlByIdentifier</p><p class="mc-scope jp"><span class="mono">$31</span> ルーチン制御 · <span class="mono">$2F</span> 入出力制御</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-flash/index.html"><div class="mc-top"><span class="mc-n">M6</span><span class="mc-sovd">→ software update</span></div><h3>Reprogramming / Flash<span class="jp">再プログラミング / フラッシュ</span></h3><p class="mc-scope en">The flash sequence · <span class="mono">$34</span>/<span class="mono">$36</span>/<span class="mono">$37</span> download · <span class="mono">$35</span> upload · checksum</p><p class="mc-scope jp">フラッシュ手順 · <span class="mono">$34</span>/<span class="mono">$36</span>/<span class="mono">$37</span> ダウンロード · <span class="mono">$35</span> アップロード · チェックサム</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="doip/index.html"><div class="mc-top"><span class="mc-n">M7</span><span class="mc-sovd">→ transport</span></div><h3>From CAN to IP: DoIP<span class="jp">CANからIPへ：DoIP</span></h3><p class="mc-scope en">Ethernet · DoIP (ISO 13400) · IP addressing · DoIP vs DoCAN · zonal architecture</p><p class="mc-scope jp">イーサネット · DoIP · IPアドレス · DoIP対DoCAN · ゾーンアーキテクチャ</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="web-api/index.html"><div class="mc-top"><span class="mc-n">M8</span><span class="mc-sovd">→ how to read SOVD</span></div><h3>Web APIs in 20 min<span class="jp">20分で学ぶWeb API</span></h3><p class="mc-scope en">HTTP verbs · REST resources &amp; URIs · JSON · status codes · client/server over IP</p><p class="mc-scope jp">HTTPメソッド · RESTリソース · JSON · ステータスコード · IP上のC/S</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="sovd/index.html"><div class="mc-top"><span class="mc-n">M9</span><span class="mc-sovd">→ SOVD itself</span></div><h3>SOVD<span class="jp">SOVD</span></h3><p class="mc-scope en">Core: resource model · entities · discovery &amp; self-description · the REST API shape. In practice: classic-ECU proxy via DoIP (CDA) · auth · remote/OTA · ODX</p><p class="mc-scope jp">コア：リソースモデル · エンティティ · 発見と自己記述 · REST APIの形。実践：DoIPプロキシでのUDS共存(CDA) · 認証 · リモート/OTA · ODX</p><div class="mc-status">soon</div></a></div></div></div><script>var root=document.querySelector('.stage');function seg(id,a){var s=document.getElementById(id);if(!s)return;s.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call(s.children,function(x){x.classList.toggle('on',x===b)});root.setAttribute(a,b.dataset.v);});}seg('themeseg','data-theme');seg('langseg','data-lang');</script></body></html>

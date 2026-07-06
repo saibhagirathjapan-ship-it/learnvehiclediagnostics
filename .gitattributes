@@ -1,0 +1,6 @@
+# Normalize line endings: store text as LF in the repo, check out native on each OS.
+* text=auto eol=lf
+
+# Treat these as binary (no line-ending munging, no diff noise).
+*.png binary
+*.svg text eol=lf

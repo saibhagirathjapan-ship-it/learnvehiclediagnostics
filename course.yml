@@ -1,0 +1,34 @@
+title: { en: "Automotive Diagnostics", jp: "自動車診断" }
+subtitle: { en: "From UDS to SOVD", jp: "UDSからSOVDへ" }
+tagline:
+  en: "A hands-on path from the first diagnostic byte to Service-Oriented Vehicle Diagnostics — built one small module at a time."
+  jp: "最初の診断バイトから、サービス指向車両診断（SOVD）まで。小さなモジュールを積み上げて手を動かして学びます。"
+modules:
+  - { n: 1, id: uds, href: "uds-foundation/index.html", status: done, sovd: "substrate",
+      thumb: "uds/assets/figures/card-thumb.svg",
+      title: { en: "UDS Foundations", jp: "UDSの基礎" },
+      scope: { en: "Why diagnostics · client/server · DCM/DEM · OSI map · message anatomy · sessions · `$10` & `$11`", jp: "診断の意義 · クライアント/サーバー · DCM/DEM · OSI · メッセージ構造 · セッション · `$10`・`$11`" } }
+  - { n: 2, id: uds-data, status: upcoming, sovd: "data",
+      title: { en: "Data & Identification", jp: "データと識別" },
+      scope: { en: "`$22` ReadDataByIdentifier · `$2E` Write · DIDs · VIN · scaling", jp: "`$22` データ読み出し · `$2E` 書き込み · DID · VIN · スケーリング" } }
+  - { n: 3, id: uds-dtc, status: upcoming, sovd: "faults",
+      title: { en: "Fault Memory & DTCs", jp: "故障メモリとDTC" },
+      scope: { en: "`$19` ReadDTCInformation · `$14` Clear · DTC status byte · snapshots · DEM lifecycle", jp: "`$19` DTC読み出し · `$14` 消去 · DTCステータス · スナップショット · DEM" } }
+  - { n: 4, id: uds-security, status: upcoming, sovd: "auth",
+      title: { en: "Security & Access", jp: "セキュリティとアクセス" },
+      scope: { en: "`$27` SecurityAccess (seed/key) · `$29` Authentication · `$28` CommunicationControl", jp: "`$27` セキュリティアクセス · `$29` 認証 · `$28` 通信制御" } }
+  - { n: 5, id: uds-routines, status: upcoming, sovd: "operations",
+      title: { en: "Routines & I/O Control", jp: "ルーチンと入出力制御" },
+      scope: { en: "`$31` RoutineControl · `$2F` InputOutputControlByIdentifier", jp: "`$31` ルーチン制御 · `$2F` 入出力制御" } }
+  - { n: 6, id: uds-flash, status: upcoming, sovd: "software update",
+      title: { en: "Reprogramming / Flash", jp: "再プログラミング / フラッシュ" },
+      scope: { en: "The flash sequence · `$34`/`$36`/`$37` download · `$35` upload · checksum", jp: "フラッシュ手順 · `$34`/`$36`/`$37` ダウンロード · `$35` アップロード · チェックサム" } }
+  - { n: 7, id: doip, status: upcoming, sovd: "transport",
+      title: { en: "From CAN to IP: DoIP", jp: "CANからIPへ：DoIP" },
+      scope: { en: "Ethernet · DoIP (ISO 13400) · IP addressing · DoIP vs DoCAN · zonal architecture", jp: "イーサネット · DoIP · IPアドレス · DoIP対DoCAN · ゾーンアーキテクチャ" } }
+  - { n: 8, id: web-api, status: upcoming, sovd: "how to read SOVD",
+      title: { en: "Web APIs in 20 min", jp: "20分で学ぶWeb API" },
+      scope: { en: "HTTP verbs · REST resources & URIs · JSON · status codes · client/server over IP", jp: "HTTPメソッド · RESTリソース · JSON · ステータスコード · IP上のC/S" } }
+  - { n: 9, id: sovd, status: upcoming, sovd: "SOVD itself",
+      title: { en: "SOVD", jp: "SOVD" },
+      scope: { en: "Core: resource model · entities · discovery & self-description · the REST API shape. In practice: classic-ECU proxy via DoIP (CDA) · auth · remote/OTA · ODX", jp: "コア：リソースモデル · エンティティ · 発見と自己記述 · REST APIの形。実践：DoIPプロキシでのUDS共存(CDA) · 認証 · リモート/OTA · ODX" } }

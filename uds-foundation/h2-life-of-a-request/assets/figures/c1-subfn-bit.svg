@@ -1,0 +1,22 @@
+<svg class="dgm" viewBox="0 0 720 140" role="img" aria-label="Inside the sub-function byte: eight bits. The top bit, bit 7 with value 0x80, is the suppress-positive-reply flag. The lower seven bits, bits 6 to 0, hold the sub-function value from 0 to 127.">
+  <text x="34" y="25" class="acc mono-t" font-size="10" letter-spacing="1">INSIDE THE SUB-FUNCTION BYTE · サブファンクション</text>
+
+  <!-- bit 7: the suppress flag (accent, set apart) -->
+  <rect x="150" y="42" width="48" height="48" rx="5" class="plate acc-s" stroke-width="1.6"/>
+  <rect x="150" y="42" width="48" height="3" class="acc"/>
+  <text x="174" y="72" text-anchor="middle" class="acc w7" font-size="15">b7</text>
+  <text x="174" y="110" text-anchor="middle" class="acc mono-t" font-size="9">0x80 · suppress?</text>
+
+  <!-- bits 6..0: the value -->
+  <rect x="232" y="42" width="44" height="48" rx="5" class="plate ln" stroke-width="1.4"/><text x="254" y="72" text-anchor="middle" class="mut w7" font-size="14">b6</text>
+  <rect x="281" y="42" width="44" height="48" rx="5" class="plate ln" stroke-width="1.4"/><text x="303" y="72" text-anchor="middle" class="mut w7" font-size="14">b5</text>
+  <rect x="330" y="42" width="44" height="48" rx="5" class="plate ln" stroke-width="1.4"/><text x="352" y="72" text-anchor="middle" class="mut w7" font-size="14">b4</text>
+  <rect x="379" y="42" width="44" height="48" rx="5" class="plate ln" stroke-width="1.4"/><text x="401" y="72" text-anchor="middle" class="mut w7" font-size="14">b3</text>
+  <rect x="428" y="42" width="44" height="48" rx="5" class="plate ln" stroke-width="1.4"/><text x="450" y="72" text-anchor="middle" class="mut w7" font-size="14">b2</text>
+  <rect x="477" y="42" width="44" height="48" rx="5" class="plate ln" stroke-width="1.4"/><text x="499" y="72" text-anchor="middle" class="mut w7" font-size="14">b1</text>
+  <rect x="526" y="42" width="44" height="48" rx="5" class="plate ln" stroke-width="1.4"/><text x="548" y="72" text-anchor="middle" class="mut w7" font-size="14">b0</text>
+
+  <!-- brace under bits 6..0 -->
+  <path d="M 232 100 V 106 H 570 V 100" class="ln" stroke-width="1.2" fill="none"/>
+  <text x="401" y="124" text-anchor="middle" class="mut mono-t" font-size="9.5">the value — bits 6–0 (0–127) · 値</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg class="dgm" viewBox="0 0 720 196" role="img" aria-label="One real round trip. The tester sends 10 03, switch to the extended session. The ECU switches session from default to extended. The ECU answers 50 03 00 32 01 F4 — a positive response carrying its timing promise. The byte packets travel the wire and pause mid-way so they can be read.">
+  <text x="88" y="30" text-anchor="middle" class="ink w7" font-size="12">TESTER</text>
+  <text x="632" y="30" text-anchor="middle" class="ink w7" font-size="12">ECU</text>
+  <line x1="88" y1="40" x2="88" y2="184" class="ln" stroke-width="1.4"/>
+  <line x1="632" y1="40" x2="632" y2="184" class="ln" stroke-width="1.4"/>
+
+  <!-- request wire + a travelling, mid-pausing byte packet (10 03) -->
+  <path d="M 88 70 H 626 M 625 65 L 632 70 L 625 75" class="acc-s" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <g>
+    <rect x="100" y="61" width="25" height="18" rx="2.5" class="plate acc-s" stroke-width="1.2"/><text x="112.5" y="74" text-anchor="middle" class="acc mono-t" font-size="12">10</text>
+    <rect x="127" y="61" width="25" height="18" rx="2.5" class="plate acc-s" stroke-width="1.2"/><text x="139.5" y="74" text-anchor="middle" class="acc mono-t" font-size="12">03</text>
+    <circle cx="163" cy="70" r="3" class="acc"/>
+    <animateTransform attributeName="transform" type="translate" dur="3.4s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.05;0.17;0.33;0.43;1" values="0 0;0 0;224 0;224 0;462 0;462 0"/>
+    <animate attributeName="opacity" dur="3.4s" repeatCount="indefinite" keyTimes="0;0.05;0.08;0.41;0.45;1" values="0;0;1;1;0;0"/>
+  </g>
+  <text x="360" y="94" text-anchor="middle" class="mut" font-size="10">“switch to the Extended session”</text>
+
+  <!-- ECU serves: switches session -->
+  <rect x="540" y="102" width="168" height="40" rx="7" class="plate acc-s" stroke-width="1.5"/>
+  <text x="624" y="119" text-anchor="middle" class="acc w7" font-size="10.5">ECU switches session</text>
+  <text x="624" y="133" text-anchor="middle" class="mut" font-size="9">Default → Extended</text>
+
+  <!-- response wire + a travelling, mid-pausing byte packet (50 03 00 32 01 F4) -->
+  <path d="M 632 162 H 94 M 95 157 L 88 162 L 95 167" class="grn-s" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <g>
+    <circle cx="418" cy="162" r="3" class="grn"/>
+    <rect x="426" y="153" width="25" height="18" rx="2.5" class="plate grn-s" stroke-width="1.2"/><text x="438.5" y="166" text-anchor="middle" class="grn mono-t" font-size="12">50</text>
+    <rect x="453" y="153" width="25" height="18" rx="2.5" class="plate grn-s" stroke-width="1.2"/><text x="465.5" y="166" text-anchor="middle" class="grn mono-t" font-size="12">03</text>
+    <rect x="480" y="153" width="25" height="18" rx="2.5" class="plate grn-s" stroke-width="1.2"/><text x="492.5" y="166" text-anchor="middle" class="grn mono-t" font-size="12">00</text>
+    <rect x="507" y="153" width="25" height="18" rx="2.5" class="plate grn-s" stroke-width="1.2"/><text x="519.5" y="166" text-anchor="middle" class="grn mono-t" font-size="12">32</text>
+    <rect x="534" y="153" width="25" height="18" rx="2.5" class="plate grn-s" stroke-width="1.2"/><text x="546.5" y="166" text-anchor="middle" class="grn mono-t" font-size="12">01</text>
+    <rect x="561" y="153" width="25" height="18" rx="2.5" class="plate grn-s" stroke-width="1.2"/><text x="573.5" y="166" text-anchor="middle" class="grn mono-t" font-size="12">F4</text>
+    <animateTransform attributeName="transform" type="translate" dur="3.4s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.5;0.58;0.74;0.86;1" values="0 0;0 0;-168 0;-168 0;-330 0;-330 0"/>
+    <animate attributeName="opacity" dur="3.4s" repeatCount="indefinite" keyTimes="0;0.5;0.54;0.82;0.86;1" values="0;0;1;1;0;0"/>
+  </g>
+  <text x="360" y="186" text-anchor="middle" class="mut" font-size="10">positive (+0x40) — and here is my timing</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg class="dgm" viewBox="0 0 560 138" role="img" aria-label="Request, an internal mode switch inside the ECU, then the positive response">
+  <text x="66" y="18" text-anchor="middle" class="ink" font-size="12.5" font-weight="700">Tester</text>
+  <text x="494" y="18" text-anchor="middle" class="ink" font-size="12.5" font-weight="700">ECU</text>
+  <line x1="66" y1="26" x2="66" y2="122" class="ln" stroke-width="1.5"/>
+  <line x1="494" y1="26" x2="494" y2="122" class="ln" stroke-width="1.5"/>
+  <path d="M66 44 L490 44" class="acc-s" stroke-width="2.5" marker-end="url(#ar)"/>
+  <text x="278" y="37" text-anchor="middle" class="acc mono-t" font-size="12.5">10 03</text>
+  <text x="278" y="57" text-anchor="middle" class="mut" font-size="11">"switch to Extended"</text>
+  <rect x="404" y="66" width="150" height="30" rx="6" class="fl acc-s" stroke-width="1.3"/>
+  <text x="479" y="79" text-anchor="middle" class="acc" font-size="10.5" font-weight="700">session flips</text>
+  <text x="479" y="91" text-anchor="middle" class="mut" font-size="10">Default &#8594; Extended</text>
+  <path d="M494 112 L68 112" class="grn-s" stroke-width="2.5" marker-end="url(#ag)"/>
+  <text x="278" y="105" text-anchor="middle" class="grn mono-t" font-size="12.5">50 03 00 32 01 F4</text>
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="acc"/></marker>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="grn"/></marker>
+  </defs>
+</svg>

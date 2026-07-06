@@ -1,0 +1,46 @@
+<svg class="dgm" viewBox="0 0 700 196" role="img" aria-label="A diagnostic tester and an ECU exchange a UDS request and response over one cable">
+  <!-- ===== Tester (left) ===== -->
+  <rect x="40" y="50" width="164" height="100" rx="7" class="plate lnf"/>
+  <rect x="40" y="50" width="164" height="100" rx="7" class="ln" fill="none" stroke-width="1.5"/>
+  <rect x="52" y="62" width="140" height="20" rx="3" class="fl"/>
+  <circle cx="62" cy="72" r="3" class="acc"/>
+  <text x="122" y="76" text-anchor="middle" class="mut mono-t" font-size="10.5">TESTER</text>
+  <text x="60" y="106" class="acc mono-t" font-size="14">&gt;</text>
+  <text x="74" y="106" class="ink mono-t" font-size="14">10 03</text>
+  <rect x="128" y="97" width="8" height="13" class="acc"/>
+  <text x="122" y="134" text-anchor="middle" class="mut" font-size="11">Diagnostic tester</text>
+
+  <!-- ===== ECU (right) ===== -->
+  <g>
+    <!-- pin ticks -->
+    <line x1="512" y1="44" x2="512" y2="52" class="ln" stroke-width="2"/>
+    <line x1="538" y1="44" x2="538" y2="52" class="ln" stroke-width="2"/>
+    <line x1="564" y1="44" x2="564" y2="52" class="ln" stroke-width="2"/>
+    <line x1="590" y1="44" x2="590" y2="52" class="ln" stroke-width="2"/>
+    <line x1="512" y1="148" x2="512" y2="156" class="ln" stroke-width="2"/>
+    <line x1="538" y1="148" x2="538" y2="156" class="ln" stroke-width="2"/>
+    <line x1="564" y1="148" x2="564" y2="156" class="ln" stroke-width="2"/>
+    <line x1="590" y1="148" x2="590" y2="156" class="ln" stroke-width="2"/>
+    <rect x="496" y="52" width="164" height="96" rx="7" class="plate"/>
+    <rect x="496" y="52" width="164" height="96" rx="7" class="ln" fill="none" stroke-width="1.5"/>
+    <text x="578" y="98" text-anchor="middle" class="ink" font-size="21" font-weight="700">ECU</text>
+    <text x="578" y="120" text-anchor="middle" class="mut mono-t" font-size="10">ISO 14229</text>
+  </g>
+
+  <!-- ===== request arrow (accent, top) ===== -->
+  <path d="M206 78 L488 78" class="acc-s" stroke-width="2.5" marker-end="url(#h_ar)"/>
+  <text x="351" y="68" text-anchor="middle" class="acc mono-t" font-size="13">10 03</text>
+
+  <!-- ===== response arrow (green, bottom) ===== -->
+  <path d="M494 122 L212 122" class="grn-s" stroke-width="2.5" marker-end="url(#h_ag)"/>
+  <text x="351" y="140" text-anchor="middle" class="grn mono-t" font-size="13">50 03 00 32 01 F4</text>
+
+  <!-- ===== UDS badge on the link ===== -->
+  <rect x="319" y="88" width="64" height="24" rx="4" class="plate acc-s" stroke-width="1.5"/>
+  <text x="351" y="104" text-anchor="middle" class="acc mono-t" font-size="13" font-weight="700">UDS</text>
+
+  <defs>
+    <marker id="h_ar" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="acc"/></marker>
+    <marker id="h_ag" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="grn"/></marker>
+  </defs>
+</svg>

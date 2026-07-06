@@ -1,0 +1,27 @@
+<svg class="dgm" viewBox="0 0 720 134" role="img" aria-label="The six response bytes 50 03 00 32 01 F4. 50 is the positive SID; 03 is the active session; the pair 00 32 is P2; the pair 01 F4 is P2 star.">
+  <!-- 50 : positive -->
+  <rect x="117" y="36" width="76" height="56" rx="6" class="plate grn-s" stroke-width="1.6"/>
+  <text x="155" y="74" text-anchor="middle" class="grn w8" font-size="26">50</text>
+  <text x="155" y="118" text-anchor="middle" class="grn mono-t" font-size="9.5">positive</text>
+
+  <!-- 03 : session -->
+  <rect x="199" y="36" width="76" height="56" rx="6" class="plate ln" stroke-width="1.5"/>
+  <text x="237" y="74" text-anchor="middle" class="ink w8" font-size="26">03</text>
+  <text x="237" y="118" text-anchor="middle" class="mut mono-t" font-size="9.5">session</text>
+
+  <!-- 00 32 : P2 -->
+  <rect x="281" y="36" width="76" height="56" rx="6" class="plate acc-s" stroke-width="1.5"/>
+  <text x="319" y="74" text-anchor="middle" class="acc w8" font-size="26">00</text>
+  <rect x="363" y="36" width="76" height="56" rx="6" class="plate acc-s" stroke-width="1.5"/>
+  <text x="401" y="74" text-anchor="middle" class="acc w8" font-size="26">32</text>
+  <path d="M 281 100 V 106 H 439 V 100" class="acc-s" stroke-width="1.2" fill="none"/>
+  <text x="360" y="122" text-anchor="middle" class="acc mono-t" font-size="10">P2 · normal wait</text>
+
+  <!-- 01 F4 : P2* -->
+  <rect x="445" y="36" width="76" height="56" rx="6" class="plate acc-s" stroke-width="1.5"/>
+  <text x="483" y="74" text-anchor="middle" class="acc w8" font-size="26">01</text>
+  <rect x="527" y="36" width="76" height="56" rx="6" class="plate acc-s" stroke-width="1.5"/>
+  <text x="565" y="74" text-anchor="middle" class="acc w8" font-size="26">F4</text>
+  <path d="M 445 100 V 106 H 603 V 100" class="acc-s" stroke-width="1.2" fill="none"/>
+  <text x="524" y="122" text-anchor="middle" class="acc mono-t" font-size="10">P2* · extended wait</text>
+</svg>

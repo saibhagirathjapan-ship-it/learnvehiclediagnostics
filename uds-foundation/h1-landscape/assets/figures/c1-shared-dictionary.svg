@@ -1,0 +1,23 @@
+<svg class="dgm" viewBox="0 0 720 210" role="img" aria-label="A shared dictionary: the tester and the ECU both look up the same numbered UDS services in ISO 14229">
+  <!-- shared dictionary panel -->
+  <rect x="262" y="26" width="196" height="158" rx="8" class="plate acc-s" stroke-width="2"/>
+  <text x="360" y="48" text-anchor="middle" class="acc w8" font-size="13">UDS · ISO 14229</text>
+  <line x1="278" y1="58" x2="442" y2="58" class="ln" stroke-width="1"/>
+  <text x="280" y="82" class="acc mono-t" font-size="12.5">$10</text><text x="324" y="82" class="ink" font-size="12">Session control</text><text x="280" y="108" class="acc mono-t" font-size="12.5">$11</text><text x="324" y="108" class="ink" font-size="12">ECU reset</text><text x="280" y="134" class="acc mono-t" font-size="12.5">$22</text><text x="324" y="134" class="ink" font-size="12">Read data</text><text x="280" y="160" class="acc mono-t" font-size="12.5">$27</text><text x="324" y="160" class="ink" font-size="12">Security …</text>
+
+  <!-- Tester box -->
+  <rect x="30" y="90" width="150" height="56" rx="8" class="fl ln" stroke-width="1.5"/>
+  <text x="105" y="114" text-anchor="middle" class="ink w7" font-size="14">Tester</text>
+  <text x="105" y="132" text-anchor="middle" class="mut" font-size="11">テスター</text>
+
+  <!-- ECU box -->
+  <rect x="540" y="90" width="150" height="56" rx="8" class="fl ln" stroke-width="1.5"/>
+  <text x="615" y="114" text-anchor="middle" class="ink w7" font-size="14">ECU</text>
+  <text x="615" y="132" text-anchor="middle" class="mut" font-size="11">制御ユニット</text>
+
+  <!-- both look up the same dictionary (arrows touch box edge -> panel edge) -->
+  <text x="221" y="110" text-anchor="middle" class="mut mono-t" font-size="9">looks up</text>
+  <path d="M 180 118 H 256 M 255 113 L 262 118 L 255 123" class="acc-s" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="499" y="110" text-anchor="middle" class="mut mono-t" font-size="9">looks up</text>
+  <path d="M 540 118 H 464 M 465 113 L 458 118 L 465 123" class="acc-s" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

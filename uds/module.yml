@@ -1,0 +1,10 @@
+id: uds
+title: { en: "UDS Foundations", jp: "UDSの基礎" }
+standard: "ISO 14229"
+tagline:
+  en: "How a diagnostic tester talks to an ECU — where UDS lives, how a request is served, and what the first services actually do."
+  jp: "診断ツールがECUとどう会話するか ― UDSがどこに住み、リクエストがどう処理され、最初のサービスが実際に何をするのか。"
+arc: { pos: 1, total: 10 }
+nav:
+  prev: null
+  next: { id: "uds-data", label: { en: "Data & Identification", jp: "データと識別" } }

@@ -1,0 +1,28 @@
+<svg class="dgm" viewBox="0 0 720 140" role="img" aria-label="Decoding the two timing numbers. P2: 00 32 read as a number is 50, times 1 millisecond resolution equals 50 milliseconds. P2 star: 01 F4 read as a number is 500, times 10 millisecond resolution equals 5000 milliseconds.">
+  <text x="34" y="26" class="acc mono-t" font-size="10" letter-spacing="1">DECODE THE TIMING · タイミングを解く</text>
+
+  <!-- Row 1: P2 -->
+  <text x="44" y="66" class="acc mono-t w7" font-size="12">P2</text>
+  <rect x="82" y="49" width="30" height="24" rx="3" class="plate acc-s" stroke-width="1.3"/><text x="97" y="66" text-anchor="middle" class="acc mono-t" font-size="12">00</text>
+  <rect x="116" y="49" width="30" height="24" rx="3" class="plate acc-s" stroke-width="1.3"/><text x="131" y="66" text-anchor="middle" class="acc mono-t" font-size="12">32</text>
+  <text x="170" y="66" text-anchor="middle" class="mut mono-t" font-size="13">→</text>
+  <text x="212" y="66" text-anchor="middle" class="ink mono-t" font-size="13">50</text>
+  <text x="292" y="66" text-anchor="middle" class="mut mono-t" font-size="11">× 1 ms</text>
+  <text x="356" y="66" text-anchor="middle" class="mut mono-t" font-size="13">→</text>
+  <text x="424" y="67" text-anchor="middle" class="acc w7" font-size="15">50 ms</text>
+  <text x="586" y="66" text-anchor="middle" class="mut" font-size="10">a normal answer</text>
+
+  <!-- divider -->
+  <line x1="34" y1="88" x2="686" y2="88" class="ln" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Row 2: P2* -->
+  <text x="44" y="116" class="acc mono-t w7" font-size="12">P2*</text>
+  <rect x="82" y="99" width="30" height="24" rx="3" class="plate acc-s" stroke-width="1.3"/><text x="97" y="116" text-anchor="middle" class="acc mono-t" font-size="12">01</text>
+  <rect x="116" y="99" width="30" height="24" rx="3" class="plate acc-s" stroke-width="1.3"/><text x="131" y="116" text-anchor="middle" class="acc mono-t" font-size="12">F4</text>
+  <text x="170" y="116" text-anchor="middle" class="mut mono-t" font-size="13">→</text>
+  <text x="214" y="116" text-anchor="middle" class="ink mono-t" font-size="13">500</text>
+  <text x="292" y="116" text-anchor="middle" class="mut mono-t" font-size="11">× 10 ms</text>
+  <text x="356" y="116" text-anchor="middle" class="mut mono-t" font-size="13">→</text>
+  <text x="424" y="117" text-anchor="middle" class="acc w7" font-size="15">5000 ms</text>
+  <text x="586" y="116" text-anchor="middle" class="mut" font-size="10">the “please wait” ceiling</text>
+</svg>

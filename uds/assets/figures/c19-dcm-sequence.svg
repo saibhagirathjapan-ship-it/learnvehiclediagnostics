@@ -1,0 +1,26 @@
+<svg class="dgm" viewBox="0 0 560 208" role="img" aria-label="Inside the DCM: validate the request, flip the session, arm timers, then answer 50; a failed check returns 7F">
+  <path d="M16 62 L146 62" class="acc-s" stroke-width="2.2" marker-end="url(#l1a)"/>
+  <text x="82" y="54" text-anchor="middle" class="acc mono-t" font-size="12">10 03</text>
+  <rect x="150" y="26" width="250" height="168" rx="11" class="fl acc-s" stroke-width="1.3"/>
+  <text x="275" y="44" text-anchor="middle" class="acc" font-size="11" font-weight="700">DCM &#183; diagnostic handler</text>
+  <rect x="164" y="52" width="222" height="30" rx="6" class="plate ln" stroke-width="1.2"/>
+  <text x="275" y="71" text-anchor="middle" class="ink" font-size="11.5">1 &#183; is it allowed right now?</text>
+  <rect x="164" y="92" width="222" height="30" rx="6" class="plate ln" stroke-width="1.2"/>
+  <text x="275" y="111" text-anchor="middle" class="ink" font-size="11.5">2 &#183; flip active-session &#8594; Extended</text>
+  <rect x="164" y="132" width="222" height="30" rx="6" class="plate ln" stroke-width="1.2"/>
+  <text x="275" y="151" text-anchor="middle" class="ink" font-size="11.5">3 &#183; arm S3 &#183; load P2 / P2*</text>
+  <path d="M275 82 L275 92" class="ln" stroke-width="1.4" marker-end="url(#l1s)"/>
+  <path d="M275 122 L275 132" class="ln" stroke-width="1.4" marker-end="url(#l1s)"/>
+  <path d="M400 147 L544 147" class="grn-s" stroke-width="2.2" marker-end="url(#l1g)"/>
+  <text x="474" y="139" text-anchor="middle" class="grn mono-t" font-size="11.5">50 03 &#8230;</text>
+  <text x="474" y="161" text-anchor="middle" class="mut" font-size="10">all checks pass</text>
+  <path d="M400 67 L544 67" class="red-s" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#l1r)"/>
+  <text x="474" y="59" text-anchor="middle" class="red mono-t" font-size="11.5">7F 10 22</text>
+  <text x="474" y="81" text-anchor="middle" class="mut" font-size="10">if not allowed</text>
+  <defs>
+    <marker id="l1a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="acc"/></marker>
+    <marker id="l1g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="grn"/></marker>
+    <marker id="l1r" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="red"/></marker>
+    <marker id="l1s" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" class="lnf"/></marker>
+  </defs>
+</svg>

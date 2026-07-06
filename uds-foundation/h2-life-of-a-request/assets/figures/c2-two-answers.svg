@@ -1,0 +1,32 @@
+<svg class="dgm" viewBox="0 0 720 188" role="img" aria-label="Two possible answers to the same request 10 03. On the left, a positive response 50 03 — a yes, where 50 equals 10 plus 0x40. On the right, a negative response 7F 10 22 — a no, made of 7F, the echoed SID, and the reason code 22. Exactly one of the two comes back.">
+  <!-- send labels -->
+  <text x="186" y="44" text-anchor="middle" class="mut mono-t" font-size="8.5">you send</text>
+  <text x="534" y="44" text-anchor="middle" class="mut mono-t" font-size="8.5">you send</text>
+
+  <!-- ==== LEFT: positive ==== -->
+  <rect x="152" y="50" width="32" height="21" rx="3" class="plate acc-s" stroke-width="1.3"/><text x="168" y="65" text-anchor="middle" class="acc mono-t" font-size="12">10</text>
+  <rect x="189" y="50" width="32" height="21" rx="3" class="plate acc-s" stroke-width="1.3"/><text x="205" y="65" text-anchor="middle" class="acc mono-t" font-size="12">03</text>
+  <path d="M 186 76 V 94 M 181 89 L 186 96 L 191 89" class="grn-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="152" y="104" width="32" height="21" rx="3" class="plate grn-s" stroke-width="1.4"/><text x="168" y="119" text-anchor="middle" class="grn mono-t" font-size="12">50</text>
+  <rect x="189" y="104" width="32" height="21" rx="3" class="plate grn-s" stroke-width="1.4"/><text x="205" y="119" text-anchor="middle" class="grn mono-t" font-size="12">03</text>
+  <text x="186" y="149" text-anchor="middle" class="grn w7" font-size="12">✓ positive</text>
+  <text x="186" y="165" text-anchor="middle" class="mut mono-t" font-size="9">50 = 10 + 0x40 · echoes you</text>
+  <text x="186" y="179" text-anchor="middle" class="mut" font-size="9.5">「はい、完了」</text>
+
+  <!-- ==== centre: exactly one of the two ==== -->
+  <path d="M 360 40 V 100" class="ln" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <rect x="342" y="102" width="36" height="22" rx="11" class="fl ln" stroke-width="1.2"/>
+  <text x="360" y="117.5" text-anchor="middle" class="mut mono-t" font-size="10">OR</text>
+  <path d="M 360 126 V 184" class="ln" stroke-width="1.2" stroke-dasharray="3 3"/>
+
+  <!-- ==== RIGHT: negative ==== -->
+  <rect x="500" y="50" width="32" height="21" rx="3" class="plate acc-s" stroke-width="1.3"/><text x="516" y="65" text-anchor="middle" class="acc mono-t" font-size="12">10</text>
+  <rect x="537" y="50" width="32" height="21" rx="3" class="plate acc-s" stroke-width="1.3"/><text x="553" y="65" text-anchor="middle" class="acc mono-t" font-size="12">03</text>
+  <path d="M 534 76 V 94 M 529 89 L 534 96 L 539 89" class="red-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="481" y="104" width="32" height="21" rx="3" class="plate red-s" stroke-width="1.4"/><text x="497" y="119" text-anchor="middle" class="red mono-t" font-size="12">7F</text>
+  <rect x="518" y="104" width="32" height="21" rx="3" class="plate acc-s" stroke-width="1.4"/><text x="534" y="119" text-anchor="middle" class="acc mono-t" font-size="12">10</text>
+  <rect x="555" y="104" width="32" height="21" rx="3" class="plate red-s" stroke-width="2.2"/><text x="571" y="119" text-anchor="middle" class="red mono-t" font-size="12">22</text>
+  <text x="534" y="149" text-anchor="middle" class="red w7" font-size="12">✕ negative</text>
+  <text x="534" y="165" text-anchor="middle" class="mut mono-t" font-size="9">7F + SID + 22 (the reason)</text>
+  <text x="534" y="179" text-anchor="middle" class="mut" font-size="9.5">「いいえ、理由は」</text>
+</svg>

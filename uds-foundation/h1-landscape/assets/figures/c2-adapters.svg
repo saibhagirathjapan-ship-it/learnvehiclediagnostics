@@ -1,0 +1,17 @@
+<svg class="dgm" viewBox="0 0 720 172" role="img" aria-label="The same service 0x10 rides over different wires — CAN, IP over DoIP, and K-Line — unchanged; only the carrier underneath differs">
+  <rect x="28" y="60" width="116" height="56" rx="6" class="fl acc-s" stroke-width="2"/>
+  <text x="86" y="90" text-anchor="middle" class="acc w8 mono-t" font-size="19">$10</text>
+  <text x="86" y="106" text-anchor="middle" class="mut" font-size="9">switch session</text>
+  <text x="86" y="132" text-anchor="middle" class="mut mono-t" font-size="9">the service — identical</text>
+  <path d="M 144 88 C 176 88 188 46 210 46" class="acc-s" stroke-width="1.6" fill="none" opacity="0.5"/><path d="M 144 88 C 176 88 188 88 210 88" class="acc-s" stroke-width="1.6" fill="none" opacity="0.5"/><path d="M 144 88 C 176 88 188 130 210 130" class="acc-s" stroke-width="1.6" fill="none" opacity="0.5"/>
+  <text x="212" y="36" class="mut mono-t" font-size="10">over CAN</text>
+    <line x1="210" y1="46" x2="690" y2="46" class="ln" stroke-width="1.6"/>
+    <rect x="408" y="34" width="46" height="24" rx="3" class="fl acc-s" stroke-width="1.4"/>
+    <text x="431" y="51" text-anchor="middle" class="acc mono-t" font-size="12">$10</text><text x="212" y="78" class="mut mono-t" font-size="10">over IP · DoIP</text>
+    <line x1="210" y1="88" x2="690" y2="88" class="ln" stroke-width="1.6"/>
+    <rect x="408" y="76" width="46" height="24" rx="3" class="fl acc-s" stroke-width="1.4"/>
+    <text x="431" y="93" text-anchor="middle" class="acc mono-t" font-size="12">$10</text><text x="212" y="120" class="mut mono-t" font-size="10">over K-Line</text>
+    <line x1="210" y1="130" x2="690" y2="130" class="ln" stroke-width="1.6"/>
+    <rect x="408" y="118" width="46" height="24" rx="3" class="fl acc-s" stroke-width="1.4"/>
+    <text x="431" y="135" text-anchor="middle" class="acc mono-t" font-size="12">$10</text>
+</svg>

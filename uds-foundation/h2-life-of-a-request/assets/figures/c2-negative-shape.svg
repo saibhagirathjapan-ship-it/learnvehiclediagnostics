@@ -1,0 +1,21 @@
+<svg class="dgm" viewBox="0 0 720 150" role="img" aria-label="A negative response is always three bytes: 7F, the negative marker; 10, your service identifier echoed back; and 22, the reason code or NRC.">
+  <text x="34" y="25" class="red mono-t" font-size="10" letter-spacing="1">A NEGATIVE RESPONSE · 否定応答</text>
+
+  <!-- 7F : the no marker -->
+  <rect x="217" y="42" width="90" height="68" rx="7" class="plate red-s" stroke-width="1.6"/>
+  <text x="262" y="88" text-anchor="middle" class="red w8" font-size="30">7F</text>
+  <path d="M 262 110 V 120" class="ln" stroke-width="1"/>
+  <text x="262" y="134" text-anchor="middle" class="red mono-t" font-size="9.5">the &quot;no&quot; marker</text>
+
+  <!-- SID echoed (accent = your request) -->
+  <rect x="315" y="42" width="90" height="68" rx="7" class="plate acc-s" stroke-width="1.6"/>
+  <text x="360" y="88" text-anchor="middle" class="acc w8" font-size="30">10</text>
+  <path d="M 360 110 V 120" class="ln" stroke-width="1"/>
+  <text x="360" y="134" text-anchor="middle" class="acc mono-t" font-size="9.5">your SID, echoed</text>
+
+  <!-- NRC : the reason -->
+  <rect x="413" y="42" width="90" height="68" rx="7" class="plate red-s" stroke-width="1.6"/>
+  <text x="458" y="88" text-anchor="middle" class="red w8" font-size="30">22</text>
+  <path d="M 458 110 V 120" class="ln" stroke-width="1"/>
+  <text x="458" y="134" text-anchor="middle" class="red mono-t" font-size="9.5">the reason · NRC</text>
+</svg>

@@ -1,0 +1,745 @@
+{
+  "light/desktop": {
+    "viewport": 1200,
+    "overflow": false,
+    "scrollWidth": 1200,
+    "clientWidth": 1200,
+    "bodyScrollWidth": 1200,
+    "winInner": 1200,
+    "consoleErrors": []
+  },
+  "light/w900": {
+    "viewport": 900,
+    "overflow": false,
+    "scrollWidth": 900,
+    "clientWidth": 900,
+    "bodyScrollWidth": 900,
+    "winInner": 900,
+    "consoleErrors": []
+  },
+  "light/mobile": {
+    "viewport": 390,
+    "overflow": false,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyScrollWidth": 390,
+    "winInner": 390,
+    "consoleErrors": []
+  },
+  "dark/desktop": {
+    "viewport": 1200,
+    "overflow": false,
+    "scrollWidth": 1200,
+    "clientWidth": 1200,
+    "bodyScrollWidth": 1200,
+    "winInner": 1200,
+    "consoleErrors": []
+  },
+  "dark/w900": {
+    "viewport": 900,
+    "overflow": false,
+    "scrollWidth": 900,
+    "clientWidth": 900,
+    "bodyScrollWidth": 900,
+    "winInner": 900,
+    "consoleErrors": []
+  },
+  "dark/mobile": {
+    "viewport": 390,
+    "overflow": false,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyScrollWidth": 390,
+    "winInner": 390,
+    "consoleErrors": []
+  },
+  "linkCheck": [
+    {
+      "href": "#brief",
+      "cls": "cm-stop cm-brief",
+      "text": "Start hereまずここから",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#brief"
+    },
+    {
+      "href": "#c1",
+      "cls": "cm-stop cm-concept",
+      "text": "01Bytes & the SIDバイトとSID",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#c1"
+    },
+    {
+      "href": "#c2",
+      "cls": "cm-stop cm-concept",
+      "text": "02Two answers2つの答え",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#c2"
+    },
+    {
+      "href": "#c3",
+      "cls": "cm-stop cm-concept",
+      "text": "03Four rules4つの規則",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#c3"
+    },
+    {
+      "href": "#c4",
+      "cls": "cm-stop cm-concept",
+      "text": "04One real $10本物の $10",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#c4"
+    },
+    {
+      "href": "#concl",
+      "cls": "cm-stop cm-conclusion",
+      "text": "Recapまとめ",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#concl"
+    },
+    {
+      "href": "#brief",
+      "cls": "",
+      "text": "Start hereまずここから",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#brief"
+    },
+    {
+      "href": "#c1",
+      "cls": "",
+      "text": "01Bytes & the SIDバイトとSID",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#c1"
+    },
+    {
+      "href": "#c2",
+      "cls": "",
+      "text": "02Two answers2つの答え",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#c2"
+    },
+    {
+      "href": "#c3",
+      "cls": "",
+      "text": "03Four rules4つの規則",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#c3"
+    },
+    {
+      "href": "#c4",
+      "cls": "",
+      "text": "04One real $10本物の $10",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#c4"
+    },
+    {
+      "href": "#concl",
+      "cls": "",
+      "text": "Recapまとめ",
+      "kind": "anchor",
+      "ok": true,
+      "target": "#concl"
+    },
+    {
+      "href": "../v4-subfunctions/index.html",
+      "cls": "fwd",
+      "text": "→ V4 · the suppress bit↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v4-subfunctions\\index.html"
+    },
+    {
+      "href": "../v4-subfunctions/index.html",
+      "cls": "fwd",
+      "text": "→ V4 · 抑制ビット↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v4-subfunctions\\index.html"
+    },
+    {
+      "href": "../../uds-security/index.html",
+      "cls": "fwd",
+      "text": "→ M4 · security access↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-security\\index.html"
+    },
+    {
+      "href": "../v3-negative-responses/index.html",
+      "cls": "fwd",
+      "text": "→ V3 · the NRC catalogue↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v3-negative-responses\\index.html"
+    },
+    {
+      "href": "../../uds-security/index.html",
+      "cls": "fwd",
+      "text": "→ M4 · セキュリティアクセス↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-security\\index.html"
+    },
+    {
+      "href": "../v3-negative-responses/index.html",
+      "cls": "fwd",
+      "text": "→ V3 · NRCカタログ↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v3-negative-responses\\index.html"
+    },
+    {
+      "href": "../v6-timing/index.html",
+      "cls": "fwd",
+      "text": "→ V6 · timing↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v6-timing\\index.html"
+    },
+    {
+      "href": "../../uds-dtc/index.html",
+      "cls": "fwd",
+      "text": "→ M3 · fault memory↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-dtc\\index.html"
+    },
+    {
+      "href": "../v5-sessions/index.html",
+      "cls": "fwd",
+      "text": "→ V5 · sessions↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v5-sessions\\index.html"
+    },
+    {
+      "href": "../v6-timing/index.html",
+      "cls": "fwd",
+      "text": "→ V6 · タイミング↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v6-timing\\index.html"
+    },
+    {
+      "href": "../../uds-dtc/index.html",
+      "cls": "fwd",
+      "text": "→ M3 · 故障メモリ↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-dtc\\index.html"
+    },
+    {
+      "href": "../v5-sessions/index.html",
+      "cls": "fwd",
+      "text": "→ V5 · セッション↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v5-sessions\\index.html"
+    },
+    {
+      "href": "../v8-addressing-transport/index.html",
+      "cls": "fwd",
+      "text": "→ V8 · addressing↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v8-addressing-transport\\index.html"
+    },
+    {
+      "href": "../v8-addressing-transport/index.html",
+      "cls": "fwd",
+      "text": "→ V8 · アドレッシング↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v8-addressing-transport\\index.html"
+    },
+    {
+      "href": "../v3-negative-responses/index.html",
+      "cls": "fwd",
+      "text": "→ V3 · negative responses↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v3-negative-responses\\index.html"
+    },
+    {
+      "href": "../v6-timing/index.html",
+      "cls": "fwd",
+      "text": "→ V6 · timing↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v6-timing\\index.html"
+    },
+    {
+      "href": "../v3-negative-responses/index.html",
+      "cls": "fwd",
+      "text": "→ V3 · 否定応答↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v3-negative-responses\\index.html"
+    },
+    {
+      "href": "../v6-timing/index.html",
+      "cls": "fwd",
+      "text": "→ V6 · タイミング↗",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\v6-timing\\index.html"
+    },
+    {
+      "href": "../h1-landscape/index.html",
+      "cls": "prev",
+      "text": "← Prev moduleThe diagnostics landscape診断",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\h1-landscape\\index.html"
+    },
+    {
+      "href": "../h3-catalog-and-server/index.html",
+      "cls": "next",
+      "text": "Next module →What UDS can do, and how th",
+      "kind": "file",
+      "ok": true,
+      "target": "D:\\Bhagirath\\Automotive\\autodiag_athenaeum\\wiki\\learn\\uds-foundation\\h3-catalog-and-server\\index.html"
+    }
+  ],
+  "nav": {
+    "strip": [
+      {
+        "href": "#brief",
+        "cls": "cm-stop cm-brief",
+        "badge": "ICON",
+        "label_en": "Start here",
+        "label_jp": "まずここから"
+      },
+      {
+        "href": "#c1",
+        "cls": "cm-stop cm-concept",
+        "badge": "01",
+        "label_en": "Bytes & the SID",
+        "label_jp": "バイトとSID"
+      },
+      {
+        "href": "#c2",
+        "cls": "cm-stop cm-concept",
+        "badge": "02",
+        "label_en": "Two answers",
+        "label_jp": "2つの答え"
+      },
+      {
+        "href": "#c3",
+        "cls": "cm-stop cm-concept",
+        "badge": "03",
+        "label_en": "Four rules",
+        "label_jp": "4つの規則"
+      },
+      {
+        "href": "#c4",
+        "cls": "cm-stop cm-concept",
+        "badge": "04",
+        "label_en": "One real $10",
+        "label_jp": "本物の $10"
+      },
+      {
+        "href": "#concl",
+        "cls": "cm-stop cm-conclusion",
+        "badge": "ICON",
+        "label_en": "Recap",
+        "label_jp": "まとめ"
+      }
+    ],
+    "rail": [
+      {
+        "href": "#brief",
+        "badge": "ICON",
+        "label_en": "Start here",
+        "label_jp": "まずここから"
+      },
+      {
+        "href": "#c1",
+        "badge": "01",
+        "label_en": "Bytes & the SID",
+        "label_jp": "バイトとSID"
+      },
+      {
+        "href": "#c2",
+        "badge": "02",
+        "label_en": "Two answers",
+        "label_jp": "2つの答え"
+      },
+      {
+        "href": "#c3",
+        "badge": "03",
+        "label_en": "Four rules",
+        "label_jp": "4つの規則"
+      },
+      {
+        "href": "#c4",
+        "badge": "04",
+        "label_en": "One real $10",
+        "label_jp": "本物の $10"
+      },
+      {
+        "href": "#concl",
+        "badge": "ICON",
+        "label_en": "Recap",
+        "label_jp": "まとめ"
+      }
+    ],
+    "arrows": 5
+  },
+  "landing": [
+    {
+      "id": "brief",
+      "top": 88,
+      "scrollMarginTop": "88px",
+      "topbarH": 46
+    },
+    {
+      "id": "c1",
+      "top": 88,
+      "scrollMarginTop": "88px",
+      "topbarH": 46
+    },
+    {
+      "id": "c2",
+      "top": 88,
+      "scrollMarginTop": "88px",
+      "topbarH": 46
+    },
+    {
+      "id": "c3",
+      "top": 88,
+      "scrollMarginTop": "88px",
+      "topbarH": 46
+    },
+    {
+      "id": "c4",
+      "top": 88,
+      "scrollMarginTop": "88px",
+      "topbarH": 46
+    },
+    {
+      "id": "concl",
+      "top": 192,
+      "scrollMarginTop": "88px",
+      "topbarH": 46
+    }
+  ],
+  "wcag": {
+    "light": [
+      {
+        "note": "cardmap chip title (ink)",
+        "sel": ".cm-stop .cm-t .en",
+        "color": "rgb(86, 91, 99)",
+        "bg": "rgb(244, 245, 246)",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "ratio": 6.26,
+        "bold": false,
+        "px": 13,
+        "threshold": 4.5
+      },
+      {
+        "note": "cardmap lead label (ink-soft)",
+        "sel": ".cm-lead .en",
+        "color": "rgb(86, 91, 99)",
+        "bg": "rgb(255, 255, 255)",
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "ratio": 6.84,
+        "bold": true,
+        "px": 10,
+        "threshold": 4.5
+      },
+      {
+        "note": "cardmap number badge (on-accent/accent)",
+        "sel": ".cm-stop .st-n",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(122, 127, 136)",
+        "fontSize": "11px",
+        "fontWeight": "700",
+        "ratio": 4.02,
+        "bold": true,
+        "px": 11,
+        "threshold": 4.5
+      },
+      {
+        "note": "cardmap brief title (ink-soft)",
+        "sel": ".cm-stop.cm-brief .cm-t .en",
+        "color": "rgb(86, 91, 99)",
+        "bg": "rgb(244, 245, 246)",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "ratio": 6.26,
+        "bold": false,
+        "px": 13,
+        "threshold": 4.5
+      },
+      {
+        "note": "cardmap arrow (ink-soft)",
+        "sel": ".cm-arr",
+        "color": "rgb(86, 91, 99)",
+        "bg": "rgb(255, 255, 255)",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "ratio": 6.84,
+        "bold": false,
+        "px": 13,
+        "threshold": 4.5
+      },
+      {
+        "note": "rail link (ink-soft)",
+        "sel": ".rail a .rl-t .en",
+        "color": "rgb(86, 91, 99)",
+        "bg": "rgb(244, 245, 246)",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "ratio": 6.26,
+        "bold": false,
+        "px": 12.5,
+        "threshold": 4.5
+      },
+      {
+        "note": "stem-n count pill (accent on chip)",
+        "sel": ".stem-n",
+        "color": "rgb(150, 101, 15)",
+        "bg": "rgb(249, 243, 225)",
+        "fontSize": "11px",
+        "fontWeight": "600",
+        "ratio": 4.55,
+        "bold": true,
+        "px": 11,
+        "threshold": 4.5
+      },
+      {
+        "note": "lg-cue +/- pill (accent border)",
+        "sel": ".lg-cue",
+        "color": "rgb(150, 101, 15)",
+        "bg": "rgb(247, 248, 249)",
+        "fontSize": "17px",
+        "fontWeight": "700",
+        "ratio": 4.74,
+        "bold": true,
+        "px": 17,
+        "threshold": 4.5
+      },
+      {
+        "note": "recall question (ink on chip)",
+        "sel": ".recall .rc-q",
+        "color": "rgb(35, 38, 44)",
+        "bg": "rgb(249, 243, 225)",
+        "fontSize": "15.5px",
+        "fontWeight": "400",
+        "ratio": 13.67,
+        "bold": false,
+        "px": 15.5,
+        "threshold": 4.5
+      },
+      {
+        "note": "recall Show-answer button (on-accent/accent)",
+        "sel": ".recall .rc-a>summary",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(150, 101, 15)",
+        "fontSize": "12.5px",
+        "fontWeight": "700",
+        "ratio": 5.04,
+        "bold": true,
+        "px": 12.5,
+        "threshold": 4.5
+      },
+      {
+        "note": "fwd pointer (accent on chip)",
+        "sel": "a.fwd",
+        "color": "rgb(150, 101, 15)",
+        "bg": "rgb(249, 243, 225)",
+        "fontSize": "11.2px",
+        "fontWeight": "600",
+        "ratio": 4.55,
+        "bold": true,
+        "px": 11.2,
+        "threshold": 4.5
+      }
+    ],
+    "dark": [
+      {
+        "note": "cardmap chip title (ink)",
+        "sel": ".cm-stop .cm-t .en",
+        "color": "rgb(154, 160, 168)",
+        "bg": "rgb(24, 26, 30)",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "ratio": 6.61,
+        "bold": false,
+        "px": 13,
+        "threshold": 4.5
+      },
+      {
+        "note": "cardmap lead label (ink-soft)",
+        "sel": ".cm-lead .en",
+        "color": "rgb(154, 160, 168)",
+        "bg": "rgb(28, 31, 36)",
+        "fontSize": "10px",
+        "fontWeight": "700",
+        "ratio": 6.27,
+        "bold": true,
+        "px": 10,
+        "threshold": 4.5
+      },
+      {
+        "note": "cardmap number badge (on-accent/accent)",
+        "sel": ".cm-stop .st-n",
+        "color": "rgb(27, 22, 14)",
+        "bg": "rgb(111, 117, 125)",
+        "fontSize": "11px",
+        "fontWeight": "700",
+        "ratio": 3.87,
+        "bold": true,
+        "px": 11,
+        "threshold": 4.5
+      },
+      {
+        "note": "cardmap brief title (ink-soft)",
+        "sel": ".cm-stop.cm-brief .cm-t .en",
+        "color": "rgb(154, 160, 168)",
+        "bg": "rgb(24, 26, 30)",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "ratio": 6.61,
+        "bold": false,
+        "px": 13,
+        "threshold": 4.5
+      },
+      {
+        "note": "cardmap arrow (ink-soft)",
+        "sel": ".cm-arr",
+        "color": "rgb(154, 160, 168)",
+        "bg": "rgb(28, 31, 36)",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "ratio": 6.27,
+        "bold": false,
+        "px": 13,
+        "threshold": 4.5
+      },
+      {
+        "note": "rail link (ink-soft)",
+        "sel": ".rail a .rl-t .en",
+        "color": "rgb(154, 160, 168)",
+        "bg": "rgb(20, 22, 26)",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "ratio": 6.87,
+        "bold": false,
+        "px": 12.5,
+        "threshold": 4.5
+      },
+      {
+        "note": "stem-n count pill (accent on chip)",
+        "sel": ".stem-n",
+        "color": "rgb(222, 169, 69)",
+        "bg": "rgb(56, 48, 15)",
+        "fontSize": "11px",
+        "fontWeight": "600",
+        "ratio": 6.18,
+        "bold": true,
+        "px": 11,
+        "threshold": 4.5
+      },
+      {
+        "note": "lg-cue +/- pill (accent border)",
+        "sel": ".lg-cue",
+        "color": "rgb(221, 168, 68)",
+        "bg": "rgb(25, 27, 32)",
+        "fontSize": "17px",
+        "fontWeight": "700",
+        "ratio": 8.01,
+        "bold": true,
+        "px": 17,
+        "threshold": 4.5
+      },
+      {
+        "note": "recall question (ink on chip)",
+        "sel": ".recall .rc-q",
+        "color": "rgb(233, 235, 238)",
+        "bg": "rgb(56, 48, 15)",
+        "fontSize": "15.5px",
+        "fontWeight": "400",
+        "ratio": 11,
+        "bold": false,
+        "px": 15.5,
+        "threshold": 4.5
+      },
+      {
+        "note": "recall Show-answer button (on-accent/accent)",
+        "sel": ".recall .rc-a>summary",
+        "color": "rgb(27, 22, 14)",
+        "bg": "rgb(222, 169, 69)",
+        "fontSize": "12.5px",
+        "fontWeight": "700",
+        "ratio": 8.45,
+        "bold": true,
+        "px": 12.5,
+        "threshold": 4.5
+      },
+      {
+        "note": "fwd pointer (accent on chip)",
+        "sel": "a.fwd",
+        "color": "rgb(150, 101, 15)",
+        "bg": "rgb(249, 243, 225)",
+        "fontSize": "11.2px",
+        "fontWeight": "600",
+        "ratio": 4.55,
+        "bold": true,
+        "px": 11.2,
+        "threshold": 4.5
+      }
+    ]
+  },
+  "langCheck": {
+    "en": {
+      "cardmap": {
+        "en": 7,
+        "jp": 0
+      },
+      "rail": {
+        "en": 7,
+        "jp": 0
+      },
+      "stem": {
+        "en": 0,
+        "jp": 0
+      },
+      "recall": {
+        "en": 3,
+        "jp": 0
+      }
+    },
+    "jp": {
+      "cardmap": {
+        "en": 0,
+        "jp": 7
+      },
+      "rail": {
+        "en": 0,
+        "jp": 7
+      },
+      "stem": {
+        "en": 0,
+        "jp": 0
+      },
+      "recall": {
+        "en": 0,
+        "jp": 3
+      }
+    }
+  }
+}

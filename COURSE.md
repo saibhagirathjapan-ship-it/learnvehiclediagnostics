@@ -212,8 +212,12 @@ only ResponseOnEvent changed.
   animation. All in `_template/render.js` + `blueprint.css`; H1 + hub inherit.
 - **Published to GitHub (2026-07-06):** git root = `wiki/learn/`, branch `main`, public repo. Publish
   a change with `git add -A && commit && push`. See memory `reference-github-repo`.
-- **In progress (this session):** token-discipline governance → [[CONVENTIONS]] §10 (read it); this
-  Current Focus trimmed (prior session-by-session detail lives in `wiki/log.md` + git history).
+- **Done 2026-07-06 — governance + shell UX.** Token-discipline → [[CONVENTIONS]] §10; Current Focus
+  trimmed (history → `wiki/log.md` + git). **Shell UX** (shared `render.js` + `blueprint.css` → H1/H2
+  re-rendered): breadcrumbs (`Course › Foundation › module`) · home-link brand · icon theme toggle
+  (sun/moon) · globe on the 3-way lang toggle · card-level prev/next · **map CSS fix** (inlined
+  blueprint.css). *Debt:* the hand-authored **map + V/M stubs don't inherit the shell** (still text
+  toggles / no breadcrumb) and the map's inlined CSS will drift — fold both into the governance pass.
 
 **Next up**
 1. **H3 "What UDS can do & how the ECU decides"** — `uds-foundation/h3-catalog-and-server/` (stub

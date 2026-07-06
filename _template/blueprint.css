@@ -198,6 +198,34 @@ td .mono{color:var(--accent);font-weight:600}
 .tb-seg{display:inline-flex;border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);border-radius:8px;overflow:hidden;background:color-mix(in srgb,var(--on-chrome) 7%,transparent)}
 .tb-seg button{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 60%,transparent);background:transparent;border:0;padding:6px 10px;line-height:1}
 .tb-seg button.on{background:var(--accent);color:var(--on-accent)}
+/* brand is now the HOME link */
+.brand{text-decoration:none}
+.brand:hover .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 42%,transparent)}
+.brand:hover .std{color:color-mix(in srgb,var(--on-chrome) 72%,transparent)}
+/* toggle icons — theme = sun/moon; language = a lead globe glyph */
+.tb-seg button{display:inline-flex;align-items:center;gap:5px}
+.tb-ico button{padding:6px 9px}
+.tb-ico .ti{display:block}
+.tb-lang-ic{display:inline-flex;align-items:center;color:color-mix(in srgb,var(--on-chrome) 58%,transparent);flex:none}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* breadcrumb bar — under the sticky topbar; trail on the left, module prev/next on the right */
+.crumbs{background:var(--bg);border-bottom:1px solid var(--line)}
+.crumbs-in{max-width:1120px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;gap:14px}
+.cr-trail{display:flex;align-items:center;gap:8px;min-width:0;flex:1;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px}
+.cr-trail a{color:var(--ink-soft);text-decoration:none}
+.cr-trail a:hover{color:var(--accent)}
+.cr-sep{color:var(--ink-faint)}
+.cr-cur{color:var(--ink);font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cr-cur .jp{font-family:var(--f-jp);color:var(--ink-soft);margin-left:6px}
+.cr-nav{display:flex;gap:8px;align-items:center;flex:none}
+.cn{display:inline-flex;flex-direction:column;gap:1px;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:5px 11px;max-width:210px}
+.cn:hover{border-color:var(--accent)}
+.cn.next{text-align:right;align-items:flex-end}
+.cn-d{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.cn-t{font-family:var(--f-display);font-weight:600;font-size:12.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cn-t .jp{font-family:var(--f-jp);color:var(--ink-soft);margin-left:5px}
+.cn.disabled{opacity:.3;pointer-events:none;min-width:64px}
 
 /* hero */
 .hero{max-width:1120px;margin:0 auto;padding:44px 20px 6px;text-align:center}
@@ -274,6 +302,16 @@ td .mono{color:var(--accent);font-weight:600}
 .modnav .next{text-align:right}
 .modnav .disabled{opacity:.4;pointer-events:none}
 
+/* card-level nav — prev/next between adjacent cards, appended under each card (lighter than .cn) */
+.cardnav{display:flex;gap:12px;margin:16px 0 30px}
+.cln{flex:1;min-width:0;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:10px 13px;display:flex;flex-direction:column;gap:2px}
+.cln.next{text-align:right;align-items:flex-end}
+.cln:hover{border-color:var(--accent)}
+.cln-d{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.cln-t{font-family:var(--f-display);font-weight:600;font-size:13.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cln-t .jp{font-family:var(--f-jp);font-weight:500;font-size:11px;color:var(--ink-soft);display:block}
+.cln.disabled{opacity:0;pointer-events:none}
+
 @media(max-width:860px){
   .toc{display:none}
   .layout,.hero,.topbar-in,.modnav,.cardmap-wrap{padding-left:14px;padding-right:14px}
@@ -285,6 +323,11 @@ td .mono{color:var(--accent);font-weight:600}
   #allseg{display:none}          /* Expand/Collapse is least essential on a phone; drop it to fit */
   .fwd{white-space:normal;overflow-wrap:anywhere}   /* let a long pointer pill wrap rather than overflow the card */
   .cardmap-wrap{position:sticky;top:0;z-index:20;margin-top:0;padding-top:8px;padding-bottom:8px;background:var(--bg)}
+  .crumbs-in{padding-left:14px;padding-right:14px;gap:8px;flex-wrap:wrap}
+  .cr-nav{flex:1 0 100%;order:2}
+  .cn{flex:1;max-width:none}
+  .cn-t{max-width:38vw}
+  .cardnav{gap:8px;margin:12px 0 24px}
 }
 
 /* ============================================================

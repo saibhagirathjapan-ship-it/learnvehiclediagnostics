@@ -221,12 +221,44 @@ function renderHero(mod){
     `<div class="arc">${dots}<span class="lbl">Module ${a.pos||1} / ${a.total||1}</span></div></section>`;
 }
 function renderTopbar(mod){
-  return `<div class="topbar"><div class="topbar-in"><div class="brand"><span class="dot"></span>${inline(mod.title.en)}<span class="std">${esc(mod.standard||'')}</span></div>`+
+  return `<div class="topbar"><div class="topbar-in"><a class="brand" href="../../index.html" aria-label="Course home · コースのホーム"><span class="dot"></span>${inline(mod.title.en)}<span class="std">${esc(mod.standard||'')}</span></a>`+
     `<div class="tb-spacer"></div><div class="tb-ctl">`+
+    `<span class="tb-lang-ic" aria-hidden="true" title="Language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg></span>`+
     `<div class="tb-seg" id="langseg"><button class="on" data-v="en">EN</button><button data-v="jp">日本語</button><button data-v="both">EN+JP</button></div>`+
-    `<div class="tb-seg" id="themeseg"><button class="on" data-v="light">Light</button><button data-v="dark">Dark</button></div>`+
+    `<div class="tb-seg tb-ico" id="themeseg">`+
+      `<button class="on" data-v="light" aria-label="Light theme" title="Light"><svg class="ti" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><span class="sr">Light</span></button>`+
+      `<button data-v="dark" aria-label="Dark theme" title="Dark"><svg class="ti" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg><span class="sr">Dark</span></button>`+
+    `</div>`+
     `<div class="tb-seg" id="allseg"><button data-a="open">Expand</button><button data-a="close">Collapse</button></div>`+
     `</div></div></div>`;
+}
+// breadcrumb bar: Course › Foundation › <module> on the left; module prev/next folded in on the right.
+function crumbNav(dir,m){
+  if(!m) return `<span class="cn ${dir} disabled" aria-hidden="true"></span>`;
+  return `<a class="cn ${dir}" href="../${esc(m.id)}/index.html">`+
+    `<span class="cn-d">${dir==='prev'?'← Prev':'Next →'}</span>`+
+    `<span class="cn-t"><span class="en">${inline(m.label.en)}</span><span class="jp">${inline(m.label.jp)}</span></span></a>`;
+}
+function renderCrumbs(mod){
+  const p = mod.parent || { label:'Foundation', href:'../index.html' };
+  const nav = mod.nav || {};
+  return `<nav class="crumbs" aria-label="Breadcrumb"><div class="crumbs-in">`+
+    `<div class="cr-trail">`+
+      `<a href="../../index.html">Course</a><span class="cr-sep" aria-hidden="true">›</span>`+
+      `<a href="${esc(p.href)}">${esc(p.label)}</a><span class="cr-sep" aria-hidden="true">›</span>`+
+      `<span class="cr-cur" aria-current="page"><span class="en">${inline(mod.title.en)}</span><span class="jp">${inline(mod.title.jp)}</span></span>`+
+    `</div>`+
+    `<div class="cr-nav">${crumbNav('prev',nav.prev)}${crumbNav('next',nav.next)}</div>`+
+  `</div></nav>`;
+}
+// card-level nav: prev/next between adjacent teaching cards (stops), appended under each card.
+function cardNav(prev,next){
+  if(!prev && !next) return '';
+  const side=(s,dir)=> s
+    ? `<a class="cln ${dir}" href="#${esc(s.id)}"><span class="cln-d">${dir==='prev'?'← Prev card':'Next card →'}</span>`+
+      `<span class="cln-t"><span class="en">${inline(s.en)}</span><span class="jp">${inline(s.jp)}</span></span></a>`
+    : `<span class="cln ${dir} disabled" aria-hidden="true"></span>`;
+  return `<nav class="cardnav">${side(prev,'prev')}${side(next,'next')}</nav>`;
 }
 // ---- card-level navigation: an ordered list of "stops" (one per teaching card) ----
 // Drives both the top overview strip and the left rail, so a reader always sees how many
@@ -293,9 +325,9 @@ function page(mod,cards,stops){
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">`+
     `<title>${esc(mod.title.en)} — ${esc(mod.standard||'')}</title>${FONTS}<style>${CSS}</style></head><body>`+
     `<div class="stage" data-theme="light" data-lang="en"><div class="progress" id="progress"></div>`+
-    renderTopbar(mod)+renderHero(mod)+renderCardMap(stops)+
+    renderTopbar(mod)+renderCrumbs(mod)+renderHero(mod)+renderCardMap(stops)+
     `<div class="layout">${renderRail(stops)}<main class="stream">${cards}</main></div>`+
-    renderModNav(mod)+`</div>${SCRIPT}</body></html>`;
+    `</div>${SCRIPT}</body></html>`;
 }
 
 const moduleDir = process.argv[2];
@@ -306,8 +338,14 @@ const assetsDir = path.join(moduleDir,'assets');
 const items = fs.readdirSync(path.join(moduleDir,'content')).filter(f=>f.endsWith('.md'))
   .map(f=>({f, ...parseFile(fs.readFileSync(path.join(moduleDir,'content',f),'utf8'))}))
   .sort((a,b)=>((a.meta.order??999)-(b.meta.order??999)) || a.f.localeCompare(b.f));
-const cards = items.map(it=>renderCard(it.meta,it.sections,assetsDir)).join('\n');
 const stops = buildStops(items);
+const stopIx = {}; stops.forEach((s,i)=>{ stopIx[s.id]=i; });
+const cards = items.map(it=>{
+  const html = renderCard(it.meta,it.sections,assetsDir);
+  const i = stopIx[String(it.meta.id)];
+  if(i===undefined) return html;                    // dividers aren't stops → no card-level nav
+  return html + cardNav(stops[i-1]||null, stops[i+1]||null);
+}).join('\n');
 const outName = process.argv[3] || '_preview.html';   // pass 'index.html' when migration is complete
 fs.writeFileSync(path.join(moduleDir,outName), page(mod,cards,stops));
 console.log('rendered', items.length, 'card(s),', stops.length, 'stop(s) →', path.join(moduleDir,outName));

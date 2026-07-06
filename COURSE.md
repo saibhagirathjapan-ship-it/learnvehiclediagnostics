@@ -201,147 +201,32 @@ only ResponseOnEvent changed.
 
 ## Current Focus
 
-**As of 2026-07-06 (session 9 — H2 built + a user-driven template UX overhaul)**
+**Current status (updated 2026-07-06)**
 
-- **DONE — H2 "The life of one request" COMPLETE & pressure-tested** (`uds-foundation/h2-life-of-a-request/`):
-  divider · brief · **C1** bytes/SID · **C2** two answers (`+0x40` / `7F+SID+NRC`) · **C3** four rules
-  (addressing · `$3E` · faults→Dem · `$11`) · **C4** the concrete `$10` round trip · conclusion. 12 figures
-  (brief + C4 **animate travelling byte-boxes**). Bar-coverage V2–V8 all covered. Ran a **7-agent
-  adversarial pressure-test to convergence** (5 rounds; R4 0 blockers / 6 minors, R5 confirming) — every
-  claim clause-grounded, every blocker/minor fixed. NOTES has the full history.
-- **Template UX overhaul (user-driven; shared → H1 + hub inherit).** Card-to-card flow was unclear, so:
-  an **overview strip** + **card-level left rail** (scroll-spy), **distinct cards**, **real forward-pointer
-  links** (+ **17 stub pages** for V1–V9/M2–M9/H3 so they resolve), a **much more visible "Go Deeper"**
-  (accent banner + solid `+/−` buttons), a **prominent `:::recall`**, and **byte-box travel animation**.
-  Renderer bug fixed (code-span `*` no longer breaks emphasis). A11y: `--chip` lightened for WCAG,
-  several `--ink-faint`→`--ink-soft`. Mobile topbar overflow + a scroll-stuck bug fixed.
-- **NEXT (session order set by user 2026-07-06):** (1) a **feedback** session (user has more UX/content
-  feedback to give); (2) a **governance** session (fold the session-9 template UX + shell decisions into
-  [[CONVENTIONS]]/[[PEDAGOGY]] as locked rules — overview strip · card rail · Go-Deeper affordance ·
-  recall prominence · real forward-links + stub pages · byte-box animation · the ≤2-class lang-selector
-  rule incl. leg/nav/pill isolation); (3) a **short GitHub-upload** session (publish the vault to a
-  website — clean scratch scripts per H2 NOTES, add `.gitignore` for `node_modules/` + `assets/*.png`);
-  **then** (4) **H3 "What UDS can do & how the ECU decides"** — `uds-foundation/h3-catalog-and-server/`
-  (stub exists). Same recipe + the now-stronger template; then V1–V9. Reuse H2 figures where they fit.
-- **H2 open item:** re-run the H2 pressure-test (round 6) to confirm clean — it was stopped at session
-  close with 0 known blockers + all round-5 findings fixed & re-verified.
-- **Deferred (optional):** a one-time attention pulse on the Go-Deeper `+` buttons (offered to user, held
-  off to avoid constant motion); `--ink-faint` UI chrome (nav numbers / PREV·NEXT / table `th`) still at
-  the accepted H1 value.
+- **Built & pressure-tested:** Foundation **H1** (the diagnostics landscape) and **H2** (the life of
+  one request) — both to the hardened card bar, clause-grounded, browser-verified light/dark/mobile.
+  The hub + the Foundation T-map are live. Legacy **M1** (`uds/`) remains a content/figure donor.
+- **Shared template overhauled (session 9):** overview strip · card-level left rail (scroll-spy) ·
+  distinct cards · real forward-pointer links (+ stub pages for V1–V9 / M2–M9 / H3) · a prominent
+  Go-Deeper affordance (accent banner + solid `+/−`) · prominent `:::recall` · byte-box travel
+  animation. All in `_template/render.js` + `blueprint.css`; H1 + hub inherit.
+- **Published to GitHub (2026-07-06):** git root = `wiki/learn/`, branch `main`, public repo. Publish
+  a change with `git add -A && commit && push`. See memory `reference-github-repo`.
+- **In progress (this session):** token-discipline governance → [[CONVENTIONS]] §10 (read it); this
+  Current Focus trimmed (prior session-by-session detail lives in `wiki/log.md` + git history).
 
----
+**Next up**
+1. **H3 "What UDS can do & how the ECU decides"** — `uds-foundation/h3-catalog-and-server/` (stub
+   exists). Same recipe + the stronger template; then V1–V9. Reuse H1/H2 figures where they fit.
+2. **Re-run the H2 pressure-test (round 6)** to confirm clean — stopped at 0 known blockers with all
+   round-5 findings fixed & re-verified.
+3. **Fold the session-9 template-UX/shell decisions into [[CONVENTIONS]]/[[PEDAGOGY]] as locked
+   rules** — overview strip · card rail · Go-Deeper affordance · recall prominence · forward-links +
+   stub pages · byte animation · the ≤2-class lang-selector rule (incl. leg/nav/pill isolation).
 
-**As of 2026-07-05 (session 7 — H1 "Start Here" + C1 rebuilt to the new card bar; illustration
-approach + UI-hygiene rules hardened per user)**
-
-- **Session 7 — card craft leveled up (user-driven).** "Start Here" (brief) and **C1** ("What UDS is,
-  and who talks") rebuilt to a new, higher bar and **signed off** (Start Here). New standing rules
-  (all in [[CONVENTIONS]], auto-loaded):
-  - **Conscious bullets** — paragraphs where a few lines suffice; **numbered** for sequences,
-    **unnumbered** otherwise; **semantic markers** (`{key}` accent diamond · `{warn}` amber triangle ·
-    normal bar). Compact **`:::reading`** Further-reading on every card (concept cards use a `## footer`).
-  - **Illustration = a schematic storyboard I draw myself** (theme-aware `.dgm` SVG + subtle SMIL
-    animation) that depicts the section's **key teaching**. Brief = *check-engine light → connect
-    tester → ask ECUs*; C1 = *client asks → server answers* (sequenced pulses, ECU never first).
-    If a hard element (a car) is needed, user supplies just that asset; I compose. **User: "loved
-    this — carry to all."**
-  - **UI hygiene HARDENED** ([[CONVENTIONS]] §7a + §8.7): named-anchor geometry (connectors touch,
-    motion traces the drawn path), **padding is mandatory** (nothing touches; soft/gradient glow not
-    hard halos), **draw the real thing sharply** (recognisable glyphs), and a **per-element
-    self-critique gate** (goal reached? looks good? conveys? anything off?).
-  - Pipeline gained: bullet/numbered/semantic lists, italics (`*..*`, upright in JP), `:::reading`,
-    concept-card `## footer` slot, **bar-figure `caption:`**.
-  - **More rules hardened (session 7 cont.):** §7b figure text (labels/callouts/**caption-below**,
-    researched from Google/Saylor/oXygen), §7a **layout framework** (paired components via a shared
-    function + constants → symmetric by construction), §8.7 **Element Completion Checklist** (run per
-    element, verify with a close-up).
-  - **Forward pointers (spiral signpost) added** — `{{→ V9 · …}}` inline pill ([[CONVENTIONS]] §6 +
-    `.fwd`) for substantial *named-but-deferred* topics (Dcm→V9, Dem→M3). T-map already signals depth
-    *exists*; the pill says *which* drill. Use sparingly.
-  - **DONE — H1 "the diagnostics landscape" module COMPLETE:** divider · brief · **C1 · C2 · C3** ·
-    conclusion, all to the new bar (conscious bullets · bar `caption:` · `:::reading` footer · framework
-    figures · checklist-verified). C2 = job-grouped family map; C3 = OSI 3-layer stack (kept visually
-    distinct from C2) + physical/functional addressing leg. 8 figures, verified light/dark/mobile.
-  - **NEXT: H2 "the life of one request"** — new module folder `uds-foundation/h2-life-of-a-request/`;
-    then H3, then V1–V9. Same bar + checklist, one card at a time.
-
-**As of 2026-07-05 (session 6 — H1 built card-by-card + documents-first re-derivation; pipeline `:::recall` + EN-on-load; template lang-toggle bug fixed)**
-
-- **Sibling nodes derived & pressure-tested** (20-agent workflow; see the Module-roadmap "Sibling
-  nodes derived" note + `wiki/learn/_derive/sibling-nodes.result.json`). The Foundation's siblings =
-  **8 pillars (M2–M9)**, roadmap validated, every per-service-deep SID homed 1:1. **User decisions
-  2026-07-05:** **merge M9+M10 → one SOVD pillar** (core = its breadth, in-practice = its depth);
-  **ignore `$84`** (minor advanced service, don't track); record it all. `course.yml` updated, hub
-  re-rendered → **9 top-level modules** (Foundation + M2–M9).
-- **Working principle set by user:** each pillar is itself a **T** and gets its **own H/V derivation**
-  (like the Foundation) when we build it — "dive deeper for each pillar in separate sections/modules."
-
-- **Foundation re-derived, documents-first** (31-agent workflow; see the Foundation block's
-  re-derivation provenance). Result **structurally confirms 3H+9V** with ~20 clause-citation
-  corrections applied and the V-numbering refined. **User decisions 2026-07-05:** adopt the corrected
-  V-numbering (**V4 = SPRMIB own drill; V7 = `$10`+`$11` combined**); **keep 3H+9V**; for the three
-  not-in-vault standards fill from **training + internet** (see the V8 gap-fill policy note).
-
-- **Transport standards resolved:** **ISO 15765-2:2024** (`the source standards/CAN/`) and **ISO 13400-2:2012**
-  (`the source standards/DoIP/`) are now in the vault and fully cited by V8 — the prior "still missing" items
-  are closed. Text sidecars for all standards live in `wiki/learn/local notes/` (working artifacts,
-  `raw/` untouched).
-
-- **Legacy M1** (`uds/index.html`, 27 flat cards) is now a **content + figure donor** for the
-  Foundation modules — its prose/SVGs get redistributed into H1–H3 + V1–V9 (the earlier "migrate S0–S6
-  as-is" plan is superseded by the H/V build). S4 (`$10`) MD already migrated as the pipeline reference.
-
-- **DONE 2026-07-05 — Foundation nav scaffolding built.** Foundation lives in
-  `wiki/learn/uds-foundation/`; the hub's Foundation card (`course.yml` M1 `href`) now opens a
-  **T-shaped map** (`uds-foundation/index.html`, scaffolding built & verified light/dark, no console
-  errors) — **H1–H3 breadth bar across the top, V1–V9 depth stem descending**, a "how to learn"
-  guidance banner (breadth → / depth ↓), bar-coverage tags on V cards, **EN on load**. Each card is
-  clickable to its module (empty stubs for now). Slugs: `h1-landscape` · `h2-life-of-a-request` ·
-  `h3-catalog-and-server` · `v1-service-model` · `v2-request-and-response` · `v3-negative-responses` ·
-  `v4-subfunctions` · `v5-sessions` · `v6-timing` · `v7-archetypes` · `v8-addressing-transport` ·
-  `v9-inside-the-server`.
-
-- **BUILD CADENCE (user, 2026-07-05):** build the Foundation **one card at a time, slowly** — author
-  a card, show it, iterate, then the next. Not a bulk auto-run. Each concept stays clause-grounded +
-  pressure-tested.
-
-- **DONE (session 6) — H1 built, verified & re-derived.** Module `wiki/learn/uds-foundation/h1-landscape/`
-  (`index.html` rendered; the map's H1 card opens it). 6 cards + 5 figures + 1 `:::recall`, browser-verified
-  (EN on load · lang toggle isolates · zero overflow/console errors in light/dark/mobile). A 9-agent
-  documents-first workflow (`_derive/`… `rederive-h1`) grounded all 25 claims against the clauses →
-  **factually sound**; two minor fixes applied (Part 4 FlexRay restored in C2; recall softened re
-  ResponseOnEvent `$86`). Full detail in `uds-foundation/h1-landscape/NOTES.md`. **The scaffold as
-  built** (breadth module; covers the V1 + V8 bars):
-  1. **Divider** — H1 · The diagnostics landscape (the one-screen map).
-  2. **Brief** (hook) — warning light → a car is many computers → diagnostics = asking each one → UDS
-     is the shared language.
-  3. **C1 What UDS is, and who talks** (V1 bar) — UDS = shared request/response language (ISO 14229);
-     tester=client (asks), ECU=server (answers, never speaks first). Fig: client↔server (reuse legacy
-     `uds/` c3); leg: shared-dictionary/SID (reuse legacy c2). Src: 14229-1 cl.1, cl.3, cl.5/7.1.
-  4. **C2 The ISO 14229 family & the neighbours** (the map) — -1 services · -2 session/timing ·
-     -3/-5/-6/-7 transport bindings; Dcm runs UDS · Dem stores faults · ODX describes · SOVD is the
-     web-API future · J1939 heavy-duty · Dlt dev-logging. Fig: family map (NEW SVG); legs: "-x = thin
-     adapters", Dem↔Dcm split (→ H3/V9). Src: 14229-1 Table 1; -5/-6/-7 §7.1; Dcm/Dem cl.1.
-  5. **C3 UDS is the top of the stack** (V8 bar) — UDS = meaning (top); transport carries it; same UDS
-     over CAN/DoIP/K-Line/LIN/FlexRay. Fig: OSI 3-layer + swap-bottom (reuse legacy c6); leg:
-     physical vs functional addressing (responses always physical). Src: 14229-1 cl.6/Table 1,
-     cl.7.4.1.4.
-  6. **Conclusion** — recap + competence beat ("place any UDS doc on the map, name the two roles") +
-     first **retrieval beat** (hidden-answer recall) + bridge → H2.
-  - **Pipeline tweaks DONE:** `render.js` default → **EN on load**; new **`:::recall`** directive
-     (bilingual `q_en/q_jp` + hidden `<details>` `a_en/a_jp`) + `.recall` styles; `.dgm` helpers
-     `w7 w8 amb amb-s` added for ported legacy SVGs. (`:::table` still deferred to M2/M3.)
-  - **Template bug fixed (all modules):** language toggle didn't hide the other language for **leg
-     summaries** + **modnav label** (3-class `display:block` tied+beat `.stage[data-lang] .jp`);
-     reduced to ≤2-class. Verified EN→0 JP, JP→0 EN. Keep new lang selectors ≤2-class.
-  - **NEXT — resume here: build H2, card by card** (`uds-foundation/h2-life-of-a-request/`). Same
-     recipe: author → render → verify light/dark → show → iterate. Then H3, then V1…V9. Reuse legacy
-     `uds/` SVGs (timeline c4, pipeline c7) where they fit. Optional: add a back-to-map link in H1.
-
-- **Still open (build-phase decisions):** **V8 density** (keep the 5-card stack incl. DoIP, vs spin
-  the IP/DoIP half out to M7) · `:::table` directive (for M2/M3) · **bundle EN fonts** base64 (map +
-  modules still use the Google-fonts link) · per-pillar T derivations for M2–M9 (each its own H/V,
-  when built).
+**Open build-phase decisions (unchanged):** V8 density (keep the 5-card stack incl. DoIP vs spin the
+IP/DoIP half to M7) · a `:::table` directive (for M2/M3) · bundle EN fonts base64 (map + modules still
+use the Google-fonts link) · per-pillar T derivations for M2–M9 (each its own H/V, when built).
 
 ---
 

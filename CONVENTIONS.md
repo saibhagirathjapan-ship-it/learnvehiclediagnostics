@@ -311,6 +311,36 @@ animation frame) — don't judge from the source.
 
 ---
 
+## 10. Working economically — token discipline (LOCKED 2026-07-06)
+
+**Principle: use the heavy tools *judiciously*, not less capably.** Match the cost of a step to what
+it is for. (Set by user 2026-07-06 — sessions had been burning the weekly token budget fast.) None of
+these ban a capability; they say *when* it earns its cost.
+
+- **Multi-agent workflows / pressure-tests — reserve for where they pay.**
+  - A **single card**: a self-review pass (§8.7 + the master checklist, run *silently*) plus at most
+    one small targeted check. No fleet.
+  - A **milestone** (a whole module done) or a **genuinely uncertain / high-stakes claim**: a
+    pressure-test is warranted — but **size the fleet to the task** (a few agents, not dozens) and
+    **cap rounds**: stop at the first round that returns 0 blockers; never iterate-to-zero over many
+    rounds. State an explicit agent budget when launching.
+- **Documents — grep, don't graze.** Default to the `local notes/` sidecar and **grep the specific
+  clause**, not whole-file reads. Open a `raw/` PDF only when the sidecar is garbled for a needed
+  table/figure (and note it). Load a standard only to ground a specific claim — not "just in case."
+- **Checklists run silently.** The master checklist and §8.7 are an **internal** per-card gate; do not
+  paste them into chat.
+- **Verify by measuring before screenshotting.** Prefer DOM/text measures (card counts, overflow,
+  console errors, lang isolation). Read an **image into context only** for the figure/geometry audit
+  that genuinely needs eyes (§9), and only that close-up — not full-page light/dark/mobile as images.
+- **Keep the auto-loaded floor lean.** Auto-loaded docs (`COURSE.md`, this file, `PEDAGOGY.md`) carry
+  only durable roadmap / rules / current status. **Session-by-session narrative → `wiki/log.md` + git
+  history**; long derivations stay in `_derive/` and are *referenced*, never inlined. Trim `COURSE.md`
+  Current Focus each session.
+- **Tool hygiene.** Redirect noisy output (`2>/dev/null`), read only the lines/regions needed, and do
+  not re-read a file already in context unless a tool requires it.
+
+---
+
 ## ✅ MASTER CARD CHECKLIST — the single run-list (ship nothing that fails)
 
 Run this for **every card** before calling it done. It consolidates §1–§9 + [[PEDAGOGY]] into one

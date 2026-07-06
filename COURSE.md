@@ -222,6 +222,9 @@ only ResponseOnEvent changed.
   *Debt:* the V1–V9 / M2–M9 **stub pages** are hand-authored and don't inherit the shell (they get it when
   built); the map's inlined CSS can drift on future theme edits — best long-term fix is to render the map
   through the pipeline.
+- **⚠️ Shell NOT signed off (as of session 12 close).** User: "still many issues" with the Foundation
+  shell — another **feedback round comes first next session**. Do not treat the shell as final or move to
+  H3 until the user has given (and we've resolved) that feedback. Resume by asking for the specific issues.
 
 **Next up**
 1. **H3 "What UDS can do & how the ECU decides"** — `uds-foundation/h3-catalog-and-server/` (stub

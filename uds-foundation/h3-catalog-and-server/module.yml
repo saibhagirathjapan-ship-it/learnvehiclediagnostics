@@ -1,0 +1,10 @@
+id: h3-catalog-and-server
+title: { en: "What UDS can do, and how the ECU decides", jp: "UDSに何ができ、ECUがどう決めるか" }
+standard: "ISO 14229 · Foundation H3"
+tagline:
+  en: "First, what a service actually is — then the whole menu of them an ECU offers, and how the ECU decides whether to carry a request out."
+  jp: "まず、サービスとは実際に何か ― 次に、ECUが差し出すその一覧、そしてECUが要求を実行するかどうかをどう決めるのか。"
+arc: { pos: 3, total: 12 }
+nav:
+  prev: { id: "h2-life-of-a-request", label: { en: "The life of one request", jp: "1つのリクエストの一生" } }
+  next: { id: "v1-service-model", label: { en: "The service model", jp: "サービスモデル" } }

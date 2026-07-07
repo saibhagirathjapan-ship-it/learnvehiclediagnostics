@@ -195,19 +195,15 @@ td .mono{color:var(--accent);font-weight:600}
 .brand .std{font-family:var(--f-mono);font-size:11px;color:color-mix(in srgb,var(--on-chrome) 52%,transparent);font-weight:500;white-space:nowrap}
 .tb-spacer{flex:1}
 .tb-ctl{display:flex;gap:7px;align-items:center}
-.tb-seg{display:inline-flex;border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);border-radius:8px;overflow:hidden;background:color-mix(in srgb,var(--on-chrome) 7%,transparent)}
-.tb-seg button{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 60%,transparent);background:transparent;border:0;padding:6px 10px;line-height:1}
-.tb-seg button.on{background:var(--accent);color:var(--on-accent)}
 /* brand is now the HOME link */
 .brand{text-decoration:none}
 .brand:hover .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 42%,transparent)}
 .brand:hover .std{color:color-mix(in srgb,var(--on-chrome) 72%,transparent)}
 /* single-icon toggles — one globe (cycles EN/日本語/EN+JP) + one theme flip (sun↔moon) */
-.tb-seg button{display:inline-flex;align-items:center;gap:5px}
 .tb-icobtn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 82%,transparent);background:color-mix(in srgb,var(--on-chrome) 8%,transparent);border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);padding:6px 9px;line-height:1}
 .tb-icobtn:hover{border-color:var(--accent);color:var(--on-chrome)}
 .tb-icobtn svg{flex:none;transition:transform .25s ease}
-.tb-icobtn .tb-lc{font-family:"IBM Plex Mono","Noto Sans JP",monospace;font-size:11.5px;min-width:38px;text-align:left}
+.tb-icobtn .tb-lc{font-family:"IBM Plex Mono","Noto Sans JP",monospace;font-size:11.5px;min-width:38px;text-align:center}
 .tb-theme .ic-moon{display:none}
 .stage[data-theme="dark"] .tb-theme .ic-sun{display:none}
 .stage[data-theme="dark"] .tb-theme .ic-moon{display:inline-block}
@@ -328,8 +324,6 @@ td .mono{color:var(--accent);font-weight:600}
   .brand .std{display:none}
   .brand{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .topbar-in{gap:8px}
-  .tb-seg button{padding:6px 8px}
-  #allseg{display:none}          /* Expand/Collapse is least essential on a phone; drop it to fit */
   .fwd{white-space:normal;overflow-wrap:anywhere}   /* let a long pointer pill wrap rather than overflow the card */
   .cardmap-wrap{top:var(--stick,40px);margin-top:0;padding-top:8px;padding-bottom:8px}
   .crumbs-in{padding-left:14px;padding-right:14px;gap:8px;flex-wrap:wrap}
@@ -344,7 +338,7 @@ td .mono{color:var(--accent);font-weight:600}
    Sharp panels suit the schematic identity. Tune radii here.
    ============================================================ */
 .card,.tblock,.tf.idx,.tf.sid .chip,.leg,.subcard,.sc-n,.callout,.byte,
-.fig,.divider,.brief,.concl,.modnav a,.tb-seg,.arc,.modcard,.mc-n,
+.fig,.divider,.brief,.concl,.modnav a,.arc,.modcard,.mc-n,
 .recall,.recall .rc-a>summary,.reading,.rd-sec{border-radius:0}
 
 /* ============================================================

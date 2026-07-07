@@ -221,8 +221,8 @@ function renderHero(mod){
     (mod.tagline?`<p class="tagline en">${inline(mod.tagline.en)}</p><p class="tagline jp">${inline(mod.tagline.jp)}</p>`:'')+
     `</section>`;
 }
-// Topbar comes from the shared partial (partials.topbar) — see FB1. Module pages pass expand:true
-// so the Expand/Collapse-legs segment appears; home is the course hub two levels up.
+// Topbar comes from the shared partial (partials.topbar) — see FB1. Identical on every surface
+// (no page-specific segments); home is the course hub two levels up.
 // breadcrumb: Course › Foundation › <module> (trail only — no module-to-module nav inside an H/V).
 function renderCrumbs(mod){
   const p = mod.parent || { label:'Foundation', href:'../index.html' };
@@ -289,10 +289,8 @@ function renderModNav(mod){
   return `<nav class="modnav">${navcard('prev',nav.prev)}${navcard('next',nav.next)}</nav>`;
 }
 // Page-specific behaviour only (chrome behaviour is in partials.TOPBAR_SCRIPT). This block owns
-// the Expand/Collapse-legs control + the one-card-at-a-time pager.
+// the one-card-at-a-time pager. (Legs are expanded individually via each Go-Deeper <details>.)
 const SCRIPT=`<script>
-// EXPAND/COLLAPSE all legs on the visible card
-(function(){var s=document.getElementById('allseg');if(s)s.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;document.querySelectorAll('.page.on .leg').forEach(function(l){l.open=(b.dataset.a==='open')});});})();
 // PAGER — one card at a time; the top strip is the always-on progress + jump nav
 var pages=[].slice.call(document.querySelectorAll('.stream.pager > .page'));
 var strip=document.querySelector('.cardmap'),links=[].slice.call(document.querySelectorAll('.cardmap a'));
@@ -321,7 +319,7 @@ function page(mod,cards,stops){
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">`+
     `<title>${esc(mod.title.en)} — ${esc(mod.standard||'')}</title>${FONTS}<style>${CSS}</style></head><body>`+
     `<div class="stage" data-theme="light" data-lang="en"><div class="progress" id="progress"></div>`+
-    topbar({home: mod.home || '../../index.html', expand:true})+renderCrumbs(mod)+renderHero(mod)+renderCardMap(stops)+
+    topbar({home: mod.home || '../../index.html'})+renderCrumbs(mod)+renderHero(mod)+renderCardMap(stops)+
     `<div class="layout"><main class="stream pager">${cards}</main></div>`+
     `</div>${TOPBAR_SCRIPT}${SCRIPT}</body></html>`;
 }

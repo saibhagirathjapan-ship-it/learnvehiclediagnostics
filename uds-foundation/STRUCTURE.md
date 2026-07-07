@@ -38,7 +38,8 @@ after the bars has a complete, honest high-level picture.
   the negative/suppress concepts). This *differs from COURSE.md's locked order* (V8 as the late
   "zoom-out" after the service homes). See Open decisions #1.
 - **Bar-coverage (every V has a bar):** V1←H1-C2 · V8←H1-C3 + H2-C4 · V2,V3←H2-C2 · V4←H2-C1 ·
-  V6,V7a←H2-C3 · V5,V7c←H2-C5/C7 · V7b←H2-C6 · V5,V9←H3-C4 · V7a/b/c←H3-C5. No orphans.
+  V6,V7a←H2-C3 · V5,V7c←H2-C5/C7 · V7b←H2-C6 · V5,V9←H3-C5 · V7a/b/c←H3-C6. No orphans.
+  *(H3-C1 primer = an additional breadth touchpoint for the service concept; V1's bar remains H1-C2 — do not re-home it.)*
 
 ---
 
@@ -82,7 +83,7 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 | H2-C5 | Concept | non-default sessions time out; the tester sends **`$3E`** to keep alive while busy | why sessions expire (clock named S3 →V6) · purpose + broadcast form of $3E (→V7c) |
 | H2-C6 | Concept | **`$11`** reset reboots → default session → **re-locks security** (glossed inline at bar altitude); `11 01 → 51 01` shown | reboot→default→locked causal chain (→V7b,V5) · the 11 01→51 01 trace (→V7b) · faults survive in the Dem store (→M3) |
 | H2-C7 | Concept | **the life of a session:** open (`$10`) · hold (`$3E`) · close (`$11`/timeout) — both endings land at default, security re-locked | open/hold/close (→V5,V7a/b/c) · two ways it ends: reset vs silent timeout (→V5,V6) |
-| H2-K | Conclusion | recap beat + session + retrieval + bridge to the catalog (lands on a **built** H3) | — |
+| H2-K | Conclusion | recap beat + session + retrieval + **3-stop bridge to H3** (first *what a service IS*, then the whole catalog of them, then how the ECU decides yes/no) — lands on a **built** H3 | — |
 
 ## V2 — Request & positive response, byte by byte
 *Enters:* SID; pos = SID+0x40; sub-fn; 10 03→50 03. *Leaves:* can lay out SDU+PCI+params+length, explain the first-byte PCI key, decode +0x40 and the echoed sub-fn.
@@ -182,17 +183,29 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 | V7c-K | Conclusion | recap + bridge to the service catalog | — |
 
 ## H3 — What UDS can do & how the ECU decides *(must build first — see Open decisions #2)*
-*Enters:* the beat, session life, addressing. *Leaves:* can name the 6 units + security sub-layer, say what needs a session/security, describe DID/RID, sketch the PduR→DSL→DSD→DSP pipeline, place $10/$11/$3E in the comms-management family.
+*Enters:* the beat, session life, addressing; a service is a numbered thing you can ask (H1). *Leaves:* can say what a diagnostic service **IS** (a named capability offered under a fixed shape — one request, one of a fixed set of replies, only if the ECU is in the right state — that reads and/or changes a live installed ECU from outside), name the 6 units + security sub-layer, say what needs a session/security, describe DID/RID, sketch the PduR→DSL→DSD→DSP pipeline, place $10/$11/$3E in the comms-management family.
+
+> **Service-primer insert (LOCKED 2026-07-07, user-approved).** Before the catalog, H3 opens with a
+> Brief + a Concept **primer** that makes the word "service" concrete (derivation: `_derive`
+> workflow `h3-service-primer-derivation`, 17 agents, ISO-grounded + adversarially checked). This
+> shifts the old C1–C5 down by one (→ C2–C6); K unchanged. The primer is a **breadth spiral**, NOT a
+> V1 duplication (H1 *names* services · H2 *traces* one · **H3 primer *abstracts* to what a service
+> IS** · V1 *formalizes* primitives/SAP). **Lint fence on the primer content** (any hit = it slid
+> into V1, pull back): `primitive · indication · confirmation · SAP · access point · A_Mtype · A_SA ·
+> A_TA · S_Data · confirmed/unconfirmed service`. The SID / +0x40 / 7F+NRC facts are H2's — the primer
+> **re-uses** them as the shape's parts, never re-derives.
 
 | card | type | covers | go-deeper |
 |---|---|---|---|
-| H3-D0 | Divider | catalog + server overview | — |
-| H3-C1 | Concept | UDS services group into **exactly six** functional units + a security sub-layer (not a 7th) | all six enumerated (no "etc."): comms mgmt · read/write data · fault memory (DTCs →M3) · routines & I/O · data transfer/reflash (→M6) · upload/download · security is a sub-layer (→M4) |
-| H3-C2 | Concept | many services need a non-default session and/or a security unlock first | session-gated vs security-gated (→V5,M4) · why gate (safety) |
-| H3-C3 | Concept | data lives at 16-bit **DIDs**, routines at 16-bit **RIDs** — huge coordinate spaces | DID space (→M2) · RID space (→M5) |
-| H3-C4 | Concept | inside the ECU a request flows through 4 stages: route → link/session → dispatch (accept/reject) → process (plain words first, PduR/DSL/DSD/DSP as secondary labels) | each stage's job · the AUTOSAR names (→V9) · the "DSD accepts → DSP executes" boundary (→V9) |
-| H3-C5 | Concept | $10/$11/$3E are members of the **communication-management** unit (same term as C1 — files into a family already met) | same unit holds $27/$28/$29→M4, $85→M3 (caveat) · the three drilled: $10(→V7a)/$11(→V7b)/$3E(→V7c) |
-| H3-K | Conclusion | recap + retrieval + bridge onward | — |
+| H3-D0 | Divider | the arc: what a service **IS** → the catalog of them → how the ECU decides yes/no | — |
+| H3-B | Brief | advance organizer (sets up, no teaching): you traced ONE request in H2 — but what is the ECU offering a whole *list* of? 3 stops (what a service is · the catalog · how it decides). Carries the hook + sealed-box + **menu** image so the primer stays one clean idea | — |
+| H3-C1 | Concept | **THE PRIMER:** a UDS **service** = a **named job the ECU offers under one fixed shape** (send one request → get one reply from a fixed set: a "done", or a "no+reason" from a known list — **only if** the ECU is in the right state); it is **diagnostic** by **purpose** — the services are the **primitives you diagnose the vehicle with**. Bar states the shape as a **generalization** ("*every* service, whatever it does, uses this one shape you already saw in H2") — it does **NOT** re-decode bytes (H2 owns that). Names **functional unit** once at the end (hands off to C2). *(Leg on "the fixed shape, byte-by-byte" DROPPED 2026-07-07 per user FB — redundant with H2-C1/C2/C3; nothing to relocate.)* | **2 legs.** *what makes it diagnostic* — the **primitives** you diagnose with: read faults (→M3) · read live data (→M2) · test an actuator (→M5) · check ECU software is healthy · update ECU software (→M6); done from **outside**, no teardown; tester = scan tool / EOL station / OTA (→M7); *purpose, not the bytes* (cl.3.6/7.1/1) · *what it means to **provide** (two roles)* — tester *uses* (asks, waits); ECU-side **server** *provides* — offers the service, then does the job + replies, or refuses with a reason; server = a **function**, not the box (cl.3.18 Note 1) → the same service can come from any ECU. Enter from H1's server role, don't re-teach it (→V9 · the Dcm, →V1 · the formal model) |
+| H3-C2 | Concept | *(was H3-C1)* UDS services group into **exactly six** functional units (ISO 14229-1 cl.10–15) + a security sub-layer (not a 7th) — lands cleanly now "service" + "functional unit" are concrete | the six, ISO-accurate (no "etc."): **communication management** (cl.10) · **data transmission** (cl.11 →M2) · **stored data / fault memory** (cl.12, DTCs →M3) · **input/output control** (cl.13 →M5) · **routine** (cl.14 →M5) · **upload/download** (cl.15, reflash →M6); **security** (SecurityAccess cl.10.4) is a **sub-layer inside cl.10** that gates the risky ones (→M4), NOT a 7th unit |
+| H3-C3 | Concept | *(was H3-C2)* many services need a non-default session and/or a security unlock first — the **precondition** part of the shape, now drilled | session-gated vs security-gated (→V5,M4) · why gate (safety) |
+| H3-C4 | Concept | *(was H3-C3)* data lives at 16-bit **DIDs**, routines at 16-bit **RIDs** — huge coordinate spaces | DID space (→M2) · RID space (→M5) |
+| H3-C5 | Concept | *(was H3-C4)* inside the ECU a request flows through 4 stages: route → link/session → dispatch (accept/reject) → process (plain words first, PduR/DSL/DSD/DSP as secondary labels) | each stage's job · the AUTOSAR names (→V9) · the "DSD accepts → DSP executes" boundary (→V9) |
+| H3-C6 | Concept | *(was H3-C5)* $10/$11/$3E are members of the **communication-management** unit (same term as C2 — files into a family already met) | same unit holds $27/$28/$29→M4, $85→M3 (caveat) · the three drilled: $10(→V7a)/$11(→V7b)/$3E(→V7c) |
+| H3-K | Conclusion | recap (incl. "service = a named capability with a fixed shape" as the idea that made the catalog legible) + retrieval + bridge onward | — |
 
 ## V9 — Inside the server (the Dcm pipeline & the NRC-origin gate)
 *Enters:* request flows route/link/dispatch/process (H3-C4); NRCs exist (V3); 0x78 at the P2 boundary (V6). *Leaves:* can walk the pipeline, describe the ordered validation gate where NRCs originate, place 0x78, state security starts locked.
@@ -281,7 +294,8 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 Figure ID = `<CARD>-F<k>` (card-scoped: `F1` = the card's bar figure, `F2…` = its go-deeper leg
 sketches in reading order). Filename = `<card>-f<k>_<kebab-title>.svg` in `<module>/assets/figures/`,
 globally unique by the `h1-/h2-` prefix. Kept 1:1 with the on-disk SVGs (verified by `checkmod.js`).
-V-drills and H3 are unbuilt — their registers are authored when each module is built.
+V-drills are unbuilt — their registers are authored when each module is built. H3 is unbuilt too,
+but its **primer** cards (H3-B, H3-C1) are speced (below); H3-C2–C6 figures are authored when H3 is built.
 
 ### H1 — The diagnostics landscape
 
@@ -312,3 +326,12 @@ V-drills and H3 are unbuilt — their registers are authored when each module is
 | H2-C5-F1 | Keeping a session alive — idle clock + `$3E` | C5 · bar | `h2-c5-f1_keep-alive.svg` |
 | H2-C6-F1 | `$11` reset — reboot to default, re-locked | C6 · bar | `h2-c6-f1_reset.svg` |
 | H2-C7-F1 | A session's life — open · hold · close | C7 · bar | `h2-c7-f1_session-life.svg` |
+
+### H3 — What UDS can do & how the ECU decides *(primer cards speced; C2–C6 figures authored when built)*
+
+| ID | Title (takeaway) | Card / leg | Filename |
+|----|------------------|------------|----------|
+| H3-B-F1 | One request, a whole menu behind it — the sealed box offered a way in | brief · bar | `h3-b-f1_a-whole-menu.svg` |
+| H3-C1-F1 | The fixed shape of a service — one in, one of a fixed set out, only if | C1 · bar | `h3-c1-f1_service-shape.svg` |
+| H3-C1-F2 | The primitives of vehicle diagnostics — read, test, check, update | C1 · leg *diagnostic* | `h3-c1-f2_diagnostic-scene.svg` |
+| H3-C1-F3 | Provide vs use — the tester asks; the server offers, does the job, or refuses | C1 · leg *provide* | `h3-c1-f3_provide-vs-use.svg` |

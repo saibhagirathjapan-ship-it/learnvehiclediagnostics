@@ -46,6 +46,13 @@ the life of a session (C7). C1's sub-function leg was **trimmed to defer suppres
 **cut to a bare NRC + →M4**. Two new figures authored — `c5-f1 keep-alive` (idle clock + `$3E`) and
 `c6-f1 reset` (reboot arc + trace + unlocked→locked padlocks). Orphans `c3-four-rules.svg` deleted.
 
+## H2-K bridge → 3-stop (2026-07-07, for the H3 service primer)
+`90-conclusion.md`'s forward bridge to H3 re-authored from a **2-stop** promise (catalogue + how-it-
+decides) to **3 stops** — first *what a service IS* (the fixed shape behind the traced beat), then the
+catalogue, then how the ECU decides — so H3's new **service primer** (H3-C1) isn't an unannounced
+detour. EN+JP, same register; text-only (no card-count/figure change). H2 re-rendered + re-verified
+clean (7 concepts, no overflow, EN-on-load + JP isolation, zero console errors).
+
 ## Figures (`assets/figures/`, 13)
 Byte-boxes travel the wire in **brief-f1 one-beat** and **c3-f1 one-real-request** (packets travel and
 PAUSE mid-wire so the strings read; response all-green as the positive message; dot lands on the wire

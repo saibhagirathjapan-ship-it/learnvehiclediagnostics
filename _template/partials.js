@@ -20,15 +20,15 @@ const IC_SUN = '<svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" f
 const IC_MOON = '<svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg>';
 
 // The constant brand is "Automotive Diagnostics", a home link, everywhere (session-9 decision).
-// `home` = relative path to the course hub from this page. `expand` adds the module-only
-// Expand/Collapse-legs segment. `brand` overrides the label (default is the constant).
-function topbar({ home = '../../index.html', brand = 'Automotive Diagnostics', expand = false } = {}) {
+// `home` = relative path to the course hub from this page. `brand` overrides the label
+// (default is the constant). The bar is IDENTICAL on every surface — hub, map, stub, module —
+// so there is nothing page-specific to diverge (Expand/Collapse-all removed 2026-07-07 per FB).
+function topbar({ home = '../../index.html', brand = 'Automotive Diagnostics' } = {}) {
   return `<header class="topbar"><div class="topbar-in">` +
     `<a class="brand" href="${esc(home)}" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">${esc(brand)}</span></a>` +
     `<div class="tb-spacer"></div><div class="tb-ctl">` +
     `<button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language">${IC_GLOBE}<span class="tb-lc">EN</span></button>` +
     `<button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme">${IC_SUN}${IC_MOON}</button>` +
-    (expand ? `<div class="tb-seg" id="allseg"><button data-a="open">Expand</button><button data-a="close">Collapse</button></div>` : '') +
     `</div></div></header>`;
 }
 

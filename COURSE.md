@@ -260,11 +260,14 @@ only ResponseOnEvent changed.
   *Debt:* the V1–V9 / M2–M9 **stub pages** are hand-authored and don't inherit the shell (they get it when
   built); the map's inlined CSS can drift on future theme edits — best long-term fix is to render the map
   through the pipeline.
-- **⚠️ Shell round EXECUTED 2026-07-07 (session 14) — still NOT signed off; a feedback round is expected.**
-  All five items (FB1 · FB4 · Task4 · Task5 · FB3) done + browser-verified (`_template/verify_shell.js` +
-  `checkmod.js`); a 4-lens adversarial continuity review of the re-authored H1/H2 came back **clean
-  (0 blockers, 0 nits)**. Do not move to H3 until the user signs off. Full write-up in `wiki/log.md`
-  (2026-07-07). Status per item (each was the "to-do" below, now **done**):
+- **✅ Shell round SIGNED OFF 2026-07-07.** All five build items (FB1 · FB4 · Task4 · Task5 · FB3) done +
+  browser-verified; then one **post-review feedback round** landed and was resolved: **topbar parity +
+  Expand/Collapse removed** — the only home-vs-module bar difference was an Expand/Collapse-all segment
+  `render.js` appended (`topbar({expand:true})`); deleting it made every topbar byte-identical *and*
+  dropped the unwanted control (dead `.tb-seg`/`#allseg` markup + CSS gone; H1/H2/map/hub re-rendered;
+  `verify_shell.js` green on all 5 page types + mobile; topbar close-up confirms hub==module). User: "none
+  on the shell feedback." Full write-ups in `wiki/log.md` (2026-07-07 ×2). Build-item status (each was the
+  "to-do" below, now **done**):
   - **FB1 — topbar is NOT a shared component (HELD as a shell build-item).** The top bar diverges across
     levels because it lives in 3 code paths (`render.js` module shell · `render-hub.js` hub, still on the
     OLD text `EN/日本語/EN+JP` seg + non-link brand · `make-stubs.js` stubs, Light/Dark only) **plus** a
@@ -300,13 +303,21 @@ only ResponseOnEvent changed.
     rebuild, per STRUCTURE scoping):** the larger H1 **3→4 re-split** (new "why diagnostics" C1 +
     neighbours→C4) is NOT shell-round scope.
 
-**Next up**
-0. **Get the user's shell sign-off** (the round is executed + verified but NOT signed off). Expect a
-   feedback round; hold H3 until it lands.
-1. **H3 "What UDS can do & how the ECU decides"** — `uds-foundation/h3-catalog-and-server/` (stub
-   exists). Same recipe + the stronger template + **the comms-management-family naming bar** (names
-   `$10`/`$11`/`$3E` as cl.10 Table 22 members, `drilled-in →` V7a/V7b/V7c). Then the V drills. Reuse
-   H1/H2 figures where they fit.
+**Next up — building H3 "What UDS can do & how the ECU decides"** (`uds-foundation/h3-catalog-and-server/`).
+Design LOCKED + **9 cards** (STRUCTURE.md H3 §; derivation `_derive/h3-service-primer-derivation`).
+- ✅ **Primer trio authored + user-approved 2026-07-07** — `00-divider` · `10-brief` · `20-c1-primer`
+  ("what a service *is*" — a named job under one fixed shape — "*and what makes it diagnostic*" = the
+  **primitives you diagnose with**). Content MD + **placeholder** SVGs; browser-verified. **Leg A dropped**
+  (re-taught H2) → primer is **2 legs** (diagnostic primitives · what it means to *provide*). Wording rules
+  the user enforced → memory `feedback-prose-and-wording` (active voice · no false agency · concrete
+  answers · reference-don't-re-teach · nothing cryptic).
+1. **Author catalog cards H3-C2..C6, then H3-K** — in the **"what it means to provide `$XX`" voice** (SID
+   kept — `feedback-service-home-and-usecases`): C2 six functional units · C3 gating · C4 DID/RID · C5
+   pipeline · **C6** comms-family naming bar (`$10`/`$11`/`$3E` as cl.10 Table 22 members, `drilled-in →`
+   V7a/V7b/V7c) · K conclusion (recap + retrieval + SOVD-less bridge). Non-dup-with-V1 lint fence per
+   STRUCTURE; reference upstream cards, don't re-teach.
+2. **SVGs for all H3 figures** (deferred to a later session per user) — replace the placeholders:
+   `h3-b-f1`, `h3-c1-f1/f2/f3`, then C2–C6 figures. Author the figure register as built.
 2. **Future H1 rebuild — the 3→4 re-split** (deferred, not shell-round scope): add a new "why diagnostics /
    cars are many ECUs" **C1** (3 contexts: workshop/EOL/OTA), and split the current C2 into **C3** (14229
    family + OSI) + **C4** (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to fully match STRUCTURE.md's 4-card H1.

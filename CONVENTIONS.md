@@ -123,6 +123,39 @@ Content is **derived from these, never hand-organized**:
 - **Build gate:** a module's `content/` cards must match its `STRUCTURE.md` card list 1:1 (checked in
   `verify.js` / `NOTES.md`), the same way DOM card counts are checked against the scaffold.
 
+## 1f. Module shell & reading UX — LOCKED (session 9 · re-confirmed 2026-07-07)
+
+The page **chrome + reading UX** are a shared locked system (like §1b's visuals) — **do not re-invent
+per module.** All of it lives in `_template/` (`partials.js` chrome · `render.js` · the hub/map/stub
+renderers · `blueprint.css`); change a behaviour in **one** place and every surface inherits. The
+contract (source of truth = those files):
+
+- **One shared top bar** (`topbar()` in `partials.js`) → **byte-identical on every surface** (module ·
+  hub · map · stub), cannot drift. Carries only: constant **"Automotive Diagnostics"** brand = home
+  link · one **globe** toggle **EN → 日本語 → EN+JP** · one **theme** toggle (sun↔moon). No page-specific
+  controls (Expand/Collapse-all removed 2026-07-07). Edit chrome **only** in `partials.js`.
+- **Sticky stack measured, never hard-coded (FB4):** `TOPBAR_SCRIPT` writes `--tbh`/`--crh`/`--stick`;
+  every sticky offset reads `--stick`. Don't hard-code a top or double-count (§7).
+- **Breadcrumb = trail only** (`.crumbs`, `Course › Foundation › <module>`, sticky at `--tbh`) — not
+  module-to-module nav.
+- **Card-level wayfinding is mandatory:** off one "stops" list (`buildStops`; a stop = one teaching
+  card, dividers excluded) render an always-on top **overview strip** (`.cm-stop`, numbered + arrows)
+  **and** a left scroll-spy **rail** (`.toc.rail`) — the reader always sees how many cards and where.
+- **One card at a time — the pager** (`.stream.pager > .page`): Prev/Next + strip + rail + **arrow
+  keys** drive it, current card highlighted. §1c "one idea per screen" made physical. Dividers ≠ stops.
+- **Depth opt-in and obvious:** T-legs (`.leg`/`.legs`) are `<details>` **collapsed by default**, opened
+  by a prominent accent **Go-Deeper** control (banner + solid `+/−`), never a faint caret (§12 autonomy).
+- **Retrieval prominent:** `:::recall` (`.recall`) is a visible "Your turn" block, answer in `<details>`
+  — not a footnote (the under-served half of [[PEDAGOGY]] 9).
+- **Forward pointers are real links:** `{{→ where}}` → `.fwd`, resolving to the target page; every
+  deferred target has at least a **stub page** so no pointer dead-ends. Plain-text or 404 = defect (§6).
+- **Byte-boxes travel:** `:::bytes` (`.byte`/`.bytes`) animate the message client→server **only when it
+  teaches** (§7, [[PEDAGOGY]] 4), obeying §7a (the moving element rides the drawn path).
+- **Language isolation — the ≤2-class rule:** visibility = `.stage[data-lang]` (`en`/`jp`/`both`)
+  toggling **at most two** hooks (`.en`/`.jp`); legs, nav, pills and figure captions all obey the **same**
+  two, so a toggle never strands a region in the wrong language. `checkmod.js` enforces EN-on-load +
+  full isolation (EN→0 JP nodes, JP→0 EN).
+
 ## 2. Phrasing (audience-facing)
 
 - **Very, very simple English** — short words, short sentences, one idea per sentence.

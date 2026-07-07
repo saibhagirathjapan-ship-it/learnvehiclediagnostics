@@ -315,34 +315,35 @@ only ResponseOnEvent changed.
 - **Figures are ALL PLACEHOLDERS** (labelled dashed-box `.dgm`, 10 of them). **C2/C3/K NOT yet user-read**
   (only the primer trio is signed off — expect a wording pass).
 
+**Done this session (2026-07-07, session 14):** H3 9→6 restructure (above) · **folded the shell/reading-UX
+decisions into [[CONVENTIONS]] §1f + a [[PEDAGOGY]] cross-link** (locked) · **published the learner persona**
+as a "Who this is for" note on the hub (data-driven from `course.yml` `whoFor`, rendered by `render-hub.js`,
+`.whofor` in `blueprint.css`; browser-verified light/dark + lang isolation).
+
 **Next up**
 1. **Get a user read on H3 C2/C3/K** (the restructured cards) — only the primer trio is signed off; hold to
    the **OK/NG gate** in memory `feedback-prose-and-wording`.
 2. **Draw the real H3 SVGs** (card/figure set now settled — 10 figs: brief 1 · primer 3 · C2 3 · C3 3).
    Author to §7a geometry, register in STRUCTURE.md §7c, geometry-audit (light + dark close-ups).
-3. **Fold the session-9 template-UX/shell decisions into [[CONVENTIONS]]/[[PEDAGOGY]] as locked rules** —
-   overview strip · card rail · Go-Deeper affordance · recall prominence · forward-links + stub pages · byte
-   animation · the ≤2-class lang-selector rule (incl. leg/nav/pill isolation) · sticky breadcrumb · shared topbar.
-4. **Publish the learner persona** ("who this is for") on the site — see Open items below.
-5. **Future H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
+3. **Future H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
    (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.
-6. **Then** the V drills (V1–V9) and the pillar modules M2–M9, each its own H/V.
+4. **Then** the V drills (V1–V9) and the pillar modules M2–M9, each its own H/V.
 
 **Open build-phase decisions (unchanged):** V8 density (keep the 5-card stack incl. DoIP vs spin the
 IP/DoIP half to M7) · a `:::table` directive (for M2/M3) · bundle EN fonts base64 (map + modules still
 use the Google-fonts link) · per-pillar T derivations for M2–M9 (each its own H/V, when built).
 
-**Open items (deferred, do later):**
-- **Publish the learner persona on the site** (user 2026-07-07). Confirmed baseline: a *motivated
-  professional engineer with zero automotive-diagnostics background* (engineer, not technician).
-  **Knows:** hex/bytes/flag-bits, request↔response + success/error, state machines, volatile vs
+**Learner persona — PUBLISHED 2026-07-07** as a "Who this is for" note on the hub (`course.yml` `whoFor`).
+The confirmed baseline, kept here as the **authoring reference** for every card: a *motivated professional
+engineer with zero automotive-diagnostics background* (engineer, not technician).
+- **Knows:** hex/bytes/flag-bits, request↔response + success/error, state machines, volatile vs
   non-volatile memory, "a message rides a bus / protocols are layered" (abstractly), "an ECU is a small
-  computer, a car has many", locked-vs-unlocked/challenge-response. **Does NOT know (teach from zero,
-  define on first use):** the *why* of vehicle diagnostics + the tester role + contexts (workshop/EOL/OTA);
-  UDS itself (SID/sub-fn/DID/RID, +0x40, 7F+NRC, the services); sessions/security/timing; the transport
-  stack (CAN/ISO-TP/DoIP/addressing) — taught from near-zero; ECU internals (boot vs app SW, Dcm/Dem);
-  the standards landscape. Surface this as a short "who this is for" note somewhere on the site.
+  computer, a car has many", locked-vs-unlocked/challenge-response.
+- **Does NOT know (teach from zero, define on first use):** the *why* of vehicle diagnostics + the tester
+  role + contexts (workshop/EOL/OTA); UDS itself (SID/sub-fn/DID/RID, +0x40, 7F+NRC, the services);
+  sessions/security/timing; the transport stack (CAN/ISO-TP/DoIP/addressing) — taught from near-zero; ECU
+  internals (boot vs app SW, Dcm/Dem); the standards landscape.
 
 ---
 

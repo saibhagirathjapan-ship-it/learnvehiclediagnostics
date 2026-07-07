@@ -123,6 +123,12 @@ generic or "AI-styled."** Concretely:
 - **Gestalt does the grouping**: proximity, similarity, common region (card borders),
   continuity. Layout should make relationships visible without a caption.
 
+The **shell / reading-UX affordances** that carry these principles are locked in [[CONVENTIONS]] §1f:
+the one-card **pager** serves chunking (P2); the always-on **overview strip + rail** give visible
+progress + autonomy (P12); the prominent **`:::recall`** is the retrieval half of P9; **real
+forward-links + stub pages** make the spiral navigable (P10); the obvious **Go-Deeper** control is
+opt-in depth (P12). Design mechanics are the tools; those principles are why they exist.
+
 > Rule of thumb: if the page could be mistaken for a default Bootstrap/Tailwind SaaS-docs
 > template, it has failed Principles 4 and 11. Distinctiveness is a teaching asset — it
 > aids memory and signals care.

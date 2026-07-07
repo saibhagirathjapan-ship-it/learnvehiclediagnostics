@@ -32,8 +32,11 @@ const topbarHtml = topbar({ home: 'index.html' });
 const hero=`<section class="hero"><div class="kicker">Automotive Diagnostics · 自動車診断</div>`+
   `<h1>${inline(c.subtitle.en)}</h1><div class="jp">${inline(c.subtitle.jp)}</div>`+
   `<p class="tagline en">${inline(c.tagline.en)}</p><p class="tagline jp">${inline(c.tagline.jp)}</p></section>`;
+// "who this is for" — the confirmed learner persona, data-driven from course.yml (optional)
+const whofor = c.whoFor ? `<section class="whofor"><div class="whofor-in"><div class="wf-lbl">Who this is for · 対象読者</div>`+
+  `<p class="en">${inline(c.whoFor.en)}</p><p class="jp">${inline(c.whoFor.jp)}</p></div></section>` : '';
 const grid=`<div class="hub"><div class="hub-h4">${c.modules.length} modules · 全${c.modules.length}モジュール</div><div class="grid">${c.modules.map(card).join('')}</div></div>`;
 const html=`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(c.title.en)} — ${esc(c.subtitle.en)}</title>${FONTS}<style>${CSS}</style></head><body>`+
-  `<div class="stage" data-theme="light" data-lang="en">${topbarHtml}${hero}${grid}</div>${TOPBAR_SCRIPT}</body></html>`;
+  `<div class="stage" data-theme="light" data-lang="en">${topbarHtml}${hero}${whofor}${grid}</div>${TOPBAR_SCRIPT}</body></html>`;
 fs.writeFileSync(path.join(LEARN,'index.html'), html);
 console.log('hub →', path.join(LEARN,'index.html'), '·', c.modules.length, 'modules');

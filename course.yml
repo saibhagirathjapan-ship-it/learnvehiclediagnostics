@@ -3,6 +3,9 @@ subtitle: { en: "From UDS to SOVD", jp: "UDSからSOVDへ" }
 tagline:
   en: "A hands-on path from the first diagnostic byte to Service-Oriented Vehicle Diagnostics — built one small module at a time."
   jp: "最初の診断バイトから、サービス指向車両診断（SOVD）まで。小さなモジュールを積み上げて手を動かして学びます。"
+whoFor:
+  en: "This course is written for a working **engineer** with no automotive-diagnostics background. If you are comfortable with hex and bytes, request-and-reply protocols, state machines, and the idea that an ECU is a small computer — and that a car has many of them — you are ready. Every vehicle-specific idea, from the first diagnostic byte onward, is defined the first time it appears."
+  jp: "このコースは、自動車診断の予備知識がない現役**エンジニア**のために書かれています。16進数とバイト、要求と応答のプロトコル、ステートマシン、そして「ECUは小さなコンピュータで、車にはそれが何十個もある」という感覚に馴染みがあれば、準備は万端です。最初の診断バイトから、車両特有の考え方はすべて、初めて登場するときに定義します。"
 modules:
   - { n: 1, id: uds, href: "uds-foundation/index.html", status: done, sovd: "substrate",
       thumb: "uds/assets/figures/card-thumb.svg",

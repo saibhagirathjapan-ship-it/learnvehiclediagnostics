@@ -1,5 +1,12 @@
 # H3 — What UDS can do, and how the ECU decides · build notes
 
+> **⚠ RESTRUCTURE PENDING (LOCKED 2026-07-07) — 9 cards → 6.** User rejected C4/C5/C6 as standalone cards.
+> Next session, BEFORE drawing SVGs: drop `50-c4-did-rid.md`, `60-c5-server-pipeline.md`,
+> `70-c6-comms-family.md` (+ their figs); rewrite C2 (six families + `$10`/`$11`/`$3E` placement + DID/RID
+> line + security leg) and add new C3 "The ECU decides what it will serve" (gates + vet/refuse); trim K.
+> Full plan: `../STRUCTURE.md` H3 "⚠ RESTRUCTURE" block. OK/NG gate: memory `feedback-prose-and-wording`.
+> The inventory below is the SHIPPED build, to be migrated.
+
 **Module:** `wiki/learn/uds-foundation/h3-catalog-and-server/` · breadth spine card 3 of 3.
 Answers *what a service is + what makes it diagnostic* (primer), then the catalog (six functional
 units), then how the ECU decides. Source of truth = `content/*.md`, rendered by

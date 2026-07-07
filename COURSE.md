@@ -319,10 +319,17 @@ Design LOCKED + **9 cards** (STRUCTURE.md H3 §; derivation `_derive/h3-service-
   before a full read — expect a wording pass).
 
 **Next up**
-1. **Draw the real H3 SVGs** (deferred per user) — replace all placeholders: `h3-b-f1`, `h3-c1-f1/f2/f3`,
-   `h3-c2..c6-f*` (15 figures). Author to §7a geometry + register in STRUCTURE.md §7c; then geometry-audit.
-2. **Expect a user wording pass on C2–K** (only the primer trio is signed off so far).
-3. **Then the V drills** (V1–V9) and the pillar modules M2–M9, each its own H/V.
+1. **Execute the H3 9→6 restructure** (LOCKED 2026-07-07 — full plan in the `uds-foundation/STRUCTURE.md`
+   H3 "⚠ RESTRUCTURE" block; hold everything to the **OK/NG gate** in memory `feedback-prose-and-wording`).
+   User rejected C4/C5/C6 as standalone cards. **Drop** standalone C4 (DID/RID→a C2 line + M2/M5), C5 (the
+   4-stage pipeline→V9; keep only the *decision*), C6 (comms family→fold into C2). **Rewrite C2** (six
+   families + place `$10`/`$11`/`$3E` →V7a/b/c + DID/RID one-liner + security leg) and **new C3** "The ECU
+   decides what it will serve" (gates + vet/refuse = the negative, →V5/M4/V9). Trim K. Re-render + adversarial
+   check + get a user read (only the primer trio is signed off). *(Pushback held: the "decide" stays in H3,
+   not H2; V9 needs its bar, carried by the new C3.)*
+2. **Draw the real H3 SVGs** — do this AFTER the restructure settles the card/figure set (deleting c4/c5/c6
+   figs first). Author to §7a geometry, register in STRUCTURE.md §7c, geometry-audit.
+3. **Then** the V drills (V1–V9) and the pillar modules M2–M9, each its own H/V.
 2. **Future H1 rebuild — the 3→4 re-split** (deferred, not shell-round scope): add a new "why diagnostics /
    cars are many ECUs" **C1** (3 contexts: workshop/EOL/OTA), and split the current C2 into **C3** (14229
    family + OSI) + **C4** (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to fully match STRUCTURE.md's 4-card H1.

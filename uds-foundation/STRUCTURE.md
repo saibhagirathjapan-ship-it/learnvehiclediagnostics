@@ -195,6 +195,32 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 > A_TA · S_Data · confirmed/unconfirmed service`. The SID / +0x40 / 7F+NRC facts are H2's — the primer
 > **re-uses** them as the shape's parts, never re-derives.
 
+> **⚠ H3 RESTRUCTURE — LOCKED 2026-07-07, EXECUTE NEXT SESSION (9 cards → 6).** User rejected C4/C5/C6 as
+> standalone cards; they fail the OK/NG gate (memory `feedback-prose-and-wording`: "earns its place" /
+> "answers a promise"). **The table BELOW is the SHIPPED 9-card build; migrate it to this 6-card target:**
+> - **Target 6 cards:** D0 divider · B brief · **C1 primer** (unchanged, signed off) · **C2 the six
+>   families** · **C3 "The ECU decides what it will serve"** · K conclusion. Each maps 1:1 to a divider
+>   promise: *what a service is · the menu · how it decides.*
+> - **DROP C4 (DID/RID)** → fold ONE bullet into C2's data/routine families ("you name *which* value or
+>   routine by a 16-bit DID/RID, not a memory address"); depth → M2 (DID) / M5 (RID). Delete
+>   `content/50-c4-did-rid.md` + `h3-c4-f*` figs.
+> - **DROP C5 (the 4-stage pipeline)** → merge ONLY the decision into C3 (the ECU vets a request and can
+>   refuse); the full route/link/dispatch/process pipeline (PduR/DSL/DSD/DSP) is **V9 depth**, not breadth.
+>   Delete `content/60-c5-server-pipeline.md` + `h3-c5-f*` figs. *(Pushback HELD: the decision stays in H3,
+>   not H2 — H2 is scoped to the wire and its conclusion already defers "how the ECU decides inside" →V9;
+>   and V9 needs a breadth bar, which C3 now carries. Old title "four stages to an answer" was NG-abstract.)*
+> - **DROP C6 (comms family)** → fold into C2: a communication-management bullet + a small leg placing
+>   `$10`/`$11`/`$3E` in family #1 with `→ V7a/b/c` pointers. Delete `content/70-c6-comms-family.md` + figs.
+> - **C2 (rewrite)** = the six families (provide-voice) + comms-family placement (**→V7a/b/c**) + the DID/RID
+>   one-liner (→M2/M5) + the security-guard leg. **Carries the V7a/b/c bars.** Current title OK.
+> - **C3 (new) "The ECU decides what it will serve":** bar = the ECU vets every request (right session?
+>   unlocked? valid?) → serves it, or refuses with a **negative** (the "no" from H2, decided inside the
+>   server). Legs: (a) the two gates, session + security (→V5, M4); (b) a refusal is that negative, born
+>   inside the server (→V9). **Carries the V5 AND V9 bars.** (Replaces old C3 gating + old C5 pipeline.)
+> - **K:** trim recap to the leaner arc. Renumber orders to 00/10/20/30/40/50.
+> - **Bar-coverage becomes:** `…V5←H3-C3 · V9←H3-C3 · V7a/b/c←H3-C2` (replaces `V5,V9←H3-C5 · V7a/b/c←H3-C6`
+>   in the line up top — update it on migration). **Figure register:** drop c4/c5/c6 rows; C2/C3 get new figs.
+
 | card | type | covers | go-deeper |
 |---|---|---|---|
 | H3-D0 | Divider | the arc: what a service **IS** → the catalog of them → how the ECU decides yes/no | — |

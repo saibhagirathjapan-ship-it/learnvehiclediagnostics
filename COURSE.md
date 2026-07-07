@@ -305,19 +305,24 @@ only ResponseOnEvent changed.
 
 **Next up — building H3 "What UDS can do & how the ECU decides"** (`uds-foundation/h3-catalog-and-server/`).
 Design LOCKED + **9 cards** (STRUCTURE.md H3 §; derivation `_derive/h3-service-primer-derivation`).
-- ✅ **Primer trio authored + user-approved 2026-07-07** — `00-divider` · `10-brief` · `20-c1-primer`
-  ("what a service *is*" — a named job under one fixed shape — "*and what makes it diagnostic*" = the
-  **primitives you diagnose with**). Content MD + **placeholder** SVGs; browser-verified. **Leg A dropped**
-  (re-taught H2) → primer is **2 legs** (diagnostic primitives · what it means to *provide*). Wording rules
-  the user enforced → memory `feedback-prose-and-wording` (active voice · no false agency · concrete
-  answers · reference-don't-re-teach · nothing cryptic).
-1. **Author catalog cards H3-C2..C6, then H3-K** — in the **"what it means to provide `$XX`" voice** (SID
-   kept — `feedback-service-home-and-usecases`): C2 six functional units · C3 gating · C4 DID/RID · C5
-   pipeline · **C6** comms-family naming bar (`$10`/`$11`/`$3E` as cl.10 Table 22 members, `drilled-in →`
-   V7a/V7b/V7c) · K conclusion (recap + retrieval + SOVD-less bridge). Non-dup-with-V1 lint fence per
-   STRUCTURE; reference upstream cards, don't re-teach.
-2. **SVGs for all H3 figures** (deferred to a later session per user) — replace the placeholders:
-   `h3-b-f1`, `h3-c1-f1/f2/f3`, then C2–C6 figures. Author the figure register as built.
+- ✅ **ALL 9 H3 cards authored + browser-verified + pushed 2026-07-07** (commit `d830ef6`). Primer trio
+  (divider · brief · primer — "what a service *is*" = a named job under one fixed shape · "*what makes it
+  diagnostic*" = the **primitives you diagnose with**; **Leg A dropped**, 2 legs) + catalog **C2** six
+  functional units (ISO cl.10–15) · **C3** gating (session + security) · **C4** DID/RID 16-bit spaces ·
+  **C5** the 4-stage server pipeline (route/check/decide/do = "how the ECU decides") · **C6** comms-family
+  placement of `$10`/`$11`/`$3E` (→V7a/b/c) · **K** conclusion (recap + retrieval + bridge to drills/M2).
+  Provided-capability voice throughout ("the ECU provides `$XX` to …"). **Two adversarial holistic checks**
+  run (primer: 1 blocker+3 nits; catalog: 3 blockers+nits) — all folded before shipping. Wording rules →
+  memory `feedback-prose-and-wording`.
+- **Figures are ALL PLACEHOLDERS** (labelled dashed-box `.dgm`). **NOT yet user-reviewed** end-to-end (the
+  primer trio was approved; C2–K were authored + adversarially checked but the user closed the session
+  before a full read — expect a wording pass).
+
+**Next up**
+1. **Draw the real H3 SVGs** (deferred per user) — replace all placeholders: `h3-b-f1`, `h3-c1-f1/f2/f3`,
+   `h3-c2..c6-f*` (15 figures). Author to §7a geometry + register in STRUCTURE.md §7c; then geometry-audit.
+2. **Expect a user wording pass on C2–K** (only the primer trio is signed off so far).
+3. **Then the V drills** (V1–V9) and the pillar modules M2–M9, each its own H/V.
 2. **Future H1 rebuild — the 3→4 re-split** (deferred, not shell-round scope): add a new "why diagnostics /
    cars are many ECUs" **C1** (3 contexts: workshop/EOL/OTA), and split the current C2 into **C3** (14229
    family + OSI) + **C4** (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to fully match STRUCTURE.md's 4-card H1.

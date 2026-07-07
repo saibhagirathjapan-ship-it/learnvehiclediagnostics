@@ -15,12 +15,16 @@ Verify: `node ../../_template/checkmod.js . <expectConcepts>` (DOM counts, overf
 | 00 | `00-divider.md` | divider | h3 | — | ✅ authored |
 | 10 | `10-brief.md` | brief | brief | b-f1 a-whole-menu *(placeholder)* | ✅ authored |
 | 20 | `20-c1-primer.md` | concept | c1 | c1-f1 service-shape · c1-f2 diagnostic-scene · c1-f3 provide-vs-use *(all placeholder)* | ✅ authored + approved |
-| — | C2 six functional units | concept | c2 | tbd | ⬜ next |
-| — | C3 session/security gating | concept | c3 | tbd | ⬜ |
-| — | C4 DID/RID coordinate spaces | concept | c4 | tbd | ⬜ |
-| — | C5 the server pipeline (route→link→dispatch→process) | concept | c5 | tbd | ⬜ |
-| — | C6 comms-management family ($10/$11/$3E) | concept | c6 | tbd | ⬜ |
-| — | K conclusion | conclusion | concl | — | ⬜ |
+| 30 | `30-c2-functional-units.md` | concept | c2 | c2-f1 six-families · c2-f2 security-gate *(placeholder)* | ✅ authored + checked |
+| 40 | `40-c3-gating.md` | concept | c3 | c3-f1 two-gates · c3-f2 why-gate *(placeholder)* | ✅ authored + checked |
+| 50 | `50-c4-did-rid.md` | concept | c4 | c4-f1 did-rid-spaces · c4-f2 did-map *(placeholder)* | ✅ authored + checked |
+| 60 | `60-c5-server-pipeline.md` | concept | c5 | c5-f1 four-stages · c5-f2 pipeline-names · c5-f3 accept-boundary *(placeholder)* | ✅ authored + checked |
+| 70 | `70-c6-comms-family.md` | concept | c6 | c6-f1 comms-family · c6-f2 family-members *(placeholder)* | ✅ authored + checked |
+| 80 | `80-conclusion.md` | conclusion | concl | — | ✅ authored + checked |
+
+**Status:** all 9 cards authored + browser-verified + pushed (commit `d830ef6`). Primer trio user-approved;
+**C2–K adversarially checked (3 blockers + nits folded) but NOT yet user-read** — expect a wording pass.
+All 15 figures are placeholders (real SVGs next session). `checkmod . 6` green.
 
 **DOM now (checkmod . 1):** 1 concept · 1 brief · 1 divider · EN on load · JP isolation · no overflow ·
 0 console errors · lists render indented.

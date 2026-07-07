@@ -5,7 +5,8 @@
 > rewrote C2 (six families + comms-placement leg →V7a/b/c + DID/RID one-liner + security leg); replaced the
 > old gating card with a new C3 "The ECU decides what it will serve" (vet → serve/refuse; legs = two gates
 > →V5/M4 and where-a-no-is-born →V9); trimmed K; renumbered 00/10/20/30/40/50. Full plan + 6-card table:
-> `../STRUCTURE.md` H3 §. **NOT yet user-read** (C2/C3/K) — expect a wording pass.
+> `../STRUCTURE.md` H3 §. **✅ USER-APPROVED 2026-07-07** ("H3 looks good") — all 6 cards signed off, prose
+> final. **Only remaining H3 work: draw the 10 real SVGs** (a focused next-session pass, per user).
 
 **Module:** `wiki/learn/uds-foundation/h3-catalog-and-server/` · breadth spine card 3 of 3.
 Answers *what a service is + what makes it diagnostic* (primer), then the catalog (six functional
@@ -29,8 +30,8 @@ Verify: `node ../../_template/checkmod.js . 3` (3 concepts; DOM counts, overflow
 **Status:** 6-card build rendered + `checkmod . 3` green (3 concepts, all bars present, EN-on-load, JP
 isolation, zero overflow, 0 console errors). Grep confirms **no stale pipeline terms** (four-stages /
 PduR / DSD / DSP) and DID/RID lives only in C2. Forward-pointers verified in the DOM: V7a/b/c (C2 comms
-leg), V5 (C3 gates leg), V9 (C3 refusal leg), M2/M5 (DID/RID + primitives). Primer trio user-approved;
-**C2/C3/K adversarially self-checked but NOT yet user-read** — expect a wording pass.
+leg), V5 (C3 gates leg), V9 (C3 refusal leg), M2/M5 (DID/RID + primitives). **All 6 cards user-approved 2026-07-07** ("H3 looks good") — prose is
+final; the only open H3 item is drawing the 10 real SVGs.
 
 ## Bar-coverage carried by H3 (post-restructure)
 - **V7a/b/c** ← H3-C2 (comms-family leg: `$10`→V7a / `$11`→V7b / `$3E`→V7c).

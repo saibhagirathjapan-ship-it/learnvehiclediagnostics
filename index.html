@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Automotive Diagnostics — From UDS to SOVD</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"><style>/* ============================================================
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Automotive Diagnostics — From UDS to SOVD</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"><style>/* ============================================================
    BLUEPRINT — canonical design system for the UDS→SOVD course
    LOCKED 2026-07-04. Do not restyle per module (see CONVENTIONS §1b–1c).
    Theme via .stage[data-theme=light|dark]; language via .stage[data-lang].
@@ -15,7 +15,7 @@ html,body{margin:0}
    Semantic hues (red/green/grey) OVERRIDE thematic use. Body text meets WCAG AA (≥4.5:1). */
 .stage[data-theme="light"]{--bg:#f4f5f6;--card:#ffffff;--ink:#23262c;--ink-soft:#565b63;--ink-faint:#7a7f88;--line:#dde0e4;--line-soft:#eceef0;
   --accent:#96650f;--accent-soft:#ecd9ad;--ok:#4f6a24;--neg:#a5352a;--warn:#a5521a;--warn-bg:#f6e7cf;--warn-ln:#ddb57c;
-  --chip:#f0e6cf;--code-bg:#eef0f2;--on-accent:#ffffff;--chrome:#23262c;--on-chrome:#f3f4f5;--shadow:0 1px 2px rgba(20,22,26,.08);
+  --chip:#f9f3e1;--code-bg:#eef0f2;--on-accent:#ffffff;--chrome:#23262c;--on-chrome:#f3f4f5;--shadow:0 1px 2px rgba(20,22,26,.08);
   --dgm-plate:#f7f8f9;--dgm-ink:#23262c;--dgm-muted:#6a6f77;--dgm-line:#b3b8bf;--dgm-fill:#e7e9ec}
 .stage[data-theme="dark"]{--bg:#14161a;--card:#1c1f24;--ink:#e9ebee;--ink-soft:#9aa0a8;--ink-faint:#6f757d;--line:#2c3037;--line-soft:#1f2228;
   --accent:#dea945;--accent-soft:#3a2c12;--ok:#a7bd61;--neg:#e68173;--warn:#e59240;--warn-bg:#33280f;--warn-ln:#6b5320;
@@ -30,12 +30,17 @@ strong{color:var(--accent);font-weight:600}
 em{font-style:italic;color:var(--ink-soft)}
 .jp em{font-style:normal;color:var(--ink)}   /* Japanese doesn't slant; give upright emphasis instead */
 /* forward-pointer pill ({{→ V9 · …}}) — spiral signpost to where a topic is drilled */
-.fwd{font-family:var(--f-mono);font-size:.8em;font-weight:600;color:var(--accent);background:var(--chip);padding:1px 6px;white-space:nowrap;letter-spacing:.01em}
+.fwd{font-family:var(--f-mono);font-size:.8em;font-weight:600;color:var(--accent);background:var(--chip);padding:1px 6px;white-space:nowrap;letter-spacing:.01em;text-decoration:none;border:1px solid transparent}
+a.fwd{cursor:pointer;transition:background .13s,color .13s,border-color .13s}
+a.fwd:hover{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+.fwd-go{margin-left:3px;font-size:.9em;opacity:.7}
 
 /* ===== concept card (schematic identity) ===== */
-.card{background:var(--card);border:1px solid var(--line);border-top:2px solid var(--accent);
-  border-radius:9px;box-shadow:var(--shadow);padding:0;overflow:hidden}
-.card-in{padding:20px 22px}
+.card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);
+  box-shadow:0 2px 10px rgba(20,22,26,.06);padding:0;overflow:hidden;margin:0 0 26px;scroll-margin-top:88px}
+.stage[data-theme="dark"] .card{box-shadow:0 2px 12px rgba(0,0,0,.4)}
+.card-in{padding:22px 24px}
+.brief,.concl,.divider{scroll-margin-top:88px}
 
 /* title-block header */
 .tblock{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:0 0 16px;background:var(--card)}
@@ -85,26 +90,32 @@ ul.blist.jp li{font-family:var(--f-jp);color:var(--ink-soft);font-size:15px;line
 .dgm .red{fill:var(--neg)} .dgm .red-s{stroke:var(--neg)} .dgm .plate{fill:var(--card)} .dgm .lnf{fill:var(--dgm-line)}
 .dgm text{font-family:var(--f-body)} .dgm .mono-t{font-family:var(--f-mono);font-weight:600}
 .dgm .amb{fill:var(--warn)} .dgm .amb-s{stroke:var(--warn)} .dgm .w7{font-weight:700} .dgm .w8{font-weight:800}
-figcaption{margin-top:9px;font-size:12px;color:var(--ink-faint);text-align:center;font-family:var(--f-body)}
+figcaption{margin-top:9px;font-size:12px;color:var(--ink-soft);text-align:center;font-family:var(--f-body)}
 
 /* ===== vertical stem = detail legs ===== */
-.stem{margin:24px 0 0}
-.stem-h{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin:0 0 14px 2px;display:flex;align-items:center;gap:10px}
-.stem-h::after{content:"";height:1px;flex:1;background:var(--line-soft)}
-.legs{border-left:2px solid var(--line)}
-.leg{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:0 0 10px 18px;position:relative;overflow:hidden}
-.leg::before{content:"";position:absolute;left:-18px;top:22px;width:18px;height:2px;background:var(--line)}
-.leg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:11px;padding:12px 14px}
+.stem{margin:28px 0 0;border-top:2px solid var(--accent-soft);padding-top:16px}
+/* "GO DEEPER" announces itself as a tinted accent banner, not a faint mono line */
+.stem-h{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin:0 0 14px;display:flex;align-items:center;gap:10px;background:var(--chip);border-left:3px solid var(--accent);padding:9px 13px}
+.stem-h .stem-n{font-weight:700;letter-spacing:.02em;text-transform:none;font-size:11px;background:var(--accent);color:var(--on-accent);padding:2px 8px}
+.stem-h .stem-hint{margin-left:auto;font-weight:500;letter-spacing:.01em;text-transform:none;font-size:11px;color:var(--ink-soft);font-family:var(--f-body)}
+.legs{border-left:3px solid var(--accent)}
+.leg{border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--card);margin:0 0 10px 18px;position:relative;overflow:hidden}
+.leg::before{content:"";position:absolute;left:-18px;top:25px;width:18px;height:2px;background:var(--accent)}
+.leg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 15px;background:var(--dgm-plate);transition:background .13s}
 .leg>summary::-webkit-details-marker{display:none}
+.leg>summary:hover{background:var(--chip)}
 .leg .lg-txt{flex:1;min-width:0}
 .lg-txt .en,.lg-txt .jp{display:block}
 .leg .lg-en{font-family:var(--f-display);font-weight:600;font-size:15px;color:var(--ink);letter-spacing:var(--dt)}
 .leg .lg-jp{font-family:var(--f-jp);font-size:12.5px;color:var(--ink-soft);margin-top:1px}
-.leg .chev{color:var(--ink-faint);font-size:13px;transition:transform .16s;flex:none;font-family:var(--f-mono)}
-.leg[open] .chev{transform:rotate(90deg)}
+/* the +/− cue is a SOLID accent button — the clearest "this row opens" signal */
+.leg .lg-cue{flex:none;width:28px;height:28px;background:var(--accent);color:var(--on-accent);border:0;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:20px;line-height:1;transition:filter .13s}
+.leg .lg-cue::before{content:"+"}
+.leg[open] .lg-cue::before{content:"\2212"}
+.leg>summary:hover .lg-cue{filter:brightness(1.12)}
 .leg[open]>summary{border-bottom:1px solid var(--line-soft);background:var(--code-bg)}
 .leg[open] .tgmini .bar{fill:var(--dgm-line)}
-.lg-body{padding:14px 16px 16px}
+.lg-body{padding:15px 16px 16px}
 .lg-body p{font-size:15px;margin:0 0 10px}
 
 /* cards nested inside a deep leg (a leg may hold up to ~4) */
@@ -145,11 +156,13 @@ td .mono{color:var(--accent);font-weight:600}
 .fig figcaption .en,.fig figcaption .jp{display:block}
 
 /* retrieval-practice beat (:::recall) — question shown, answer hidden */
-.recall{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;background:var(--dgm-plate);padding:13px 15px;margin:14px 0 2px}
-.recall .rc-q{font-size:14.5px;color:var(--ink);line-height:1.55}
-.recall .rc-q .lbl{font-family:var(--f-mono);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:5px}
-.recall .rc-a{margin-top:11px}
-.recall .rc-a>summary{list-style:none;cursor:pointer;font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+.recall{border:1.5px solid var(--accent);border-left-width:5px;background:var(--chip);padding:16px 18px;margin:18px 0 2px;box-shadow:0 2px 10px rgba(20,22,26,.05)}
+.recall .rc-q{font-size:15.5px;color:var(--ink);line-height:1.55}
+.recall .rc-q .lbl{font-family:var(--f-mono);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.recall .rc-q .lbl::before{content:"?";font-size:12px;width:20px;height:20px;border:1.5px solid var(--accent);border-radius:50%;display:grid;place-items:center;flex:none}
+.recall .rc-a{margin-top:13px}
+.recall .rc-a>summary{list-style:none;cursor:pointer;font-family:var(--f-mono);font-size:12.5px;font-weight:700;color:var(--on-accent);background:var(--accent);display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border:1px solid var(--accent)}
+.recall .rc-a>summary:hover{filter:brightness(1.07)}
 .recall .rc-a>summary::-webkit-details-marker{display:none}
 .recall .rc-a>summary::before{content:"▸";font-size:10px}
 .recall .rc-a[open]>summary::before{content:"▾"}
@@ -161,12 +174,12 @@ td .mono{color:var(--accent);font-weight:600}
 
 /* "Further reading" panel (:::reading) — compact; standards get doc + clause */
 .reading{border:1px solid var(--line-soft);border-left:2px solid var(--dgm-line);background:var(--dgm-plate);padding:8px 12px;margin:14px 0 2px}
-.reading .rd-h{font-family:var(--f-mono);font-weight:700;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 5px}
+.reading .rd-h{font-family:var(--f-mono);font-weight:700;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 5px}
 .reading .rd-list{list-style:none;margin:0;padding:0}
 .reading .rd-list li{padding:4px 0;display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px}
 .rd-doc{font-family:var(--f-mono);font-weight:600;font-size:11.5px;color:var(--ink-soft)}
 .rd-sec{font-family:var(--f-mono);font-size:10.5px;font-weight:600;color:var(--accent)}
-.rd-note{flex:1 1 100%;font-size:11.5px;color:var(--ink-faint);line-height:1.45;margin-top:1px}
+.rd-note{flex:1 1 100%;font-size:11.5px;color:var(--ink-soft);line-height:1.45;margin-top:1px}
 
 /* ============================================================
    MODULE SHELL — topbar · hero · TOC · dividers · nav
@@ -185,6 +198,40 @@ td .mono{color:var(--accent);font-weight:600}
 .tb-seg{display:inline-flex;border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);border-radius:8px;overflow:hidden;background:color-mix(in srgb,var(--on-chrome) 7%,transparent)}
 .tb-seg button{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 60%,transparent);background:transparent;border:0;padding:6px 10px;line-height:1}
 .tb-seg button.on{background:var(--accent);color:var(--on-accent)}
+/* brand is now the HOME link */
+.brand{text-decoration:none}
+.brand:hover .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 42%,transparent)}
+.brand:hover .std{color:color-mix(in srgb,var(--on-chrome) 72%,transparent)}
+/* single-icon toggles — one globe (cycles EN/日本語/EN+JP) + one theme flip (sun↔moon) */
+.tb-seg button{display:inline-flex;align-items:center;gap:5px}
+.tb-icobtn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 82%,transparent);background:color-mix(in srgb,var(--on-chrome) 8%,transparent);border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);padding:6px 9px;line-height:1}
+.tb-icobtn:hover{border-color:var(--accent);color:var(--on-chrome)}
+.tb-icobtn svg{flex:none;transition:transform .25s ease}
+.tb-icobtn .tb-lc{font-family:"IBM Plex Mono","Noto Sans JP",monospace;font-size:11.5px;min-width:38px;text-align:left}
+.tb-theme .ic-moon{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-sun{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-moon{display:inline-block}
+.tb-theme:hover svg{transform:rotate(30deg)}
+
+/* breadcrumb bar — sticky, pinned directly under the topbar (FB4). Stacks below .topbar at --tbh;
+   the overview strip below then pins at --stick (= topbar + crumbs). Opaque bg so page content
+   scrolls under it cleanly; z between topbar (30) and the overview strip (20). */
+.crumbs{position:sticky;top:var(--tbh,44px);z-index:29;background:var(--bg);border-bottom:1px solid var(--line)}
+.crumbs-in{max-width:1120px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;gap:14px}
+.cr-trail{display:flex;align-items:center;gap:8px;min-width:0;flex:1;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px}
+.cr-trail a{color:var(--ink-soft);text-decoration:none}
+.cr-trail a:hover{color:var(--accent)}
+.cr-sep{color:var(--ink-faint)}
+.cr-cur{color:var(--ink);font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cr-cur .jp{font-family:var(--f-jp);color:var(--ink-soft);margin-left:6px}
+.cr-nav{display:flex;gap:8px;align-items:center;flex:none}
+.cn{display:inline-flex;flex-direction:column;gap:1px;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:5px 11px;max-width:210px}
+.cn:hover{border-color:var(--accent)}
+.cn.next{text-align:right;align-items:flex-end}
+.cn-d{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.cn-t{font-family:var(--f-display);font-weight:600;font-size:12.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cn-t .jp{font-family:var(--f-jp);color:var(--ink-soft);margin-left:5px}
+.cn.disabled{opacity:.3;pointer-events:none;min-width:64px}
 
 /* hero */
 .hero{max-width:1120px;margin:0 auto;padding:44px 20px 6px;text-align:center}
@@ -199,14 +246,40 @@ td .mono{color:var(--accent);font-weight:600}
 .arc .lbl{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);margin-left:6px}
 
 /* layout: sidebar TOC + stream */
-.layout{max-width:1120px;margin:0 auto;display:flex;gap:26px;padding:0 20px;align-items:flex-start}
+.layout{max-width:820px;margin:0 auto;display:block;padding:0 20px}
+/* pager: one card at a time (each .page = a card + its prev/next) */
+.stream.pager>.page{display:none;scroll-margin-top:calc(var(--stick,44px) + 60px)}
+.stream.pager>.page.on{display:block}
 .toc{position:sticky;top:70px;width:212px;flex:none;align-self:flex-start;max-height:calc(100vh - 90px);overflow:auto;padding:20px 0;font-size:13px}
 .toc h4{margin:0 0 8px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
 .toc a{display:flex;gap:9px;align-items:baseline;text-decoration:none;color:var(--ink-soft);padding:6px 10px;border-radius:7px;border-left:2px solid transparent;line-height:1.3}
 .toc a .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);flex:none}
 .toc a:hover{background:var(--bg);color:var(--ink)}
 .toc a.on{color:var(--accent);border-left-color:var(--accent);background:var(--chip)}
-.stream{flex:1;min-width:0;padding:22px 0 40px}
+.stream{min-width:0;padding:20px 0 60px}
+
+/* ===== overview strip: this module's cards, in order (sits after the hero) ===== */
+.cardmap-wrap{position:sticky;top:var(--stick,44px);z-index:20;margin-top:18px;padding:9px 20px;background:var(--bg);border-bottom:1px solid var(--line-soft)}
+.cardmap{max-width:1120px;margin:0 auto;border:0;background:transparent;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cardmap-in{display:flex;align-items:center;gap:2px;padding:11px 13px;width:max-content;min-width:100%}
+.cm-lead{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-right:9px;white-space:nowrap;flex:none}
+.cm-stop{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;text-decoration:none;border:1px solid var(--line);background:var(--bg);white-space:nowrap;flex:none;transition:border-color .13s,background .13s}
+.cm-stop:hover{border-color:var(--accent)}
+.cm-stop.on{border-color:var(--accent);background:var(--chip)}
+.cm-t{font-family:var(--f-display);font-weight:600;font-size:13px;color:var(--ink);letter-spacing:var(--dt)}
+.cm-brief .cm-t,.cm-conclusion .cm-t{color:var(--ink-soft);font-weight:500}
+.cm-arr{color:var(--ink-soft);font-family:var(--f-mono);font-size:13px;padding:0 4px;flex:none}
+/* stop number/icon badge — shared by the strip + the rail */
+.st-n{font-family:var(--f-mono);font-weight:700;font-size:11px;color:var(--on-accent);background:var(--accent);min-width:22px;height:20px;padding:0 4px;display:grid;place-items:center;flex:none}
+.st-ic{background:var(--ink-soft);font-size:12px}
+
+/* ===== left rail = card list (repurposes the .toc sidebar) ===== */
+.rail a{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--ink-soft);padding:7px 9px;border-left:2px solid transparent;line-height:1.25;margin-bottom:1px}
+.rail a .rl-t{font-size:12.5px;min-width:0}
+.rl-t .en,.rl-t .jp{display:block}
+.rl-t .jp{font-family:var(--f-jp);font-size:11px;color:var(--ink-faint)}
+.rail a:hover{background:var(--bg);color:var(--ink)}
+.rail a.on{color:var(--accent);background:var(--chip);border-left-color:var(--accent)}
 
 /* divider — a dark-grey section bar with an ochre rule */
 .divider{background:var(--chrome);border:0;border-left:4px solid var(--accent);border-radius:10px;padding:20px 22px;margin:0 0 18px;scroll-margin-top:72px}
@@ -238,11 +311,32 @@ td .mono{color:var(--accent);font-weight:600}
 .modnav .next{text-align:right}
 .modnav .disabled{opacity:.4;pointer-events:none}
 
+/* card-level nav — prev/next between adjacent cards, appended under each card (lighter than .cn) */
+.cardnav{display:flex;gap:12px;margin:16px 0 30px}
+.cln{flex:1;min-width:0;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:10px 13px;display:flex;flex-direction:column;gap:2px}
+.cln.next{text-align:right;align-items:flex-end}
+.cln:hover{border-color:var(--accent)}
+.cln-d{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.cln-t{font-family:var(--f-display);font-weight:600;font-size:13.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cln-t .jp{font-family:var(--f-jp);font-weight:500;font-size:11px;color:var(--ink-soft);display:block}
+.cln.disabled{opacity:0;pointer-events:none}
+
 @media(max-width:860px){
   .toc{display:none}
-  .layout,.hero,.topbar-in,.modnav{padding-left:14px;padding-right:14px}
+  .layout,.hero,.topbar-in,.modnav,.cardmap-wrap{padding-left:14px;padding-right:14px}
   .hero h1{font-size:27px}
   .brand .std{display:none}
+  .brand{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar-in{gap:8px}
+  .tb-seg button{padding:6px 8px}
+  #allseg{display:none}          /* Expand/Collapse is least essential on a phone; drop it to fit */
+  .fwd{white-space:normal;overflow-wrap:anywhere}   /* let a long pointer pill wrap rather than overflow the card */
+  .cardmap-wrap{top:var(--stick,40px);margin-top:0;padding-top:8px;padding-bottom:8px}
+  .crumbs-in{padding-left:14px;padding-right:14px;gap:8px;flex-wrap:wrap}
+  .cr-nav{flex:1 0 100%;order:2}
+  .cn{flex:1;max-width:none}
+  .cn-t{max-width:38vw}
+  .cardnav{gap:8px;margin:12px 0 24px}
 }
 
 /* ============================================================
@@ -275,7 +369,73 @@ td .mono{color:var(--accent);font-weight:600}
 .mc-status{margin-top:auto;padding-top:13px;font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--ok)}
 .modcard.upcoming .mc-status{color:var(--ink-faint)}
 @media(max-width:560px){.grid{grid-template-columns:1fr}}
-</style></head><body><div class="stage" data-theme="light" data-lang="both"><div class="topbar"><div class="topbar-in"><div class="brand"><span class="dot"></span>Automotive Diagnostics<span class="std">Learn · 学習</span></div><div class="tb-spacer"></div><div class="tb-ctl"><div class="tb-seg" id="langseg"><button data-v="en">EN</button><button data-v="jp">日本語</button><button class="on" data-v="both">EN+JP</button></div><div class="tb-seg" id="themeseg"><button class="on" data-v="light">Light</button><button data-v="dark">Dark</button></div></div></div></div><section class="hero"><div class="kicker">Automotive Diagnostics · 自動車診断</div><h1>From UDS to SOVD</h1><div class="jp">UDSからSOVDへ</div><p class="tagline en">A hands-on path from the first diagnostic byte to Service-Oriented Vehicle Diagnostics — built one small module at a time.</p><p class="tagline jp">最初の診断バイトから、サービス指向車両診断（SOVD）まで。小さなモジュールを積み上げて手を動かして学びます。</p></section><div class="hub"><div class="hub-h4">9 modules · 全9モジュール</div><div class="grid"><a class="modcard" href="uds-foundation/index.html"><div class="mc-top"><span class="mc-n">M1</span><span class="mc-sovd">→ substrate</span></div><h3>UDS Foundations<span class="jp">UDSの基礎</span></h3><p class="mc-scope en">Why diagnostics · client/server · DCM/DEM · OSI map · message anatomy · sessions · <span class="mono">$10</span> &amp; <span class="mono">$11</span></p><p class="mc-scope jp">診断の意義 · クライアント/サーバー · DCM/DEM · OSI · メッセージ構造 · セッション · <span class="mono">$10</span>・<span class="mono">$11</span></p><div class="mc-thumb"><svg class="dgm" viewBox="0 0 320 128" role="img" aria-label="A tester and an ECU exchange a UDS request and response">
+
+/* ============================================================
+   FOUNDATION MAP (uds-foundation/index.html) — the T-shaped module chooser.
+   Rendered through _template/render-map.js (was a hand-copied inline block; moved here
+   2026-07-07 so the map cannot drift from the design system — FB1).
+   ============================================================ */
+.fhero{max-width:1080px;margin:0 auto;padding:40px 20px 4px;text-align:center}
+.fhero .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.fhero h1{font-family:var(--f-display);font-weight:700;font-size:32px;line-height:1.12;margin:11px 0 6px;color:var(--ink);letter-spacing:-.5px}
+.fhero h1 .jp{font-family:var(--f-jp);font-size:20px;color:var(--ink-soft);font-weight:600}
+.fhero .ftag{max-width:60ch;margin:14px auto 0;color:var(--ink-soft);font-size:16px}
+.fhero .ftag.jp{font-family:var(--f-jp)}
+
+.fmap{max-width:1040px;margin:0 auto;padding:22px 20px 90px}
+
+/* how-to-learn guidance indicator */
+.guide{border:1px dashed var(--line);background:var(--dgm-plate);padding:15px 18px;margin:0 0 34px}
+.guide .g-h{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.guide .g-row{display:flex;flex-wrap:wrap;gap:9px 26px}
+.guide .g{display:inline-flex;align-items:baseline;gap:10px;font-size:14px;color:var(--ink-soft);line-height:1.5}
+.guide .g b{color:var(--ink)}
+.guide .ar{font-family:var(--f-mono);color:var(--accent);font-weight:700;font-size:17px;flex:none;line-height:1}
+.guide .g.jp,.guide .g-h.jp{font-family:var(--f-jp)}
+
+/* section tags */
+.axis{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin:0 0 13px}
+.axis.breadth::after{content:"";height:1px;flex:1;background:var(--line)}
+.axis.depth{justify-content:center}
+.axis .n{font-family:var(--f-mono);color:var(--on-accent);background:var(--accent);padding:2px 7px}
+
+/* the horizontal bar (breadth spine) */
+.hbar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* the trunk connecting bar -> stem */
+.trunk{height:36px;position:relative}
+.trunk::before{content:"";position:absolute;left:50%;top:0;bottom:-8px;width:2px;transform:translateX(-1px);background:var(--line)}
+.trunk::after{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;transform:translate(-50%,0) rotate(45deg);background:var(--accent)}
+
+/* the vertical stem (depth drills) */
+.vstem{width:min(470px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;position:relative}
+.vstem::before{content:"";position:absolute;left:50%;top:-18px;bottom:26px;width:2px;transform:translateX(-1px);background:var(--line);z-index:0}
+
+/* map cards */
+.fcard{display:flex;flex-direction:column;text-decoration:none;background:var(--card);border:1px solid var(--line);padding:14px 16px;color:var(--ink);transition:border-color .15s,transform .12s;position:relative;z-index:1}
+.fcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.hcard{border-top:2px solid var(--accent)}
+.vcard{border-left:3px solid var(--accent)}
+.vcard::before{content:"";position:absolute;left:50%;top:-11px;width:10px;height:10px;transform:translate(-50%,0) rotate(45deg);background:var(--accent);z-index:2}
+.tc-top{display:flex;align-items:center;gap:8px}
+.tc-id{font-family:var(--f-mono);font-weight:700;font-size:12px;color:var(--on-accent);background:var(--accent);padding:3px 8px}
+.tc-kind{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--ink-faint)}
+.tc-bar{margin-left:auto;font-family:var(--f-mono);font-size:10px;color:var(--accent);background:var(--chip);padding:2px 6px}
+.tc-title{font-family:var(--f-display);font-weight:600;font-size:15.5px;margin:11px 0 0;color:var(--ink);letter-spacing:var(--dt);line-height:1.22}
+.tc-title .jp{display:block;font-family:var(--f-jp);font-size:12px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+.tc-line{font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.5}
+.tc-line.jp{font-family:var(--f-jp)}
+.tc-go{margin-top:11px;font-family:var(--f-mono);font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em}
+.tc-go .ar{color:var(--accent)}
+.tc-stub{margin-left:6px;color:var(--ink-faint);text-transform:none;letter-spacing:0}
+.fcard,.tc-id,.tc-bar,.axis .n{border-radius:0}
+
+@media(max-width:720px){
+  .hbar{grid-template-columns:1fr}
+  .vstem{width:100%}
+  .fhero h1{font-size:26px}
+}
+</style></head><body><div class="stage" data-theme="light" data-lang="en"><header class="topbar"><div class="topbar-in"><a class="brand" href="index.html" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a><div class="tb-spacer"></div><div class="tb-ctl"><button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg><span class="tb-lc">EN</span></button><button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme"><svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg></button></div></div></header><section class="hero"><div class="kicker">Automotive Diagnostics · 自動車診断</div><h1>From UDS to SOVD</h1><div class="jp">UDSからSOVDへ</div><p class="tagline en">A hands-on path from the first diagnostic byte to Service-Oriented Vehicle Diagnostics — built one small module at a time.</p><p class="tagline jp">最初の診断バイトから、サービス指向車両診断（SOVD）まで。小さなモジュールを積み上げて手を動かして学びます。</p></section><div class="hub"><div class="hub-h4">9 modules · 全9モジュール</div><div class="grid"><a class="modcard" href="uds-foundation/index.html"><div class="mc-top"><span class="mc-n">M1</span><span class="mc-sovd">→ substrate</span></div><h3>UDS Foundations<span class="jp">UDSの基礎</span></h3><p class="mc-scope en">Why diagnostics · client/server · DCM/DEM · OSI map · message anatomy · sessions · <span class="mono">$10</span> &amp; <span class="mono">$11</span></p><p class="mc-scope jp">診断の意義 · クライアント/サーバー · DCM/DEM · OSI · メッセージ構造 · セッション · <span class="mono">$10</span>・<span class="mono">$11</span></p><div class="mc-thumb"><svg class="dgm" viewBox="0 0 320 128" role="img" aria-label="A tester and an ECU exchange a UDS request and response">
   <!-- ===== Tester (left) ===== -->
   <rect x="12" y="33" width="80" height="62" rx="6" class="plate lnf"/>
   <rect x="12" y="33" width="80" height="62" rx="6" class="ln" fill="none" stroke-width="1.4"/>
@@ -316,4 +476,14 @@ td .mono{color:var(--accent);font-weight:600}
     <marker id="h0_c_ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="acc"/></marker>
     <marker id="h0_c_ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" class="grn"/></marker>
   </defs>
-</svg></div><div class="mc-status">✓ ready</div></a><a class="modcard upcoming" href="uds-data/index.html"><div class="mc-top"><span class="mc-n">M2</span><span class="mc-sovd">→ data</span></div><h3>Data &amp; Identification<span class="jp">データと識別</span></h3><p class="mc-scope en"><span class="mono">$22</span> ReadDataByIdentifier · <span class="mono">$2E</span> Write · DIDs · VIN · scaling</p><p class="mc-scope jp"><span class="mono">$22</span> データ読み出し · <span class="mono">$2E</span> 書き込み · DID · VIN · スケーリング</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-dtc/index.html"><div class="mc-top"><span class="mc-n">M3</span><span class="mc-sovd">→ faults</span></div><h3>Fault Memory &amp; DTCs<span class="jp">故障メモリとDTC</span></h3><p class="mc-scope en"><span class="mono">$19</span> ReadDTCInformation · <span class="mono">$14</span> Clear · DTC status byte · snapshots · DEM lifecycle</p><p class="mc-scope jp"><span class="mono">$19</span> DTC読み出し · <span class="mono">$14</span> 消去 · DTCステータス · スナップショット · DEM</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-security/index.html"><div class="mc-top"><span class="mc-n">M4</span><span class="mc-sovd">→ auth</span></div><h3>Security &amp; Access<span class="jp">セキュリティとアクセス</span></h3><p class="mc-scope en"><span class="mono">$27</span> SecurityAccess (seed/key) · <span class="mono">$29</span> Authentication · <span class="mono">$28</span> CommunicationControl</p><p class="mc-scope jp"><span class="mono">$27</span> セキュリティアクセス · <span class="mono">$29</span> 認証 · <span class="mono">$28</span> 通信制御</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-routines/index.html"><div class="mc-top"><span class="mc-n">M5</span><span class="mc-sovd">→ operations</span></div><h3>Routines &amp; I/O Control<span class="jp">ルーチンと入出力制御</span></h3><p class="mc-scope en"><span class="mono">$31</span> RoutineControl · <span class="mono">$2F</span> InputOutputControlByIdentifier</p><p class="mc-scope jp"><span class="mono">$31</span> ルーチン制御 · <span class="mono">$2F</span> 入出力制御</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-flash/index.html"><div class="mc-top"><span class="mc-n">M6</span><span class="mc-sovd">→ software update</span></div><h3>Reprogramming / Flash<span class="jp">再プログラミング / フラッシュ</span></h3><p class="mc-scope en">The flash sequence · <span class="mono">$34</span>/<span class="mono">$36</span>/<span class="mono">$37</span> download · <span class="mono">$35</span> upload · checksum</p><p class="mc-scope jp">フラッシュ手順 · <span class="mono">$34</span>/<span class="mono">$36</span>/<span class="mono">$37</span> ダウンロード · <span class="mono">$35</span> アップロード · チェックサム</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="doip/index.html"><div class="mc-top"><span class="mc-n">M7</span><span class="mc-sovd">→ transport</span></div><h3>From CAN to IP: DoIP<span class="jp">CANからIPへ：DoIP</span></h3><p class="mc-scope en">Ethernet · DoIP (ISO 13400) · IP addressing · DoIP vs DoCAN · zonal architecture</p><p class="mc-scope jp">イーサネット · DoIP · IPアドレス · DoIP対DoCAN · ゾーンアーキテクチャ</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="web-api/index.html"><div class="mc-top"><span class="mc-n">M8</span><span class="mc-sovd">→ how to read SOVD</span></div><h3>Web APIs in 20 min<span class="jp">20分で学ぶWeb API</span></h3><p class="mc-scope en">HTTP verbs · REST resources &amp; URIs · JSON · status codes · client/server over IP</p><p class="mc-scope jp">HTTPメソッド · RESTリソース · JSON · ステータスコード · IP上のC/S</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="sovd/index.html"><div class="mc-top"><span class="mc-n">M9</span><span class="mc-sovd">→ SOVD itself</span></div><h3>SOVD<span class="jp">SOVD</span></h3><p class="mc-scope en">Core: resource model · entities · discovery &amp; self-description · the REST API shape. In practice: classic-ECU proxy via DoIP (CDA) · auth · remote/OTA · ODX</p><p class="mc-scope jp">コア：リソースモデル · エンティティ · 発見と自己記述 · REST APIの形。実践：DoIPプロキシでのUDS共存(CDA) · 認証 · リモート/OTA · ODX</p><div class="mc-status">soon</div></a></div></div></div><script>var root=document.querySelector('.stage');function seg(id,a){var s=document.getElementById(id);if(!s)return;s.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call(s.children,function(x){x.classList.toggle('on',x===b)});root.setAttribute(a,b.dataset.v);});}seg('themeseg','data-theme');seg('langseg','data-lang');</script></body></html>
+</svg></div><div class="mc-status">✓ ready</div></a><a class="modcard upcoming" href="uds-data/index.html"><div class="mc-top"><span class="mc-n">M2</span><span class="mc-sovd">→ data</span></div><h3>Data &amp; Identification<span class="jp">データと識別</span></h3><p class="mc-scope en"><span class="mono">$22</span> ReadDataByIdentifier · <span class="mono">$2E</span> Write · DIDs · VIN · scaling</p><p class="mc-scope jp"><span class="mono">$22</span> データ読み出し · <span class="mono">$2E</span> 書き込み · DID · VIN · スケーリング</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-dtc/index.html"><div class="mc-top"><span class="mc-n">M3</span><span class="mc-sovd">→ faults</span></div><h3>Fault Memory &amp; DTCs<span class="jp">故障メモリとDTC</span></h3><p class="mc-scope en"><span class="mono">$19</span> ReadDTCInformation · <span class="mono">$14</span> Clear · DTC status byte · snapshots · DEM lifecycle</p><p class="mc-scope jp"><span class="mono">$19</span> DTC読み出し · <span class="mono">$14</span> 消去 · DTCステータス · スナップショット · DEM</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-security/index.html"><div class="mc-top"><span class="mc-n">M4</span><span class="mc-sovd">→ auth</span></div><h3>Security &amp; Access<span class="jp">セキュリティとアクセス</span></h3><p class="mc-scope en"><span class="mono">$27</span> SecurityAccess (seed/key) · <span class="mono">$29</span> Authentication · <span class="mono">$28</span> CommunicationControl</p><p class="mc-scope jp"><span class="mono">$27</span> セキュリティアクセス · <span class="mono">$29</span> 認証 · <span class="mono">$28</span> 通信制御</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-routines/index.html"><div class="mc-top"><span class="mc-n">M5</span><span class="mc-sovd">→ operations</span></div><h3>Routines &amp; I/O Control<span class="jp">ルーチンと入出力制御</span></h3><p class="mc-scope en"><span class="mono">$31</span> RoutineControl · <span class="mono">$2F</span> InputOutputControlByIdentifier</p><p class="mc-scope jp"><span class="mono">$31</span> ルーチン制御 · <span class="mono">$2F</span> 入出力制御</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="uds-flash/index.html"><div class="mc-top"><span class="mc-n">M6</span><span class="mc-sovd">→ software update</span></div><h3>Reprogramming / Flash<span class="jp">再プログラミング / フラッシュ</span></h3><p class="mc-scope en">The flash sequence · <span class="mono">$34</span>/<span class="mono">$36</span>/<span class="mono">$37</span> download · <span class="mono">$35</span> upload · checksum</p><p class="mc-scope jp">フラッシュ手順 · <span class="mono">$34</span>/<span class="mono">$36</span>/<span class="mono">$37</span> ダウンロード · <span class="mono">$35</span> アップロード · チェックサム</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="doip/index.html"><div class="mc-top"><span class="mc-n">M7</span><span class="mc-sovd">→ transport</span></div><h3>From CAN to IP: DoIP<span class="jp">CANからIPへ：DoIP</span></h3><p class="mc-scope en">Ethernet · DoIP (ISO 13400) · IP addressing · DoIP vs DoCAN · zonal architecture</p><p class="mc-scope jp">イーサネット · DoIP · IPアドレス · DoIP対DoCAN · ゾーンアーキテクチャ</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="web-api/index.html"><div class="mc-top"><span class="mc-n">M8</span><span class="mc-sovd">→ how to read SOVD</span></div><h3>Web APIs in 20 min<span class="jp">20分で学ぶWeb API</span></h3><p class="mc-scope en">HTTP verbs · REST resources &amp; URIs · JSON · status codes · client/server over IP</p><p class="mc-scope jp">HTTPメソッド · RESTリソース · JSON · ステータスコード · IP上のC/S</p><div class="mc-status">soon</div></a><a class="modcard upcoming" href="sovd/index.html"><div class="mc-top"><span class="mc-n">M9</span><span class="mc-sovd">→ SOVD itself</span></div><h3>SOVD<span class="jp">SOVD</span></h3><p class="mc-scope en">Core: resource model · entities · discovery &amp; self-description · the REST API shape. In practice: classic-ECU proxy via DoIP (CDA) · auth · remote/OTA · ODX</p><p class="mc-scope jp">コア：リソースモデル · エンティティ · 発見と自己記述 · REST APIの形。実践：DoIPプロキシでのUDS共存(CDA) · 認証 · リモート/OTA · ODX</p><div class="mc-status">soon</div></a></div></div></div><script>
+(function(){var root=document.querySelector('.stage');if(!root)return;
+function stick(){var t=document.querySelector('.topbar'),c=document.querySelector('.crumbs');
+  var th=t?t.offsetHeight:0,ch=c?c.offsetHeight:0,d=document.documentElement.style;
+  d.setProperty('--tbh',th+'px');d.setProperty('--crh',ch+'px');d.setProperty('--stick',(th+ch)+'px');}
+stick();addEventListener('resize',stick);addEventListener('load',stick);
+var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=document.getElementById('langbtn');
+if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];stick();});
+var tb=document.getElementById('themebtn');if(tb)tb.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});
+})();
+</script></body></html>

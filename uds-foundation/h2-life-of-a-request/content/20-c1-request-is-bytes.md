@@ -7,7 +7,7 @@ title:
   en: "A request is just bytes — and byte 1 is the service"
   jp: "要求はただのバイト列 ― そして先頭バイトがサービス"
 short: { en: "Bytes & the SID", jp: "バイトとSID" }
-illustration: figures/c1-request-bytes.svg
+illustration: figures/h2-c1-f1_request-shape.svg
 caption:
   en: "**`10 03` = \"switch to the Extended session\".** The first byte names the service (`$10`); the next byte is its option (`03`)."
   jp: "**`10 03` ＝「拡張セッションに切り替えて」。** 先頭バイトがサービス（`$10`）、次のバイトがその選択肢（`03`）。"
@@ -50,7 +50,7 @@ Every request follows the **same shape**, no matter which service it is:
 どの要求も、サービスが何であれ**同じ形**に従います：
 :::
 
-:::figure src=figures/c1-pdu-shape.svg
+:::figure src=figures/h2-c1-f2_request-anatomy.svg
 en: **One byte of service, then its parameters.** The SID is always a single byte; most request services fall in the range `$10`–`$3E`, and zero or more parameter bytes follow.
 jp: **1バイトのサービス、続いて引数。** SIDは常に1バイト。ほとんどの要求サービスは `$10`–`$3E` の範囲に収まり、その後に0個以上の引数バイトが続きます。
 :::
@@ -71,20 +71,20 @@ jp: **1バイトのサービス、続いて引数。** SIDは常に1バイト。
 
 ## leg:subfn
 :::en
-When the second byte is a **sub-function**, its **top bit** carries a hidden switch: "**don't bother sending me the positive reply**". Set that bit and the ECU still does the work — it just stays quiet on success. It is how a tester keeps a busy bus clean.
+When the second byte is a **sub-function**, it isn't a plain number. Its **top bit** is set aside as a **reserved flag** — a one-bit switch the tester *could* raise — while the **lower 7 bits** carry the actual value (here, `03`). Notice the flag exists; what it does comes later.
 :::
 :::jp
-2バイト目が**サブファンクション**のとき、その**最上位ビット**には隠しスイッチがあります ― 「**成功の応答は返さなくていい**」。このビットを立てても、ECUは作業をします ― ただ成功時に黙るだけです。混み合ったバスをテスターが静かに保つ手口です。
+2バイト目が**サブファンクション**のとき、それは単なる数値ではありません。**最上位ビット**は**予約された旗**として取り分けられ（テスターが立て*得る*1ビットのスイッチ）、**下位7ビット**が実際の値（ここでは `03`）を運びます。旗の存在に気づくだけ ― その働きは後ほど。
 :::
 
-:::figure src=figures/c1-subfn-bit.svg
-en: **The sub-function byte, bit by bit.** The top bit (`0x80`) is the "suppress the positive reply" flag; the lower 7 bits are the actual value.
-jp: **サブファンクション・バイトをビットで。** 最上位ビット（`0x80`）が「肯定応答を抑制」の旗、下位7ビットが実際の値です。
+:::figure src=figures/h2-c1-f3_subfunction-byte.svg
+en: **The sub-function byte, split.** The top bit (`0x80`) is a reserved flag; the lower 7 bits are the value.
+jp: **サブファンクション・バイトの内訳。** 最上位ビット（`0x80`）は予約された旗、下位7ビットが値です。
 :::
 
 :::key
-en: We only flag this here — the full rule (negatives are *still* sent, and why) is a drill of its own {{→ V4 · the suppress bit}}.
-jp: ここでは触れるだけ ― 完全な規則（否定応答は*やはり*送られる、その理由）は専用ドリルで {{→ V4 · 抑制ビット}}。
+en: What that reserved flag does — and the rule around it — is a drill of its own {{→ V4 · the suppress bit}}. For now: byte 1 is the service, the rest are parameters.
+jp: その予約ビットの働き ― そしてそれをめぐる規則 ― は専用ドリルで {{→ V4 · 抑制ビット}}。今は「バイト1がサービス、残りは引数」で十分です。
 :::
 
 ## footer

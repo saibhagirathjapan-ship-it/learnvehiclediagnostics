@@ -1,16 +1,16 @@
 ---
 id: concl
 type: conclusion
-order: 60
+order: 90
 eyebrow: "Section recap · まとめ"
 ---
 
 ## body
 :::en
-One request is a **string of bytes**, and its **first byte is the service (SID)**. The ECU serves it and returns **exactly one** of two answers: a **positive** one, echoing the SID **+ `0x40`**, or a **negative** one — the fixed `7F` + your SID + a reason code (**NRC**). Around that single beat, four rules always hold: a request aims at **one ECU or all** (but answers come back from one), **`$3E`** keeps a session alive, faults log to a **separate store**, and **`$11`** drops back to default and re-locks. We watched it for real: `10 03` → `50 03 00 32 01 F4`, a "yes" that even hands back the ECU's timing. The one thing we passed over is the middle of the beat — *how* the ECU decides yes-or-no inside, its validity checks. That's a story of its own {{→ V9 · inside the server}}.
+One request is a **string of bytes**, and its **first byte is the service (SID)**. The ECU serves it and returns **exactly one** of two answers: a **positive** one, echoing the SID **+ `0x40`**, or a **negative** one — the fixed `7F` + your SID + a reason code (**NRC**). We watched it for real: `10 03` → `50 03 00 32 01 F4`, a "yes" that even hands back the ECU's timing. Two things hold around **every** beat — a request aims at **one ECU or all** (but answers come from one), and the reply is **always positive or negative**. And that beat runs inside a **session** with a life of its own: `$10` opens it, `$3E` holds it open, and an `$11` reset or a timeout closes it — back to the default, re-locked. The one thing we passed over is the *middle* of the beat — how the ECU decides yes-or-no inside. That's a story of its own {{→ V9 · inside the server}}.
 :::
 :::jp
-1つの要求は**バイト列**で、その**先頭バイトがサービス（SID）**です。ECUはそれを処理し、2つのうち**ちょうど1つ**の答えを返します ― SIDに **`0x40` を足して**反射する**肯定**か、固定の `7F` ＋あなたのSID＋理由コード（**NRC**）の**否定**。その1拍の周りには、常に4つの規則 ― 要求は**1台か全員**に宛て（でも答えは1台から）、**`$3E`** がセッションを生かし、故障は**別ストア**へ、**`$11`** はデフォルトへ戻して再ロック。本物も見ました：`10 03` → `50 03 00 32 01 F4`、タイミングまで返す「はい」。通り過ぎたのは1拍の**真ん中**だけ ― ECUが内部で*どう*イエス・ノーを決めるか、その検証です。それは独立した物語です {{→ V9 · サーバーの内部}}。
+1つの要求は**バイト列**で、その**先頭バイトがサービス（SID）**です。ECUはそれを処理し、2つのうち**ちょうど1つ**の答えを返します ― SIDに **`0x40` を足して**反射する**肯定**か、固定の `7F` ＋あなたのSID＋理由コード（**NRC**）の**否定**。本物も見ました：`10 03` → `50 03 00 32 01 F4`、タイミングまで返す「はい」。**どの**1拍にも2つのことが成り立ちます ― 要求は**1台か全員**に宛て（でも答えは1台から）、応答は**常に肯定か否定**。そしてその拍は、独自の一生を持つ**セッション**の中で流れます：`$10` が開き、`$3E` が保ち、`$11` リセットかタイムアウトが閉じる ― デフォルトへ戻り、再ロック。通り過ぎたのは1拍の**真ん中**だけ ― ECUが内部で*どう*イエス・ノーを決めるか。それは独立した物語です {{→ V9 · サーバーの内部}}。
 :::
 
 :::key

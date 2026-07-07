@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>UDS Foundation — the learning map</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-/* --- inlined _template/blueprint.css (self-contained, no runtime dep) --- */
-/* ============================================================
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>UDS Foundation — the learning map</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"><style>/* ============================================================
    BLUEPRINT — canonical design system for the UDS→SOVD course
    LOCKED 2026-07-04. Do not restyle per module (see CONVENTIONS §1b–1c).
    Theme via .stage[data-theme=light|dark]; language via .stage[data-lang].
@@ -218,14 +207,16 @@ td .mono{color:var(--accent);font-weight:600}
 .tb-icobtn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 82%,transparent);background:color-mix(in srgb,var(--on-chrome) 8%,transparent);border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);padding:6px 9px;line-height:1}
 .tb-icobtn:hover{border-color:var(--accent);color:var(--on-chrome)}
 .tb-icobtn svg{flex:none;transition:transform .25s ease}
-.tb-icobtn .tb-lc{font-family:"IBM Plex Mono","Noto Sans JP",monospace;font-size:11.5px;min-width:38px;text-align:left}
+.tb-icobtn .tb-lc{font-family:"IBM Plex Mono","Noto Sans JP",monospace;font-size:11.5px;min-width:38px;text-align:center}
 .tb-theme .ic-moon{display:none}
 .stage[data-theme="dark"] .tb-theme .ic-sun{display:none}
 .stage[data-theme="dark"] .tb-theme .ic-moon{display:inline-block}
 .tb-theme:hover svg{transform:rotate(30deg)}
 
-/* breadcrumb bar — under the sticky topbar; trail on the left, module prev/next on the right */
-.crumbs{background:var(--bg);border-bottom:1px solid var(--line)}
+/* breadcrumb bar — sticky, pinned directly under the topbar (FB4). Stacks below .topbar at --tbh;
+   the overview strip below then pins at --stick (= topbar + crumbs). Opaque bg so page content
+   scrolls under it cleanly; z between topbar (30) and the overview strip (20). */
+.crumbs{position:sticky;top:var(--tbh,44px);z-index:29;background:var(--bg);border-bottom:1px solid var(--line)}
 .crumbs-in{max-width:1120px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;gap:14px}
 .cr-trail{display:flex;align-items:center;gap:8px;min-width:0;flex:1;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px}
 .cr-trail a{color:var(--ink-soft);text-decoration:none}
@@ -257,7 +248,7 @@ td .mono{color:var(--accent);font-weight:600}
 /* layout: sidebar TOC + stream */
 .layout{max-width:820px;margin:0 auto;display:block;padding:0 20px}
 /* pager: one card at a time (each .page = a card + its prev/next) */
-.stream.pager>.page{display:none;scroll-margin-top:calc(var(--tbh,44px) + 60px)}
+.stream.pager>.page{display:none;scroll-margin-top:calc(var(--stick,44px) + 60px)}
 .stream.pager>.page.on{display:block}
 .toc{position:sticky;top:70px;width:212px;flex:none;align-self:flex-start;max-height:calc(100vh - 90px);overflow:auto;padding:20px 0;font-size:13px}
 .toc h4{margin:0 0 8px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
@@ -268,7 +259,7 @@ td .mono{color:var(--accent);font-weight:600}
 .stream{min-width:0;padding:20px 0 60px}
 
 /* ===== overview strip: this module's cards, in order (sits after the hero) ===== */
-.cardmap-wrap{position:sticky;top:var(--tbh,44px);z-index:20;margin-top:18px;padding:9px 20px;background:var(--bg);border-bottom:1px solid var(--line-soft)}
+.cardmap-wrap{position:sticky;top:var(--stick,44px);z-index:20;margin-top:18px;padding:9px 20px;background:var(--bg);border-bottom:1px solid var(--line-soft)}
 .cardmap{max-width:1120px;margin:0 auto;border:0;background:transparent;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .cardmap-in{display:flex;align-items:center;gap:2px;padding:11px 13px;width:max-content;min-width:100%}
 .cm-lead{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-right:9px;white-space:nowrap;flex:none}
@@ -340,7 +331,7 @@ td .mono{color:var(--accent);font-weight:600}
   .tb-seg button{padding:6px 8px}
   #allseg{display:none}          /* Expand/Collapse is least essential on a phone; drop it to fit */
   .fwd{white-space:normal;overflow-wrap:anywhere}   /* let a long pointer pill wrap rather than overflow the card */
-  .cardmap-wrap{top:var(--tbh,40px);margin-top:0;padding-top:8px;padding-bottom:8px}
+  .cardmap-wrap{top:var(--stick,40px);margin-top:0;padding-top:8px;padding-bottom:8px}
   .crumbs-in{padding-left:14px;padding-right:14px;gap:8px;flex-wrap:wrap}
   .cr-nav{flex:1 0 100%;order:2}
   .cn{flex:1;max-width:none}
@@ -379,9 +370,11 @@ td .mono{color:var(--accent);font-weight:600}
 .modcard.upcoming .mc-status{color:var(--ink-faint)}
 @media(max-width:560px){.grid{grid-template-columns:1fr}}
 
-</style>
-<style>
-/* ===== Foundation map — the T-shaped module chooser (scaffolding) ===== */
+/* ============================================================
+   FOUNDATION MAP (uds-foundation/index.html) — the T-shaped module chooser.
+   Rendered through _template/render-map.js (was a hand-copied inline block; moved here
+   2026-07-07 so the map cannot drift from the design system — FB1).
+   ============================================================ */
 .fhero{max-width:1080px;margin:0 auto;padding:40px 20px 4px;text-align:center}
 .fhero .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
 .fhero h1{font-family:var(--f-display);font-weight:700;font-size:32px;line-height:1.12;margin:11px 0 6px;color:var(--ink);letter-spacing:-.5px}
@@ -418,7 +411,7 @@ td .mono{color:var(--accent);font-weight:600}
 .vstem{width:min(470px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;position:relative}
 .vstem::before{content:"";position:absolute;left:50%;top:-18px;bottom:26px;width:2px;transform:translateX(-1px);background:var(--line);z-index:0}
 
-/* cards */
+/* map cards */
 .fcard{display:flex;flex-direction:column;text-decoration:none;background:var(--card);border:1px solid var(--line);padding:14px 16px;color:var(--ink);transition:border-color .15s,transform .12s;position:relative;z-index:1}
 .fcard:hover{border-color:var(--accent);transform:translateY(-2px)}
 .hcard{border-top:2px solid var(--accent)}
@@ -435,140 +428,21 @@ td .mono{color:var(--accent);font-weight:600}
 .tc-go{margin-top:11px;font-family:var(--f-mono);font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em}
 .tc-go .ar{color:var(--accent)}
 .tc-stub{margin-left:6px;color:var(--ink-faint);text-transform:none;letter-spacing:0}
+.fcard,.tc-id,.tc-bar,.axis .n{border-radius:0}
 
 @media(max-width:720px){
   .hbar{grid-template-columns:1fr}
   .vstem{width:100%}
   .fhero h1{font-size:26px}
 }
-</style>
-</head>
-<body>
-<div class="stage" data-theme="light" data-lang="en">
-
-  <header class="topbar">
-    <div class="topbar-in">
-      <a class="brand" href="../index.html" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a>
-      <div class="tb-spacer"></div>
-      <div class="tb-ctl">
-        <button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg><span class="tb-lc">EN</span></button>
-        <button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme"><svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg></button>
-      </div>
-    </div>
-  </header>
-
-  <nav class="crumbs" aria-label="Breadcrumb"><div class="crumbs-in"><div class="cr-trail">
-    <a href="../index.html">Course</a><span class="cr-sep" aria-hidden="true">›</span>
-    <span class="cr-cur" aria-current="page"><span class="en">Foundation</span><span class="jp">基盤</span></span>
-  </div></div></nav>
-
-  <section class="fhero">
-    <div class="kicker">Foundation · 基盤</div>
-    <h1><span class="en">The UDS Foundation</span><span class="jp">UDSの基盤</span></h1>
-    <p class="ftag en">Twelve single-sitting modules. Read the three across the top for the whole picture; drill the nine down the stem for depth. Pick any card.</p>
-    <p class="ftag jp">1回で読み切れる12モジュール。上段の3つを横に読めば全体像、縦の9つをたどれば深く理解できます。どのカードからでもどうぞ。</p>
-  </section>
-
-  <div class="fmap">
-
-    <div class="guide">
-      <div class="g-h en">How to learn this map</div>
-      <div class="g-h jp">この地図の歩き方</div>
-      <div class="g-row">
-        <span class="g en"><span class="ar">→</span><span>Across the top = <b>breadth</b>. Read <b>H1 → H3</b> and you have the whole subject at a high level.</span></span>
-        <span class="g jp"><span class="ar">→</span><span>上段は<b>広さ</b>。<b>H1 → H3</b> を読めば、全体像を高い視点でつかめます。</span></span>
-      </div>
-      <div class="g-row">
-        <span class="g en"><span class="ar">↓</span><span>Down the stem = <b>depth</b>. Drill <b>V1 → V9</b> in order to go deep.</span></span>
-        <span class="g jp"><span class="ar">↓</span><span>縦の幹は<b>深さ</b>。<b>V1 → V9</b> を順にたどると、深く掘り下げられます。</span></span>
-      </div>
-    </div>
-
-    <div class="axis breadth"><span class="n">H</span><span class="en">Breadth spine · read across →</span><span class="jp">広さの背骨 · 横に読む →</span></div>
-    <div class="hbar" id="hbar"></div>
-
-    <div class="trunk"></div>
-
-    <div class="axis depth"><span class="n">V</span><span class="en">Depth drills · go down ↓</span><span class="jp">深さのドリル · 縦にたどる ↓</span></div>
-    <div class="vstem" id="vstem"></div>
-
-  </div>
-</div>
-
-<script>
-var MODS = [
-  { id:'H1', kind:'H', slug:'h1-landscape', built:true,
-    t_en:'The diagnostics landscape', t_jp:'診断の全体像',
-    l_en:'What UDS is, who talks (tester ↔ ECU), and where it sits among the standards.',
-    l_jp:'UDSとは何か、誰が話すのか（テスター↔ECU）、標準の中での位置づけ。' },
-  { id:'H2', kind:'H', slug:'h2-life-of-a-request', built:true,
-    t_en:'The life of one request', t_jp:'1つのリクエストの一生',
-    l_en:'Follow a single request in and one answer out — the whole beat, end to end.',
-    l_jp:'1つのリクエストと1つの応答を、端から端まで追いかける。' },
-  { id:'H3', kind:'H', slug:'h3-catalog-and-server',
-    t_en:'What UDS can do & how the ECU decides', t_jp:'できること／ECUの判断',
-    l_en:'The service catalog (6 units + security) and the server at a glance.',
-    l_jp:'サービス一覧（6ユニット＋セキュリティ）とサーバーの概観。' },
-
-  { id:'V1', kind:'V', bar:'H1', slug:'v1-service-model',
-    t_en:'The service model', t_jp:'サービスモデル',
-    l_en:'Primitives, confirmed vs unconfirmed, and the client/server access point.',
-    l_jp:'プリミティブ、確認応答の有無、クライアント/サーバーのアクセス点。' },
-  { id:'V2', kind:'V', bar:'H2', slug:'v2-request-and-response',
-    t_en:'Request & positive response', t_jp:'リクエストと肯定応答',
-    l_en:'Byte by byte: the A_PDU, the SID, and the SID + 0x40 rule.',
-    l_jp:'バイト単位：A_PDU、SID、そして SID + 0x40 の規則。' },
-  { id:'V3', kind:'V', bar:'H2', slug:'v3-negative-responses',
-    t_en:'Negative responses & the NRC catalog', t_jp:'否定応答とNRC一覧',
-    l_en:'7F + SID + NRC, the single global NRC catalog, and 0x78 responsePending.',
-    l_jp:'7F + SID + NRC、共通のNRC一覧、そして 0x78（応答保留）。' },
-  { id:'V4', kind:'V', bar:'H2', slug:'v4-subfunctions',
-    t_en:'Sub-functions & the suppress bit', t_jp:'サブファンクションと抑制ビット',
-    l_en:'The sub-function byte and the suppressPositiveResponse bit (0x80).',
-    l_jp:'サブファンクションバイトと、肯定応答抑制ビット（0x80）。' },
-  { id:'V5', kind:'V', bar:'H2', slug:'v5-sessions',
-    t_en:'Sessions & the state machine', t_jp:'セッションと状態機械',
-    l_en:'Default / programming / extended / safety — how sessions gate access.',
-    l_jp:'デフォルト/プログラミング/拡張/安全 — セッションによる許可制御。' },
-  { id:'V6', kind:'V', bar:'H2', slug:'v6-timing',
-    t_en:'Timing & keep-alive', t_jp:'タイミングとキープアライブ',
-    l_en:'P2 / P2* / S3 and the TesterPresent ($3E) heartbeat.',
-    l_jp:'P2 / P2* / S3 と、TesterPresent（$3E）の心拍。' },
-  { id:'V7', kind:'V', bar:'H2', slug:'v7-archetypes',
-    t_en:'The archetype exchanges — $10 & $11', t_jp:'原型のやり取り — $10・$11',
-    l_en:'Two concrete traces that tie the whole substrate together.',
-    l_jp:'基盤全体を結びつける、2つの具体的なやり取り。' },
-  { id:'V8', kind:'V', bar:'H1', slug:'v8-addressing-transport',
-    t_en:'Addressing & the transport descent', t_jp:'アドレスと搬送層への降下',
-    l_en:'Physical vs functional; ISO-TP frames; DoIP — how the bytes travel.',
-    l_jp:'物理/機能アドレス、ISO-TPフレーム、DoIP — バイトの通り道。' },
-  { id:'V9', kind:'V', bar:'H3', slug:'v9-inside-the-server',
-    t_en:'Inside the server — the Dcm pipeline', t_jp:'サーバーの内部 — Dcmパイプライン',
-    l_en:'DSL → DSD → DSP, and the gate where every NRC is born.',
-    l_jp:'DSL → DSD → DSP、そして全NRCが生まれる関門。' },
-];
-
-function card(m){
-  var isV = m.kind === 'V';
-  var barTag = isV ? '<span class="tc-bar">bar &uarr; ' + m.bar + '</span>' : '';
-  return '<a class="fcard ' + (isV ? 'vcard' : 'hcard') + '" href="' + m.slug + '/index.html">'
-    + '<div class="tc-top"><span class="tc-id">' + m.id + '</span>'
-    + '<span class="tc-kind">' + (isV ? 'DEPTH' : 'BREADTH') + '</span>' + barTag + '</div>'
-    + '<h3 class="tc-title"><span class="en">' + m.t_en + '</span><span class="jp">' + m.t_jp + '</span></h3>'
-    + '<p class="tc-line en">' + m.l_en + '</p><p class="tc-line jp">' + m.l_jp + '</p>'
-    + '<span class="tc-go">' + (m.built ? 'read <span class="ar">&rarr;</span>' : 'open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span>') + '</span>'
-    + '</a>';
-}
-
-document.getElementById('hbar').innerHTML = MODS.filter(function(m){return m.kind==='H'}).map(card).join('');
-document.getElementById('vstem').innerHTML = MODS.filter(function(m){return m.kind==='V'}).map(card).join('');
-
-var root = document.querySelector('.stage');
-function setTbh(){var t=document.querySelector('.topbar');if(t)document.documentElement.style.setProperty('--tbh',t.offsetHeight+'px');}
-setTbh();addEventListener('resize',setTbh);
-(function(){var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=document.getElementById('langbtn');
- if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];});})();
-(function(){var b=document.getElementById('themebtn');if(b)b.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});})();
-</script>
-</body>
-</html>
+</style></head><body><div class="stage" data-theme="light" data-lang="en"><header class="topbar"><div class="topbar-in"><a class="brand" href="../index.html" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a><div class="tb-spacer"></div><div class="tb-ctl"><button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg><span class="tb-lc">EN</span></button><button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme"><svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg></button></div></div></header><nav class="crumbs" aria-label="Breadcrumb"><div class="crumbs-in"><div class="cr-trail"><a href="../index.html">Course</a><span class="cr-sep" aria-hidden="true">›</span><span class="cr-cur" aria-current="page"><span class="en">Foundation</span><span class="jp">基盤</span></span></div></div></nav><section class="fhero"><div class="kicker">Foundation · 基盤</div><h1><span class="en">The UDS Foundation</span><span class="jp">UDSの基盤</span></h1><p class="ftag en">14 single-sitting modules. Read the three across the top for the whole picture; open any of the 11 below to go deeper. Pick any card.</p><p class="ftag jp">1回で読み切れる14モジュール。上段の3つを横に読めば全体像、下の11を開けばさらに深く。どのカードからでもどうぞ。</p></section><div class="fmap"><div class="guide"><div class="g-h en">How to learn this map</div><div class="g-h jp">この地図の歩き方</div><div class="g-row"><span class="g en"><span class="ar">→</span><span>The three cards across the top are the <b>whole story</b>. Read <b>H1 → H3</b> and you understand the subject at a high level.</span></span><span class="g jp"><span class="ar">→</span><span>上段の3枚が<b>話の全体</b>です。<b>H1 → H3</b> を読めば、高い視点で全体をつかめます。</span></span></div><div class="g-row"><span class="g en"><span class="ar">↓</span><span>Each card down the stem <b>goes deeper into one topic</b>. Open any that interest you — they're optional.</span></span><span class="g jp"><span class="ar">↓</span><span>縦の各カードは<b>1つの話題を深く掘り下げます</b>。気になるものを開いてください（任意）。</span></span></div></div><div class="axis breadth"><span class="n">H</span><span class="en">The whole picture · read across →</span><span class="jp">全体像 · 横に読む →</span></div><div class="hbar"><a class="fcard hcard" href="h1-landscape/index.html"><div class="tc-top"><span class="tc-id">H1</span><span class="tc-kind">OVERVIEW</span></div><h3 class="tc-title"><span class="en">The diagnostics landscape</span><span class="jp">診断の全体像</span></h3><p class="tc-line en">What UDS is, who talks (tester ↔ ECU), and where it sits among the standards.</p><p class="tc-line jp">UDSとは何か、誰が話すのか（テスター↔ECU）、標準の中での位置づけ。</p><span class="tc-go">read <span class="ar">&rarr;</span></span></a><a class="fcard hcard" href="h2-life-of-a-request/index.html"><div class="tc-top"><span class="tc-id">H2</span><span class="tc-kind">OVERVIEW</span></div><h3 class="tc-title"><span class="en">The life of one request</span><span class="jp">1つのリクエストの一生</span></h3><p class="tc-line en">Follow one request in and one answer out — then the whole life of a session.</p><p class="tc-line jp">1つの要求と1つの応答を追い、続けてセッションの一生をたどる。</p><span class="tc-go">read <span class="ar">&rarr;</span></span></a><a class="fcard hcard" href="h3-catalog-and-server/index.html"><div class="tc-top"><span class="tc-id">H3</span><span class="tc-kind">OVERVIEW</span></div><h3 class="tc-title"><span class="en">What UDS can do &amp; how the ECU decides</span><span class="jp">できること／ECUの判断</span></h3><p class="tc-line en">The service catalog (6 units + security), the server, and the comms-management family that holds $10/$11/$3E.</p><p class="tc-line jp">サービス一覧（6ユニット＋セキュリティ）、サーバー、そして $10/$11/$3E を束ねる通信管理ファミリ。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a></div><div class="trunk"></div><div class="axis depth"><span class="n">V</span><span class="en">Go deeper · one topic at a time ↓</span><span class="jp">深掘り · 1つずつ ↓</span></div><div class="vstem"><a class="fcard vcard" href="v1-service-model/index.html"><div class="tc-top"><span class="tc-id">V1</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H1</span></div><h3 class="tc-title"><span class="en">The service model</span><span class="jp">サービスモデル</span></h3><p class="tc-line en">Primitives, confirmed vs unconfirmed, and the client/server access point.</p><p class="tc-line jp">プリミティブ、確認応答の有無、クライアント/サーバーのアクセス点。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v2-request-and-response/index.html"><div class="tc-top"><span class="tc-id">V2</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H2</span></div><h3 class="tc-title"><span class="en">Request &amp; positive response</span><span class="jp">リクエストと肯定応答</span></h3><p class="tc-line en">Byte by byte: the A_PDU, the SID, and the SID + 0x40 rule.</p><p class="tc-line jp">バイト単位：A_PDU、SID、そして SID + 0x40 の規則。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v3-negative-responses/index.html"><div class="tc-top"><span class="tc-id">V3</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H2</span></div><h3 class="tc-title"><span class="en">Negative responses &amp; the NRC catalog</span><span class="jp">否定応答とNRC一覧</span></h3><p class="tc-line en">7F + SID + NRC, the single global NRC catalog, and 0x78 responsePending.</p><p class="tc-line jp">7F + SID + NRC、共通のNRC一覧、そして 0x78（応答保留）。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v4-subfunctions/index.html"><div class="tc-top"><span class="tc-id">V4</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H2</span></div><h3 class="tc-title"><span class="en">Sub-functions &amp; the suppress bit</span><span class="jp">サブファンクションと抑制ビット</span></h3><p class="tc-line en">The sub-function byte and the suppressPositiveResponse bit (0x80).</p><p class="tc-line jp">サブファンクションバイトと、肯定応答抑制ビット（0x80）。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v5-sessions/index.html"><div class="tc-top"><span class="tc-id">V5</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H2</span></div><h3 class="tc-title"><span class="en">Sessions &amp; the state machine</span><span class="jp">セッションと状態機械</span></h3><p class="tc-line en">Default / programming / extended / safety — how sessions gate access.</p><p class="tc-line jp">デフォルト/プログラミング/拡張/安全 — セッションによる許可制御。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v6-timing/index.html"><div class="tc-top"><span class="tc-id">V6</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H2</span></div><h3 class="tc-title"><span class="en">Timing &amp; keep-alive</span><span class="jp">タイミングとキープアライブ</span></h3><p class="tc-line en">P2 / P2* / S3 — the deadlines and the session-idle clock.</p><p class="tc-line jp">P2 / P2* / S3 — 応答期限とセッションのアイドル時計。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v7a-session-control/index.html"><div class="tc-top"><span class="tc-id">V7a</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H2</span></div><h3 class="tc-title"><span class="en">$10 DiagnosticSessionControl</span><span class="jp">$10 診断セッション制御</span></h3><p class="tc-line en">The service that opens a session, whole — its trace, types, and couplings.</p><p class="tc-line jp">セッションを開くサービスの全体 ― トレース・種類・結合。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v7b-ecu-reset/index.html"><div class="tc-top"><span class="tc-id">V7b</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H2</span></div><h3 class="tc-title"><span class="en">$11 ECUReset</span><span class="jp">$11 ECUリセット</span></h3><p class="tc-line en">The service that reboots the ECU — reset types, memory effects, and timing.</p><p class="tc-line jp">ECUを再起動するサービス ― リセット種別・メモリ影響・タイミング。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v7c-tester-present/index.html"><div class="tc-top"><span class="tc-id">V7c</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H2</span></div><h3 class="tc-title"><span class="en">$3E TesterPresent</span><span class="jp">$3E テスタープレゼント</span></h3><p class="tc-line en">Why you keep a session alive — presence, the broadcast keep-alive, what lapses lose.</p><p class="tc-line jp">なぜセッションを保つのか ― 存在通知、ブロードキャスト保持、失効時に失うもの。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v8-addressing-transport/index.html"><div class="tc-top"><span class="tc-id">V8</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H1</span></div><h3 class="tc-title"><span class="en">Addressing &amp; the transport descent</span><span class="jp">アドレスと搬送層への降下</span></h3><p class="tc-line en">Physical vs functional; ISO-TP frames; DoIP — how the bytes travel.</p><p class="tc-line jp">物理/機能アドレス、ISO-TPフレーム、DoIP — バイトの通り道。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a><a class="fcard vcard" href="v9-inside-the-server/index.html"><div class="tc-top"><span class="tc-id">V9</span><span class="tc-kind">DEEP DIVE</span><span class="tc-bar">bar &uarr; H3</span></div><h3 class="tc-title"><span class="en">Inside the server — the Dcm pipeline</span><span class="jp">サーバーの内部 — Dcmパイプライン</span></h3><p class="tc-line en">DSL → DSD → DSP, and the gate where every NRC is born.</p><p class="tc-line jp">DSL → DSD → DSP、そして全NRCが生まれる関門。</p><span class="tc-go">open <span class="ar">&rarr;</span><span class="tc-stub">(content coming)</span></span></a></div></div></div><script>
+(function(){var root=document.querySelector('.stage');if(!root)return;
+function stick(){var t=document.querySelector('.topbar'),c=document.querySelector('.crumbs');
+  var th=t?t.offsetHeight:0,ch=c?c.offsetHeight:0,d=document.documentElement.style;
+  d.setProperty('--tbh',th+'px');d.setProperty('--crh',ch+'px');d.setProperty('--stick',(th+ch)+'px');}
+stick();addEventListener('resize',stick);addEventListener('load',stick);
+var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=document.getElementById('langbtn');
+if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];stick();});
+var tb=document.getElementById('themebtn');if(tb)tb.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});
+})();
+</script></body></html>

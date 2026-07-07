@@ -28,7 +28,7 @@ A modern car is not one computer. It is **dozens** — engine, brakes, doors, ai
 3. テスターが各ECUに「何が悪い？」と尋ね、答えを読み取ります。これが**診断**です。
 :::
 
-:::figure src=figures/brief-hero.svg
+:::figure src=figures/h1-brief-f1_who-talks.svg
 en: **From warning light to answer.** The car flags a fault; a tester connects and asks its ECUs what's wrong — here the engine ECU is the one at fault.
 jp: **警告灯から答えへ。** 車が異常を知らせ、テスターをつないでECUに原因を尋ねます ― ここではエンジンECUが該当。
 :::

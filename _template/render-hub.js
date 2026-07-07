@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const { FONTS, topbar, TOPBAR_SCRIPT } = require('./partials.js');   // shared page chrome (FB1)
 const CSS = fs.readFileSync(path.join(__dirname, 'blueprint.css'), 'utf8');
 const LEARN = process.argv[2] ? path.resolve(process.argv[2]) : path.resolve(__dirname, '..');
 const c = yaml.load(fs.readFileSync(path.join(LEARN, 'course.yml'), 'utf8'));
@@ -26,17 +27,13 @@ function card(m){
     thumb(m)+
     `<div class="mc-status">${up?'soon':'✓ ready'}</div></a>`;
 }
-const FONTS=`<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">`;
-const topbar=`<div class="topbar"><div class="topbar-in"><div class="brand"><span class="dot"></span>${inline(c.title.en)}<span class="std">Learn · 学習</span></div>`+
-  `<div class="tb-spacer"></div><div class="tb-ctl">`+
-  `<div class="tb-seg" id="langseg"><button data-v="en">EN</button><button data-v="jp">日本語</button><button class="on" data-v="both">EN+JP</button></div>`+
-  `<div class="tb-seg" id="themeseg"><button class="on" data-v="light">Light</button><button data-v="dark">Dark</button></div></div></div></div>`;
+// the hub IS the course home, so the brand links to itself (index.html)
+const topbarHtml = topbar({ home: 'index.html' });
 const hero=`<section class="hero"><div class="kicker">Automotive Diagnostics · 自動車診断</div>`+
   `<h1>${inline(c.subtitle.en)}</h1><div class="jp">${inline(c.subtitle.jp)}</div>`+
   `<p class="tagline en">${inline(c.tagline.en)}</p><p class="tagline jp">${inline(c.tagline.jp)}</p></section>`;
 const grid=`<div class="hub"><div class="hub-h4">${c.modules.length} modules · 全${c.modules.length}モジュール</div><div class="grid">${c.modules.map(card).join('')}</div></div>`;
-const SCRIPT=`<script>var root=document.querySelector('.stage');function seg(id,a){var s=document.getElementById(id);if(!s)return;s.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call(s.children,function(x){x.classList.toggle('on',x===b)});root.setAttribute(a,b.dataset.v);});}seg('themeseg','data-theme');seg('langseg','data-lang');</script>`;
 const html=`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(c.title.en)} — ${esc(c.subtitle.en)}</title>${FONTS}<style>${CSS}</style></head><body>`+
-  `<div class="stage" data-theme="light" data-lang="both">${topbar}${hero}${grid}</div>${SCRIPT}</body></html>`;
+  `<div class="stage" data-theme="light" data-lang="en">${topbarHtml}${hero}${grid}</div>${TOPBAR_SCRIPT}</body></html>`;
 fs.writeFileSync(path.join(LEARN,'index.html'), html);
 console.log('hub →', path.join(LEARN,'index.html'), '·', c.modules.length, 'modules');

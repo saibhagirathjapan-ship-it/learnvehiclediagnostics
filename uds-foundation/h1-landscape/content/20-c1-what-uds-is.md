@@ -6,7 +6,7 @@ section: { n: "H1", en: "The diagnostics landscape", jp: "診断の全体像" }
 title:
   en: "What UDS is, and who talks"
   jp: "UDSとは何か、そして誰が話すのか"
-illustration: figures/c1-client-server.svg
+illustration: figures/h1-c1-f1_client-server.svg
 caption:
   en: "**One language, two fixed roles.** The tester (client) always asks; the ECU (server) only answers — never the other way round."
   jp: "**1つの言語、2つの固定役割。** テスター（クライアント）が必ず尋ね、ECU（サーバー）は答えるだけ ― 逆はありません。"
@@ -38,18 +38,16 @@ legs:
 :::en
 - UDS is written down as one international standard, **ISO 14229**.
 - It defines a set of **services** — each is one thing the tester can ask: read a fault, reset, unlock a function, reprogram.
-- Every service has a number — its **Service Identifier (SID)** — in hex, like `$10`.
-- Both sides look up the **same** numbers, so any compliant tool can talk to any compliant ECU.
+- Every service has a **number** so both sides mean the same thing; any compliant tool can talk to any compliant ECU. You'll read those numbers, byte by byte, in the next chapter {{→ H2}}.
 :::
 :::jp
 - UDSは1つの国際規格 **ISO 14229** として文書化されています。
 - **サービス**の集合を定義します ― 各サービスは「テスターが頼める1つの動作」：故障を読む、再起動、機能の解除、再書込み。
-- 各サービスには番号 ― **サービス識別子（SID）** ― があり、`$10` のように16進で書きます。
-- 双方が**同じ**番号を引くので、規格に沿ったどのツールも、どのECUとでも話せます。
+- 各サービスには**番号**があり、双方が同じ意味を指します。規格に沿ったどのツールも、どのECUとでも話せます。その番号は次章でバイト単位に読みます {{→ H2}}。
 :::
-:::figure src=figures/c1-shared-dictionary.svg
-en: **One dictionary, looked up from both ends.** `$` just means "hex": `$10` is the number 16.
-jp: **一つの辞書を、両端から引く。** `$` は「16進」の意味で、`$10` は数の16。
+:::figure src=figures/h1-c1-f2_shared-dictionary.svg
+en: **One dictionary, looked up from both ends.** Tester and ECU agree on the same numbered services.
+jp: **一つの辞書を、両端から引く。** テスターとECUが同じ番号のサービスで一致します。
 :::
 
 ## leg:server

@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const { FONTS, topbar, TOPBAR_SCRIPT } = require('./partials.js');   // shared page chrome (FB1)
 
 const CSS = fs.readFileSync(path.join(__dirname, 'blueprint.css'), 'utf8');
 let uidc = 0;
@@ -14,14 +15,16 @@ let uidc = 0;
 const LINKS = {
   H1:'../h1-landscape/', H2:'../h2-life-of-a-request/', H3:'../h3-catalog-and-server/',
   V1:'../v1-service-model/', V2:'../v2-request-and-response/', V3:'../v3-negative-responses/',
-  V4:'../v4-subfunctions/', V5:'../v5-sessions/', V6:'../v6-timing/', V7:'../v7-archetypes/',
+  V4:'../v4-subfunctions/', V5:'../v5-sessions/', V6:'../v6-timing/',
+  V7a:'../v7a-session-control/', V7b:'../v7b-ecu-reset/', V7c:'../v7c-tester-present/',
   V8:'../v8-addressing-transport/', V9:'../v9-inside-the-server/',
   M2:'../../uds-data/', M3:'../../uds-dtc/', M4:'../../uds-security/', M5:'../../uds-routines/',
   M6:'../../uds-flash/', M7:'../../doip/', M8:'../../web-api/', M9:'../../sovd/',
 };
 function fwd(inner){
   const t = inner.trim();
-  const idm = t.match(/\b([VMH]\d+)\b/);
+  // match H1..H3 / V1..V9 (incl. the split service homes V7a/V7b/V7c) / M2..M9
+  const idm = t.match(/\b([VMH]\d+[a-c]?)\b/);
   const href = idm && LINKS[idm[1]] ? LINKS[idm[1]] + 'index.html' : null;
   return href ? `<a class="fwd" href="${href}">${t}<span class="fwd-go">↗</span></a>`
               : `<span class="fwd">${t}</span>`;
@@ -213,29 +216,13 @@ function renderCard(meta,sections,assetsDir){
   }
 }
 function renderHero(mod){
-  const a=mod.arc||{}; let dots='';
-  for(let i=1;i<=(a.total||1);i++) dots+=`<span class="dot${i===a.pos?' on':''}"></span>`;
   return `<section class="hero"><div class="kicker">Automotive Diagnostics · 自動車診断</div>`+
     `<h1>${inline(mod.title.en)}</h1><div class="jp">${inline(mod.title.jp)}</div>`+
     (mod.tagline?`<p class="tagline en">${inline(mod.tagline.en)}</p><p class="tagline jp">${inline(mod.tagline.jp)}</p>`:'')+
-    `<div class="arc">${dots}<span class="lbl">Module ${a.pos||1} / ${a.total||1}</span></div></section>`;
+    `</section>`;
 }
-// Topbar — constant brand ("Automotive Diagnostics", a home link) + two single-icon toggles.
-// LANG: one globe button cycling EN → 日本語 → EN+JP.  THEME: one button flipping light/dark.
-const IC_GLOBE='<svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg>';
-const IC_SUN='<svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg>';
-const IC_MOON='<svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg>';
-function topbarCtl(){
-  return `<div class="tb-ctl">`+
-    `<button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language">${IC_GLOBE}<span class="tb-lc">EN</span></button>`+
-    `<button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme">${IC_SUN}${IC_MOON}</button>`+
-    `<div class="tb-seg" id="allseg"><button data-a="open">Expand</button><button data-a="close">Collapse</button></div>`+
-    `</div>`;
-}
-function renderTopbar(mod, home){
-  return `<div class="topbar"><div class="topbar-in"><a class="brand" href="${esc(home||'../../index.html')}" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a>`+
-    `<div class="tb-spacer"></div>${topbarCtl()}</div></div>`;
-}
+// Topbar comes from the shared partial (partials.topbar) — see FB1. Module pages pass expand:true
+// so the Expand/Collapse-legs segment appears; home is the course hub two levels up.
 // breadcrumb: Course › Foundation › <module> (trail only — no module-to-module nav inside an H/V).
 function renderCrumbs(mod){
   const p = mod.parent || { label:'Foundation', href:'../index.html' };
@@ -301,17 +288,9 @@ function renderModNav(mod){
   const nav=mod.nav||{};
   return `<nav class="modnav">${navcard('prev',nav.prev)}${navcard('next',nav.next)}</nav>`;
 }
-const FONTS=`<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">`;
+// Page-specific behaviour only (chrome behaviour is in partials.TOPBAR_SCRIPT). This block owns
+// the Expand/Collapse-legs control + the one-card-at-a-time pager.
 const SCRIPT=`<script>
-var root=document.querySelector('.stage');
-// keep sticky offsets honest: expose the live topbar height as --tbh
-function setTbh(){var t=document.querySelector('.topbar');if(t)document.documentElement.style.setProperty('--tbh',t.offsetHeight+'px');}
-setTbh();addEventListener('resize',setTbh);
-// LANGUAGE — one globe button cycles EN → 日本語 → EN+JP
-(function(){var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=document.getElementById('langbtn');
- if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];});})();
-// THEME — one button flips light/dark (icon swaps via CSS on [data-theme])
-(function(){var b=document.getElementById('themebtn');if(b)b.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});})();
 // EXPAND/COLLAPSE all legs on the visible card
 (function(){var s=document.getElementById('allseg');if(s)s.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;document.querySelectorAll('.page.on .leg').forEach(function(l){l.open=(b.dataset.a==='open')});});})();
 // PAGER — one card at a time; the top strip is the always-on progress + jump nav
@@ -327,7 +306,7 @@ function show(i,scroll){
   if(pr)pr.style.width=(pages.length>1?i/(pages.length-1)*100:100)+'%';
   if(scroll){
     if(history.replaceState)history.replaceState(null,'','#'+id);
-    if(wrap){var off=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--tbh'))||44;var top=wrap.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo(0,Math.max(0,top));}
+    if(wrap){var off=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--stick'))||44;var top=wrap.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo(0,Math.max(0,top));}
   }
 }
 function jump(id){for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===id){show(k,true);return true}}return false;}
@@ -342,9 +321,9 @@ function page(mod,cards,stops){
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">`+
     `<title>${esc(mod.title.en)} — ${esc(mod.standard||'')}</title>${FONTS}<style>${CSS}</style></head><body>`+
     `<div class="stage" data-theme="light" data-lang="en"><div class="progress" id="progress"></div>`+
-    renderTopbar(mod)+renderCrumbs(mod)+renderHero(mod)+renderCardMap(stops)+
+    topbar({home: mod.home || '../../index.html', expand:true})+renderCrumbs(mod)+renderHero(mod)+renderCardMap(stops)+
     `<div class="layout"><main class="stream pager">${cards}</main></div>`+
-    `</div>${SCRIPT}</body></html>`;
+    `</div>${TOPBAR_SCRIPT}${SCRIPT}</body></html>`;
 }
 
 const moduleDir = process.argv[2];

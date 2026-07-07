@@ -15,29 +15,43 @@ Verify: `node verify.js` (DOM counts, overflow, console) · `node shots.js` (fro
 `assets/*.png` are verification screenshots (fig*, ui-*, verify-*, godeep-*, pick-*) — regenerable; the
 committed deliverable is `index.html` + `content/*.md` + `assets/figures/*.svg`.
 
-## Card inventory (status ✅ done)
+## Card inventory (status ✅ done · restructured to 7 concept cards 2026-07-07, FB3)
 
-| order | file | type | figure(s) | V-bar |
-|-------|------|------|-----------|-------|
-| 00 | `00-divider.md` | divider | — | — |
-| 10 | `10-brief.md` | brief | brief-beat (animated 3-beat storyboard) | — |
-| 20 | `20-c1-request-is-bytes.md` | concept | c1-request-bytes · c1-pdu-shape · c1-subfn-bit | V2 (+V4) |
-| 30 | `30-c2-two-answers.md` | concept | c2-two-answers · c2-negative-shape | V2, V3 |
-| 40 | `40-c3-always-true.md` | concept | c3-four-rules · c3-addressing · c3-session-life | V8, V6, V5 |
-| 50 | `50-c4-one-real-request.md` | concept | c4-roundtrip (animated) · c4-response-bytes · c4-timing-decode | V7, V6, V5 |
-| 60 | `60-conclusion.md` | conclusion | — | — |
+Figures renamed to the §7c convention `h2-<card>-f<k>_<title>.svg` (register in `../STRUCTURE.md`).
 
-**DOM (verify.js):** 4 concept · 1 brief · 1 concl · 1 divider · **12 figures** · 1 recall · 8 legs · EN
-on load. Zero console errors; zero overflow light/dark/both/mobile; zero page h-overflow at 1200/900/390.
-Lang isolation exact (incl. the rail). **Bar-coverage V2–V8 all covered** (see the audit summaries).
+| order | file | type | id | figure(s) | V-bar / → |
+|-------|------|------|----|-----------|-----------|
+| 00 | `00-divider.md` | divider | h2 | — | — |
+| 10 | `10-brief.md` | brief | brief | brief-f1 one-beat (animated) | — |
+| 20 | `20-c1-request-is-bytes.md` | concept | c1 | c1-f1 request-shape · c1-f2 anatomy · c1-f3 subfn-byte | V2 (subfn flag → V4, deferred) |
+| 30 | `30-c2-two-answers.md` | concept | c2 | c2-f1 two-answers · c2-f2 negative-shape | V2, V3 |
+| 40 | `40-c3-one-real-request.md` | concept | c3 | c3-f1 one-real-request (animated) · c3-f2 reply-bytes · c3-f3 timing-decode | V2, V6 (trace moved here, right after pos/neg) |
+| 50 | `50-c4-two-invariants.md` | concept | c4 | c4-f1 addressing | V8 (per-beat invariants) |
+| 60 | `60-c5-keep-alive.md` | concept | c5 | c5-f1 keep-alive | V6 (S3), V7c ($3E) |
+| 70 | `70-c6-reset.md` | concept | c6 | c6-f1 reset (11 01 → 51 01 trace) | V7b, V5 · Dem → M3 (bare) |
+| 80 | `80-c7-session-life.md` | concept | c7 | c7-f1 session-life | V5, V6, V7a/b/c |
+| 90 | `90-conclusion.md` | conclusion | concl | — | — |
 
-## Figures (`assets/figures/`, 12)
-Byte-boxes travel the wire in **brief-beat** (request `10 03` out → response `50 03 …` back, looping,
-dots + boxes) and **c4-roundtrip** (packets travel and PAUSE mid-wire so the strings read; response is
-all-green as the positive message; leading dot lands on the wire terminus, no overshoot). All other
-figures are static schematics; all theme-aware `.dgm`, semantic colours (accent=request, green=positive,
-red=negative, amber=caution), geometry anchored. c3-addressing answer = a clean return-bus (crosses
-nothing; fixed in H1's copy too).
+**DOM (checkmod.js):** **7 concept** · 1 brief · 1 concl · 1 divider · **13 figures** · 1 recall ·
+12 legs · EN on load. Zero console errors; zero element/page h-overflow light/dark; lang isolation exact
+(JP-mode hides EN). Every concept has exactly one bar figure. Verify: `NODE_PATH=../../uds/node_modules
+node ../../_template/checkmod.js . 7`.
+
+## FB3 restructure (2026-07-07) — the "four-rules" split + trace-first re-sequence
+The shipped 4-concept H2 was re-authored to the 7-concept STRUCTURE.md flow: the real trace (old C4)
+**moved up to C3**, right after pos/neg; the "four rules hold" **bucket card was split** into per-beat
+invariants (C4) + `$3E` keep-alive (C5) + `$11` reset (C6, now carrying the `11 01 → 51 01` trace) +
+the life of a session (C7). C1's sub-function leg was **trimmed to defer suppression** (reserved flag
+→ V4, no mechanic taught before the positive reply is defined); C2's inline "security" definition was
+**cut to a bare NRC + →M4**. Two new figures authored — `c5-f1 keep-alive` (idle clock + `$3E`) and
+`c6-f1 reset` (reboot arc + trace + unlocked→locked padlocks). Orphans `c3-four-rules.svg` deleted.
+
+## Figures (`assets/figures/`, 13)
+Byte-boxes travel the wire in **brief-f1 one-beat** and **c3-f1 one-real-request** (packets travel and
+PAUSE mid-wire so the strings read; response all-green as the positive message; dot lands on the wire
+terminus, no overshoot). **c5-f1 keep-alive** animates the idle-clock fill resetting on each `$3E`.
+All theme-aware `.dgm`, semantic colours (accent=request, green=positive, red=negative, amber=caution),
+geometry anchored (§7a verified via figure close-ups light+dark).
 
 ## Template changes made in H2 (shared — affect H1 + hub)
 This module drove a set of **shared-template** upgrades (`_template/render.js` + `blueprint.css`):

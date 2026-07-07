@@ -126,9 +126,36 @@ footnote in H1.
 Supersedes the old single "M1 UDS Foundations". Built as a **course-scale T** ([[CONVENTIONS]]
 §1c-scale): a **horizontal breadth spine** (read these alone = a complete high-level overview) +
 **vertical depth drills** (opt-in). **Bar-coverage invariant enforced:** every V has a bar in the
-H-spine. H/V are *altitudes of the same topic*, not two buckets — `$10`/`$11` appear in the breadth
-sweep **and** as their own drill. **Sizing = 3 H + 9 V = 12 modules** (user-confirmed 2026-07-05;
-collapse seams → 3H+6V if ever pruned).
+H-spine. H/V are *altitudes of the same topic*, not two buckets — `$10`/`$11`/`$3E` appear in the
+breadth sweep **and** as their own drill. **Sizing = 3 H + 11 V = 14 modules** (V7-split +
+`$3E`-vertical restructure, user-confirmed 2026-07-07 — see the restructure note below; collapse
+seams → 3H+6V if ever pruned).
+
+> **Service-axis restructure (LOCKED 2026-07-07, session 13) — the `$10`/`$11`/`$3E` home fix.**
+> User FB: the Foundation is built on a **concept axis** (drills titled by mechanism) while M2–M6 are
+> **service-axis** (one module = one SID group), so `$10`/`$11`/`$3E` were the *only* deep-treated
+> services with **no findable single home + no H bar that names them** — a reference-layer
+> inconsistency. Resolved by a grounded, adversarially-reviewed design pass (21-agent workflow
+> `foundation-service-axis-restructure`; per-service ISO-14229-1 depth = `$10` **RICH** · `$11`
+> **moderate** · `$3E` **thin-as-mechanism-but user wants a use-case drill**). **Decisions:**
+> (1) **split old V7** ("`$10`+`$11` as one beat") into two SID-titled *synthesis homes* **V7a `$10`**
+> + **V7b `$11`** — each a home page that *references* the mechanism drills (V4/V5/V6), never
+> re-teaches them; (2) **`$3E` gets its own vertical V7c** — but framed by **use-cases** (why/when
+> you reach for it: hold a non-default session open mid-operation, the functional-broadcast keep-alive
+> during a flash, "I'm still here" presence, what you lose if it lapses → S3 timeout → re-lock) — the
+> **S3 timer *mechanics* stay in V6**, V7c cross-links to them (no duplicate channel); (3) **add an H3
+> comm-management-family naming bar** naming `$10`/`$11`/`$3E` as members of ISO 14229-1 cl.10 Table 22
+> (the diagnostic-&-communication-management functional unit) — standards-native, with `drilled-in →`
+> pointers + a caveat that the same unit's `$27`/`$28`/`$29`→M4 and `$85`→M3 (so it reads as a
+> functional-unit map, **not** a 7th unit). **Reframe (supersedes the `sibling-nodes` bookkeeping):**
+> `$10`/`$11`/`$3E` are **not** "deep-dived in the Foundation, homed 1:1" like M2–M6 — they are
+> **cl.10 comms-management plumbing that never crosses the `DSD→DSP` boundary**, so they get
+> *reference-layer parity* (single home + naming bar) but no fabricated DSP-side module. **Lint rule
+> added:** a service-synthesis vertical (V7a/b/c) may not re-decode a byte string or re-draw a diagram
+> owned by a mechanism drill — each fact TAUGHT once, REFERENCED elsewhere via `{{→}}`. **Parked
+> (user 2026-07-07):** "comm-management as its own module" (cl.10 Table 22 is one ISO functional unit,
+> split across Foundation + M4) — kept as a future refactor note only; the **8-pillar roadmap and M4
+> are untouched**, not re-litigated.
 
 > **Re-derivation provenance (2026-07-05, session 4).** A 31-agent documents-first workflow
 > (`wiki/learn/_derive/foundation-derivation.workflow.js`; full result JSON
@@ -139,7 +166,8 @@ collapse seams → 3H+6V if ever pruned).
 > citation/framing corrections applied). Outcome: **structurally identical to this block** (zero
 > module-boundary changes); the corrections are folded in below and the V-numbering is refined
 > (**SPRMIB promoted to its own drill V4; `$10`+`$11` merged into one archetype drill V7** —
-> user-confirmed).
+> user-confirmed). *(V7 was later **split** into service homes V7a/V7b + a `$3E` home V7c on
+> 2026-07-07 — see the "Service-axis restructure" note above; this session-4 record is historical.)*
 
 **Depth-of-foundation boundary — one token: `DSD accepts → DSP executes`.** Everything up to the
 server's validity gate handing a *validated* request to processing is foundation; the instant the
@@ -152,10 +180,15 @@ one-line T-leg, not a crisp spec line.)
 | id | module | covers | gives the learner | source (clause-verified) |
 |----|--------|--------|-------------------|--------------------------|
 | **H1** | The diagnostics landscape — what UDS is, who talks | V1, V8 | UDS = 14229-1 app-layer services, transport-independent; client(tester)↔server(ECU); the 14229 family (-1 app · -2 session · -3/-5/-6/-7 transport bindings) + where Dcm/Dem·ODX·SOVD·J1939·Dlt sit; OSI map at a glance; Dem↔Dcm split as a placement bar | 14229-1 cl.1, Intro Table 1, cl.6, cl.3 · -5/-6/-7 §7.1 · Dcm/Dem/J1939/Dlt cl.1 |
-| **H2** | The life of one request — one exchange, end to end | V2–V8 | the whole beat traced once: `SID` → serve → `+0x40` **or** `7F+SID+NRC`; **+ four bar one-liners:** physical-vs-functional addressing (responses always physical) · `$3E` keep-alive · fault-logging (separate Dem store) · `$11` returns-to-default & re-locks; `$10` as the one concrete round trip (encodes P2/P2\*) | 14229-1 cl.7.1, 8.4/8.5/8.6, 8.1, 10.2/10.3/10.7 |
-| **H3** | What UDS can do + how the ECU decides — catalog + server at a glance | V5, V9 | the **6 functional units (cl.10–15) + 1 security sub-layer (cl.16)** — not a 7th unit; what needs session/security; the 16-bit DID + RID coordinate spaces; the one-screen "inside the server" bar (PduR→DSL→DSD→DSP); FDIS renumbers **down**, only ResponseOnEvent changed | 14229-1 cl.10–16, Annex C.1/F.1, cl.8.7.2 Fig 5 · Dcm cl.7.1.1 · FDIS Foreword |
+| **H2** | The life of one request — one exchange, end to end | V2, V3, V4, V6, V8, **V7a (`$10` trace), V7b (`$11` trace)** | the whole beat traced once: `SID` → serve → `+0x40` **or** `7F+SID+NRC`; **+ bar one-liners:** physical-vs-functional addressing (responses always physical) · `$3E` keep-alive (→ V7c) · fault-logging (separate Dem store) · `$11` returns-to-default & re-locks; **the two concrete round trips** — `$10` (`10 02 → 50 02 00 32 01 F4`, encodes P2/P2\*) is V7a's bar, `$11` (`11 01 → 51 01`) is V7b's bar; life-of-a-session **open (`$10`) · hold (`$3E`) · close (`$11`/timeout)** | 14229-1 cl.7.1, 8.4/8.5/8.6, 8.1, 10.2/10.3/10.7 |
+| **H3** | What UDS can do + how the ECU decides — catalog, server & the comms-management family | V5, V9, **V7a/V7b/V7c** (comms-family bar) | the **6 functional units (cl.10–15) + 1 security sub-layer (cl.16)** — not a 7th unit; what needs session/security; the 16-bit DID + RID coordinate spaces; the one-screen "inside the server" bar (PduR→DSL→DSD→DSP); FDIS renumbers **down**, only ResponseOnEvent changed. **+ comm-management-family naming bar:** `$10` DiagnosticSessionControl / `$11` ECUReset / `$3E` TesterPresent as members of cl.10 Table 22 (drilled in → V7a/V7b/V7c), caveat: same unit's `$27`/`$28`/`$29`→M4, `$85`→M3 | 14229-1 cl.10–16, **cl.10.2 Table 22**, Annex C.1/F.1, cl.8.7.2 Fig 5 · Dcm cl.7.1.1 · FDIS Foreword |
 
-**Vertical — depth drills (teaching order: message → sub-fn → sessions/timing → archetype → zoom out → zoom in)**
+**Vertical — depth drills** — full **card-level flow + continuity spec** for every H/V now lives in
+[`uds-foundation/STRUCTURE.md`](uds-foundation/STRUCTURE.md) (continuity-checked 2026-07-07).
+**Drill order (DECIDED 2026-07-07, supersedes the old "V8 as late zoom-out"):**
+`H1 → V1 → H2 → V2 → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → H3 → V9` — i.e. message → sub-fn →
+**transport (V8, moved up)** → sessions/timing → the service homes `$10`/`$11`/`$3E` → server (V9).
+V8 moved after V4 because it leans on a concrete message + the negative/suppress concepts.
 
 | id | module | bar | drills into | source (clause-verified) |
 |----|--------|-----|-------------|--------------------------|
@@ -163,18 +196,23 @@ one-line T-leg, not a crisp spec line.)
 | **V2** | Request & positive response, byte by byte | H2 | `A_PDU = A_SDU+A_PCI+params+Length`; A_PCI keyed on first byte; **pos = `SID+0x40`** (bit 6 = type), sub-fn echoed with bit7=0 | 14229-1 cl.8.2/8.3/8.4, 9.3 |
 | **V3** | Negative responses & the NRC catalog | H2 | fixed `7F+SID+NRC`; the **single global Annex A.1 catalog** (3 ranges) + always-supported set; **`0x78` RCRRP** (final resp always sent, opens P2\*) | 14229-1 cl.8.5/8.6, Annex A.1, 9.4 |
 | **V4** | **Sub-functions & the suppressPosRsp bit** | H2 | sub-fn byte: bit 7 SPRMIB (`&0x80`), bits 6–0 value (`&0x7F`); **suppresses the positive reply ONLY — physical negatives always sent, service still fully executes** (cl.9.2.2 Table 11 note) | 14229-1 cl.9.2.2, 8.7.3.2, 8.7.5 |
-| **V5** | Sessions & the session state machine | H2 (+H3) | one active session (`01` default at power-up / `02` prog / `03` ext / `04` safety); Fig 7 machine; non-default **re-locks security**; two return-to-default causes (explicit DSC/reset vs S3 timeout) | 14229-1 cl.10.2 Table 25/Fig 7 · Dcm 7.2.4.11 |
-| **V6** | Timing & keep-alive — P2 / P2\* / S3 | H2 | the whole 14229-2 timing family: `tP2_Server` (rec 50 ms) + `tP2*_Server` (rec 5000 ms, unlocked by `0x78`); `tP4_Server`; client tP2/tP6/tP3; **S3 keep-alive** (`tS3_Client` 2000 < `tS3_Server` 5000) via `$3E`; only the owning connection resets S3 | 14229-2 cl.9.1, **9.5** · 14229-1 cl.10.7 |
-| **V7** | **The archetype exchanges — `$10` + `$11` as one beat** | H2 | two concrete traces: `$10` positive resp **encodes P2/P2\*** (`00 32 01 F4` = 50/5000 ms); `$11` reset types 01–05, reboot → default → security LOCKED (causal chain) | 14229-1 cl.10.2 Tables 28/29, 10.3 Table 34 · Dcm 7.4.2 |
+| **V5** | Sessions & the session state machine | H2 (+H3) | **mechanism only:** one active session (`01` default at power-up / `02` prog / `03` ext / `04` safety); Fig 7 machine + its four transition cases (what each does to ResponseOnEvent / security-relock / scheduler / I-O-control / CommunicationControl / ControlDTCSetting); non-default **re-locks security**; two return-to-default causes (explicit DSC/reset vs S3 timeout). *The `$10`-the-service framing + byte trace live in V7a; cross-link `{{→ V7a}}` (enter) `{{→ V7b}}` (reset-close).* | 14229-1 cl.10.2 Table 25/Fig 7 · Dcm 7.2.4.11 |
+| **V6** | Timing & keep-alive — P2 / P2\* / S3 | H2 | the whole 14229-2 timing family: `tP2_Server` (rec 50 ms) + `tP2*_Server` (rec 5000 ms, unlocked by `0x78`); `tP4_Server`; client tP2/tP6/tP3; **S3 machinery** (`tS3_Client` 2000 < `tS3_Server` 5000; non-default-only timeout; only the owning connection resets S3; any final response also refreshes S3; default disables `tS3_Server`). *The S3 **numbers/model** live here; `$3E`-as-a-service (its use-cases) is V7c, cross-linked `{{→ V7c}}`; `$10`'s "response carries P2/P2\*" byte-decode is V7a.* | 14229-2 cl.9.1, **9.5** · 14229-1 cl.10.7 |
+| **V7a** | **`$10` DiagnosticSessionControl — the service, whole** | H2 (`$10` trace) + H3 (comms-family) | **RICH service-synthesis home.** One end-to-end trace decoded once (`10 02 → 50 02 00 32 01 F4`); legs (≤4): four session types + programmingSession boot-SW exit contract · the response record decoded (echo + P2/P2\* bytes, single source of truth for `00 32 01 F4`) · response-first switch ordering + `0x22` CNC gating + relock/S3 couplings as **summary** · `{{→ V5 state machine}} {{→ V6 timing}} {{→ V4 SPRMIB}}`. References the mechanism drills, never re-teaches | 14229-1 cl.10.2 Tables 25/28/29/30/31 · 14229-2 (P2 semantics) |
+| **V7b** | **`$11` ECUReset — the service, whole** | H2 (`$11` trace) + H3 (comms-family) | **Moderate home — size to ~3 strong legs, don't pad to 4.** Trace `11 01 → 51 01`; legs: reset-type sub-fns `01`hard/`02`keyOffOn/`03`soft/`04`enableRapidPowerShutDown/`05`disable + the **volatile/non-volatile memory-effect** contrast · rapid-power-shutdown pair (conditional `powerDownTime` byte, sleep semantics, key-on termination) · the **unusual response-before-reset** timing rule (documented exception to cl.8) + undefined dead-time. Reboot→default→security-LOCKED stated as a **one-line summary** `{{→ V5}}`, not a padded leg | 14229-1 cl.10.3 Table 34 · Dcm 7.4.2 |
+| **V7c** | **`$3E` TesterPresent — why you keep a session alive** | H2 (keep-alive bar) + H3 (comms-family) | **USE-CASE drill (not an S3 re-teach — user 2026-07-07).** The *purpose*: hold a non-default session open while the tester is between requests or mid-operation; the **functional-broadcast** keep-alive (`3E 80`, SPRMIB=1, no responses — feed many ECUs at once) esp. during a **flash/long routine**; "I'm still here" presence; **what you lose if it lapses** → S3 timeout → default → security re-locked (`{{→ V7b}}` same end-state as reset). Mechanics minimal (sub-fn `00`, 2 NRCs); the S3 **numbers** live in V6 `{{→ V6}}`, the state-end in V5 `{{→ V5}}` | 14229-1 `$3E` cl. · 14229-2 cl.9.5 (S3) |
 | **V8** | Addressing & the transport / OSI descent | H1 (+H2) | physical (1:1) vs functional (1:n, SF-only, NRC-suppressed) — responses always physical; OSI descent, invariant middle; CAN 0–8B vs FD 0–64B; ISO-TP SF/FF/CF/FC + FlowStatus + the six **`tTL_*`** timers; 11-/29-bit IDs; USDT/UUDT; DoIP 8-byte header + `0x8001`; K-Line/LIN/FR as thin adapters | 14229-1 cl.7.4.1.4, 8.7.1 · **15765-2:2024** cl.6, 9 · **13400-2:2012** cl.6, 7 · 14229-3 cl.13.3/13.4 |
 | **V9** | Inside the server — Dcm pipeline & the NRC-origin gate | H3 | 14229-1 cl.8.7.2 Fig 5 behaviour realized as Dcm DSL→DSD→DSP; the **ordered 7-step DSD gate** (`SWS_Dcm_01535`, stop on first failure) where every NRC is born; `0x78` at the P2/P2\* boundary; security state (LOCKED init) | 14229-1 cl.8.7 · Dcm cl.7.1.1, **7.3.4.3 SWS_Dcm_01535** |
 
 **Pressure-test outcomes (re-confirmed 2026-07-05):** (1) **Dem stays out of the foundation → M3
 (Faults)** — only a placement bar in H1/H3, not universal substrate; foundation keeps **Dcm** only.
-(2) **Order is concrete-first** — message → sub-fn → sessions/timing → archetype (`$10`+`$11`) → zoom
-out (transport, V8) → zoom in (Dcm, V9). (3) **Bar-coverage holds airtight:** H1={V1,V8} · H2={V2–V8}
-· H3={V5,V9}; V2/V5/V8 double-touched; zero orphans, zero overclaims. **Collapse seams** (if pruning
-to 3H+6V): V2+V3, V5+V6, and fold V8.
+(2) **Order is concrete-first** — message → sub-fn → **transport (V8, moved up 2026-07-07)** →
+sessions/timing → the service homes (`$10`/`$11`/`$3E`, V7a/b/c) → zoom in (Dcm, V9). *(V8 was moved
+ahead of sessions because it leans on a concrete message + negatives/suppress — see STRUCTURE.md.)* (3) **Bar-coverage holds
+airtight (re-checked 2026-07-07):** H1={V1,V8} · H2={V2,V3,V4,V6,V8,**V7a,V7b**} · H3={V5,V9,**V7a,V7b,
+V7c** via the comms-family bar}; V2/V5/V8/V7a/V7b double-touched; zero orphans (every V7a/b/c has an H
+bar), zero overclaims. **Collapse seams** (if pruning to 3H+6V): re-merge **V7a+V7b+V7c** back into one
+archetype drill, then V2+V3, V5+V6, and fold V8.
 
 **Double-derived facts (Foundation) — clause-verified 2026-07-05:**
 `pos = SID+0x40` · `neg = 7F+SID+NRC` (fixed `7F` + echoed request SID + one NRC) · `SPRMIB = bit 7
@@ -201,11 +239,11 @@ only ResponseOnEvent changed.
 
 ## Current Focus
 
-**Current status (updated 2026-07-06)**
+**Current status (updated 2026-07-07)**
 
-- **Built & pressure-tested:** Foundation **H1** (the diagnostics landscape) and **H2** (the life of
-  one request) — both to the hardened card bar, clause-grounded, browser-verified light/dark/mobile.
-  The hub + the Foundation T-map are live. Legacy **M1** (`uds/`) remains a content/figure donor.
+- **Built & pressure-tested:** Foundation **H1** (3 concept cards) and **H2** (**7 concept cards** after
+  the FB3 re-author) — clause-grounded, browser-verified light/dark/mobile. The hub + the Foundation
+  T-map are live (map now rendered through the pipeline). Legacy **M1** (`uds/`) remains a figure donor.
 - **Shared template overhauled (session 9):** overview strip · card-level left rail (scroll-spy) ·
   distinct cards · real forward-pointer links (+ stub pages for V1–V9 / M2–M9 / H3) · a prominent
   Go-Deeper affordance (accent banner + solid `+/−`) · prominent `:::recall` · byte-box travel
@@ -222,15 +260,56 @@ only ResponseOnEvent changed.
   *Debt:* the V1–V9 / M2–M9 **stub pages** are hand-authored and don't inherit the shell (they get it when
   built); the map's inlined CSS can drift on future theme edits — best long-term fix is to render the map
   through the pipeline.
-- **⚠️ Shell NOT signed off (as of session 12 close).** User: "still many issues" with the Foundation
-  shell — another **feedback round comes first next session**. Do not treat the shell as final or move to
-  H3 until the user has given (and we've resolved) that feedback. Resume by asking for the specific issues.
+- **⚠️ Shell round EXECUTED 2026-07-07 (session 14) — still NOT signed off; a feedback round is expected.**
+  All five items (FB1 · FB4 · Task4 · Task5 · FB3) done + browser-verified (`_template/verify_shell.js` +
+  `checkmod.js`); a 4-lens adversarial continuity review of the re-authored H1/H2 came back **clean
+  (0 blockers, 0 nits)**. Do not move to H3 until the user signs off. Full write-up in `wiki/log.md`
+  (2026-07-07). Status per item (each was the "to-do" below, now **done**):
+  - **FB1 — topbar is NOT a shared component (HELD as a shell build-item).** The top bar diverges across
+    levels because it lives in 3 code paths (`render.js` module shell · `render-hub.js` hub, still on the
+    OLD text `EN/日本語/EN+JP` seg + non-link brand · `make-stubs.js` stubs, Light/Dark only) **plus** a
+    hand-copy in the Foundation map (`uds-foundation/index.html`). **Fix (when doing the shell round):**
+    extract one shared `topbar()` partial all three renderers call, and render the map through the pipeline
+    so the hand-copy dies. **✅ DONE** — `_template/partials.js` `topbar()`/`TOPBAR_SCRIPT`/`FONTS` used by
+    `render.js` + `render-hub.js` + `make-stubs.js`; map now renders via `_template/render-map.js` (map CSS
+    moved into `blueprint.css`; hand-copied topbar + inline-CSS drift gone).
+  - **FB2 — `$10`/`$11`/`$3E` service-axis restructure: RESOLVED & LOCKED 2026-07-07** (see the
+    "Service-axis restructure" note in the Foundation H/V block). Plan updated to **3H + 11V**
+    (V7→V7a `$10`+V7b `$11`, new V7c `$3E` use-case drill, + H3 comms-family bar). This is a *content-plan*
+    change; the V-stub pages must be regenerated for the new numbering when the shell work happens.
+  - **FB3 — continuity pass: full card-level flow speced + shipped-H1/H2 random fitments found
+    (2026-07-07).** After confirming the learner baseline (persona → open item), an 8-agent continuity
+    workflow designed the ideal card-level flow for all 14 modules FRESH and audited every seam. Result
+    in [`uds-foundation/STRUCTURE.md`](uds-foundation/STRUCTURE.md) (the build spec). **Decisions:** (1)
+    **V8 moves after V4**; (2) **fold the shipped-H1/H2 continuity re-author into THIS shell round** (one
+    pass — re-order H2, split the "four-rules" card into C4–C7, add the `11 01 → 51 01` trace, trim the
+    subfn/security legs, cut H1-C3's addressing dup); (3) **H2 = 7 concept cards** (one idea each). The
+    worst shipped fitments: H2's "four rules" bucket-card, addressing taught twice (H1+H2), suppression
+    explained before the positive reply is defined, `security` inline-defined in a breadth leg.
+  - **FB4 — sticky breadcrumb. ✅ DONE** — `.crumbs` `position:sticky` at `--tbh`; overview strip stacks at
+    `--stick` (= topbar+crumbs, measured in `TOPBAR_SCRIPT`); pager scroll-offset uses `--stick`. Verified
+    on hub/map/stub/H1/H2 + mobile.
+  - **Task4 — V-renumber. ✅ DONE** — V7→V7a/V7b/V7c (stub slugs + `render.js` LINKS + `fwd` `[VMH]\d+[a-c]?`);
+    orphan `v7-archetypes/` removed; stubs regenerated; map V-stem = V1–V6,V7a/b/c,V8,V9 + H3 comms-family line.
+  - **Task5 — STRUCTURE + figure register. ✅ DONE** — course-level `wiki/learn/STRUCTURE.md` authored (hub
+    source of truth, §1e); all H1/H2 figures renamed to §7c `h#-<card>-f<k>_<title>.svg` (collision resolved
+    by construction); figure registers populated in `uds-foundation/STRUCTURE.md`.
+  - **FB3 — H1/H2 re-author (structure/flow). ✅ DONE** — H2 → **7 concept cards** (trace→C3; four-rules
+    split into C4–C7; `11 01 → 51 01` trace in C6; subfn/security legs trimmed). H1 = the 3 Decision-#2
+    trims (cut C3 addressing dup · soften C1 SID pre-empt · cut C2 SOVD teaser). **Deferred (future H1
+    rebuild, per STRUCTURE scoping):** the larger H1 **3→4 re-split** (new "why diagnostics" C1 +
+    neighbours→C4) is NOT shell-round scope.
 
 **Next up**
+0. **Get the user's shell sign-off** (the round is executed + verified but NOT signed off). Expect a
+   feedback round; hold H3 until it lands.
 1. **H3 "What UDS can do & how the ECU decides"** — `uds-foundation/h3-catalog-and-server/` (stub
-   exists). Same recipe + the stronger template; then V1–V9. Reuse H1/H2 figures where they fit.
-2. **Re-run the H2 pressure-test (round 6)** to confirm clean — stopped at 0 known blockers with all
-   round-5 findings fixed & re-verified.
+   exists). Same recipe + the stronger template + **the comms-management-family naming bar** (names
+   `$10`/`$11`/`$3E` as cl.10 Table 22 members, `drilled-in →` V7a/V7b/V7c). Then the V drills. Reuse
+   H1/H2 figures where they fit.
+2. **Future H1 rebuild — the 3→4 re-split** (deferred, not shell-round scope): add a new "why diagnostics /
+   cars are many ECUs" **C1** (3 contexts: workshop/EOL/OTA), and split the current C2 into **C3** (14229
+   family + OSI) + **C4** (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to fully match STRUCTURE.md's 4-card H1.
 3. **Fold the session-9 template-UX/shell decisions into [[CONVENTIONS]]/[[PEDAGOGY]] as locked
    rules** — overview strip · card rail · Go-Deeper affordance · recall prominence · forward-links +
    stub pages · byte animation · the ≤2-class lang-selector rule (incl. leg/nav/pill isolation).
@@ -238,6 +317,17 @@ only ResponseOnEvent changed.
 **Open build-phase decisions (unchanged):** V8 density (keep the 5-card stack incl. DoIP vs spin the
 IP/DoIP half to M7) · a `:::table` directive (for M2/M3) · bundle EN fonts base64 (map + modules still
 use the Google-fonts link) · per-pillar T derivations for M2–M9 (each its own H/V, when built).
+
+**Open items (deferred, do later):**
+- **Publish the learner persona on the site** (user 2026-07-07). Confirmed baseline: a *motivated
+  professional engineer with zero automotive-diagnostics background* (engineer, not technician).
+  **Knows:** hex/bytes/flag-bits, request↔response + success/error, state machines, volatile vs
+  non-volatile memory, "a message rides a bus / protocols are layered" (abstractly), "an ECU is a small
+  computer, a car has many", locked-vs-unlocked/challenge-response. **Does NOT know (teach from zero,
+  define on first use):** the *why* of vehicle diagnostics + the tester role + contexts (workshop/EOL/OTA);
+  UDS itself (SID/sub-fn/DID/RID, +0x40, 7F+NRC, the services); sessions/security/timing; the transport
+  stack (CAN/ISO-TP/DoIP/addressing) — taught from near-zero; ECU internals (boot vs app SW, Dcm/Dem);
+  the standards landscape. Surface this as a short "who this is for" note somewhere on the site.
 
 ---
 

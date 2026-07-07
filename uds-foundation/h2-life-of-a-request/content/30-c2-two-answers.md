@@ -7,7 +7,7 @@ title:
   en: "One request, one of two answers"
   jp: "1つの要求に、2つのうち1つの答え"
 short: { en: "Two answers", jp: "2つの答え" }
-illustration: figures/c2-two-answers.svg
+illustration: figures/h2-c2-f1_two-answers.svg
 caption:
   en: "**Same question, two possible replies.** A positive `50 03` (yes), or a negative `7F 10 22` (no — with a reason). Never both, never neither."
   jp: "**同じ問い、返り得る答えは2つ。** 肯定 `50 03`（はい）か、否定 `7F 10 22`（いいえ ― 理由つき）。両方も、どちらもなしも、ありません。"
@@ -20,10 +20,10 @@ legs:
 
 ## bar
 :::en
-How do you know your request even worked? The ECU tells you. It serves the request, then answers in **exactly one** of two ways — never a third, and never silence *(unless you asked it to stay quiet — the flag from C1)*.
+How do you know your request even worked? The ECU tells you. It serves the request, then answers in **exactly one** of two ways — never a third, and never silence *(the reserved flag from C1 can change that, but that's a `V4` story)*.
 :::
 :::jp
-要求が本当に通ったか、どう分かるのでしょう？ ECUが教えてくれます。要求を処理し、**ちょうど2通りのうち1つ**で答えます ― 3つ目はなく、沈黙もありません*（C1の旗で「黙って」と頼んだ場合を除く）*。
+要求が本当に通ったか、どう分かるのでしょう？ ECUが教えてくれます。要求を処理し、**ちょうど2通りのうち1つ**で答えます ― 3つ目はなく、沈黙もありません*（C1の予約ビットがそれを変え得ますが、それは `V4` の話）*。
 :::
 
 :::en
@@ -66,18 +66,18 @@ A "no" is never just a refusal — it always carries a **reason**. Say you ask t
 「いいえ」は単なる拒否ではありません ― 必ず**理由**を伴います。たとえばECUが忙しくて今は切り替えられないときにセッション切替を頼むと、`7F 10 22` が返ります。形は決して変わりません：
 :::
 
-:::figure src=figures/c2-negative-shape.svg
+:::figure src=figures/h2-c2-f2_negative-shape.svg
 en: **Three bytes, always.** `7F` says "negative"; the middle byte echoes the service you asked for; the last byte is the reason code (NRC).
 jp: **常に3バイト。** `7F` が「否定」、中央のバイトが要求したサービスの反射、最後のバイトが理由コード（NRC）。
 :::
 
 :::en
-- Here `22` = **conditionsNotCorrect** ("not right now"). The NRC is drawn from **one shared list** used by every service — e.g. `11` serviceNotSupported, `33` securityAccessDenied (**security** = a lock that guards the most powerful services {{→ M4 · security access}}).
+- Here `22` = **conditionsNotCorrect** ("not right now"). The NRC is drawn from **one shared list** used by every service — e.g. `11` serviceNotSupported, or `33` securityAccessDenied {{→ M4 · security access}}.
 - Because your SID is echoed in the middle, you always know **which** request was refused.
 - The full catalogue of reasons is its own drill {{→ V3 · the NRC catalogue}}.
 :::
 :::jp
-- ここで `22` は **conditionsNotCorrect**（条件不成立＝「今はだめ」）。NRCは全サービス共通の**1つのリスト**から取られます ― 例：`11` サービス非対応、`33` セキュリティ拒否（**セキュリティ**＝最も強力なサービスを守る鍵 {{→ M4 · セキュリティアクセス}}）。
+- ここで `22` は **conditionsNotCorrect**（条件不成立＝「今はだめ」）。NRCは全サービス共通の**1つのリスト**から取られます ― 例：`11` サービス非対応、`33` セキュリティアクセス拒否 {{→ M4 · セキュリティアクセス}}。
 - SIDが中央に反射されるので、**どの**要求が断られたか常に分かります。
 - 理由の全カタログは専用ドリルで {{→ V3 · NRCカタログ}}。
 :::

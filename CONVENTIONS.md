@@ -95,6 +95,34 @@ not the authoring surface. Layout: `wiki/learn/<module>/content/<id>.md` (one co
 + a shared template + renderer + verification in a shared tooling folder. (Concept-MD schema is
 proposed at content-build time.)
 
+## 1e. `STRUCTURE.md` is the organization source of truth, at two scales (LOCKED 2026-07-07)
+
+**The `STRUCTURE.md` rule is fractal (mirrors §1c-scale — the course is a T, each module is a T):**
+
+- **Course scale — `wiki/learn/STRUCTURE.md`** owns the **hub page** structure: the full ordered
+  module list (Foundation, M2…M9), a **high-level line on what each module contains**, and the arc /
+  dependency spine between them. It is the source of truth the **course hub page** (and `course.yml`,
+  the render data) derive from — the home page is never hand-organized.
+- **Module scale — `wiki/learn/<module>/STRUCTURE.md`** owns that module's **card-level** organization
+  and flow: the ordered card list (type · what each card covers · its go-deeper legs) with explicit
+  **flows-from / sets-up** links, the module's *enters-with / leaves-with*, bar-coverage, and the
+  **figure register** (§7c).
+
+Content is **derived from these, never hand-organized**:
+
+- **Direction of authority:** `COURSE.md` (build roadmap + status) → **course `STRUCTURE.md`** (hub: the
+  module list + high-level of each + the arc) → the module's **`STRUCTURE.md`** (card-level flow) →
+  `content/<id>.md` (the prose/figures for each card) → rendered `index.html`. Each layer derives from
+  the one above; you never reorganize by editing the content MD or the HTML directly.
+- **Any change starts in `STRUCTURE.md`.** To add / move / merge / delete a card or a go-deeper leg,
+  **edit `STRUCTURE.md` first**, then propagate to the content MD and re-render. A reorder that lives
+  only in the content folder is a process violation (it reintroduces hand-organized drift).
+- **It is the continuity contract.** `STRUCTURE.md` is what the continuity audit (H↔H, H↔V, card↔card,
+  card↔go-deeper, prior-knowledge) is run against, and what a reviewer reads to critique flow without
+  opening the HTML. The reference example is `wiki/learn/uds-foundation/STRUCTURE.md`.
+- **Build gate:** a module's `content/` cards must match its `STRUCTURE.md` card list 1:1 (checked in
+  `verify.js` / `NOTES.md`), the same way DOM card counts are checked against the scaffold.
+
 ## 2. Phrasing (audience-facing)
 
 - **Very, very simple English** — short words, short sentences, one idea per sentence.
@@ -227,6 +255,23 @@ Rules:
 > (developers.google.com/tech-writing/two/illustrations); Saylor *ENGL210 — Labels, Callouts,
 > Captions, and Notes*; oXygen *DITA Style Guide — Callouts*.
 
+### 7c. Figure IDs, titles & filenames — the figure register (LOCKED 2026-07-07)
+
+Every figure gets a **stable ID + a human title**, recorded in the module's `STRUCTURE.md` **figure
+register**, so a reviewer can point at a figure and give feedback without opening the HTML.
+
+- **Figure ID = `<CARD>-F<k>`**, card-scoped: `<card-id>` + `-F` + the figure's index within that card
+  (`F1` = the card's canonical bar figure; `F2, F3…` = its go-deeper leg sketches, in reading order).
+  E.g. `H2-C3-F1`. Card-scoped (not a flat per-module counter) so inserting a figure never renumbers
+  the others, and the ID says exactly where the figure lives.
+- **Title** = a short human title = the figure's *takeaway* (matches the caption intent, §7b).
+- **Filename = `<card>-f<k>_<kebab-title>.svg`**, lowercase, in `<module>/assets/figures/`.
+  E.g. `h2-c3-f1_one-real-request.svg`. The `id_title` filename is the "figure_title.extension"
+  handle for feedback; filenames are globally unique (card-scoped prefix prevents collisions like the
+  old shared `c3-addressing.svg`).
+- **The figure register lives in `STRUCTURE.md`** (one table per module: ID · title · card/leg ·
+  filename), authored as part of the flow spec (§1e) and kept 1:1 with the actual SVGs.
+
 ## 8. Artifact craft — build unit by unit, never by eye
 
 For each unit (slide · panel · figure), in order: (1) state the unit's objective,
@@ -277,8 +322,10 @@ animation frame) — don't judge from the source.
 
 ## Module build recipe (apply to M2…M10)
 
-1. Read [[COURSE]] → this file → the module's `NOTES.md` (create it if new).
-2. Draft a **card scaffold** (nugget list) and show the user before auto-running.
+1. Read [[COURSE]] → this file → the module's `STRUCTURE.md` and `NOTES.md` (create them if new).
+2. Author/refresh the module's **`STRUCTURE.md`** (§1e) — the ordered card list + go-deeper legs +
+   flow links + figure register — and show the user before auto-running. This *is* the card scaffold;
+   the `content/` MD is derived from it, never organized independently.
 3. Reuse the **shared Blueprint template + renderer** (do not restyle): author each concept as
    a **content MD file** (§1d) and render to the self-contained HTML page; keep the T-card
    taxonomy (§1c), bilingual EN/JP, bundled fonts, `.dgm` diagrams, accent-highlight, notation

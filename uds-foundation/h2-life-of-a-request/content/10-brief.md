@@ -28,7 +28,7 @@ One request is a short handful of **bytes**. The tester sends them; the ECU read
 3. ECUは**1つ**の答えを返します ― 「はい、これです」か、「いいえ、理由はこれです」。
 :::
 
-:::figure src=figures/brief-beat.svg
+:::figure src=figures/h2-brief-f1_one-beat.svg
 en: **One request, one answer.** The tester sends bytes out; the ECU serves them and sends a single answer back. This one round trip is the beat we trace all through H2.
 jp: **1つの要求、1つの答え。** テスターがバイトを送り、ECUが処理して1つの答えを返す。この往復が、H2を通して追う「1拍」です。
 :::

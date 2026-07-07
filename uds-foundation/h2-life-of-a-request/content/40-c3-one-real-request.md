@@ -1,14 +1,14 @@
 ---
-id: c4
+id: c3
 type: concept
-order: 50
+order: 40
 section: { n: "H2", en: "The life of one request", jp: "1つのリクエストの一生" }
 sid: "$10"
 title:
   en: "Watch one real request, byte for byte"
   jp: "本物の要求を1つ、バイトまで見る"
 short: { en: "One real $10", jp: "本物の $10" }
-illustration: figures/c4-roundtrip.svg
+illustration: figures/h2-c3-f1_one-real-request.svg
 caption:
   en: "**`10 03` out, `50 03 00 32 01 F4` back.** A positive reply — and its extra bytes are the ECU's promise about how long its answers may take."
   jp: "**`10 03` を送り、`50 03 00 32 01 F4` が返る。** 肯定応答 ― その追加バイトは「答えにどれだけ時間がかかり得るか」というECUの約束です。"
@@ -21,10 +21,10 @@ legs:
 
 ## bar
 :::en
-Time to put every piece together on **one real exchange** — the `$10` we've been previewing. The tester sends **two** bytes; the ECU sends **six** back. Nothing new here — just the beat, made concrete.
+You now know both halves — a request is bytes led by a SID, and the answer is a positive `+0x40` or a negative `7F`. So put them together on **one real exchange**, the `$10` we've been previewing. The tester sends **two** bytes; the ECU sends **six** back. Nothing new — just the beat, made concrete.
 :::
 :::jp
-すべてを**1つの本物のやり取り**にまとめましょう ― ずっと予告してきた `$10` です。テスターが**2**バイトを送り、ECUが**6**バイトを返します。新しいことは何もありません ― ただ、あの1拍を具体にしただけです。
+両側が分かりました ― 要求はSIDで始まるバイト列、答えは肯定の `+0x40` か否定の `7F`。では**1つの本物のやり取り**、ずっと予告してきた `$10` にまとめましょう。テスターが**2**バイトを送り、ECUが**6**バイトを返します。新しいことはなく、ただあの1拍を具体にしただけです。
 :::
 
 :::en
@@ -44,7 +44,7 @@ Every byte in the reply has a job. Read them left to right:
 応答のどのバイトにも役目があります。左から右へ読みます：
 :::
 
-:::figure src=figures/c4-response-bytes.svg
+:::figure src=figures/h2-c3-f2_reply-bytes.svg
 en: **Six bytes, four jobs.** `50` = positive; `03` = the session now active; the pairs `00 32` and `01 F4` are the two timing values, `P2` and `P2*`.
 jp: **6バイト、4つの役目。** `50`＝肯定、`03`＝現在有効なセッション、対になった `00 32` と `01 F4` が2つのタイミング値 `P2` と `P2*`。
 :::
@@ -64,7 +64,7 @@ Those two pairs are the reason the reply is longer than a plain "yes". Convert e
 この2つの対こそ、応答が単なる「はい」より長い理由です。各対を16進から変換し、その**分解能**（1カウントが表す時間）を掛けます：
 :::
 
-:::figure src=figures/c4-timing-decode.svg
+:::figure src=figures/h2-c3-f3_timing-decode.svg
 en: **From bytes to milliseconds.** `00 32` = 50 counts × 1 ms = **50 ms** (`P2`). `01 F4` = 500 counts × 10 ms = **5000 ms** (`P2*`).
 jp: **バイトからミリ秒へ。** `00 32`＝50カウント×1 ms＝**50 ms**（`P2`）。`01 F4`＝500カウント×10 ms＝**5000 ms**（`P2*`）。
 :::

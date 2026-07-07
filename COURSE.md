@@ -303,39 +303,31 @@ only ResponseOnEvent changed.
     rebuild, per STRUCTURE scoping):** the larger H1 **3→4 re-split** (new "why diagnostics" C1 +
     neighbours→C4) is NOT shell-round scope.
 
-**Next up — building H3 "What UDS can do & how the ECU decides"** (`uds-foundation/h3-catalog-and-server/`).
-Design LOCKED + **9 cards** (STRUCTURE.md H3 §; derivation `_derive/h3-service-primer-derivation`).
-- ✅ **ALL 9 H3 cards authored + browser-verified + pushed 2026-07-07** (commit `d830ef6`). Primer trio
-  (divider · brief · primer — "what a service *is*" = a named job under one fixed shape · "*what makes it
-  diagnostic*" = the **primitives you diagnose with**; **Leg A dropped**, 2 legs) + catalog **C2** six
-  functional units (ISO cl.10–15) · **C3** gating (session + security) · **C4** DID/RID 16-bit spaces ·
-  **C5** the 4-stage server pipeline (route/check/decide/do = "how the ECU decides") · **C6** comms-family
-  placement of `$10`/`$11`/`$3E` (→V7a/b/c) · **K** conclusion (recap + retrieval + bridge to drills/M2).
-  Provided-capability voice throughout ("the ECU provides `$XX` to …"). **Two adversarial holistic checks**
-  run (primer: 1 blocker+3 nits; catalog: 3 blockers+nits) — all folded before shipping. Wording rules →
-  memory `feedback-prose-and-wording`.
-- **Figures are ALL PLACEHOLDERS** (labelled dashed-box `.dgm`). **NOT yet user-reviewed** end-to-end (the
-  primer trio was approved; C2–K were authored + adversarially checked but the user closed the session
-  before a full read — expect a wording pass).
+**H3 — 6-card build DONE (restructured 2026-07-07, session 14).** `uds-foundation/h3-catalog-and-server/`.
+- ✅ **9→6 restructure executed + browser-verified.** Cards: divider · brief · **C1 primer** (user-approved)
+  · **C2** the six functional units (+ a comms-family leg placing `$10`/`$11`/`$3E` →V7a/b/c · a DID/RID
+  one-liner →M2/M5 · the security-guard leg) · **C3** "The ECU decides what it will serve" (vet →
+  serve/refuse; legs = two gates →V5/M4 and where-a-no-is-born →V9) · **K** conclusion. Dropped the old
+  standalone C4 (DID/RID), C5 (4-stage pipeline → V9 depth, only the *decision* kept), C6 (comms family →
+  folded into C2), per the OK/NG gate. `checkmod . 3` green; grep confirms **no stale pipeline terms**;
+  forward-pointers verified in DOM. Bar-coverage now **V7a/b/c←C2 · V5←C3 · V9←C3**. Record:
+  `uds-foundation/STRUCTURE.md` H3 § + `h3-catalog-and-server/NOTES.md`.
+- **Figures are ALL PLACEHOLDERS** (labelled dashed-box `.dgm`, 10 of them). **C2/C3/K NOT yet user-read**
+  (only the primer trio is signed off — expect a wording pass).
 
 **Next up**
-1. **Execute the H3 9→6 restructure** (LOCKED 2026-07-07 — full plan in the `uds-foundation/STRUCTURE.md`
-   H3 "⚠ RESTRUCTURE" block; hold everything to the **OK/NG gate** in memory `feedback-prose-and-wording`).
-   User rejected C4/C5/C6 as standalone cards. **Drop** standalone C4 (DID/RID→a C2 line + M2/M5), C5 (the
-   4-stage pipeline→V9; keep only the *decision*), C6 (comms family→fold into C2). **Rewrite C2** (six
-   families + place `$10`/`$11`/`$3E` →V7a/b/c + DID/RID one-liner + security leg) and **new C3** "The ECU
-   decides what it will serve" (gates + vet/refuse = the negative, →V5/M4/V9). Trim K. Re-render + adversarial
-   check + get a user read (only the primer trio is signed off). *(Pushback held: the "decide" stays in H3,
-   not H2; V9 needs its bar, carried by the new C3.)*
-2. **Draw the real H3 SVGs** — do this AFTER the restructure settles the card/figure set (deleting c4/c5/c6
-   figs first). Author to §7a geometry, register in STRUCTURE.md §7c, geometry-audit.
-3. **Then** the V drills (V1–V9) and the pillar modules M2–M9, each its own H/V.
-2. **Future H1 rebuild — the 3→4 re-split** (deferred, not shell-round scope): add a new "why diagnostics /
-   cars are many ECUs" **C1** (3 contexts: workshop/EOL/OTA), and split the current C2 into **C3** (14229
-   family + OSI) + **C4** (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to fully match STRUCTURE.md's 4-card H1.
-3. **Fold the session-9 template-UX/shell decisions into [[CONVENTIONS]]/[[PEDAGOGY]] as locked
-   rules** — overview strip · card rail · Go-Deeper affordance · recall prominence · forward-links +
-   stub pages · byte animation · the ≤2-class lang-selector rule (incl. leg/nav/pill isolation).
+1. **Get a user read on H3 C2/C3/K** (the restructured cards) — only the primer trio is signed off; hold to
+   the **OK/NG gate** in memory `feedback-prose-and-wording`.
+2. **Draw the real H3 SVGs** (card/figure set now settled — 10 figs: brief 1 · primer 3 · C2 3 · C3 3).
+   Author to §7a geometry, register in STRUCTURE.md §7c, geometry-audit (light + dark close-ups).
+3. **Fold the session-9 template-UX/shell decisions into [[CONVENTIONS]]/[[PEDAGOGY]] as locked rules** —
+   overview strip · card rail · Go-Deeper affordance · recall prominence · forward-links + stub pages · byte
+   animation · the ≤2-class lang-selector rule (incl. leg/nav/pill isolation) · sticky breadcrumb · shared topbar.
+4. **Publish the learner persona** ("who this is for") on the site — see Open items below.
+5. **Future H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
+   many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
+   (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.
+6. **Then** the V drills (V1–V9) and the pillar modules M2–M9, each its own H/V.
 
 **Open build-phase decisions (unchanged):** V8 density (keep the 5-card stack incl. DoIP vs spin the
 IP/DoIP half to M7) · a `:::table` directive (for M2/M3) · bundle EN fonts base64 (map + modules still

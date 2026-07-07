@@ -1,7 +1,7 @@
 ---
 id: concl
 type: conclusion
-order: 80
+order: 50
 eyebrow: "Section recap · まとめ"
 ---
 
@@ -9,18 +9,18 @@ eyebrow: "Section recap · まとめ"
 :::en
 A **service** is a named job an ECU provides, under one fixed shape: one request in, one reply from a fixed set, and only in the right state. A service is **diagnostic** because of its purpose — these are the building blocks you use to read a vehicle's faults and data, test its parts, and check or update its software.
 
-Those services come in **six families**: communication management, data transmission, stored data, input/output control, routine, and upload/download — with **security** guarding the risky ones across all six. Inside the data and routine families, a **16-bit DID or RID** names exactly which value or routine. And when a request arrives, the ECU runs it through **four stages** — route, check, decide, do — saying yes or no at the "decide" stage.
+Those services come in **six families**: communication management, data transmission, stored data, input/output control, routine, and upload/download — with **security** guarding the risky ones across all six, and a 16-bit **DID** or **RID** naming exactly which value or routine inside the data and routine families. And the menu is not served flat: before it acts, the ECU **decides** — it checks the session, the lock, and the request itself, then serves it or refuses with a **negative** reply.
 :::
 :::jp
 **サービス**とは、ECUが差し出す名前つきの仕事で、1つの決まった型を持ちます ― 要求が1つ入り、決まった集合から返答が1つ、しかも正しい状態のときだけ。サービスが**診断**なのは、その目的ゆえです ― これらは、車の故障やデータを読み、部品を試し、ソフトを確認・更新するための、基本の部品です。
 
-それらのサービスは**6つの族**に分かれます ― 通信管理、データ伝送、保存データ、入出力制御、ルーチン、アップロード／ダウンロード ― そして**セキュリティ**が、6つすべてにまたがって危険なものを守ります。データ族とルーチン族の中では、**16ビットのDIDやRID**が、どの値・どのルーチンかを正確に指します。要求が届くと、ECUはそれを**4段階** ― 経路・確認・判断・実行 ― に通し、「判断」の段階でイエス・ノーを言います。
+それらのサービスは**6つの族**に分かれます ― 通信管理、データ伝送、保存データ、入出力制御、ルーチン、アップロード／ダウンロード ― そして**セキュリティ**が6つすべてにまたがって危険なものを守り、データ族とルーチン族の中では16ビットの **DID** や **RID** が、どの値・どのルーチンかを正確に指します。そしてメニューは一律には出されません：動く前に、ECUは**決めます** ― セッション、ロック、要求そのものを確かめ、実行するか、**否定**応答で断ります。
 :::
 
 :::key
 label: You can now · できること
-en: Place any UDS service on the map — name it by its SID, say which of the six families it belongs to, and tell what it needs to run: a plain session, a non-default one, or a security unlock. You can also trace the four stages a request crosses inside the ECU — route, check, decide, do — and say where a "no" is born.
-jp: どのUDSサービスも地図に置けます ― SIDで名前を言い、6つの族のどれに属するかを言い、動かすのに何が要るか ― ふつうのセッションか、非デフォルトか、セキュリティのロック解除か ― を言えます。さらに、要求がECUの中で越える4段階 ― 経路・確認・判断・実行 ― をたどり、「いいえ」がどこで生まれるかを言えます。
+en: Place any UDS service on the map — name it by its SID, say which of the six families it belongs to, and tell what it needs to run: a plain session, a non-default one, or a security unlock. And you can say what the ECU does with a request — check it, then serve or refuse — where every "no" is a decision made inside the server.
+jp: どのUDSサービスも地図に置けます ― SIDで名前を言い、6つの族のどれに属するかを言い、動かすのに何が要るか ― ふつうのセッションか、非デフォルトか、セキュリティのロック解除か ― を言えます。さらに、ECUが要求をどう扱うか ― 確かめ、それから実行するか断るか ― を、そして「いいえ」がすべてサーバーの中で下される決定であることを言えます。
 :::
 
 :::recall

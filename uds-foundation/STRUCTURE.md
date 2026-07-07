@@ -29,16 +29,17 @@ after the bars has a complete, honest high-level picture.
 
 ## Reading paths
 
-- **Breadth-only (bars read alone = whole picture):** **H1 → H2 → H3.** Holds literally *once H3 is
-  built to the bar* (it is currently a stub). Every bar term (security, S3, P2, DID/RID, the pipeline
-  acronyms, the six units) is glossed inline at bar altitude or carries a `{{→}}` pointer — no bar leans
-  on a collapsed leg or an unbuilt drill.
+- **Breadth-only (bars read alone = whole picture):** **H1 → H2 → H3.** H3 is now built to the bar
+  (6 cards). Every bar term (security, S3, P2, DID/RID, the six units) is glossed inline at bar altitude
+  or carries a `{{→}}` pointer — no bar leans on a collapsed leg or an unbuilt drill. (The server-pipeline
+  acronyms PduR/DSL/DSD/DSP are **no longer** at H3 bar altitude — they moved to V9 depth in the 9→6
+  restructure.)
 - **Full drill order (opt-in depth):** H1 → V1 → H2 → V2 → V3 → V4 → **V8** → V5 → V6 → V7a → V7b →
   V7c → H3 → V9. **⚠ open decision:** this moves **V8 to after V4** (V8 leans on a concrete message +
   the negative/suppress concepts). This *differs from COURSE.md's locked order* (V8 as the late
   "zoom-out" after the service homes). See Open decisions #1.
 - **Bar-coverage (every V has a bar):** V1←H1-C2 · V8←H1-C3 + H2-C4 · V2,V3←H2-C2 · V4←H2-C1 ·
-  V6,V7a←H2-C3 · V5,V7c←H2-C5/C7 · V7b←H2-C6 · V5,V9←H3-C5 · V7a/b/c←H3-C6. No orphans.
+  V6,V7a←H2-C3 · V5,V7c←H2-C5/C7 · V7b←H2-C6 · V5←H3-C3 · V9←H3-C3 · V7a/b/c←H3-C2. No orphans.
   *(H3-C1 primer = an additional breadth touchpoint for the service concept; V1's bar remains H1-C2 — do not re-home it.)*
 
 ---
@@ -183,55 +184,35 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 | V7c-K | Conclusion | recap + bridge to the service catalog | — |
 
 ## H3 — What UDS can do & how the ECU decides *(must build first — see Open decisions #2)*
-*Enters:* the beat, session life, addressing; a service is a numbered thing you can ask (H1). *Leaves:* can say what a diagnostic service **IS** (a named capability offered under a fixed shape — one request, one of a fixed set of replies, only if the ECU is in the right state — that reads and/or changes a live installed ECU from outside), name the 6 units + security sub-layer, say what needs a session/security, describe DID/RID, sketch the PduR→DSL→DSD→DSP pipeline, place $10/$11/$3E in the comms-management family.
+*Enters:* the beat, session life, addressing; a service is a numbered thing you can ask (H1). *Leaves:* can say what a diagnostic service **IS** (a named capability offered under a fixed shape — one request, one of a fixed set of replies, only if the ECU is in the right state — that reads and/or changes a live installed ECU from outside), name the 6 units + security sub-layer, say what needs a session/security, name DID/RID (the 16-bit coordinate for data/routine), place $10/$11/$3E in the comms-management family, and say **how the ECU decides** — it vets every request (session? unlock? valid?) then serves it or refuses with a negative, decided **inside** the server (→V9 for the step-by-step gate).
 
 > **Service-primer insert (LOCKED 2026-07-07, user-approved).** Before the catalog, H3 opens with a
 > Brief + a Concept **primer** that makes the word "service" concrete (derivation: `_derive`
-> workflow `h3-service-primer-derivation`, 17 agents, ISO-grounded + adversarially checked). This
-> shifts the old C1–C5 down by one (→ C2–C6); K unchanged. The primer is a **breadth spiral**, NOT a
+> workflow `h3-service-primer-derivation`, 17 agents, ISO-grounded + adversarially checked). In the final 6-card layout (post 9→6 restructure) the primer is **C1**, the catalog **C2**, the
+> decide-card **C3** (K = conclusion). The primer is a **breadth spiral**, NOT a
 > V1 duplication (H1 *names* services · H2 *traces* one · **H3 primer *abstracts* to what a service
 > IS** · V1 *formalizes* primitives/SAP). **Lint fence on the primer content** (any hit = it slid
 > into V1, pull back): `primitive · indication · confirmation · SAP · access point · A_Mtype · A_SA ·
 > A_TA · S_Data · confirmed/unconfirmed service`. The SID / +0x40 / 7F+NRC facts are H2's — the primer
 > **re-uses** them as the shape's parts, never re-derives.
 
-> **⚠ H3 RESTRUCTURE — LOCKED 2026-07-07, EXECUTE NEXT SESSION (9 cards → 6).** User rejected C4/C5/C6 as
-> standalone cards; they fail the OK/NG gate (memory `feedback-prose-and-wording`: "earns its place" /
-> "answers a promise"). **The table BELOW is the SHIPPED 9-card build; migrate it to this 6-card target:**
-> - **Target 6 cards:** D0 divider · B brief · **C1 primer** (unchanged, signed off) · **C2 the six
->   families** · **C3 "The ECU decides what it will serve"** · K conclusion. Each maps 1:1 to a divider
->   promise: *what a service is · the menu · how it decides.*
-> - **DROP C4 (DID/RID)** → fold ONE bullet into C2's data/routine families ("you name *which* value or
->   routine by a 16-bit DID/RID, not a memory address"); depth → M2 (DID) / M5 (RID). Delete
->   `content/50-c4-did-rid.md` + `h3-c4-f*` figs.
-> - **DROP C5 (the 4-stage pipeline)** → merge ONLY the decision into C3 (the ECU vets a request and can
->   refuse); the full route/link/dispatch/process pipeline (PduR/DSL/DSD/DSP) is **V9 depth**, not breadth.
->   Delete `content/60-c5-server-pipeline.md` + `h3-c5-f*` figs. *(Pushback HELD: the decision stays in H3,
->   not H2 — H2 is scoped to the wire and its conclusion already defers "how the ECU decides inside" →V9;
->   and V9 needs a breadth bar, which C3 now carries. Old title "four stages to an answer" was NG-abstract.)*
-> - **DROP C6 (comms family)** → fold into C2: a communication-management bullet + a small leg placing
->   `$10`/`$11`/`$3E` in family #1 with `→ V7a/b/c` pointers. Delete `content/70-c6-comms-family.md` + figs.
-> - **C2 (rewrite)** = the six families (provide-voice) + comms-family placement (**→V7a/b/c**) + the DID/RID
->   one-liner (→M2/M5) + the security-guard leg. **Carries the V7a/b/c bars.** Current title OK.
-> - **C3 (new) "The ECU decides what it will serve":** bar = the ECU vets every request (right session?
->   unlocked? valid?) → serves it, or refuses with a **negative** (the "no" from H2, decided inside the
->   server). Legs: (a) the two gates, session + security (→V5, M4); (b) a refusal is that negative, born
->   inside the server (→V9). **Carries the V5 AND V9 bars.** (Replaces old C3 gating + old C5 pipeline.)
-> - **K:** trim recap to the leaner arc. Renumber orders to 00/10/20/30/40/50.
-> - **Bar-coverage becomes:** `…V5←H3-C3 · V9←H3-C3 · V7a/b/c←H3-C2` (replaces `V5,V9←H3-C5 · V7a/b/c←H3-C6`
->   in the line up top — update it on migration). **Figure register:** drop c4/c5/c6 rows; C2/C3 get new figs.
+> **✅ H3 9→6 RESTRUCTURE DONE 2026-07-07 (session 14).** The old C4 (DID/RID), C5 (4-stage pipeline) and
+> C6 (comms family) were rejected as standalone cards (OK/NG gate) and removed. DID/RID → a one-liner in
+> C2 (→M2/M5); the pipeline → V9 depth (only the *decision* survives, in C3); the comms family → a leg in
+> C2. **C2** rewritten (six families + comms-placement leg →V7a/b/c + DID/RID one-liner + security leg;
+> carries the V7a/b/c bars). **C3** is new — "The ECU decides what it will serve" (vet → serve/refuse;
+> legs = two gates →V5/M4 and where-a-no-is-born →V9; carries the V5 AND V9 bars). K trimmed to the leaner
+> arc; orders renumbered 00/10/20/30/40/50. Content browser-verified (`checkmod . 3` green, no stale
+> pipeline terms). The 6-card build is the table below.
 
 | card | type | covers | go-deeper |
 |---|---|---|---|
 | H3-D0 | Divider | the arc: what a service **IS** → the catalog of them → how the ECU decides yes/no | — |
 | H3-B | Brief | advance organizer (sets up, no teaching): you traced ONE request in H2 — but what is the ECU offering a whole *list* of? 3 stops (what a service is · the catalog · how it decides). Carries the hook + sealed-box + **menu** image so the primer stays one clean idea | — |
 | H3-C1 | Concept | **THE PRIMER:** a UDS **service** = a **named job the ECU offers under one fixed shape** (send one request → get one reply from a fixed set: a "done", or a "no+reason" from a known list — **only if** the ECU is in the right state); it is **diagnostic** by **purpose** — the services are the **primitives you diagnose the vehicle with**. Bar states the shape as a **generalization** ("*every* service, whatever it does, uses this one shape you already saw in H2") — it does **NOT** re-decode bytes (H2 owns that). Names **functional unit** once at the end (hands off to C2). *(Leg on "the fixed shape, byte-by-byte" DROPPED 2026-07-07 per user FB — redundant with H2-C1/C2/C3; nothing to relocate.)* | **2 legs.** *what makes it diagnostic* — the **primitives** you diagnose with: read faults (→M3) · read live data (→M2) · test an actuator (→M5) · check ECU software is healthy · update ECU software (→M6); done from **outside**, no teardown; tester = scan tool / EOL station / OTA (→M7); *purpose, not the bytes* (cl.3.6/7.1/1) · *what it means to **provide** (two roles)* — tester *uses* (asks, waits); ECU-side **server** *provides* — offers the service, then does the job + replies, or refuses with a reason; server = a **function**, not the box (cl.3.18 Note 1) → the same service can come from any ECU. Enter from H1's server role, don't re-teach it (→V9 · the Dcm, →V1 · the formal model) |
-| H3-C2 | Concept | *(was H3-C1)* UDS services group into **exactly six** functional units (ISO 14229-1 cl.10–15) + a security sub-layer (not a 7th) — lands cleanly now "service" + "functional unit" are concrete | the six, ISO-accurate (no "etc."): **communication management** (cl.10) · **data transmission** (cl.11 →M2) · **stored data / fault memory** (cl.12, DTCs →M3) · **input/output control** (cl.13 →M5) · **routine** (cl.14 →M5) · **upload/download** (cl.15, reflash →M6); **security** (SecurityAccess cl.10.4) is a **sub-layer inside cl.10** that gates the risky ones (→M4), NOT a 7th unit |
-| H3-C3 | Concept | *(was H3-C2)* many services need a non-default session and/or a security unlock first — the **precondition** part of the shape, now drilled | session-gated vs security-gated (→V5,M4) · why gate (safety) |
-| H3-C4 | Concept | *(was H3-C3)* data lives at 16-bit **DIDs**, routines at 16-bit **RIDs** — huge coordinate spaces | DID space (→M2) · RID space (→M5) |
-| H3-C5 | Concept | *(was H3-C4)* inside the ECU a request flows through 4 stages: route → link/session → dispatch (accept/reject) → process (plain words first, PduR/DSL/DSD/DSP as secondary labels) | each stage's job · the AUTOSAR names (→V9) · the "DSD accepts → DSP executes" boundary (→V9) |
-| H3-C6 | Concept | *(was H3-C5)* $10/$11/$3E are members of the **communication-management** unit (same term as C2 — files into a family already met) | same unit holds $27/$28/$29→M4, $85→M3 (caveat) · the three drilled: $10(→V7a)/$11(→V7b)/$3E(→V7c) |
-| H3-K | Conclusion | recap (incl. "service = a named capability with a fixed shape" as the idea that made the catalog legible) + retrieval + bridge onward | — |
+| H3-C2 | Concept | UDS services group into **exactly six** functional units (ISO 14229-1 cl.10–15) + a security sub-layer (not a 7th). **Bar** = the six (provide-voice), each named with real SIDs; **+ a DID/RID one-liner** (data/routine name a target by a 16-bit id, not a memory address →M2/M5). **Carries the V7a/b/c bars** (via the comms leg). | *comms family* (leg): $10/$11/$3E act on the conversation → placed in family #1, drilled $10(→V7a)/$11(→V7b)/$3E(→V7c); same unit also holds $27/$28/$29(→M4) + $85(→M3) · *security* (leg): SecurityAccess ($27) guards the risky ones across all six — read always, unlock to change; a guard, **not** a 7th unit (→M4) |
+| H3-C3 | Concept | **"The ECU decides what it will serve"** — the ECU vets every request against its state (right session? unlocked? valid?) → serves it, or **refuses** with the **negative** (7F+SID+reason) from H2; the "no" is decided **inside** the server, not a wire glitch. **Carries the V5 AND V9 bars.** | *two gates* (leg): session (→V5) + security ($27, →M4), why = safety · *where a "no" is born* (leg): the ECU checks **before** it works; a failed check emits the reason — the full ordered gate is V9 depth (→V9) |
+| H3-K | Conclusion | recap (service = a named capability with a fixed shape · six families + security guard · DID/RID · the ECU decides → serve/refuse) + retrieval (which family is $22? reprogram = which family + what gates it?) + bridge onward to M2 | — |
 
 ## V9 — Inside the server (the Dcm pipeline & the NRC-origin gate)
 *Enters:* request flows route/link/dispatch/process (H3-C4); NRCs exist (V3); 0x78 at the P2 boundary (V6). *Leaves:* can walk the pipeline, describe the ordered validation gate where NRCs originate, place 0x78, state security starts locked.
@@ -306,8 +287,9 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 
 ## Still open / build-time
 
-4. **H3 + V9 are unbuilt stubs.** Breadth-reads-alone and V9's bar both require H3 to exist — build H3
-   to the bar (COURSE.md Current Focus already plans this) before signing off the spine.
+4. **H3 built (2026-07-07); V9 remains an unbuilt stub.** The breadth-reads-alone path now holds (H1→H2→H3
+   all built to the bar). V9's bar is carried by H3-C3 (the decide card). Remaining before the spine signs
+   off: draw the real H3 SVGs (placeholders now) and build the V-drills, V9 included.
 5. **Asset check — RESOLVED 2026-07-07.** The `c3-addressing.svg` collision is gone: H1-C3's addressing
    leg was cut (H1's copy deleted), and all H1/H2 figures were renamed to the globally-unique §7c
    convention `<h#>-<card>-f<k>_<title>.svg` (see the Figure register below), so no two figures can
@@ -320,8 +302,8 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 Figure ID = `<CARD>-F<k>` (card-scoped: `F1` = the card's bar figure, `F2…` = its go-deeper leg
 sketches in reading order). Filename = `<card>-f<k>_<kebab-title>.svg` in `<module>/assets/figures/`,
 globally unique by the `h1-/h2-` prefix. Kept 1:1 with the on-disk SVGs (verified by `checkmod.js`).
-V-drills are unbuilt — their registers are authored when each module is built. H3 is unbuilt too,
-but its **primer** cards (H3-B, H3-C1) are speced (below); H3-C2–C6 figures are authored when H3 is built.
+V-drills are unbuilt — their registers are authored when each module is built. **H3 is now built**
+(6 cards, 10 figures — all still labelled-dashed-box **placeholders**; real SVGs are the next H3 task).
 
 ### H1 — The diagnostics landscape
 
@@ -353,7 +335,7 @@ but its **primer** cards (H3-B, H3-C1) are speced (below); H3-C2–C6 figures ar
 | H2-C6-F1 | `$11` reset — reboot to default, re-locked | C6 · bar | `h2-c6-f1_reset.svg` |
 | H2-C7-F1 | A session's life — open · hold · close | C7 · bar | `h2-c7-f1_session-life.svg` |
 
-### H3 — What UDS can do & how the ECU decides *(primer cards speced; C2–C6 figures authored when built)*
+### H3 — What UDS can do & how the ECU decides *(6-card build; all 10 figures are placeholders)*
 
 | ID | Title (takeaway) | Card / leg | Filename |
 |----|------------------|------------|----------|
@@ -361,3 +343,9 @@ but its **primer** cards (H3-B, H3-C1) are speced (below); H3-C2–C6 figures ar
 | H3-C1-F1 | The fixed shape of a service — one in, one of a fixed set out, only if | C1 · bar | `h3-c1-f1_service-shape.svg` |
 | H3-C1-F2 | The primitives of vehicle diagnostics — read, test, check, update | C1 · leg *diagnostic* | `h3-c1-f2_diagnostic-scene.svg` |
 | H3-C1-F3 | Provide vs use — the tester asks; the server offers, does the job, or refuses | C1 · leg *provide* | `h3-c1-f3_provide-vs-use.svg` |
+| H3-C2-F1 | Every service belongs to one of six families | C2 · bar | `h3-c2-f1_six-families.svg` |
+| H3-C2-F2 | The three you know live in the first family (`$10`/`$11`/`$3E`) | C2 · leg *comms* | `h3-c2-f2_comms-family.svg` |
+| H3-C2-F3 | Security gates the risky services (`$27`) | C2 · leg *security* | `h3-c2-f3_security-gate.svg` |
+| H3-C3-F1 | The ECU vets a request, then serves or refuses | C3 · bar | `h3-c3-f1_decide-serve-or-refuse.svg` |
+| H3-C3-F2 | Two gates — the gate matches the risk | C3 · leg *gates* | `h3-c3-f2_two-gates.svg` |
+| H3-C3-F3 | Check first, work second — where a "no" is born | C3 · leg *refusal* | `h3-c3-f3_no-is-born.svg` |

@@ -375,6 +375,10 @@ animation frame) — don't judge from the source.
    category** (see [[COURSE]] roadmap).
 6. Verify in-browser (§9). Update `NOTES.md`, append `wiki/log.md`, update [[COURSE]] Current
    Focus.
+7. **Publish — `git add -A && git commit && git push`** (git root = `wiki/learn/`, branch `main`).
+   The live GitHub Pages site **is** the deliverable, so a module is **not "done" until it's pushed**
+   — don't leave it local. `.gitignore` already excludes screenshots (`*.png`), `node_modules/`, and
+   `_derive/`, so `git add -A` is safe. Confirm the push landed (see [[reference-github-repo]]).
 
 ## Notation & shared facts
 

@@ -19,6 +19,8 @@ current focus. Granular per-card status lives in each module's `NOTES.md`.
 2. Append a dated entry to `wiki/log.md` (what changed).
 3. Update "Current Focus" below (what's done, what's next).
 4. Save any durable, cross-session fact to memory (user prefs, locked decisions).
+5. **Commit + push** (git root = `wiki/learn/`, branch `main`) — the live GitHub Pages site is the
+   deliverable, so a session/drill is **not done until it's pushed**. Confirm the push landed.
 
 ---
 
@@ -350,7 +352,7 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
    **STRUCTURE reading order: V1 ✅ → V2 → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9**. Card-level flow for
    every drill is already speced in `uds-foundation/STRUCTURE.md`; author each drill's §7c figure register there
    as it's built. Per-drill cadence: confirm purpose + card plan → build (user review) → verify (`checkmod`,
-   light/dark close-ups) → adversarial pass → update NOTES/STRUCTURE/log. **Build V2's Brief in the new 3-part
+   light/dark close-ups) → adversarial pass → update NOTES/STRUCTURE/log → **commit + push** (a drill isn't done until pushed). **Build V2's Brief in the new 3-part
    format** ([[CONVENTIONS]] §4).
 2. **Then the H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**

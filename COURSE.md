@@ -347,6 +347,16 @@ shows all 3 label facts, C3-F3 dropped untaught params). Record: `v1-service-mod
 able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need retrofitting** (follow-up).
 
 **Next up**
+
+> **Session-18 decision gate (2026-07-09) — exemplar-rigor review, do this FIRST next session.** A research
+> session studied three explainer exemplars (TLDR News · Vector "EnginEEring the Jigsaw" F0–F28 · 3Blue1Brown)
+> and produced a prioritized rigor report: **`_derive/exemplar-rigors.md`** (+ log 2026-07-09). **Nothing is
+> adopted yet** — several proposals touch LOCKED conventions and need user sign-off. Two are live in-code
+> defects worth fixing regardless: the **ochre/olive actor-colour collision** (ECU painted in `grn-s` = the OK
+> hue) and the **missing `prefers-reduced-motion`** fallback. Decide which proposals to adopt, then either run
+> the **figure-system package** (reduced-motion → `§7d` visual-cast lexicon + actor tokens → staged/driven
+> "animate-the-consequence" figures) or proceed straight to V2 below.
+
 1. **V2 (request & positive response) — ACTIVE NEXT SESSION** (user-confirmed 2026-07-08). Continue the V depth
    drills via the H3 pipeline (module.yml + `content/*.md` + `.dgm` figures → rendered `index.html`), in
    **STRUCTURE reading order: V1 ✅ → V2 → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9**. Card-level flow for
@@ -371,6 +381,18 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
   ([[CONVENTIONS]] §4) and read as hook-only. Retrofit them (why-this / what's-inside / what-you'll-be-able-to-do,
   derived from each module's STRUCTURE.md card list + *Leaves:* line, `:::key` "By the end"). A small pass; do
   opportunistically, not before V2 (user 2026-07-08).
+- **OP — exemplar-rigor proposals (session 18, 2026-07-09).** Full prioritized set in
+  **`_derive/exemplar-rigors.md`**. Highest-leverage, both studies converged: (1) fix the **ochre/olive
+  actor-colour collision**; (2) write a **visual-cast lexicon `CONVENTIONS §7d`** (client/server/ECU/bus/byte-box
+  = one class+glyph each) + a `checkmod.js` lint; (3) **staged, click-to-advance figure reveal** (element N lights
+  as prose names it); (4) **animate the consequence** not just the path (V5 sessions re-lock, M4 seed→key opens
+  the lock); (5) **`prefers-reduced-motion`** fallback + "static end-frame must teach" rule; (6) name the **ONE
+  deep intuition** ("a diagnostic request is a typed message a state machine agrees to serve; SOVD is that
+  conversation re-dressed as web resources") on hub + STRUCTURE; (7) **surface the SOVD arc + an F0-style "how to
+  read this"** on the hub. Plus: 3B1B **motivate-before-define** beat rewrites (`h2` C1/C2, V5, V3), the UDS→SOVD
+  **"change-of-basis"** M9 signature animation, a **motion grammar** + shared **byte-box generator**, an EN+JP
+  **`GLOSSARY.md`** contract, **between-module `:::recall`**, per-module **level chips**, and a **"what breaks
+  without this"** beat per service card. Most touch LOCKED conventions → **user sign-off required before adopting.**
 
 **Open build-phase decisions (unchanged):** V8 density (keep the 5-card stack incl. DoIP vs spin the
 IP/DoIP half to M7) · a `:::table` directive (for M2/M3) · bundle EN fonts base64 (map + modules still

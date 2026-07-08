@@ -1,0 +1,35 @@
+<svg class="dgm" viewBox="0 0 720 250" role="img" aria-label="Symmetric shape, asymmetric roles. Both the client and the server have one send step and one receive step, mirrored across a centre line. But only the client ever starts the exchange, shown by a one-way arrow; the server always replies.">
+  <!-- the asymmetry: only the client starts -->
+  <text x="360" y="34" text-anchor="middle" class="acc mono-t w7" font-size="11">the client always starts →</text>
+  <path d="M 250 48 H 470 M 469 43 L 476 48 L 469 53" class="acc-s" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle r="3.6" class="acc">
+    <animateMotion dur="2.4s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.7;1" keyPoints="0;1;1" path="M 250 48 L 476 48"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.68;0.76;1" dur="2.4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- column headers -->
+  <text x="230" y="82" text-anchor="middle" class="acc w8" font-size="13">CLIENT</text>
+  <text x="230" y="97" text-anchor="middle" class="mut" font-size="9.5">tester · テスター</text>
+  <text x="490" y="82" text-anchor="middle" class="grn w8" font-size="13">SERVER</text>
+  <text x="490" y="97" text-anchor="middle" class="mut" font-size="9.5">ECU · 制御ユニット</text>
+
+  <!-- mirror axis -->
+  <path d="M 360 104 V 214" class="ln" stroke-width="1.3" stroke-dasharray="4 4"/>
+  <text x="360" y="234" text-anchor="middle" class="mut mono-t" font-size="9">mirror · 鏡映し</text>
+
+  <!-- row labels -->
+  <text x="92" y="133" text-anchor="end" class="mut mono-t" font-size="9.5">sends</text>
+  <text x="92" y="185" text-anchor="end" class="mut mono-t" font-size="9.5">is told</text>
+
+  <!-- send row -->
+  <rect x="150" y="112" width="160" height="36" rx="6" class="fl acc-s" stroke-width="1.7"/>
+  <text x="230" y="135" text-anchor="middle" class="acc mono-t w7" font-size="12">request</text>
+  <rect x="410" y="112" width="160" height="36" rx="6" class="fl grn-s" stroke-width="1.7"/>
+  <text x="490" y="135" text-anchor="middle" class="grn mono-t w7" font-size="12">response</text>
+
+  <!-- receive row -->
+  <rect x="150" y="164" width="160" height="36" rx="6" class="fl acc-s" stroke-width="1.7"/>
+  <text x="230" y="187" text-anchor="middle" class="acc mono-t w7" font-size="12">confirmation</text>
+  <rect x="410" y="164" width="160" height="36" rx="6" class="fl grn-s" stroke-width="1.7"/>
+  <text x="490" y="187" text-anchor="middle" class="grn mono-t w7" font-size="12">indication</text>
+</svg>

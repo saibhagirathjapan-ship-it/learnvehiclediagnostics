@@ -1,0 +1,56 @@
+<svg class="dgm" viewBox="0 0 720 292" role="img" aria-label="Two panels. Left: a confirmed service has six steps — request, a local request-confirmation, indication, response, a local response-confirmation, confirmation. Right: an unconfirmed service stops after three — request, request-confirmation, indication — with no reply.">
+  <!-- divider -->
+  <path d="M 360 60 V 258" class="ln" stroke-width="1.4"/>
+
+  <!-- ===================== LEFT: CONFIRMED (6) ===================== -->
+  <text x="190" y="34" text-anchor="middle" class="ink w8" font-size="13">CONFIRMED</text>
+  <text x="190" y="50" text-anchor="middle" class="mut" font-size="10">a reply comes back · 返答あり</text>
+  <text x="95" y="80" text-anchor="middle" class="acc w7" font-size="10.5">TESTER</text>
+  <text x="285" y="80" text-anchor="middle" class="grn w7" font-size="10.5">ECU</text>
+  <path d="M 95 88 V 246" class="ln" stroke-width="1.3" stroke-dasharray="3 4"/>
+  <path d="M 285 88 V 246" class="ln" stroke-width="1.3" stroke-dasharray="3 4"/>
+
+  <!-- request T->E -->
+  <text x="100" y="112" class="acc mono-t" font-size="9.5">① request</text>
+  <text x="280" y="112" text-anchor="end" class="acc mono-t" font-size="9.5">indication ③</text>
+  <path d="M 95 120 H 279 M 278 115.5 L 285 120 L 278 124.5" class="acc-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- request-confirmation: local self-signal at tester -->
+  <path d="M 95 128 H 116 V 138 H 96 M 102 133 L 96 138 L 102 143" class="acc-s" stroke-width="1.3" fill="none" stroke-dasharray="2.5 2.5" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="opacity" values="0.35;1;0.35" dur="2.4s" repeatCount="indefinite"/>
+  </path>
+  <text x="121" y="137" class="mut mono-t" font-size="8.5">② req-confirm ✓</text>
+
+  <!-- response E->T -->
+  <text x="100" y="186" class="grn mono-t" font-size="9.5">⑥ confirmation</text>
+  <text x="280" y="186" text-anchor="end" class="grn mono-t" font-size="9.5">response ④</text>
+  <path d="M 285 194 H 101 M 102 189.5 L 95 194 L 102 198.5" class="grn-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- response-confirmation: local self-signal at ECU -->
+  <path d="M 285 202 H 264 V 212 H 284 M 278 207 L 284 212 L 278 217" class="grn-s" stroke-width="1.3" fill="none" stroke-dasharray="2.5 2.5" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="opacity" values="0.35;1;0.35" dur="2.4s" repeatCount="indefinite"/>
+  </path>
+  <text x="259" y="211" text-anchor="end" class="mut mono-t" font-size="8.5">⑤ rsp-confirm ✓</text>
+
+  <text x="190" y="240" text-anchor="middle" class="ink w8" font-size="15">= 6 steps</text>
+
+  <!-- ===================== RIGHT: UNCONFIRMED (3) ===================== -->
+  <text x="540" y="34" text-anchor="middle" class="ink w8" font-size="13">UNCONFIRMED</text>
+  <text x="540" y="50" text-anchor="middle" class="mut" font-size="10">no reply · 返答なし</text>
+  <text x="455" y="80" text-anchor="middle" class="acc w7" font-size="10.5">TESTER</text>
+  <text x="645" y="80" text-anchor="middle" class="grn w7" font-size="10.5">ECU</text>
+  <path d="M 455 88 V 246" class="ln" stroke-width="1.3" stroke-dasharray="3 4"/>
+  <path d="M 645 88 V 246" class="ln" stroke-width="1.3" stroke-dasharray="3 4"/>
+
+  <text x="460" y="112" class="acc mono-t" font-size="9.5">① request</text>
+  <text x="640" y="112" text-anchor="end" class="acc mono-t" font-size="9.5">indication ③</text>
+  <path d="M 455 120 H 639 M 638 115.5 L 645 120 L 638 124.5" class="acc-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 455 128 H 476 V 138 H 456 M 462 133 L 456 138 L 462 143" class="acc-s" stroke-width="1.3" fill="none" stroke-dasharray="2.5 2.5" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="opacity" values="0.35;1;0.35" dur="2.4s" repeatCount="indefinite"/>
+  </path>
+  <text x="481" y="137" class="mut mono-t" font-size="8.5">② req-confirm ✓</text>
+
+  <!-- no reply marker where the response would be -->
+  <path d="M 465 194 H 635" class="ln" stroke-width="1.3" fill="none" stroke-dasharray="3 5" stroke-opacity="0.5"/>
+  <text x="550" y="190" text-anchor="middle" class="mut" font-size="9.5">— nothing comes back —</text>
+
+  <text x="540" y="240" text-anchor="middle" class="ink w8" font-size="15">= 3 steps</text>
+</svg>

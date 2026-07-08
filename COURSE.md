@@ -332,8 +332,27 @@ only ResponseOnEvent changed.
 · primer 3 · C2 3 · C3 3) through the `.dgm` design system, geometry-audited via per-figure light/dark close-ups.
 **Session 16:** the C1 redesign + C3 polish above; "lead positive / no negative framing" added to memory.
 
+**✅ V1 (service model) BUILT + SIGNED-OFF-PENDING 2026-07-08 (session 17).** 5 cards (Brief + C1–C3 + Conclusion),
+byte-free abstract skeleton; 10 `.dgm` figures **all animated where motion teaches** (per-user directive) —
+sequence-diagram of the 4 primitives, the 6-vs-3 count, reading-an-arrow, the owner zig-zag, by-side sort,
+symmetry, the SAP address-label swap, the param-name label, the layer hand-down. Verified: `checkmod` green
+(3 concepts, EN-on-load, lang isolation, zero overflow, no console errors); all 10 figures geometry-audited
+light+dark; **4-lens adversarial review** (ISO accuracy vs 14229-1/-2 — all 8 target claims hold; pedagogy/
+continuity; bilingual; figures) + a re-run pedagogy pass — all findings folded (citation fixes, C1 opener
+leads positive, conclusion params **bold** not mono, `A_TAtype`/physical-functional glossed "→V8", C3-F1 now
+shows all 3 label facts, C3-F3 dropped untaught params). Record: `v1-service-model/NOTES.md` + STRUCTURE §7c.
+**New locked convention:** the **Brief = 3-part advance organizer** (why-this / what's-inside / what-you'll-be-
+able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need retrofitting** (follow-up).
+
 **Next up**
-1. **Future H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
+1. **V2 (request & positive response) — ACTIVE NEXT SESSION** (user-confirmed 2026-07-08). Continue the V depth
+   drills via the H3 pipeline (module.yml + `content/*.md` + `.dgm` figures → rendered `index.html`), in
+   **STRUCTURE reading order: V1 ✅ → V2 → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9**. Card-level flow for
+   every drill is already speced in `uds-foundation/STRUCTURE.md`; author each drill's §7c figure register there
+   as it's built. Per-drill cadence: confirm purpose + card plan → build (user review) → verify (`checkmod`,
+   light/dark close-ups) → adversarial pass → update NOTES/STRUCTURE/log. **Build V2's Brief in the new 3-part
+   format** ([[CONVENTIONS]] §4).
+2. **Then the H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
    (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.
    - **Plant the doctor↔patient SPINE analogy in this opener** and carry it as a light through-line:
@@ -343,7 +362,13 @@ only ResponseOnEvent changed.
      seeded early, not sprung mid-course; **H3-C1's primitive leg then nods back to it.** (Decided session 15:
      a spine analogy introduced cold at a C1 leg reads as off — so it was **deferred out of the H3-C1 `f2`
      redraw**, which now stands alone [atoms → "The Diagnosis"] without the doctor.)
-2. **Then** the V drills (V1–V9) and the pillar modules M2–M9, each its own H/V.
+3. **Then** the pillar modules M2–M9, each its own H/V.
+
+**Open points / backlog (tracked, not blocking the active build):**
+- **OP — 3-part Brief retrofit.** H1/H2/H3 briefs predate the locked **3-part advance-organizer** Brief format
+  ([[CONVENTIONS]] §4) and read as hook-only. Retrofit them (why-this / what's-inside / what-you'll-be-able-to-do,
+  derived from each module's STRUCTURE.md card list + *Leaves:* line, `:::key` "By the end"). A small pass; do
+  opportunistically, not before V2 (user 2026-07-08).
 
 **Open build-phase decisions (unchanged):** V8 density (keep the 5-card stack incl. DoIP vs spin the
 IP/DoIP half to M7) · a `:::table` directive (for M2/M3) · bundle EN fonts base64 (map + modules still

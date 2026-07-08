@@ -1,0 +1,46 @@
+<svg class="dgm" viewBox="0 0 720 300" role="img" aria-label="The four steps sorted by owner. The tester owns request at the top and confirmation at the bottom, bracketing the exchange in ochre. The ECU owns indication and response in the middle, in olive. A dot traces the whole flow: request, indication, the ECU serves, response, confirmation.">
+  <defs>
+    <radialGradient id="glowC2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--ok)" stop-opacity="0.34"/>
+      <stop offset="60%" stop-color="var(--ok)" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="var(--ok)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- headers -->
+  <rect x="100" y="20" width="150" height="40" rx="8" class="fl acc-s" stroke-width="2"/>
+  <text x="175" y="45" text-anchor="middle" class="acc w8" font-size="14">TESTER</text>
+  <rect x="470" y="20" width="150" height="40" rx="8" class="fl grn-s" stroke-width="2"/>
+  <text x="545" y="45" text-anchor="middle" class="grn w8" font-size="14">ECU</text>
+
+  <!-- tester "opens & closes" bracket -->
+  <path d="M 88 100 q -14 0 -14 14 V 262 q 0 14 14 14" class="acc-s" stroke-width="1.6" fill="none"/>
+  <text transform="rotate(-90 40 188)" x="40" y="188" text-anchor="middle" class="acc mono-t" font-size="9.5">opens &amp; closes</text>
+
+  <!-- serve glow -->
+  <circle cx="545" cy="198" r="30" fill="url(#glowC2)">
+    <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.44;0.52;0.62;1" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <text x="583" y="201" class="mut mono-t" font-size="9">serves · 処理</text>
+
+  <!-- flow arrows -->
+  <path d="M 245 110 L 468 166 M 461 160.5 L 470 168 L 458 169" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 545 186 V 208 M 540 203 L 545 210 L 550 203" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 475 228 L 252 264 M 261 259.5 L 250 266 L 262 268.5" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- step chips -->
+  <rect x="105" y="92" width="140" height="36" rx="6" class="fl acc-s" stroke-width="1.8"/>
+  <text x="175" y="114" text-anchor="middle" class="acc mono-t w7" font-size="12">① request</text>
+  <rect x="475" y="150" width="140" height="36" rx="6" class="fl grn-s" stroke-width="1.8"/>
+  <text x="545" y="172" text-anchor="middle" class="grn mono-t w7" font-size="12">② indication</text>
+  <rect x="475" y="210" width="140" height="36" rx="6" class="fl grn-s" stroke-width="1.8"/>
+  <text x="545" y="232" text-anchor="middle" class="grn mono-t w7" font-size="12">③ response</text>
+  <rect x="105" y="248" width="140" height="36" rx="6" class="fl acc-s" stroke-width="1.8"/>
+  <text x="175" y="270" text-anchor="middle" class="acc mono-t w7" font-size="12">④ confirmation</text>
+
+  <!-- travelling dot: the whole exchange -->
+  <circle r="4" class="ink">
+    <animateMotion dur="4s" repeatCount="indefinite" calcMode="linear" path="M 105 110 L 245 110 L 470 168 L 545 168 L 545 228 L 475 228 L 245 266 L 175 266"/>
+    <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.04;0.5;0.94;1" dur="4s" repeatCount="indefinite"/>
+  </circle>
+</svg>

@@ -302,8 +302,9 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 Figure ID = `<CARD>-F<k>` (card-scoped: `F1` = the card's bar figure, `F2…` = its go-deeper leg
 sketches in reading order). Filename = `<card>-f<k>_<kebab-title>.svg` in `<module>/assets/figures/`,
 globally unique by the `h1-/h2-` prefix. Kept 1:1 with the on-disk SVGs (verified by `checkmod.js`).
-V-drills are unbuilt — their registers are authored when each module is built. **H3 is now fully built**
-(6 cards, 10 figures — **all real SVGs drawn + geometry-audited 2026-07-08**, light + dark close-ups; §7a clean).
+**H3 fully built** (6 cards, 10 figures — real SVGs drawn + geometry-audited 2026-07-08). **V1 fully built
+2026-07-08** (5 cards, 10 figures — all animated where motion teaches, geometry-audited light + dark; §7a clean).
+V2–V9 unbuilt — their registers are authored when each module is built.
 
 ### H1 — The diagnostics landscape
 
@@ -349,3 +350,18 @@ V-drills are unbuilt — their registers are authored when each module is built.
 | H3-C3-F1 | The ECU vets a request, then serves or refuses | C3 · bar | `h3-c3-f1_decide-serve-or-refuse.svg` |
 | H3-C3-F2 | Two gates — the gate matches the risk | C3 · leg *gates* | `h3-c3-f2_two-gates.svg` |
 | H3-C3-F3 | Check first, work second — where a "no" is born | C3 · leg *refusal* | `h3-c3-f3_no-is-born.svg` |
+
+### V1 — The service model *(5-card build; 10 figures, all animated where motion teaches; geometry-audited 2026-07-08)*
+
+| ID | Title (takeaway) | Card / leg | Filename |
+|----|------------------|------------|----------|
+| V1-B-F1 | One exchange, about to be slowed down and named | brief · bar | `v1-b-f1_one-exchange.svg` |
+| V1-C1-F1 | One exchange, four steps — same message at its two ends | C1 · bar | `v1-c1-f1_four-steps.svg` |
+| V1-C1-F2 | Six steps for a reply, three for none | C1 · leg *count* | `v1-c1-f2_six-and-three.svg` |
+| V1-C1-F3 | One arrow, three facts (tail acts · head told · down = time) | C1 · leg *arrows* | `v1-c1-f3_reading-arrows.svg` |
+| V1-C2-F1 | The tester brackets; the ECU serves the middle | C2 · bar | `v1-c2-f1_owners.svg` |
+| V1-C2-F2 | Three steps each, no overlap | C2 · leg *sides* | `v1-c2-f2_by-side.svg` |
+| V1-C2-F3 | The names mirror; the roles do not | C2 · leg *symmetry* | `v1-c2-f3_symmetry.svg` |
+| V1-C3-F1 | Every call crosses a SAP with a label; the reply swaps from/to | C3 · bar | `v1-c3-f1_sap.svg` |
+| V1-C3-F2 | The label, with its real names (A_Mtype / A_SA / A_TA) | C3 · leg *names* | `v1-c3-f2_param-names.svg` |
+| V1-C3-F3 | Rich on top, plain below — the call becomes S_Data | C3 · leg *sessionlayer* | `v1-c3-f3_session-layer.svg` |

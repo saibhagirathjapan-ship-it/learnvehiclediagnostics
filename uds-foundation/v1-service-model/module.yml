@@ -1,0 +1,10 @@
+id: v1-service-model
+title: { en: "The service model", jp: "サービスモデル" }
+standard: "ISO 14229 · Foundation V1"
+tagline:
+  en: "Before any bytes: the exact shape of one service exchange — how many steps, who makes each, and what travels along with it."
+  jp: "バイトに入る前に：1つのサービスのやり取りの正確な形 ― 何ステップで、誰がどれを行い、何が一緒に運ばれるのか。"
+arc: { pos: 4, total: 12 }
+nav:
+  prev: { id: "h3-catalog-and-server", label: { en: "What UDS can do, and how the ECU decides", jp: "UDSに何ができ、ECUがどう決めるか" } }
+  next: { id: "v2-request-and-response", label: { en: "Request & positive response", jp: "リクエストと肯定応答" } }

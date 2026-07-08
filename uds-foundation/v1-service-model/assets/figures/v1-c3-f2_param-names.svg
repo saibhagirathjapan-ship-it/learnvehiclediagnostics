@@ -1,0 +1,33 @@
+<svg class="dgm" viewBox="0 0 720 250" role="img" aria-label="The address label with its real parameter names. Three mandatory fields: A_Mtype is the message type, one of four setups; A_SA is the source address, who is asking; A_TA is the target address, who should answer. The target also carries A_TAtype: aimed at one ECU, or a whole group.">
+  <!-- card -->
+  <rect x="140" y="28" width="440" height="206" rx="10" class="fl ln" stroke-width="1.6"/>
+  <path d="M 140 64 H 580" class="ln" stroke-width="1.4"/>
+  <text x="162" y="52" class="acc w8" font-size="13">THE ADDRESS LABEL</text>
+  <text x="558" y="52" text-anchor="end" class="mut mono-t" font-size="9.5">3 mandatory · 必須3つ</text>
+
+  <!-- row separators -->
+  <path d="M 140 120 H 580" class="ln" stroke-width="1" stroke-opacity="0.6"/>
+  <path d="M 140 158 H 580" class="ln" stroke-width="1" stroke-opacity="0.6"/>
+  <path d="M 140 196 H 580" class="ln" stroke-width="1" stroke-opacity="0.6"/>
+
+  <!-- A_Mtype -->
+  <rect x="160" y="76" width="94" height="28" rx="5" class="fl acc-s" stroke-width="1.5"/>
+  <text x="207" y="94" text-anchor="middle" class="acc mono-t w7" font-size="11.5">A_Mtype</text>
+  <text x="272" y="90" class="ink" font-size="11">message type — picks 1 of 4 setups:</text>
+  <text x="272" y="108" class="mut mono-t" font-size="9.5">diagnostics · remote · secure · secure-remote</text>
+
+  <!-- A_SA -->
+  <rect x="160" y="128" width="94" height="28" rx="5" class="fl acc-s" stroke-width="1.5"/>
+  <text x="207" y="146" text-anchor="middle" class="acc mono-t w7" font-size="11.5">A_SA</text>
+  <text x="272" y="146" class="ink" font-size="11">source address — who is asking</text>
+
+  <!-- A_TA -->
+  <rect x="160" y="166" width="94" height="28" rx="5" class="fl acc-s" stroke-width="1.5"/>
+  <text x="207" y="184" text-anchor="middle" class="acc mono-t w7" font-size="11.5">A_TA</text>
+  <text x="272" y="184" class="ink" font-size="11">target address — who should answer</text>
+
+  <!-- A_TAtype (qualifier) -->
+  <rect x="180" y="202" width="94" height="24" rx="5" class="fl ln" stroke-width="1.3"/>
+  <text x="227" y="218" text-anchor="middle" class="mut mono-t w7" font-size="10.5">A_TAtype</text>
+  <text x="292" y="218" class="mut" font-size="10">one ECU (physical), or a group (functional)</text>
+</svg>

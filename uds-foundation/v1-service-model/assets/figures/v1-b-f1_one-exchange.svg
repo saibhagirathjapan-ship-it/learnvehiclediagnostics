@@ -1,0 +1,51 @@
+<svg class="dgm" viewBox="0 0 720 214" role="img" aria-label="One exchange between the tester and the ECU: one request travels out, one answer travels back. The drill will slow this down and name every step, and say who owns each.">
+  <defs>
+    <radialGradient id="glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.30"/>
+      <stop offset="60%" stop-color="var(--accent)" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ECU "serving" glow between arrival and reply -->
+  <circle cx="578" cy="104" r="52" fill="url(#glowB)">
+    <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.42;0.5;0.6;1" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- TESTER -->
+  <rect x="54" y="56" width="176" height="96" rx="9" class="fl acc-s" stroke-width="2"/>
+  <rect x="72" y="80" width="34" height="40" rx="5" class="plate ln" stroke-width="1.5"/>
+  <rect x="77" y="84" width="24" height="17" rx="2" fill="#0d1013"/>
+  <circle cx="80" cy="112" r="2.2" class="lnf"/><circle cx="89" cy="112" r="2.2" class="lnf"/><circle cx="98" cy="112" r="2.2" class="lnf"/>
+  <text x="122" y="96" class="acc w8" font-size="15">TESTER</text>
+  <text x="122" y="114" class="ink" font-size="11.5">Tester · テスター</text>
+
+  <!-- ECU -->
+  <rect x="490" y="56" width="176" height="96" rx="9" class="fl grn-s" stroke-width="2"/>
+  <rect x="512" y="88" width="30" height="30" rx="2" class="fl ln" stroke-width="1.4"/>
+  <line x1="508" y1="95" x2="512" y2="95" class="ln" stroke-width="1.4"/><line x1="508" y1="103" x2="512" y2="103" class="ln" stroke-width="1.4"/><line x1="508" y1="111" x2="512" y2="111" class="ln" stroke-width="1.4"/>
+  <line x1="542" y1="95" x2="546" y2="95" class="ln" stroke-width="1.4"/><line x1="542" y1="103" x2="546" y2="103" class="ln" stroke-width="1.4"/><line x1="542" y1="111" x2="546" y2="111" class="ln" stroke-width="1.4"/>
+  <circle cx="517" cy="93" r="1.5" class="lnf"/>
+  <text x="556" y="96" class="grn w8" font-size="15">ECU</text>
+  <text x="556" y="114" class="ink" font-size="11.5">ECU · 制御ユニット</text>
+
+  <!-- request out -->
+  <text x="360" y="80" text-anchor="middle" class="acc mono-t" font-size="11">one request →</text>
+  <path d="M 230 92 H 484 M 483 87 L 490 92 L 483 97" class="acc-s" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle r="3.6" class="acc">
+    <animateMotion dur="2.8s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.4;1" keyPoints="0;1;1" path="M 230 92 L 490 92"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.39;0.45;1" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- answer back -->
+  <path d="M 490 116 H 236 M 237 111 L 230 116 L 237 121" class="grn-s" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="360" y="134" text-anchor="middle" class="grn mono-t" font-size="11">← one answer</text>
+  <circle r="3.6" class="grn">
+    <animateMotion dur="2.8s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.55;0.95;1" keyPoints="0;0;1;1" path="M 490 116 L 230 116"/>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.55;0.6;0.92;1" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- the question this drill answers -->
+  <text x="360" y="183" text-anchor="middle" class="ink w7" font-size="12">How many steps is that, really — and who owns each?</text>
+  <text x="360" y="200" text-anchor="middle" class="mut" font-size="10.5">実際それは何ステップで、どれが誰のもの？</text>
+</svg>

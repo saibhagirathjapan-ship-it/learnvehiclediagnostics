@@ -1,0 +1,53 @@
+<svg class="dgm" viewBox="0 0 720 192" role="img" aria-label="Every call crosses a service access point carrying an address label. The request rides from tester to ECU tagged from T to E; the reply rides back tagged from E to T. The label is the same three facts, with from and to swapped, so a reply always returns to the asker.">
+  <defs>
+    <radialGradient id="glowC3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--ok)" stop-opacity="0.30"/>
+      <stop offset="60%" stop-color="var(--ok)" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="var(--ok)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="606" cy="82" r="40" fill="url(#glowC3)">
+    <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.44;0.52;0.62;1" dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- tester / ECU -->
+  <rect x="44" y="48" width="140" height="68" rx="9" class="fl acc-s" stroke-width="2"/>
+  <text x="114" y="80" text-anchor="middle" class="acc w8" font-size="14">TESTER</text>
+  <text x="114" y="97" text-anchor="middle" class="ink" font-size="10.5">T</text>
+  <rect x="536" y="48" width="140" height="68" rx="9" class="fl grn-s" stroke-width="2"/>
+  <text x="606" y="80" text-anchor="middle" class="grn w8" font-size="14">ECU</text>
+  <text x="606" y="97" text-anchor="middle" class="ink" font-size="10.5">E</text>
+
+  <!-- SAP boundaries -->
+  <path d="M 200 54 V 112" class="ln" stroke-width="1.2" stroke-dasharray="3 3" stroke-opacity="0.7"/>
+  <path d="M 520 54 V 112" class="ln" stroke-width="1.2" stroke-dasharray="3 3" stroke-opacity="0.7"/>
+  <text x="200" y="46" text-anchor="middle" class="mut mono-t" font-size="8.5">SAP</text>
+  <text x="520" y="46" text-anchor="middle" class="mut mono-t" font-size="8.5">SAP</text>
+
+  <!-- request wire -->
+  <text x="360" y="60" text-anchor="middle" class="acc mono-t" font-size="10">request →</text>
+  <path d="M 184 70 H 530 M 529 65.5 L 536 70 L 529 74.5" class="acc-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <g>
+    <rect x="190" y="52" width="72" height="34" rx="4" class="fl acc-s" stroke-width="1.3"/>
+    <text x="226" y="65" text-anchor="middle" class="mut mono-t" font-size="8">diag</text>
+    <text x="226" y="79" text-anchor="middle" class="acc mono-t w7" font-size="11">T → E</text>
+    <animateTransform attributeName="transform" type="translate" dur="3s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.42;1" values="0 0;284 0;284 0"/>
+    <animate attributeName="opacity" dur="3s" repeatCount="indefinite" keyTimes="0;0.03;0.38;0.44;1" values="0;1;1;0;0"/>
+  </g>
+
+  <!-- response wire -->
+  <path d="M 536 100 H 190 M 191 95.5 L 184 100 L 191 104.5" class="grn-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="360" y="126" text-anchor="middle" class="grn mono-t" font-size="10">← response</text>
+  <g>
+    <rect x="468" y="82" width="72" height="34" rx="4" class="fl grn-s" stroke-width="1.3"/>
+    <text x="504" y="95" text-anchor="middle" class="mut mono-t" font-size="8">diag</text>
+    <text x="504" y="109" text-anchor="middle" class="grn mono-t w7" font-size="11">E → T</text>
+    <animateTransform attributeName="transform" type="translate" dur="3s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.55;0.98;1" values="0 0;0 0;-286 0;-286 0"/>
+    <animate attributeName="opacity" dur="3s" repeatCount="indefinite" keyTimes="0;0.55;0.6;0.94;1" values="0;0;1;1;0"/>
+  </g>
+
+  <!-- swap note -->
+  <text x="360" y="156" text-anchor="middle" class="ink w7" font-size="11">Same label — on the way back, from and to swap.</text>
+  <text x="360" y="172" text-anchor="middle" class="mut" font-size="9.5">同じラベル ― 戻り道では from と to が入れ替わる。</text>
+</svg>

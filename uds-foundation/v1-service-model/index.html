@@ -1,4 +1,866 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The service model — coming soon</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../_template/blueprint.css"><style>.stub{max-width:640px;margin:0 auto;padding:70px 20px 90px;text-align:center}.stub .tag{display:inline-block;font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);background:var(--chip);padding:5px 12px;margin-bottom:20px}.stub h1{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.15;margin:0 0 6px;color:var(--ink)}.stub .jp{font-family:var(--f-jp);font-size:17px;color:var(--ink-soft);font-weight:600;margin-bottom:22px}.stub p{color:var(--ink-soft);font-size:15.5px;line-height:1.6;margin:0 auto 28px;max-width:52ch}.stub a.back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--on-accent);background:var(--accent);padding:10px 18px}.stub a.back:hover{filter:brightness(1.07)}</style></head><body><div class="stage" data-theme="light" data-lang="en"><header class="topbar"><div class="topbar-in"><a class="brand" href="../../index.html" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a><div class="tb-spacer"></div><div class="tb-ctl"><button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg><span class="tb-lc">EN</span></button><button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme"><svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg></button></div></div></header><div class="stub"><span class="tag">Coming soon · 準備中</span><h1>The service model</h1><div class="jp">サービスモデル</div><p>This drill isn't written yet. It's part of the course roadmap and will be built out card by card — check back soon.</p><a class="back" href="../index.html">← Back to the Foundation map</a></div></div><script>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The service model — ISO 14229 · Foundation V1</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"><style>/* ============================================================
+   BLUEPRINT — canonical design system for the UDS→SOVD course
+   LOCKED 2026-07-04. Do not restyle per module (see CONVENTIONS §1b–1c).
+   Theme via .stage[data-theme=light|dark]; language via .stage[data-lang].
+   Fonts: Space Grotesk (display) · IBM Plex Sans (body) · IBM Plex Mono
+   (mono) · Noto Sans JP (jp). Bundle as @font-face at module build.
+   ============================================================ */
+*{box-sizing:border-box}
+html,body{margin:0}
+
+.stage{--f-display:"Space Grotesk";--f-body:"IBM Plex Sans";--f-mono:"IBM Plex Mono";--f-jp:"Noto Sans JP";--dt:-.3px;
+  min-height:100vh;background:var(--bg);padding:34px 20px 90px;font-family:var(--f-body)}
+/* Palette "Ochre & Olive" (LOCKED 2026-07-05): warm cream/charcoal neutrals · ochre = key accent ·
+   olive = positive/OK · brick-red = negative/danger · burnt-amber = warn · grey = neutral/disabled.
+   Semantic hues (red/green/grey) OVERRIDE thematic use. Body text meets WCAG AA (≥4.5:1). */
+.stage[data-theme="light"]{--bg:#f4f5f6;--card:#ffffff;--ink:#23262c;--ink-soft:#565b63;--ink-faint:#7a7f88;--line:#dde0e4;--line-soft:#eceef0;
+  --accent:#96650f;--accent-soft:#ecd9ad;--ok:#4f6a24;--neg:#a5352a;--warn:#a5521a;--warn-bg:#f6e7cf;--warn-ln:#ddb57c;
+  --chip:#f9f3e1;--code-bg:#eef0f2;--on-accent:#ffffff;--chrome:#23262c;--on-chrome:#f3f4f5;--shadow:0 1px 2px rgba(20,22,26,.08);
+  --dgm-plate:#f7f8f9;--dgm-ink:#23262c;--dgm-muted:#6a6f77;--dgm-line:#b3b8bf;--dgm-fill:#e7e9ec}
+.stage[data-theme="dark"]{--bg:#14161a;--card:#1c1f24;--ink:#e9ebee;--ink-soft:#9aa0a8;--ink-faint:#6f757d;--line:#2c3037;--line-soft:#1f2228;
+  --accent:#dea945;--accent-soft:#3a2c12;--ok:#a7bd61;--neg:#e68173;--warn:#e59240;--warn-bg:#33280f;--warn-ln:#6b5320;
+  --chip:#38300f;--code-bg:#15171c;--on-accent:#1b160e;--chrome:#262a31;--on-chrome:#e9ebee;--shadow:0 1px 2px rgba(0,0,0,.45);
+  --dgm-plate:#15171c;--dgm-ink:#e9ebee;--dgm-muted:#8b929b;--dgm-line:#3a3f47;--dgm-fill:#1f232a}
+.wrap{max-width:840px;margin:0 auto}
+.stage[data-lang="en"] .jp{display:none}
+.stage[data-lang="jp"] .en{display:none}
+.mono{font-family:var(--f-mono)}
+strong{color:var(--accent);font-weight:600}
+.callout.warn strong{color:var(--warn)}
+em{font-style:italic;color:var(--ink-soft)}
+.jp em{font-style:normal;color:var(--ink)}   /* Japanese doesn't slant; give upright emphasis instead */
+/* forward-pointer pill ({{→ V9 · …}}) — spiral signpost to where a topic is drilled */
+.fwd{font-family:var(--f-mono);font-size:.8em;font-weight:600;color:var(--accent);background:var(--chip);padding:1px 6px;white-space:nowrap;letter-spacing:.01em;text-decoration:none;border:1px solid transparent}
+a.fwd{cursor:pointer;transition:background .13s,color .13s,border-color .13s}
+a.fwd:hover{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+.fwd-go{margin-left:3px;font-size:.9em;opacity:.7}
+
+/* ===== concept card (schematic identity) ===== */
+.card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);
+  box-shadow:0 2px 10px rgba(20,22,26,.06);padding:0;overflow:hidden;margin:0 0 26px;scroll-margin-top:88px}
+.stage[data-theme="dark"] .card{box-shadow:0 2px 12px rgba(0,0,0,.4)}
+.card-in{padding:22px 24px}
+.brief,.concl,.divider{scroll-margin-top:88px}
+
+/* title-block header */
+.tblock{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:0 0 16px;background:var(--card)}
+.tf{padding:8px 12px;border-right:1px solid var(--line-soft);display:flex;flex-direction:column;justify-content:center}
+.tf:last-child{border-right:0}
+.tf.idx{font-family:var(--f-mono);font-weight:600;font-size:13px;color:var(--accent);background:var(--code-bg);justify-content:center}
+.tf.idx small{color:var(--ink-faint);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.tf.grow{flex:1;min-width:0}
+.tf.grow h3{margin:0;font-family:var(--f-display);font-weight:600;font-size:19px;line-height:1.2;color:var(--ink);letter-spacing:var(--dt)}
+.tf.grow .jp{margin-top:2px;font-family:var(--f-jp);font-size:13.5px;color:var(--ink-soft);font-weight:500}
+.tf.sid{justify-content:center}
+.tf.sid .chip{font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--on-accent);background:var(--ink);padding:5px 9px;border-radius:6px}
+.tf.tgcell{justify-content:center;align-items:center;background:var(--code-bg)}
+
+/* T-glyph */
+.tg{width:34px;height:32px;display:block}
+.tg .bar{fill:var(--dgm-line)} .tg .seg{fill:var(--dgm-line)}
+.tg.barlit .bar{fill:var(--accent)}
+.tg.s1 .g1{fill:var(--accent)} .tg.s2 .g2{fill:var(--accent)} .tg.s3 .g3{fill:var(--accent)} .tg.s4 .g4{fill:var(--accent)}
+.tgmini{width:22px;height:21px;flex:none}
+
+/* high-level bar */
+.barzone .kicker{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.barzone .kicker::after{content:"";height:1px;flex:1;background:var(--line)}
+.card p{margin:0 0 11px;font-size:16px;line-height:1.58;color:var(--ink)}
+.card p.jp{font-family:var(--f-jp);color:var(--ink-soft);line-height:1.82;font-size:15px}
+.card p.lead{font-size:16.5px}
+
+/* bullet list with SEMANTIC markers — normal · {key} · {warn} (conscious icon choice) */
+ul.blist{margin:2px 0 12px;padding:0;list-style:none}
+ul.blist li{position:relative;padding:5px 0 5px 22px;font-size:16px;line-height:1.5;color:var(--ink)}
+ul.blist li::before{content:"";position:absolute;left:2px;top:13px;width:9px;height:2px;background:var(--dgm-line)}          /* normal: understated bar */
+ul.blist li.bl-key{font-weight:500}
+ul.blist li.bl-key::before{left:1px;top:10px;width:7px;height:7px;background:var(--accent);transform:rotate(45deg)}        /* key point: accent diamond */
+ul.blist li.bl-warn::before{left:0;top:8px;width:0;height:2px;background:none;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:7px solid var(--warn)}  /* caution: amber triangle */
+ul.blist.jp li{font-family:var(--f-jp);color:var(--ink-soft);font-size:15px;line-height:1.75}
+.brief ul.blist li,.concl ul.blist li{font-size:15.5px}
+/* numbered steps (ordered list) also carry the lang class */
+.steps.jp li{font-family:var(--f-jp);color:var(--ink-soft)}
+/* concept-card footer (e.g. Further reading at the bottom of a T-card) */
+.card-footer{margin-top:15px}
+
+.fig{margin:15px 0 2px;border:1px solid var(--line);border-radius:8px;background:var(--dgm-plate);padding:15px}
+.fig svg{display:block;width:100%;height:auto}
+.dgm .ink{fill:var(--dgm-ink)} .dgm .mut{fill:var(--dgm-muted)} .dgm .acc{fill:var(--accent)} .dgm .acc-s{stroke:var(--accent)}
+.dgm .grn{fill:var(--ok)} .dgm .grn-s{stroke:var(--ok)} .dgm .ln{stroke:var(--dgm-line)} .dgm .fl{fill:var(--dgm-fill)} .dgm .fl-s{stroke:var(--dgm-fill)}
+.dgm .red{fill:var(--neg)} .dgm .red-s{stroke:var(--neg)} .dgm .plate{fill:var(--card)} .dgm .lnf{fill:var(--dgm-line)}
+.dgm text{font-family:var(--f-body)} .dgm .mono-t{font-family:var(--f-mono);font-weight:600}
+.dgm .amb{fill:var(--warn)} .dgm .amb-s{stroke:var(--warn)} .dgm .w7{font-weight:700} .dgm .w8{font-weight:800}
+figcaption{margin-top:9px;font-size:12px;color:var(--ink-soft);text-align:center;font-family:var(--f-body)}
+
+/* ===== vertical stem = detail legs ===== */
+.stem{margin:28px 0 0;border-top:2px solid var(--accent-soft);padding-top:16px}
+/* "GO DEEPER" announces itself as a tinted accent banner, not a faint mono line */
+.stem-h{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin:0 0 14px;display:flex;align-items:center;gap:10px;background:var(--chip);border-left:3px solid var(--accent);padding:9px 13px}
+.stem-h .stem-n{font-weight:700;letter-spacing:.02em;text-transform:none;font-size:11px;background:var(--accent);color:var(--on-accent);padding:2px 8px}
+.stem-h .stem-hint{margin-left:auto;font-weight:500;letter-spacing:.01em;text-transform:none;font-size:11px;color:var(--ink-soft);font-family:var(--f-body)}
+.legs{border-left:3px solid var(--accent)}
+.leg{border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--card);margin:0 0 10px 18px;position:relative;overflow:hidden}
+.leg::before{content:"";position:absolute;left:-18px;top:25px;width:18px;height:2px;background:var(--accent)}
+.leg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 15px;background:var(--dgm-plate);transition:background .13s}
+.leg>summary::-webkit-details-marker{display:none}
+.leg>summary:hover{background:var(--chip)}
+.leg .lg-txt{flex:1;min-width:0}
+.lg-txt .en,.lg-txt .jp{display:block}
+.leg .lg-en{font-family:var(--f-display);font-weight:600;font-size:15px;color:var(--ink);letter-spacing:var(--dt)}
+.leg .lg-jp{font-family:var(--f-jp);font-size:12.5px;color:var(--ink-soft);margin-top:1px}
+/* the +/− cue is a SOLID accent button — the clearest "this row opens" signal */
+.leg .lg-cue{flex:none;width:28px;height:28px;background:var(--accent);color:var(--on-accent);border:0;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:20px;line-height:1;transition:filter .13s}
+.leg .lg-cue::before{content:"+"}
+.leg[open] .lg-cue::before{content:"\2212"}
+.leg>summary:hover .lg-cue{filter:brightness(1.12)}
+.leg[open]>summary{border-bottom:1px solid var(--line-soft);background:var(--code-bg)}
+.leg[open] .tgmini .bar{fill:var(--dgm-line)}
+.lg-body{padding:15px 16px 16px}
+.lg-body p{font-size:15px;margin:0 0 10px}
+
+/* cards nested inside a deep leg (a leg may hold up to ~4) */
+.subcard{border:1px solid var(--line-soft);border-radius:7px;padding:13px 15px;margin:12px 0 0;background:var(--dgm-plate)}
+.subcard:first-child{margin-top:2px}
+.subcard .sc-h{display:flex;align-items:center;gap:8px;margin:0 0 7px}
+.subcard .sc-n{font-family:var(--f-mono);font-size:10.5px;font-weight:600;color:var(--accent);background:var(--chip);border-radius:4px;padding:2px 6px;flex:none}
+.subcard .sc-t{font-family:var(--f-display);font-weight:600;font-size:14px;color:var(--ink);letter-spacing:var(--dt)}
+.subcard .sc-jp{font-family:var(--f-jp);font-size:12px;color:var(--ink-soft)}
+.subcard p{margin:0 0 8px}
+
+/* byte-boxes */
+.bytes{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}
+.byte{flex:0 0 auto;min-width:54px;text-align:center;border:1.5px solid var(--line);border-radius:7px;overflow:hidden;background:var(--card)}
+.byte .hex{font-family:var(--f-mono);font-weight:600;font-size:17px;padding:7px 9px;color:var(--ink);background:var(--code-bg)}
+.byte .cap{font-size:10px;padding:4px 5px;color:var(--ink-soft);border-top:1px solid var(--line-soft)}
+.byte.pos .hex{background:var(--ok);color:var(--on-accent)} .byte.sub .hex{background:var(--chip);color:var(--accent)} .byte.neg .hex{background:var(--neg);color:var(--on-accent)} .byte.sid .hex{background:var(--accent);color:var(--on-accent)}
+
+/* numbered steps */
+.steps{list-style:none;counter-reset:s;padding:0;margin:6px 0 4px}
+.steps li{counter-increment:s;position:relative;padding:6px 0 6px 34px;font-size:14.5px;color:var(--ink);border-bottom:1px dashed var(--line-soft)}
+.steps li:last-child{border-bottom:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:6px;width:22px;height:22px;border-radius:5px;background:var(--chip);color:var(--accent);
+  font-family:var(--f-mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+
+/* tables */
+table{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0 2px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink)}
+th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;border-bottom:1.5px solid var(--line);font-family:var(--f-mono)}
+td .mono{color:var(--accent);font-weight:600}
+
+/* callouts */
+.callout{border-radius:8px;padding:12px 14px;margin:12px 0 0;font-size:14px;border:1px solid transparent;line-height:1.5}
+.callout .lbl{font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px;font-family:var(--f-mono)}
+.callout.key{background:var(--chip);border-color:color-mix(in srgb,var(--accent) 34%,transparent)} .callout.key .lbl{color:var(--accent)}
+.callout.warn{background:var(--warn-bg);border-color:var(--warn-ln)} .callout.warn .lbl{color:var(--warn)}
+.callout .en,.callout .jp{display:block} .callout .jp{margin-top:5px}
+.fig figcaption .en,.fig figcaption .jp{display:block}
+
+/* retrieval-practice beat (:::recall) — question shown, answer hidden */
+.recall{border:1.5px solid var(--accent);border-left-width:5px;background:var(--chip);padding:16px 18px;margin:18px 0 2px;box-shadow:0 2px 10px rgba(20,22,26,.05)}
+.recall .rc-q{font-size:15.5px;color:var(--ink);line-height:1.55}
+.recall .rc-q .lbl{font-family:var(--f-mono);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.recall .rc-q .lbl::before{content:"?";font-size:12px;width:20px;height:20px;border:1.5px solid var(--accent);border-radius:50%;display:grid;place-items:center;flex:none}
+.recall .rc-a{margin-top:13px}
+.recall .rc-a>summary{list-style:none;cursor:pointer;font-family:var(--f-mono);font-size:12.5px;font-weight:700;color:var(--on-accent);background:var(--accent);display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border:1px solid var(--accent)}
+.recall .rc-a>summary:hover{filter:brightness(1.07)}
+.recall .rc-a>summary::-webkit-details-marker{display:none}
+.recall .rc-a>summary::before{content:"▸";font-size:10px}
+.recall .rc-a[open]>summary::before{content:"▾"}
+.recall .rc-body{margin-top:11px;font-size:14.5px;color:var(--ink);line-height:1.55}
+/* keep these selectors at <=2 classes so the .stage[data-lang] hide rule (3) still wins */
+.rc-q .en,.rc-q .jp,.rc-body .en,.rc-body .jp{display:block}
+.rc-q .jp,.rc-body .jp{font-family:var(--f-jp);color:var(--ink-soft)}
+.rc-q .jp{margin-top:3px} .rc-body .jp{margin-top:4px}
+
+/* "Further reading" panel (:::reading) — compact; standards get doc + clause */
+.reading{border:1px solid var(--line-soft);border-left:2px solid var(--dgm-line);background:var(--dgm-plate);padding:8px 12px;margin:14px 0 2px}
+.reading .rd-h{font-family:var(--f-mono);font-weight:700;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 5px}
+.reading .rd-list{list-style:none;margin:0;padding:0}
+.reading .rd-list li{padding:4px 0;display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px}
+.rd-doc{font-family:var(--f-mono);font-weight:600;font-size:11.5px;color:var(--ink-soft)}
+.rd-sec{font-family:var(--f-mono);font-size:10.5px;font-weight:600;color:var(--accent)}
+.rd-note{flex:1 1 100%;font-size:11.5px;color:var(--ink-soft);line-height:1.45;margin-top:1px}
+
+/* ============================================================
+   MODULE SHELL — topbar · hero · TOC · dividers · nav
+   ============================================================ */
+.stage{padding:0}
+.progress{position:fixed;left:0;top:0;height:2px;background:var(--accent);width:0;z-index:40}
+
+/* top bar — dark-grey chrome */
+.topbar{position:sticky;top:0;z-index:30;background:var(--chrome);border-bottom:1px solid rgba(0,0,0,.28)}
+.topbar-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:9px 20px}
+.brand{font-family:var(--f-display);font-weight:700;color:var(--on-chrome);font-size:15px;display:flex;align-items:center;gap:9px;min-width:0}
+.brand .dot{width:9px;height:9px;border-radius:2px;background:var(--accent);flex:none}
+.brand .std{font-family:var(--f-mono);font-size:11px;color:color-mix(in srgb,var(--on-chrome) 52%,transparent);font-weight:500;white-space:nowrap}
+.tb-spacer{flex:1}
+.tb-ctl{display:flex;gap:7px;align-items:center}
+/* brand is now the HOME link */
+.brand{text-decoration:none}
+.brand:hover .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 42%,transparent)}
+.brand:hover .std{color:color-mix(in srgb,var(--on-chrome) 72%,transparent)}
+/* single-icon toggles — one globe (cycles EN/日本語/EN+JP) + one theme flip (sun↔moon) */
+.tb-icobtn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 82%,transparent);background:color-mix(in srgb,var(--on-chrome) 8%,transparent);border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);padding:6px 9px;line-height:1}
+.tb-icobtn:hover{border-color:var(--accent);color:var(--on-chrome)}
+.tb-icobtn svg{flex:none;transition:transform .25s ease}
+.tb-icobtn .tb-lc{font-family:"IBM Plex Mono","Noto Sans JP",monospace;font-size:11.5px;min-width:38px;text-align:center}
+.tb-theme .ic-moon{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-sun{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-moon{display:inline-block}
+.tb-theme:hover svg{transform:rotate(30deg)}
+
+/* breadcrumb bar — sticky, pinned directly under the topbar (FB4). Stacks below .topbar at --tbh;
+   the overview strip below then pins at --stick (= topbar + crumbs). Opaque bg so page content
+   scrolls under it cleanly; z between topbar (30) and the overview strip (20). */
+.crumbs{position:sticky;top:var(--tbh,44px);z-index:29;background:var(--bg);border-bottom:1px solid var(--line)}
+.crumbs-in{max-width:1120px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;gap:14px}
+.cr-trail{display:flex;align-items:center;gap:8px;min-width:0;flex:1;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px}
+.cr-trail a{color:var(--ink-soft);text-decoration:none}
+.cr-trail a:hover{color:var(--accent)}
+.cr-sep{color:var(--ink-faint)}
+.cr-cur{color:var(--ink);font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cr-cur .jp{font-family:var(--f-jp);color:var(--ink-soft);margin-left:6px}
+.cr-nav{display:flex;gap:8px;align-items:center;flex:none}
+.cn{display:inline-flex;flex-direction:column;gap:1px;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:5px 11px;max-width:210px}
+.cn:hover{border-color:var(--accent)}
+.cn.next{text-align:right;align-items:flex-end}
+.cn-d{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.cn-t{font-family:var(--f-display);font-weight:600;font-size:12.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cn-t .jp{font-family:var(--f-jp);color:var(--ink-soft);margin-left:5px}
+.cn.disabled{opacity:.3;pointer-events:none;min-width:64px}
+
+/* hero */
+.hero{max-width:1120px;margin:0 auto;padding:44px 20px 6px;text-align:center}
+.hero .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1.12;margin:12px 0 6px;color:var(--ink);letter-spacing:-.5px}
+.hero .jp{font-family:var(--f-jp);font-size:19px;color:var(--ink-soft);font-weight:600}
+.hero .tagline{max-width:58ch;margin:16px auto 0;color:var(--ink-soft);font-size:16.5px}
+.hero .tagline.jp{font-family:var(--f-jp)}
+.arc{display:inline-flex;gap:7px;align-items:center;margin:24px auto 0;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+.arc .dot{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.arc .dot.on{background:var(--accent);box-shadow:0 0 0 3px var(--chip)}
+.arc .lbl{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);margin-left:6px}
+
+/* layout: sidebar TOC + stream */
+.layout{max-width:820px;margin:0 auto;display:block;padding:0 20px}
+/* pager: one card at a time (each .page = a card + its prev/next) */
+.stream.pager>.page{display:none;scroll-margin-top:calc(var(--stick,44px) + 60px)}
+.stream.pager>.page.on{display:block}
+.toc{position:sticky;top:70px;width:212px;flex:none;align-self:flex-start;max-height:calc(100vh - 90px);overflow:auto;padding:20px 0;font-size:13px}
+.toc h4{margin:0 0 8px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.toc a{display:flex;gap:9px;align-items:baseline;text-decoration:none;color:var(--ink-soft);padding:6px 10px;border-radius:7px;border-left:2px solid transparent;line-height:1.3}
+.toc a .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);flex:none}
+.toc a:hover{background:var(--bg);color:var(--ink)}
+.toc a.on{color:var(--accent);border-left-color:var(--accent);background:var(--chip)}
+.stream{min-width:0;padding:20px 0 60px}
+
+/* ===== overview strip: this module's cards, in order (sits after the hero) ===== */
+.cardmap-wrap{position:sticky;top:var(--stick,44px);z-index:20;margin-top:18px;padding:9px 20px;background:var(--bg);border-bottom:1px solid var(--line-soft)}
+.cardmap{max-width:1120px;margin:0 auto;border:0;background:transparent;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cardmap-in{display:flex;align-items:center;gap:2px;padding:11px 13px;width:max-content;min-width:100%}
+.cm-lead{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-right:9px;white-space:nowrap;flex:none}
+.cm-stop{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;text-decoration:none;border:1px solid var(--line);background:var(--bg);white-space:nowrap;flex:none;transition:border-color .13s,background .13s}
+.cm-stop:hover{border-color:var(--accent)}
+.cm-stop.on{border-color:var(--accent);background:var(--chip)}
+.cm-t{font-family:var(--f-display);font-weight:600;font-size:13px;color:var(--ink);letter-spacing:var(--dt)}
+.cm-brief .cm-t,.cm-conclusion .cm-t{color:var(--ink-soft);font-weight:500}
+.cm-arr{color:var(--ink-soft);font-family:var(--f-mono);font-size:13px;padding:0 4px;flex:none}
+/* stop number/icon badge — shared by the strip + the rail */
+.st-n{font-family:var(--f-mono);font-weight:700;font-size:11px;color:var(--on-accent);background:var(--accent);min-width:22px;height:20px;padding:0 4px;display:grid;place-items:center;flex:none}
+.st-ic{background:var(--ink-soft);font-size:12px}
+
+/* ===== left rail = card list (repurposes the .toc sidebar) ===== */
+.rail a{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--ink-soft);padding:7px 9px;border-left:2px solid transparent;line-height:1.25;margin-bottom:1px}
+.rail a .rl-t{font-size:12.5px;min-width:0}
+.rl-t .en,.rl-t .jp{display:block}
+.rl-t .jp{font-family:var(--f-jp);font-size:11px;color:var(--ink-faint)}
+.rail a:hover{background:var(--bg);color:var(--ink)}
+.rail a.on{color:var(--accent);background:var(--chip);border-left-color:var(--accent)}
+
+/* divider — a dark-grey section bar with an ochre rule */
+.divider{background:var(--chrome);border:0;border-left:4px solid var(--accent);border-radius:10px;padding:20px 22px;margin:0 0 18px;scroll-margin-top:72px}
+.divider .sec{font-family:var(--f-mono);font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--accent)}
+.divider h2{margin:7px 0 0;font-family:var(--f-display);font-weight:700;font-size:23px;line-height:1.2;color:var(--on-chrome);letter-spacing:var(--dt)}
+.divider h2 .jp{display:block;font-family:var(--f-jp);font-size:16px;color:color-mix(in srgb,var(--on-chrome) 68%,transparent);font-weight:600;margin-top:3px}
+.divider .sub{margin:11px 0 0;font-size:14.5px;color:color-mix(in srgb,var(--on-chrome) 74%,transparent);max-width:62ch}
+.divider .sub.jp{font-family:var(--f-jp)}
+
+/* brief + conclusion */
+.brief{background:var(--dgm-plate);border:1px dashed var(--line);border-radius:10px;padding:18px 20px;margin:0 0 18px}
+.concl{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:10px;padding:18px 20px;margin:0 0 18px}
+.brief .eyebrow,.concl .eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}
+.brief .eyebrow{color:var(--accent)} .concl .eyebrow{color:var(--ok)}
+.brief .eyebrow,.concl .eyebrow{display:inline-flex;align-items:center;gap:7px}
+.lbl-ic{width:14px;height:14px;flex:none}
+.brief p{font-size:16px;margin:0 0 9px;color:var(--ink)} .concl p{font-size:15.5px;margin:0 0 9px;color:var(--ink)}
+.brief p:last-child,.concl p:last-child{margin-bottom:0}
+.brief p.jp,.concl p.jp{font-family:var(--f-jp);color:var(--ink-soft)}
+
+/* cross-module nav */
+.modnav{max-width:1120px;margin:6px auto 0;padding:24px 20px 64px;display:flex;gap:14px;border-top:1px solid var(--line)}
+.modnav a{flex:1;min-width:0;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:13px 16px;background:var(--card)}
+.modnav a:hover{border-color:var(--accent)}
+.modnav .dir{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em}
+.modnav .t{font-family:var(--f-display);font-weight:600;margin-top:3px;color:var(--ink)}
+.modnav .t .jp{font-family:var(--f-jp);font-weight:500;color:var(--ink-soft);font-size:13px}
+.modnav .jp{display:block}
+.modnav .next{text-align:right}
+.modnav .disabled{opacity:.4;pointer-events:none}
+
+/* card-level nav — prev/next between adjacent cards, appended under each card (lighter than .cn) */
+.cardnav{display:flex;gap:12px;margin:16px 0 30px}
+.cln{flex:1;min-width:0;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:10px 13px;display:flex;flex-direction:column;gap:2px}
+.cln.next{text-align:right;align-items:flex-end}
+.cln:hover{border-color:var(--accent)}
+.cln-d{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.cln-t{font-family:var(--f-display);font-weight:600;font-size:13.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cln-t .jp{font-family:var(--f-jp);font-weight:500;font-size:11px;color:var(--ink-soft);display:block}
+.cln.disabled{opacity:0;pointer-events:none}
+
+@media(max-width:860px){
+  .toc{display:none}
+  .layout,.hero,.topbar-in,.modnav,.cardmap-wrap{padding-left:14px;padding-right:14px}
+  .hero h1{font-size:27px}
+  .brand .std{display:none}
+  .brand{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar-in{gap:8px}
+  .fwd{white-space:normal;overflow-wrap:anywhere}   /* let a long pointer pill wrap rather than overflow the card */
+  .cardmap-wrap{top:var(--stick,40px);margin-top:0;padding-top:8px;padding-bottom:8px}
+  .crumbs-in{padding-left:14px;padding-right:14px;gap:8px;flex-wrap:wrap}
+  .cr-nav{flex:1 0 100%;order:2}
+  .cn{flex:1;max-width:none}
+  .cn-t{max-width:38vw}
+  .cardnav{gap:8px;margin:12px 0 24px}
+}
+
+/* ============================================================
+   RECTANGULAR "blueprint sheet" corners (LOCKED 2026-07-04).
+   Sharp panels suit the schematic identity. Tune radii here.
+   ============================================================ */
+.card,.tblock,.tf.idx,.tf.sid .chip,.leg,.subcard,.sc-n,.callout,.byte,
+.fig,.divider,.brief,.concl,.modnav a,.arc,.modcard,.mc-n,
+.recall,.recall .rc-a>summary,.reading,.rd-sec{border-radius:0}
+
+/* ============================================================
+   COURSE HUB (wiki/learn/index.html) — all modules as cards
+   ============================================================ */
+.hub{max-width:1080px;margin:0 auto;padding:6px 20px 74px}
+.hub-h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:26px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.modcard{display:flex;flex-direction:column;text-decoration:none;background:var(--card);border:1px solid var(--line);border-top:2px solid var(--accent);padding:15px 18px 16px;color:var(--ink);transition:border-color .15s,transform .12s}
+.modcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.modcard.upcoming{border-top-color:var(--line);opacity:.7}
+.mc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mc-n{font-family:var(--f-mono);font-weight:700;font-size:12px;color:var(--on-accent);background:var(--accent);padding:3px 8px}
+.modcard.upcoming .mc-n{color:var(--ink-faint);background:var(--code-bg)}
+.mc-sovd{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em}
+.modcard h3{font-family:var(--f-display);font-weight:600;font-size:17px;margin:13px 0 0;color:var(--ink);letter-spacing:var(--dt)}
+.modcard h3 .jp{display:block;font-family:var(--f-jp);font-size:12.5px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+.mc-scope{font-size:12.5px;color:var(--ink-soft);margin:10px 0 0;line-height:1.5}
+.mc-scope.jp{font-family:var(--f-jp)}
+.mc-thumb{margin:14px 0 2px;border:1px solid var(--line-soft);background:var(--dgm-plate);padding:10px 12px}
+.mc-thumb svg{display:block;width:100%;height:auto}
+.mc-status{margin-top:auto;padding-top:13px;font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--ok)}
+.modcard.upcoming .mc-status{color:var(--ink-faint)}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+/* hub — "who this is for" learner-persona note */
+.whofor{max-width:1080px;margin:20px auto 0;padding:0 20px}
+.whofor-in{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);padding:15px 20px}
+.wf-lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 7px}
+.whofor p{margin:0;font-size:14.5px;line-height:1.62;color:var(--ink-soft);max-width:80ch}
+.whofor p.jp{font-family:var(--f-jp);margin-top:7px;line-height:1.8}
+
+/* ============================================================
+   FOUNDATION MAP (uds-foundation/index.html) — the T-shaped module chooser.
+   Rendered through _template/render-map.js (was a hand-copied inline block; moved here
+   2026-07-07 so the map cannot drift from the design system — FB1).
+   ============================================================ */
+.fhero{max-width:1080px;margin:0 auto;padding:40px 20px 4px;text-align:center}
+.fhero .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.fhero h1{font-family:var(--f-display);font-weight:700;font-size:32px;line-height:1.12;margin:11px 0 6px;color:var(--ink);letter-spacing:-.5px}
+.fhero h1 .jp{font-family:var(--f-jp);font-size:20px;color:var(--ink-soft);font-weight:600}
+.fhero .ftag{max-width:60ch;margin:14px auto 0;color:var(--ink-soft);font-size:16px}
+.fhero .ftag.jp{font-family:var(--f-jp)}
+
+.fmap{max-width:1040px;margin:0 auto;padding:22px 20px 90px}
+
+/* how-to-learn guidance indicator */
+.guide{border:1px dashed var(--line);background:var(--dgm-plate);padding:15px 18px;margin:0 0 34px}
+.guide .g-h{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.guide .g-row{display:flex;flex-wrap:wrap;gap:9px 26px}
+.guide .g{display:inline-flex;align-items:baseline;gap:10px;font-size:14px;color:var(--ink-soft);line-height:1.5}
+.guide .g b{color:var(--ink)}
+.guide .ar{font-family:var(--f-mono);color:var(--accent);font-weight:700;font-size:17px;flex:none;line-height:1}
+.guide .g.jp,.guide .g-h.jp{font-family:var(--f-jp)}
+
+/* section tags */
+.axis{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin:0 0 13px}
+.axis.breadth::after{content:"";height:1px;flex:1;background:var(--line)}
+.axis.depth{justify-content:center}
+.axis .n{font-family:var(--f-mono);color:var(--on-accent);background:var(--accent);padding:2px 7px}
+
+/* the horizontal bar (breadth spine) */
+.hbar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* the trunk connecting bar -> stem */
+.trunk{height:36px;position:relative}
+.trunk::before{content:"";position:absolute;left:50%;top:0;bottom:-8px;width:2px;transform:translateX(-1px);background:var(--line)}
+.trunk::after{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;transform:translate(-50%,0) rotate(45deg);background:var(--accent)}
+
+/* the vertical stem (depth drills) */
+.vstem{width:min(470px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;position:relative}
+.vstem::before{content:"";position:absolute;left:50%;top:-18px;bottom:26px;width:2px;transform:translateX(-1px);background:var(--line);z-index:0}
+
+/* map cards */
+.fcard{display:flex;flex-direction:column;text-decoration:none;background:var(--card);border:1px solid var(--line);padding:14px 16px;color:var(--ink);transition:border-color .15s,transform .12s;position:relative;z-index:1}
+.fcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.hcard{border-top:2px solid var(--accent)}
+.vcard{border-left:3px solid var(--accent)}
+.vcard::before{content:"";position:absolute;left:50%;top:-11px;width:10px;height:10px;transform:translate(-50%,0) rotate(45deg);background:var(--accent);z-index:2}
+.tc-top{display:flex;align-items:center;gap:8px}
+.tc-id{font-family:var(--f-mono);font-weight:700;font-size:12px;color:var(--on-accent);background:var(--accent);padding:3px 8px}
+.tc-kind{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--ink-faint)}
+.tc-bar{margin-left:auto;font-family:var(--f-mono);font-size:10px;color:var(--accent);background:var(--chip);padding:2px 6px}
+.tc-title{font-family:var(--f-display);font-weight:600;font-size:15.5px;margin:11px 0 0;color:var(--ink);letter-spacing:var(--dt);line-height:1.22}
+.tc-title .jp{display:block;font-family:var(--f-jp);font-size:12px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+.tc-line{font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.5}
+.tc-line.jp{font-family:var(--f-jp)}
+.tc-go{margin-top:11px;font-family:var(--f-mono);font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em}
+.tc-go .ar{color:var(--accent)}
+.tc-stub{margin-left:6px;color:var(--ink-faint);text-transform:none;letter-spacing:0}
+.fcard,.tc-id,.tc-bar,.axis .n{border-radius:0}
+
+@media(max-width:720px){
+  .hbar{grid-template-columns:1fr}
+  .vstem{width:100%}
+  .fhero h1{font-size:26px}
+}
+</style></head><body><div class="stage" data-theme="light" data-lang="en"><div class="progress" id="progress"></div><header class="topbar"><div class="topbar-in"><a class="brand" href="../../index.html" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a><div class="tb-spacer"></div><div class="tb-ctl"><button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg><span class="tb-lc">EN</span></button><button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme"><svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg></button></div></div></header><nav class="crumbs" aria-label="Breadcrumb"><div class="crumbs-in"><div class="cr-trail"><a href="../../index.html">Course</a><span class="cr-sep" aria-hidden="true">›</span><a href="../index.html">Foundation</a><span class="cr-sep" aria-hidden="true">›</span><span class="cr-cur" aria-current="page"><span class="en">The service model</span><span class="jp">サービスモデル</span></span></div></div></nav><section class="hero"><div class="kicker">Automotive Diagnostics · 自動車診断</div><h1>The service model</h1><div class="jp">サービスモデル</div><p class="tagline en">Before any bytes: the exact shape of one service exchange — how many steps, who makes each, and what travels along with it.</p><p class="tagline jp">バイトに入る前に：1つのサービスのやり取りの正確な形 ― 何ステップで、誰がどれを行い、何が一緒に運ばれるのか。</p></section><div class="cardmap-wrap"><nav class="cardmap" aria-label="Cards in this module"><div class="cardmap-in"><span class="cm-lead"><span class="en">In this module</span><span class="jp">この章</span></span><a class="cm-stop cm-brief" href="#brief"><span class="st-n st-ic">▸</span><span class="cm-t"><span class="en">Start here</span><span class="jp">まずここから</span></span></a><span class="cm-arr" aria-hidden="true">→</span><a class="cm-stop cm-concept" href="#c1"><span class="st-n">01</span><span class="cm-t"><span class="en">The four steps</span><span class="jp">4つのステップ</span></span></a><span class="cm-arr" aria-hidden="true">→</span><a class="cm-stop cm-concept" href="#c2"><span class="st-n">02</span><span class="cm-t"><span class="en">Who does each</span><span class="jp">誰が行うか</span></span></a><span class="cm-arr" aria-hidden="true">→</span><a class="cm-stop cm-concept" href="#c3"><span class="st-n">03</span><span class="cm-t"><span class="en">The address label</span><span class="jp">宛先ラベル</span></span></a><span class="cm-arr" aria-hidden="true">→</span><a class="cm-stop cm-conclusion" href="#concl"><span class="st-n st-ic">✓</span><span class="cm-t"><span class="en">Recap</span><span class="jp">まとめ</span></span></a></div></nav></div><div class="layout"><main class="stream pager"><div class="page" data-id="brief"><section class="brief" id="brief"><div class="eyebrow"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14V2.4"/><path d="M4 3.1h7l-1.6 2.4L11 8H4"/></svg>Start here · まずここから</div><p class="en">In <strong>H1</strong> you learned the two roles: the <strong>tester</strong> asks, the <strong>ECU</strong> answers. But "ask" and "answer" are vague words. What is the exact shape of <strong>one</strong> exchange — how many steps does it take, who makes each one, and what information travels along with it?</p><p class="jp"><strong>H1</strong> では2つの役割を学びました ― <strong>テスター</strong>が尋ね、<strong>ECU</strong>が答える。でも「尋ねる」「答える」は曖昧な言葉です。<strong>1回</strong>のやり取りの正確な形とは何でしょう ― 何ステップかかり、誰が各ステップを行い、どんな情報が一緒に運ばれるのか？</p><p class="en">Pin that shape down now, while it is still simple. Every real message you meet later is just this same shape, with actual bytes filled in. This drill has three parts:</p><ol class="steps en"><li><strong>The four steps</strong> — the fixed order every exchange follows: request, indication, response, confirmation.</li><li><strong>Who does each step</strong> — which steps belong to the tester, and which to the ECU.</li><li><strong>The address label</strong> — what every call carries: the kind of message, who is asking, and who should answer.</li></ol><p class="jp">その形を、まだ単純なうちに、ここで固めておきます。あとで出会う実際のメッセージは、すべてこの同じ形に、実際のバイトを入れただけのものです。この章は3部構成です：</p><ol class="steps jp"><li><strong>4つのステップ</strong> ― どのやり取りも従う決まった順序：リクエスト、通知、応答、確認。</li><li><strong>各ステップを誰が行うか</strong> ― どのステップがテスターのもので、どれがECUのものか。</li><li><strong>宛先ラベル</strong> ― どの呼び出しも運ぶもの：メッセージの種類、誰が尋ねているか、誰が答えるべきか。</li></ol><p class="en">There is no hex here yet. This is the skeleton. In <strong>H2</strong>, we send a real request and watch bytes travel this exact path.</p><p class="jp">ここにはまだ16進はありません。これは骨組みです。<strong>H2</strong> では、実際のリクエストを送り、バイトがまさにこの経路を進む様子を見ます。</p><div class="fig"><svg class="dgm" viewBox="0 0 720 214" role="img" aria-label="One exchange between the tester and the ECU: one request travels out, one answer travels back. The drill will slow this down and name every step, and say who owns each.">
+  <defs>
+    <radialGradient id="u0_glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.30"/>
+      <stop offset="60%" stop-color="var(--accent)" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ECU "serving" glow between arrival and reply -->
+  <circle cx="578" cy="104" r="52" fill="url(#u0_glowB)">
+    <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.42;0.5;0.6;1" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- TESTER -->
+  <rect x="54" y="56" width="176" height="96" rx="9" class="fl acc-s" stroke-width="2"/>
+  <rect x="72" y="80" width="34" height="40" rx="5" class="plate ln" stroke-width="1.5"/>
+  <rect x="77" y="84" width="24" height="17" rx="2" fill="#0d1013"/>
+  <circle cx="80" cy="112" r="2.2" class="lnf"/><circle cx="89" cy="112" r="2.2" class="lnf"/><circle cx="98" cy="112" r="2.2" class="lnf"/>
+  <text x="122" y="96" class="acc w8" font-size="15">TESTER</text>
+  <text x="122" y="114" class="ink" font-size="11.5">Tester · テスター</text>
+
+  <!-- ECU -->
+  <rect x="490" y="56" width="176" height="96" rx="9" class="fl grn-s" stroke-width="2"/>
+  <rect x="512" y="88" width="30" height="30" rx="2" class="fl ln" stroke-width="1.4"/>
+  <line x1="508" y1="95" x2="512" y2="95" class="ln" stroke-width="1.4"/><line x1="508" y1="103" x2="512" y2="103" class="ln" stroke-width="1.4"/><line x1="508" y1="111" x2="512" y2="111" class="ln" stroke-width="1.4"/>
+  <line x1="542" y1="95" x2="546" y2="95" class="ln" stroke-width="1.4"/><line x1="542" y1="103" x2="546" y2="103" class="ln" stroke-width="1.4"/><line x1="542" y1="111" x2="546" y2="111" class="ln" stroke-width="1.4"/>
+  <circle cx="517" cy="93" r="1.5" class="lnf"/>
+  <text x="556" y="96" class="grn w8" font-size="15">ECU</text>
+  <text x="556" y="114" class="ink" font-size="11.5">ECU · 制御ユニット</text>
+
+  <!-- request out -->
+  <text x="360" y="80" text-anchor="middle" class="acc mono-t" font-size="11">one request →</text>
+  <path d="M 230 92 H 484 M 483 87 L 490 92 L 483 97" class="acc-s" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle r="3.6" class="acc">
+    <animateMotion dur="2.8s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.4;1" keyPoints="0;1;1" path="M 230 92 L 490 92"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.39;0.45;1" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- answer back -->
+  <path d="M 490 116 H 236 M 237 111 L 230 116 L 237 121" class="grn-s" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="360" y="134" text-anchor="middle" class="grn mono-t" font-size="11">← one answer</text>
+  <circle r="3.6" class="grn">
+    <animateMotion dur="2.8s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.55;0.95;1" keyPoints="0;0;1;1" path="M 490 116 L 230 116"/>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.55;0.6;0.92;1" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- the question this drill answers -->
+  <text x="360" y="183" text-anchor="middle" class="ink w7" font-size="12">How many steps is that, really — and who owns each?</text>
+  <text x="360" y="200" text-anchor="middle" class="mut" font-size="10.5">実際それは何ステップで、どれが誰のもの？</text>
+</svg><figcaption><span class="en"><strong>One exchange, about to be slowed down.</strong> The tester sends, the ECU answers — but how many steps is that, really, and who owns each? This drill names them.</span><span class="jp"><strong>1回のやり取りを、これからゆっくり見る。</strong> テスターが送り、ECUが答える ― でも実際それは何ステップで、各ステップは誰のもの？ この章でそれらに名前を付けます。</span></figcaption></div><div class="callout key"><span class="lbl">By the end · この章を終えると</span><span class="en">You can describe any UDS service as a short, named sequence of steps, tell the tester's steps apart from the ECU's, and name the address information every service call carries.</span><span class="jp">どのUDSサービスも、名前のついた短いステップの並びとして説明でき、テスターのステップとECUのステップを見分け、どのサービス呼び出しも運ぶ宛先情報を挙げられます。</span></div><div class="reading"><div class="rd-h">Further reading · 参考文献</div><ul class="rd-list"><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.5 Conventions</span><span class="rd-note">Services are described by <strong>service primitives</strong> passed between a service user and a service provider</span></li><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.7.1 General</span><span class="rd-note">The application-layer services and their general form</span></li></ul></div></section><nav class="cardnav"><span class="cln prev disabled" aria-hidden="true"></span><a class="cln next" href="#c1"><span class="cln-d">Next card →</span><span class="cln-t"><span class="en">The four steps</span><span class="jp">4つのステップ</span></span></a></nav></div>
+<div class="page" data-id="c1"><article class="card" id="c1"><div class="card-in"><div class="tblock"><div class="tf idx"><small>Card</small>C1</div><div class="tf grow"><h3>The four steps of one exchange</h3><div class="jp">1回のやり取りの4つのステップ</div></div><div class="tf tgcell"><svg class="tg barlit" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg></div></div><div class="barzone"><p class="kicker"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.4 8h11.2"/><path d="M5 5.3 2.3 8 5 10.7"/><path d="M11 5.3 13.7 8 11 10.7"/></svg>High level · 概要</p><p class="en lead">One exchange is a short, ordered sequence of named steps — not a single event. Each step is called a <strong>primitive</strong> — one hand-off between a side and the wire that connects them.</p><p class="en lead">The clean round trip has four steps, in this order:</p><p class="jp lead">1回のやり取りは、名前のついたステップの、短く順序だった並びです ― 単一の出来事ではありません。各ステップは<strong>プリミティブ</strong>と呼ばれます ― 一方の側と、両側をつなぐ線との間で起きる、1回の受け渡しです。</p><p class="jp lead">きれいな往復は、この順で4ステップです：</p><ol class="steps en"><li><strong>request</strong> — the tester starts the exchange and sends the call out.</li><li><strong>indication</strong> — the call reaches the ECU, which is told that a request has arrived.</li><li><strong>response</strong> — the ECU sends its answer back.</li><li><strong>confirmation</strong> — the answer reaches the tester.</li></ol><ol class="steps jp"><li><strong>リクエスト（request）</strong> ― テスターがやり取りを始め、呼び出しを送り出す。</li><li><strong>通知（indication）</strong> ― 呼び出しがECUに届き、ECUは「リクエストが来た」と知らされる。</li><li><strong>応答（response）</strong> ― ECUが答えを返す。</li><li><strong>確認（confirmation）</strong> ― 答えがテスターに届く。</li></ol><p class="en lead">Read them top to bottom and you have the whole shape: <strong>out, arrives, back, arrives</strong>. Notice that steps 1 and 2 are the <em>same message</em> seen at its two ends — the request leaving the tester is the indication arriving at the ECU. The same is true of steps 3 and 4 for the answer.</p><p class="jp lead">上から下へ読めば、形の全体がわかります：<strong>出る、届く、戻る、届く</strong>。ステップ1と2は、<em>同じメッセージ</em>をその両端で見たものだと気づいてください ― テスターを出る「リクエスト」は、ECUに届く「通知」です。答えについても、ステップ3と4は同じです。</p><div class="fig"><svg class="dgm" viewBox="0 0 720 268" role="img" aria-label="A sequence diagram of one exchange. Time runs downward. Step 1 request leaves the tester and step 2 indication arrives at the ECU — the same message at its two ends. The ECU serves it. Step 3 response leaves the ECU and step 4 confirmation arrives at the tester.">
+  <defs>
+    <radialGradient id="u1_glowC1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--ok)" stop-opacity="0.32"/>
+      <stop offset="60%" stop-color="var(--ok)" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="var(--ok)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- time axis -->
+  <text x="44" y="92" text-anchor="middle" class="mut mono-t" font-size="9.5">time</text>
+  <path d="M 44 100 V 232 M 39 227 L 44 234 L 49 227" class="ln" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- lifeline heads -->
+  <rect x="110" y="20" width="150" height="50" rx="8" class="fl acc-s" stroke-width="2"/>
+  <text x="185" y="44" text-anchor="middle" class="acc w8" font-size="14">TESTER</text>
+  <text x="185" y="60" text-anchor="middle" class="ink" font-size="10.5">テスター</text>
+  <rect x="460" y="20" width="150" height="50" rx="8" class="fl grn-s" stroke-width="2"/>
+  <text x="535" y="44" text-anchor="middle" class="grn w8" font-size="14">ECU</text>
+  <text x="535" y="60" text-anchor="middle" class="ink" font-size="10.5">制御ユニット</text>
+
+  <!-- lifelines -->
+  <path d="M 185 70 V 248" class="ln" stroke-width="1.4" stroke-dasharray="3 4"/>
+  <path d="M 535 70 V 248" class="ln" stroke-width="1.4" stroke-dasharray="3 4"/>
+
+  <!-- ECU serving glow (between indication and response) -->
+  <circle cx="535" cy="155" r="34" fill="url(#u1_glowC1)">
+    <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.44;0.52;0.66;1" dur="3.2s" repeatCount="indefinite"/>
+  </circle>
+  <text x="560" y="158" class="mut mono-t" font-size="9">serves · 処理</text>
+
+  <!-- request message: tester -> ECU -->
+  <text x="196" y="108" class="acc mono-t" font-size="10.5">① request</text>
+  <text x="524" y="108" text-anchor="end" class="acc mono-t" font-size="10.5">indication ②</text>
+  <path d="M 185 118 H 529 M 528 113 L 535 118 L 528 123" class="acc-s" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle r="3.6" class="acc">
+    <animateMotion dur="3.2s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.42;1" keyPoints="0;1;1" path="M 185 118 L 535 118"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.41;0.47;1" dur="3.2s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- response message: ECU -> tester -->
+  <text x="196" y="184" class="grn mono-t" font-size="10.5">④ confirmation</text>
+  <text x="524" y="184" text-anchor="end" class="grn mono-t" font-size="10.5">response ③</text>
+  <path d="M 535 192 H 191 M 192 187 L 185 192 L 192 197" class="grn-s" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle r="3.6" class="grn">
+    <animateMotion dur="3.2s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.6;0.98;1" keyPoints="0;0;1;1" path="M 535 192 L 185 192"/>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.95;1" dur="3.2s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- pairing note -->
+  <text x="360" y="238" text-anchor="middle" class="mut" font-size="10">Steps 1 &amp; 2 are one message; steps 3 &amp; 4 are the other.</text>
+</svg><figcaption><span class="en"><strong>One exchange, four steps.</strong> The request leaves the tester and arrives at the ECU (request → indication); the answer leaves the ECU and arrives at the tester (response → confirmation). Time runs down the page.</span><span class="jp"><strong>1回のやり取り、4つのステップ。</strong> リクエストはテスターを出てECUに届き（リクエスト → 通知）、答えはECUを出てテスターに届きます（応答 → 確認）。時間はページの下へ流れます。</span></figcaption></div></div><div class="stem"><div class="stem-h"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3.5h12" stroke-opacity=".36"/><path d="M8 3.5v6.8"/><path d="M5.4 8.2 8 10.8l2.6-2.6"/></svg><span class="sh-t"><span class="en">Go deeper</span><span class="jp">もっと詳しく</span></span><span class="stem-n"><span class="en">2 more</span><span class="jp">あと2</span></span><span class="stem-hint"><span class="en">tap a row to expand ↓</span><span class="jp">各行をタップで展開 ↓</span></span></div><div class="legs"><details class="leg"><summary><svg class="tg tgmini s1" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg><span class="lg-txt"><span class="lg-en en">The full count — six steps, or three</span><span class="lg-jp jp">本当の数 ― 6ステップ、あるいは3ステップ</span></span><span class="lg-cue" aria-hidden="true"></span></summary><div class="lg-body"><p class="en">The four steps are the ones you can follow end to end. The standard actually names <strong>six</strong> for a full exchange. The two extra steps are local "it went out" signals.</p><p class="jp">4つのステップは、端から端まで追えるものです。標準は、完全なやり取りには実は<strong>6つ</strong>を名付けています。追加の2ステップは、ローカルな「送り出した」という合図です。</p><div class="fig"><svg class="dgm" viewBox="0 0 720 292" role="img" aria-label="Two panels. Left: a confirmed service has six steps — request, a local request-confirmation, indication, response, a local response-confirmation, confirmation. Right: an unconfirmed service stops after three — request, request-confirmation, indication — with no reply.">
+  <!-- divider -->
+  <path d="M 360 60 V 258" class="ln" stroke-width="1.4"/>
+
+  <!-- ===================== LEFT: CONFIRMED (6) ===================== -->
+  <text x="190" y="34" text-anchor="middle" class="ink w8" font-size="13">CONFIRMED</text>
+  <text x="190" y="50" text-anchor="middle" class="mut" font-size="10">a reply comes back · 返答あり</text>
+  <text x="95" y="80" text-anchor="middle" class="acc w7" font-size="10.5">TESTER</text>
+  <text x="285" y="80" text-anchor="middle" class="grn w7" font-size="10.5">ECU</text>
+  <path d="M 95 88 V 246" class="ln" stroke-width="1.3" stroke-dasharray="3 4"/>
+  <path d="M 285 88 V 246" class="ln" stroke-width="1.3" stroke-dasharray="3 4"/>
+
+  <!-- request T->E -->
+  <text x="100" y="112" class="acc mono-t" font-size="9.5">① request</text>
+  <text x="280" y="112" text-anchor="end" class="acc mono-t" font-size="9.5">indication ③</text>
+  <path d="M 95 120 H 279 M 278 115.5 L 285 120 L 278 124.5" class="acc-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- request-confirmation: local self-signal at tester -->
+  <path d="M 95 128 H 116 V 138 H 96 M 102 133 L 96 138 L 102 143" class="acc-s" stroke-width="1.3" fill="none" stroke-dasharray="2.5 2.5" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="opacity" values="0.35;1;0.35" dur="2.4s" repeatCount="indefinite"/>
+  </path>
+  <text x="121" y="137" class="mut mono-t" font-size="8.5">② req-confirm ✓</text>
+
+  <!-- response E->T -->
+  <text x="100" y="186" class="grn mono-t" font-size="9.5">⑥ confirmation</text>
+  <text x="280" y="186" text-anchor="end" class="grn mono-t" font-size="9.5">response ④</text>
+  <path d="M 285 194 H 101 M 102 189.5 L 95 194 L 102 198.5" class="grn-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- response-confirmation: local self-signal at ECU -->
+  <path d="M 285 202 H 264 V 212 H 284 M 278 207 L 284 212 L 278 217" class="grn-s" stroke-width="1.3" fill="none" stroke-dasharray="2.5 2.5" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="opacity" values="0.35;1;0.35" dur="2.4s" repeatCount="indefinite"/>
+  </path>
+  <text x="259" y="211" text-anchor="end" class="mut mono-t" font-size="8.5">⑤ rsp-confirm ✓</text>
+
+  <text x="190" y="240" text-anchor="middle" class="ink w8" font-size="15">= 6 steps</text>
+
+  <!-- ===================== RIGHT: UNCONFIRMED (3) ===================== -->
+  <text x="540" y="34" text-anchor="middle" class="ink w8" font-size="13">UNCONFIRMED</text>
+  <text x="540" y="50" text-anchor="middle" class="mut" font-size="10">no reply · 返答なし</text>
+  <text x="455" y="80" text-anchor="middle" class="acc w7" font-size="10.5">TESTER</text>
+  <text x="645" y="80" text-anchor="middle" class="grn w7" font-size="10.5">ECU</text>
+  <path d="M 455 88 V 246" class="ln" stroke-width="1.3" stroke-dasharray="3 4"/>
+  <path d="M 645 88 V 246" class="ln" stroke-width="1.3" stroke-dasharray="3 4"/>
+
+  <text x="460" y="112" class="acc mono-t" font-size="9.5">① request</text>
+  <text x="640" y="112" text-anchor="end" class="acc mono-t" font-size="9.5">indication ③</text>
+  <path d="M 455 120 H 639 M 638 115.5 L 645 120 L 638 124.5" class="acc-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 455 128 H 476 V 138 H 456 M 462 133 L 456 138 L 462 143" class="acc-s" stroke-width="1.3" fill="none" stroke-dasharray="2.5 2.5" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="opacity" values="0.35;1;0.35" dur="2.4s" repeatCount="indefinite"/>
+  </path>
+  <text x="481" y="137" class="mut mono-t" font-size="8.5">② req-confirm ✓</text>
+
+  <!-- no reply marker where the response would be -->
+  <path d="M 465 194 H 635" class="ln" stroke-width="1.3" fill="none" stroke-dasharray="3 5" stroke-opacity="0.5"/>
+  <text x="550" y="190" text-anchor="middle" class="mut" font-size="9.5">— nothing comes back —</text>
+
+  <text x="540" y="240" text-anchor="middle" class="ink w8" font-size="15">= 3 steps</text>
+</svg><figcaption><span class="en"><strong>Six for a reply, three for none.</strong> Each side gets a short local "sent" signal after it transmits (dashed). A confirmed service uses all six; an unconfirmed service — one that expects no reply — stops after three.</span><span class="jp"><strong>返答ありは6、なしは3。</strong> 各側は送信の直後に、短いローカルな「送信済み」合図を受け取ります（破線）。確認応答つきサービスは6すべてを使い、確認応答なしサービス ― 返答を期待しないもの ― は3で止まります。</span></figcaption></div><p class="en">Right after the tester sends, its own side confirms the request left the wire — the <strong>request-confirmation</strong>. Right after the ECU sends its answer, its side confirms the reply left too — the <strong>response-confirmation</strong>. Neither crosses to the other side; each just tells its own sender "sent."</p><p class="jp">テスターが送った直後、テスター側は「リクエストが線を出た」と確認します ― <strong>リクエスト確認（request-confirmation）</strong>。ECUが答えを送った直後、ECU側は「応答も出た」と確認します ― <strong>応答確認（response-confirmation）</strong>。どちらも相手側へは渡りません。それぞれ、自分の送信側に「送った」と伝えるだけです。</p><p class="en">So a <strong>confirmed service</strong> — one that draws a reply — has six steps. A service that expects <strong>no reply</strong> is an <strong>unconfirmed service</strong>, and it has only three: request, request-confirmation, indication. The call goes out and arrives; nothing comes back.</p><p class="jp">つまり、<strong>確認応答つきサービス（confirmed service）</strong> ― 4つ目の「確認」まで返る、返答を引き出すもの ― は6ステップです。<strong>返答を期待しない</strong>サービスは<strong>確認応答なしサービス（unconfirmed service）</strong>で、3ステップだけです：リクエスト、リクエスト確認、通知。呼び出しは出て届き、何も戻りません。</p></div></details><details class="leg"><summary><svg class="tg tgmini s2" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg><span class="lg-txt"><span class="lg-en en">How to read a sequence arrow</span><span class="lg-jp jp">シーケンス矢印の読み方</span></span><span class="lg-cue" aria-hidden="true"></span></summary><div class="lg-body"><p class="en">Every arrow in the picture reads the same way, so learn it once.</p><p class="jp">図の中のどの矢印も同じ読み方です。一度覚えてしまいましょう。</p><div class="fig"><svg class="dgm" viewBox="0 0 720 226" role="img" aria-label="How to read one sequence arrow. The tail sits on the side that acts (the tester); the head points at the side that is told (the ECU); moving down the page means moving forward in time. The same message is called request where it leaves and indication where it arrives.">
+  <!-- time axis: down = later -->
+  <text x="46" y="52" text-anchor="middle" class="mut mono-t" font-size="9.5">time</text>
+  <path d="M 46 60 V 186 M 41 181 L 46 188 L 51 181" class="ln" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="46" y="204" text-anchor="middle" class="mut" font-size="9">later ↓</text>
+
+  <!-- tester node (acts) -->
+  <rect x="112" y="52" width="82" height="28" rx="6" class="fl acc-s" stroke-width="1.8"/>
+  <text x="153" y="70" text-anchor="middle" class="acc w8" font-size="12">TESTER</text>
+  <text x="153" y="38" text-anchor="middle" class="ink w7" font-size="10.5">the side that acts</text>
+  <text x="153" y="24" text-anchor="middle" class="mut" font-size="9">動く側</text>
+
+  <!-- ECU node (is told) -->
+  <rect x="524" y="150" width="82" height="28" rx="6" class="fl grn-s" stroke-width="1.8"/>
+  <text x="565" y="168" text-anchor="middle" class="grn w8" font-size="12">ECU</text>
+  <text x="565" y="196" text-anchor="middle" class="ink w7" font-size="10.5">the side that is told</text>
+  <text x="565" y="210" text-anchor="middle" class="mut" font-size="9">知らされる側</text>
+
+  <!-- the arrow, descending: acts (upper-left) -> told (lower-right) -->
+  <path d="M 153 82 L 521 150" class="acc-s" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <path d="M 512 143 L 523 151 L 510 153" class="acc-s" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle r="4" class="acc">
+    <animateMotion dur="2.6s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.6;1" keyPoints="0;1;1" path="M 153 82 L 521 150"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.58;0.66;1" dur="2.6s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- the same message, two names — kept clear of the descending arrow line -->
+  <text x="212" y="134" class="acc mono-t" font-size="11">request</text>
+  <text x="212" y="149" class="mut" font-size="9">where it leaves</text>
+  <text x="488" y="106" text-anchor="end" class="acc mono-t" font-size="11">indication</text>
+  <text x="488" y="121" text-anchor="end" class="mut" font-size="9">where it arrives</text>
+</svg><figcaption><span class="en"><strong>One arrow, three facts.</strong> The tail is the side that acts; the head is the side that is told; going down the page is going forward in time. That is why request sits above indication — same message, leaving then arriving.</span><span class="jp"><strong>1本の矢印、3つの事実。</strong> 尾は動く側、頭は知らされる側、ページを下へ進むことは時間を先へ進めること。だからリクエストは通知の上にあります ― 同じメッセージが、出て、そして届く。</span></figcaption></div><ul class="blist en"><li class="bl-key">The <strong>tail</strong> of an arrow is the side that acts. The <strong>head</strong> is the side that is told. Moving <strong>down</strong> the page moves forward in time.</li><li>So a downward arrow from tester to ECU means the tester acted first, and the ECU learns of it a moment later — request above, indication below.</li></ul><ul class="blist jp"><li class="bl-key">矢印の<strong>尾</strong>は動く側。<strong>頭</strong>は知らされる側。ページを<strong>下へ</strong>進むことは、時間を先へ進めること。</li><li>だから、テスターからECUへ下向きの矢印は、テスターが先に動き、ECUが少し後にそれを知る、という意味です ― 上にリクエスト、下に通知。</li></ul></div></details></div></div><div class="card-footer"><div class="reading"><div class="rd-h">Further reading · 参考文献</div><ul class="rd-list"><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.7.3.1–7.3.4</span><span class="rd-note">The service primitives: request, indication, response, confirm, and the two confirm-of-send primitives</span></li><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.5 &amp; cl.7.1, Fig. 3 &amp; Fig. 4</span><span class="rd-note">Confirmed service (six primitives) vs unconfirmed service (three: request, request-confirmation, indication)</span></li></ul></div></div></div></article><nav class="cardnav"><a class="cln prev" href="#brief"><span class="cln-d">← Prev card</span><span class="cln-t"><span class="en">Start here</span><span class="jp">まずここから</span></span></a><a class="cln next" href="#c2"><span class="cln-d">Next card →</span><span class="cln-t"><span class="en">Who does each</span><span class="jp">誰が行うか</span></span></a></nav></div>
+<div class="page" data-id="c2"><article class="card" id="c2"><div class="card-in"><div class="tblock"><div class="tf idx"><small>Card</small>C2</div><div class="tf grow"><h3>Who does each step</h3><div class="jp">各ステップを誰が行うか</div></div><div class="tf tgcell"><svg class="tg barlit" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg></div></div><div class="barzone"><p class="kicker"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.4 8h11.2"/><path d="M5 5.3 2.3 8 5 10.7"/><path d="M11 5.3 13.7 8 11 10.7"/></svg>High level · 概要</p><p class="en lead">The four steps have the same shape on both sides, but the two sides do very different jobs. Sort the steps by who owns them:</p><p class="jp lead">4つのステップは両側で同じ形をしていますが、2つの側が担う仕事はまるで違います。ステップを、誰のものかで分けてみます：</p><ul class="blist en"><li>The <strong>tester</strong> owns <strong>request</strong> and <strong>confirmation</strong> — it opens the exchange, and it receives the final answer.</li><li>The <strong>ECU</strong> owns <strong>indication</strong> and <strong>response</strong> — it is told of the request, and it sends the answer.</li></ul><ul class="blist jp"><li><strong>テスター</strong>は<strong>リクエスト</strong>と<strong>確認</strong>を担います ― やり取りを開き、最後の答えを受け取ります。</li><li><strong>ECU</strong>は<strong>通知</strong>と<strong>応答</strong>を担います ― リクエストを知らされ、答えを送ります。</li></ul><p class="en lead">There is a clear pattern. The tester <strong>brackets</strong> the exchange: it opens it (request) and closes it (confirmation). The ECU sits in the <strong>middle</strong>: it hears the request (indication), then serves it (response). One side always <strong>asks first</strong>; the other always <strong>answers</strong>. The ECU never speaks first.</p><p class="jp lead">はっきりした型があります。テスターはやり取りを<strong>挟みます</strong>：開いて（リクエスト）、閉じます（確認）。ECUは<strong>中間</strong>にいます：リクエストを聞き（通知）、それに応じます（応答）。片側は必ず<strong>先に尋ね</strong>、もう片側は必ず<strong>答えます</strong>。ECUが先に話すことはありません。</p><div class="fig"><svg class="dgm" viewBox="0 0 720 300" role="img" aria-label="The four steps sorted by owner. The tester owns request at the top and confirmation at the bottom, bracketing the exchange in ochre. The ECU owns indication and response in the middle, in olive. A dot traces the whole flow: request, indication, the ECU serves, response, confirmation.">
+  <defs>
+    <radialGradient id="u4_glowC2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--ok)" stop-opacity="0.34"/>
+      <stop offset="60%" stop-color="var(--ok)" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="var(--ok)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- headers -->
+  <rect x="100" y="20" width="150" height="40" rx="8" class="fl acc-s" stroke-width="2"/>
+  <text x="175" y="45" text-anchor="middle" class="acc w8" font-size="14">TESTER</text>
+  <rect x="470" y="20" width="150" height="40" rx="8" class="fl grn-s" stroke-width="2"/>
+  <text x="545" y="45" text-anchor="middle" class="grn w8" font-size="14">ECU</text>
+
+  <!-- tester "opens & closes" bracket -->
+  <path d="M 88 100 q -14 0 -14 14 V 262 q 0 14 14 14" class="acc-s" stroke-width="1.6" fill="none"/>
+  <text transform="rotate(-90 40 188)" x="40" y="188" text-anchor="middle" class="acc mono-t" font-size="9.5">opens &amp; closes</text>
+
+  <!-- serve glow -->
+  <circle cx="545" cy="198" r="30" fill="url(#u4_glowC2)">
+    <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.44;0.52;0.62;1" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <text x="583" y="201" class="mut mono-t" font-size="9">serves · 処理</text>
+
+  <!-- flow arrows -->
+  <path d="M 245 110 L 468 166 M 461 160.5 L 470 168 L 458 169" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 545 186 V 208 M 540 203 L 545 210 L 550 203" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 475 228 L 252 264 M 261 259.5 L 250 266 L 262 268.5" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- step chips -->
+  <rect x="105" y="92" width="140" height="36" rx="6" class="fl acc-s" stroke-width="1.8"/>
+  <text x="175" y="114" text-anchor="middle" class="acc mono-t w7" font-size="12">① request</text>
+  <rect x="475" y="150" width="140" height="36" rx="6" class="fl grn-s" stroke-width="1.8"/>
+  <text x="545" y="172" text-anchor="middle" class="grn mono-t w7" font-size="12">② indication</text>
+  <rect x="475" y="210" width="140" height="36" rx="6" class="fl grn-s" stroke-width="1.8"/>
+  <text x="545" y="232" text-anchor="middle" class="grn mono-t w7" font-size="12">③ response</text>
+  <rect x="105" y="248" width="140" height="36" rx="6" class="fl acc-s" stroke-width="1.8"/>
+  <text x="175" y="270" text-anchor="middle" class="acc mono-t w7" font-size="12">④ confirmation</text>
+
+  <!-- travelling dot: the whole exchange -->
+  <circle r="4" class="ink">
+    <animateMotion dur="4s" repeatCount="indefinite" calcMode="linear" path="M 105 110 L 245 110 L 470 168 L 545 168 L 545 228 L 475 228 L 245 266 L 175 266"/>
+    <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.04;0.5;0.94;1" dur="4s" repeatCount="indefinite"/>
+  </circle>
+</svg><figcaption><span class="en"><strong>The tester brackets; the ECU serves.</strong> The tester owns the opening (request) and the closing (confirmation). The ECU owns the middle — it hears the request (indication) and sends the answer (response). One side always asks first.</span><span class="jp"><strong>テスターが挟み、ECUが応える。</strong> テスターは開始（リクエスト）と終了（確認）を担い、ECUは中間 ― リクエストを聞き（通知）、答えを送る（応答）― を担います。片側が必ず先に尋ねます。</span></figcaption></div></div><div class="stem"><div class="stem-h"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3.5h12" stroke-opacity=".36"/><path d="M8 3.5v6.8"/><path d="M5.4 8.2 8 10.8l2.6-2.6"/></svg><span class="sh-t"><span class="en">Go deeper</span><span class="jp">もっと詳しく</span></span><span class="stem-n"><span class="en">2 more</span><span class="jp">あと2</span></span><span class="stem-hint"><span class="en">tap a row to expand ↓</span><span class="jp">各行をタップで展開 ↓</span></span></div><div class="legs"><details class="leg"><summary><svg class="tg tgmini s1" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg><span class="lg-txt"><span class="lg-en en">All six steps, sorted by side</span><span class="lg-jp jp">6ステップすべてを、側ごとに分ける</span></span><span class="lg-cue" aria-hidden="true"></span></summary><div class="lg-body"><p class="en">Add the two local "sent" signals from the last card and every step still belongs to exactly one side — each stays with whichever side just sent.</p><p class="jp">前のカードの、ローカルな2つの「送信済み」合図を加えても、どのステップもきっかり片側に属します ― それぞれ、ちょうど送った側にとどまります。</p><div class="fig"><svg class="dgm" viewBox="0 0 720 250" role="img" aria-label="All six steps sorted by side. The tester's side owns request (sends), request-confirmation (a local sent signal), and confirmation (receives). The ECU's side owns indication (receives), response (sends), and response-confirmation (a local sent signal). Each step has one home.">
+  <text x="195" y="42" text-anchor="middle" class="acc w8" font-size="13">TESTER'S SIDE</text>
+  <text x="195" y="58" text-anchor="middle" class="mut" font-size="10">テスター側</text>
+  <text x="525" y="42" text-anchor="middle" class="grn w8" font-size="13">ECU'S SIDE</text>
+  <text x="525" y="58" text-anchor="middle" class="mut" font-size="10">ECU側</text>
+  <path d="M 360 74 V 232" class="ln" stroke-width="1.3" stroke-dasharray="3 4"/>
+
+  <!-- tester side -->
+  <rect x="70" y="80" width="250" height="42" rx="6" class="fl acc-s" stroke-width="1.7"/>
+  <text x="88" y="105" class="acc mono-t w7" font-size="12.5">request</text>
+  <text x="305" y="105" text-anchor="end" class="mut mono-t" font-size="9.5">sends</text>
+  <rect x="70" y="132" width="250" height="42" rx="6" class="fl acc-s" stroke-width="1.4" stroke-dasharray="3 3"/>
+  <text x="88" y="157" class="acc mono-t w7" font-size="12.5">request-confirmation</text>
+  <text x="305" y="157" text-anchor="end" class="mut mono-t" font-size="9.5">local ✓
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="2.4s" repeatCount="indefinite"/>
+  </text>
+  <rect x="70" y="184" width="250" height="42" rx="6" class="fl acc-s" stroke-width="1.7"/>
+  <text x="88" y="209" class="acc mono-t w7" font-size="12.5">confirmation</text>
+  <text x="305" y="209" text-anchor="end" class="mut mono-t" font-size="9.5">receives</text>
+
+  <!-- ECU side -->
+  <rect x="400" y="80" width="250" height="42" rx="6" class="fl grn-s" stroke-width="1.7"/>
+  <text x="418" y="105" class="grn mono-t w7" font-size="12.5">indication</text>
+  <text x="635" y="105" text-anchor="end" class="mut mono-t" font-size="9.5">receives</text>
+  <rect x="400" y="132" width="250" height="42" rx="6" class="fl grn-s" stroke-width="1.7"/>
+  <text x="418" y="157" class="grn mono-t w7" font-size="12.5">response</text>
+  <text x="635" y="157" text-anchor="end" class="mut mono-t" font-size="9.5">sends</text>
+  <rect x="400" y="184" width="250" height="42" rx="6" class="fl grn-s" stroke-width="1.4" stroke-dasharray="3 3"/>
+  <text x="418" y="209" class="grn mono-t w7" font-size="12.5">response-confirmation</text>
+  <text x="635" y="209" text-anchor="end" class="mut mono-t" font-size="9.5">local ✓
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="2.4s" repeatCount="indefinite"/>
+  </text>
+</svg><figcaption><span class="en"><strong>Three each, no overlap.</strong> The tester's side owns request, request-confirmation, and confirmation. The ECU's side owns indication, response, and response-confirmation. Every step has one home.</span><span class="jp"><strong>各3つ、重なりなし。</strong> テスター側はリクエスト・リクエスト確認・確認を担い、ECU側は通知・応答・応答確認を担います。どのステップにも居場所は1つ。</span></figcaption></div><ul class="blist en"><li>The <strong>tester's side</strong>: request, request-confirmation, confirmation.</li><li>The <strong>ECU's side</strong>: indication, response, response-confirmation.</li></ul><ul class="blist jp"><li><strong>テスター側</strong>：リクエスト、リクエスト確認、確認。</li><li><strong>ECU側</strong>：通知、応答、応答確認。</li></ul></div></details><details class="leg"><summary><svg class="tg tgmini s2" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg><span class="lg-txt"><span class="lg-en en">A symmetric shape, but not symmetric roles</span><span class="lg-jp jp">形は対称、でも役割は非対称</span></span><span class="lg-cue" aria-hidden="true"></span></summary><div class="lg-body"><p class="en">Why give both sides matching, mirror-image steps, when only the tester ever starts and only the ECU ever does the work?</p><p class="jp">始めるのはいつもテスターだけ、仕事をするのはいつもECUだけなのに、なぜ両側に、鏡映しの対応するステップを与えるのでしょう？</p><div class="fig"><svg class="dgm" viewBox="0 0 720 250" role="img" aria-label="Symmetric shape, asymmetric roles. Both the client and the server have one send step and one receive step, mirrored across a centre line. But only the client ever starts the exchange, shown by a one-way arrow; the server always replies.">
+  <!-- the asymmetry: only the client starts -->
+  <text x="360" y="34" text-anchor="middle" class="acc mono-t w7" font-size="11">the client always starts →</text>
+  <path d="M 250 48 H 470 M 469 43 L 476 48 L 469 53" class="acc-s" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle r="3.6" class="acc">
+    <animateMotion dur="2.4s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.7;1" keyPoints="0;1;1" path="M 250 48 L 476 48"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.68;0.76;1" dur="2.4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- column headers -->
+  <text x="230" y="82" text-anchor="middle" class="acc w8" font-size="13">CLIENT</text>
+  <text x="230" y="97" text-anchor="middle" class="mut" font-size="9.5">tester · テスター</text>
+  <text x="490" y="82" text-anchor="middle" class="grn w8" font-size="13">SERVER</text>
+  <text x="490" y="97" text-anchor="middle" class="mut" font-size="9.5">ECU · 制御ユニット</text>
+
+  <!-- mirror axis -->
+  <path d="M 360 104 V 214" class="ln" stroke-width="1.3" stroke-dasharray="4 4"/>
+  <text x="360" y="234" text-anchor="middle" class="mut mono-t" font-size="9">mirror · 鏡映し</text>
+
+  <!-- row labels -->
+  <text x="92" y="133" text-anchor="end" class="mut mono-t" font-size="9.5">sends</text>
+  <text x="92" y="185" text-anchor="end" class="mut mono-t" font-size="9.5">is told</text>
+
+  <!-- send row -->
+  <rect x="150" y="112" width="160" height="36" rx="6" class="fl acc-s" stroke-width="1.7"/>
+  <text x="230" y="135" text-anchor="middle" class="acc mono-t w7" font-size="12">request</text>
+  <rect x="410" y="112" width="160" height="36" rx="6" class="fl grn-s" stroke-width="1.7"/>
+  <text x="490" y="135" text-anchor="middle" class="grn mono-t w7" font-size="12">response</text>
+
+  <!-- receive row -->
+  <rect x="150" y="164" width="160" height="36" rx="6" class="fl acc-s" stroke-width="1.7"/>
+  <text x="230" y="187" text-anchor="middle" class="acc mono-t w7" font-size="12">confirmation</text>
+  <rect x="410" y="164" width="160" height="36" rx="6" class="fl grn-s" stroke-width="1.7"/>
+  <text x="490" y="187" text-anchor="middle" class="grn mono-t w7" font-size="12">indication</text>
+</svg><figcaption><span class="en"><strong>The names mirror; the roles do not.</strong> A general template gives both ends matching steps. UDS fills it in one way: the client (tester) always starts, the server (ECU) always serves — the real work sits on the serving side.</span><span class="jp"><strong>名前は鏡映し、でも役割は違う。</strong> 一般的なひな型は、両端に対応するステップを与えます。UDSはそれを一方向に埋めます：クライアント（テスター）が必ず始め、サーバー（ECU）が必ず応じる ― 実際の仕事は応じる側にあります。</span></figcaption></div><p class="en">Because this is a <strong>general template</strong>, borrowed from the way all layered communication is described: give both ends matching steps, then let each protocol decide who uses which. UDS fills the template one way — the <strong>client always starts</strong>, the <strong>server always serves</strong>. The names mirror; the roles do not. <a class="fwd" href="../h3-catalog-and-server/index.html">→ H3 · one asks, the other does the work<span class="fwd-go">↗</span></a></p><p class="jp">これが<strong>一般的なひな型</strong>だからです ― 階層型通信すべての記述の仕方から借りたものです：両端に対応するステップを与え、どちらがどれを使うかは各プロトコルに委ねる。UDSはこのひな型を一方向に埋めます ― <strong>クライアントが必ず始め</strong>、<strong>サーバーが必ず応じます</strong>。名前は鏡映し、役割はそうではありません。<a class="fwd" href="../h3-catalog-and-server/index.html">→ H3 · 片方が頼み、もう片方が担う<span class="fwd-go">↗</span></a></p></div></details></div></div><div class="card-footer"><div class="reading"><div class="rd-h">Further reading · 参考文献</div><ul class="rd-list"><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.7.3.2</span><span class="rd-note">request &amp; indication — the client starts; the server is notified</span></li><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.7.3.3–7.3.4</span><span class="rd-note">response &amp; confirm, and the confirm-of-send steps, split by side</span></li><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.7.1</span><span class="rd-note">The client function and server function, and their fixed roles</span></li></ul></div></div></div></article><nav class="cardnav"><a class="cln prev" href="#c1"><span class="cln-d">← Prev card</span><span class="cln-t"><span class="en">The four steps</span><span class="jp">4つのステップ</span></span></a><a class="cln next" href="#c3"><span class="cln-d">Next card →</span><span class="cln-t"><span class="en">The address label</span><span class="jp">宛先ラベル</span></span></a></nav></div>
+<div class="page" data-id="c3"><article class="card" id="c3"><div class="card-in"><div class="tblock"><div class="tf idx"><small>Card</small>C3</div><div class="tf grow"><h3>The address label every call carries</h3><div class="jp">どの呼び出しも運ぶ宛先ラベル</div></div><div class="tf tgcell"><svg class="tg barlit" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg></div></div><div class="barzone"><p class="kicker"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.4 8h11.2"/><path d="M5 5.3 2.3 8 5 10.7"/><path d="M11 5.3 13.7 8 11 10.7"/></svg>High level · 概要</p><p class="en lead">Every step so far has been about <em>timing</em> — who acts, and when. But a call also has to say <strong>where</strong> it is going. So each service crosses a <strong>service access point</strong> (<strong>SAP</strong>): the boundary where one layer hands the call to the layer below. As it crosses, it carries a small label of address information:</p><p class="jp lead">ここまでの各ステップは<em>タイミング</em>の話でした ― 誰が、いつ動くか。でも呼び出しは、<strong>どこへ</strong>行くのかも言わねばなりません。そこで各サービスは、<strong>サービスアクセスポイント（SAP）</strong> を越えます ― ある層が下の層へ呼び出しを渡す境界です。越えるとき、小さな宛先情報のラベルを携えます：</p><ul class="blist en"><li>what <strong>kind</strong> of message it is,</li><li><strong>who</strong> is asking — the source,</li><li><strong>who</strong> should answer — the target.</li></ul><ul class="blist jp"><li>どんな<strong>種類</strong>のメッセージか、</li><li><strong>誰</strong>が尋ねているか ― 送信元、</li><li><strong>誰</strong>が答えるべきか ― 宛先。</li></ul><p class="en lead">On the way back, the label simply swaps: the answer's target is whoever was the original source. That is why a reply always goes home to the asker, and never anywhere else.</p><p class="jp lead">戻り道では、ラベルは単純に入れ替わります：答えの宛先は、もとの送信元だった相手です。だから返答はいつも尋ねた側へ帰り、他のどこへも行きません。</p><div class="fig"><svg class="dgm" viewBox="0 0 720 192" role="img" aria-label="Every call crosses a service access point carrying an address label. The request rides from tester to ECU tagged from T to E; the reply rides back tagged from E to T. The label is the same three facts, with from and to swapped, so a reply always returns to the asker.">
+  <defs>
+    <radialGradient id="u7_glowC3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--ok)" stop-opacity="0.30"/>
+      <stop offset="60%" stop-color="var(--ok)" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="var(--ok)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="606" cy="82" r="40" fill="url(#u7_glowC3)">
+    <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.44;0.52;0.62;1" dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- tester / ECU -->
+  <rect x="44" y="48" width="140" height="68" rx="9" class="fl acc-s" stroke-width="2"/>
+  <text x="114" y="80" text-anchor="middle" class="acc w8" font-size="14">TESTER</text>
+  <text x="114" y="97" text-anchor="middle" class="ink" font-size="10.5">T</text>
+  <rect x="536" y="48" width="140" height="68" rx="9" class="fl grn-s" stroke-width="2"/>
+  <text x="606" y="80" text-anchor="middle" class="grn w8" font-size="14">ECU</text>
+  <text x="606" y="97" text-anchor="middle" class="ink" font-size="10.5">E</text>
+
+  <!-- SAP boundaries -->
+  <path d="M 200 54 V 112" class="ln" stroke-width="1.2" stroke-dasharray="3 3" stroke-opacity="0.7"/>
+  <path d="M 520 54 V 112" class="ln" stroke-width="1.2" stroke-dasharray="3 3" stroke-opacity="0.7"/>
+  <text x="200" y="46" text-anchor="middle" class="mut mono-t" font-size="8.5">SAP</text>
+  <text x="520" y="46" text-anchor="middle" class="mut mono-t" font-size="8.5">SAP</text>
+
+  <!-- request wire -->
+  <text x="360" y="60" text-anchor="middle" class="acc mono-t" font-size="10">request →</text>
+  <path d="M 184 70 H 530 M 529 65.5 L 536 70 L 529 74.5" class="acc-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <g>
+    <rect x="190" y="52" width="72" height="34" rx="4" class="fl acc-s" stroke-width="1.3"/>
+    <text x="226" y="65" text-anchor="middle" class="mut mono-t" font-size="8">diag</text>
+    <text x="226" y="79" text-anchor="middle" class="acc mono-t w7" font-size="11">T → E</text>
+    <animateTransform attributeName="transform" type="translate" dur="3s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.42;1" values="0 0;284 0;284 0"/>
+    <animate attributeName="opacity" dur="3s" repeatCount="indefinite" keyTimes="0;0.03;0.38;0.44;1" values="0;1;1;0;0"/>
+  </g>
+
+  <!-- response wire -->
+  <path d="M 536 100 H 190 M 191 95.5 L 184 100 L 191 104.5" class="grn-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="360" y="126" text-anchor="middle" class="grn mono-t" font-size="10">← response</text>
+  <g>
+    <rect x="468" y="82" width="72" height="34" rx="4" class="fl grn-s" stroke-width="1.3"/>
+    <text x="504" y="95" text-anchor="middle" class="mut mono-t" font-size="8">diag</text>
+    <text x="504" y="109" text-anchor="middle" class="grn mono-t w7" font-size="11">E → T</text>
+    <animateTransform attributeName="transform" type="translate" dur="3s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.55;0.98;1" values="0 0;0 0;-286 0;-286 0"/>
+    <animate attributeName="opacity" dur="3s" repeatCount="indefinite" keyTimes="0;0.55;0.6;0.94;1" values="0;0;1;1;0"/>
+  </g>
+
+  <!-- swap note -->
+  <text x="360" y="156" text-anchor="middle" class="ink w7" font-size="11">Same label — on the way back, from and to swap.</text>
+  <text x="360" y="172" text-anchor="middle" class="mut" font-size="9.5">同じラベル ― 戻り道では from と to が入れ替わる。</text>
+</svg><figcaption><span class="en"><strong>Every call crosses a hand-off point, carrying a label.</strong> At the service access point the call passes to the layer below, tagged with three facts: the kind of message, who is asking, who should answer. On the way back, the label swaps — the answer goes home to the asker.</span><span class="jp"><strong>どの呼び出しも受け渡し点を越え、ラベルを携える。</strong> サービスアクセスポイントで、呼び出しは下の層へ渡され、3つの事実が付きます：メッセージの種類、誰が尋ねているか、誰が答えるべきか。戻り道ではラベルが入れ替わり、答えは尋ねた側へ帰ります。</span></figcaption></div></div><div class="stem"><div class="stem-h"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3.5h12" stroke-opacity=".36"/><path d="M8 3.5v6.8"/><path d="M5.4 8.2 8 10.8l2.6-2.6"/></svg><span class="sh-t"><span class="en">Go deeper</span><span class="jp">もっと詳しく</span></span><span class="stem-n"><span class="en">2 more</span><span class="jp">あと2</span></span><span class="stem-hint"><span class="en">tap a row to expand ↓</span><span class="jp">各行をタップで展開 ↓</span></span></div><div class="legs"><details class="leg"><summary><svg class="tg tgmini s1" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg><span class="lg-txt"><span class="lg-en en">The three names — A_Mtype, A_SA, A_TA</span><span class="lg-jp jp">3つの名前 ― A_Mtype、A_SA、A_TA</span></span><span class="lg-cue" aria-hidden="true"></span></summary><div class="lg-body"><p class="en">In the standard the label has exact names. There are <strong>three mandatory</strong> ones.</p><p class="jp">標準では、このラベルに正確な名前があります。<strong>必須</strong>のものが<strong>3つ</strong>あります。</p><div class="fig"><svg class="dgm" viewBox="0 0 720 250" role="img" aria-label="The address label with its real parameter names. Three mandatory fields: A_Mtype is the message type, one of four setups; A_SA is the source address, who is asking; A_TA is the target address, who should answer. The target also carries A_TAtype: aimed at one ECU, or a whole group.">
+  <!-- card -->
+  <rect x="140" y="28" width="440" height="206" rx="10" class="fl ln" stroke-width="1.6"/>
+  <path d="M 140 64 H 580" class="ln" stroke-width="1.4"/>
+  <text x="162" y="52" class="acc w8" font-size="13">THE ADDRESS LABEL</text>
+  <text x="558" y="52" text-anchor="end" class="mut mono-t" font-size="9.5">3 mandatory · 必須3つ</text>
+
+  <!-- row separators -->
+  <path d="M 140 120 H 580" class="ln" stroke-width="1" stroke-opacity="0.6"/>
+  <path d="M 140 158 H 580" class="ln" stroke-width="1" stroke-opacity="0.6"/>
+  <path d="M 140 196 H 580" class="ln" stroke-width="1" stroke-opacity="0.6"/>
+
+  <!-- A_Mtype -->
+  <rect x="160" y="76" width="94" height="28" rx="5" class="fl acc-s" stroke-width="1.5"/>
+  <text x="207" y="94" text-anchor="middle" class="acc mono-t w7" font-size="11.5">A_Mtype</text>
+  <text x="272" y="90" class="ink" font-size="11">message type — picks 1 of 4 setups:</text>
+  <text x="272" y="108" class="mut mono-t" font-size="9.5">diagnostics · remote · secure · secure-remote</text>
+
+  <!-- A_SA -->
+  <rect x="160" y="128" width="94" height="28" rx="5" class="fl acc-s" stroke-width="1.5"/>
+  <text x="207" y="146" text-anchor="middle" class="acc mono-t w7" font-size="11.5">A_SA</text>
+  <text x="272" y="146" class="ink" font-size="11">source address — who is asking</text>
+
+  <!-- A_TA -->
+  <rect x="160" y="166" width="94" height="28" rx="5" class="fl acc-s" stroke-width="1.5"/>
+  <text x="207" y="184" text-anchor="middle" class="acc mono-t w7" font-size="11.5">A_TA</text>
+  <text x="272" y="184" class="ink" font-size="11">target address — who should answer</text>
+
+  <!-- A_TAtype (qualifier) -->
+  <rect x="180" y="202" width="94" height="24" rx="5" class="fl ln" stroke-width="1.3"/>
+  <text x="227" y="218" text-anchor="middle" class="mut mono-t w7" font-size="10.5">A_TAtype</text>
+  <text x="292" y="218" class="mut" font-size="10">one ECU (physical), or a group (functional)</text>
+</svg><figcaption><span class="en"><strong>The label, with its real names.</strong> A_Mtype picks the setup; A_SA is the source; A_TA is the target — aimed at one ECU, or a whole group.</span><span class="jp"><strong>ラベルとその本当の名前。</strong> A_Mtype が構成を選び、A_SA が送信元、A_TA が宛先 ― 1台のECUに向けるか、グループ全体に向けるか。</span></figcaption></div><ul class="blist en"><li><strong>A_Mtype</strong> — the message type. It picks one of four setups: plain <strong>diagnostics</strong>, remote, secure, or secure-remote.</li><li><strong>A_SA</strong> — the source address: a number naming who is asking.</li><li><strong>A_TA</strong> — the target address: a number naming who should answer.</li></ul><ul class="blist jp"><li><strong>A_Mtype</strong> ― メッセージの種類。4つの構成から1つを選びます：素の<strong>診断（diagnostics）</strong>、リモート、セキュア、セキュアリモート。</li><li><strong>A_SA</strong> ― 送信元アドレス：誰が尋ねているかを表す番号。</li><li><strong>A_TA</strong> ― 宛先アドレス：誰が答えるべきかを表す番号。</li></ul><p class="en">The target also carries <strong>A_TAtype</strong> — whether the call is aimed at <strong>one</strong> ECU or a <strong>whole group</strong>. The names for these two — physical and functional addressing — come later, with the full story of addressing on the wire. <a class="fwd" href="../v8-addressing-transport/index.html">→ V8 · addressing &amp; the transport<span class="fwd-go">↗</span></a></p><p class="jp">宛先はさらに <strong>A_TAtype</strong> を携えます ― 呼び出しが<strong>1台</strong>のECUに向くか、<strong>グループ全体</strong>に向くか。この2つの呼び方（物理アドレッシングと機能アドレッシング）と、線の上でのアドレッシングの全体像は、あとで扱います。<a class="fwd" href="../v8-addressing-transport/index.html">→ V8 · アドレッシングとトランスポート<span class="fwd-go">↗</span></a></p></div></details><details class="leg"><summary><svg class="tg tgmini s2" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg><span class="lg-txt"><span class="lg-en en">One layer down — the same call becomes S_Data</span><span class="lg-jp jp">1つ下の層 ― 同じ呼び出しが S_Data になる</span></span><span class="lg-cue" aria-hidden="true"></span></summary><div class="lg-body"><p class="en">The four-step model lives at the top, in the <strong>application layer</strong>. One layer below sits the <strong>session layer</strong>, and it is deliberately plain.</p><p class="jp">4ステップのモデルは一番上、<strong>アプリケーション層</strong>にあります。1つ下には<strong>セッション層</strong>があり、これは意図的に素っ気なく作られています。</p><div class="fig"><svg class="dgm" viewBox="0 0 720 256" role="img" aria-label="One layer down. The application layer holds the rich four-step call with its A_ parameters. It hands the call down to the session layer, which offers only three plain calls: S_Data.request (send this), S_Data.indication (this arrived), and S_Data.confirm (send finished). The rich label rides down as the session layer's address fields.">
+  <defs>
+    <radialGradient id="u9_glowSD" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.30"/>
+      <stop offset="70%" stop-color="var(--accent)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- application layer -->
+  <rect x="90" y="26" width="540" height="82" rx="10" class="fl acc-s" stroke-width="2"/>
+  <text x="110" y="50" class="acc w8" font-size="13">APPLICATION LAYER</text>
+  <text x="262" y="50" class="mut" font-size="10">— where the four-step model lives</text>
+  <text x="360" y="88" text-anchor="middle" class="mut mono-t" font-size="10.5">service.request ( A_Mtype, A_SA, A_TA, … )</text>
+
+  <!-- hand-down -->
+  <path d="M 360 110 V 162 M 355 157 L 360 164 L 365 157" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="374" y="140" class="mut mono-t" font-size="9">hands the call down · 下へ渡す</text>
+  <circle r="4" class="acc">
+    <animateMotion dur="2.6s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.5;1" keyPoints="0;1;1" path="M 360 112 L 360 162"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.48;0.56;1" dur="2.6s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- session layer -->
+  <rect x="90" y="166" width="540" height="82" rx="10" class="fl ln" stroke-width="1.8"/>
+  <text x="110" y="190" class="ink w8" font-size="13">SESSION LAYER</text>
+  <text x="238" y="190" class="mut" font-size="10">— just three plain calls</text>
+
+  <circle cx="182" cy="223" r="30" fill="url(#u9_glowSD)">
+    <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.5;0.6;0.74;1" dur="2.6s" repeatCount="indefinite"/>
+  </circle>
+  <rect x="108" y="204" width="150" height="38" rx="6" class="fl acc-s" stroke-width="1.5"/>
+  <text x="183" y="222" text-anchor="middle" class="acc mono-t w7" font-size="10.5">S_Data.request</text>
+  <text x="183" y="235" text-anchor="middle" class="mut" font-size="8.5">send this</text>
+  <rect x="268" y="204" width="150" height="38" rx="6" class="fl ln" stroke-width="1.5"/>
+  <text x="343" y="222" text-anchor="middle" class="ink mono-t w7" font-size="10.5">S_Data.indication</text>
+  <text x="343" y="235" text-anchor="middle" class="mut" font-size="8.5">this arrived</text>
+  <rect x="428" y="204" width="150" height="38" rx="6" class="fl ln" stroke-width="1.5"/>
+  <text x="503" y="222" text-anchor="middle" class="ink mono-t w7" font-size="10.5">S_Data.confirm</text>
+  <text x="503" y="235" text-anchor="middle" class="mut" font-size="8.5">send finished</text>
+</svg><figcaption><span class="en"><strong>Rich on top, plain below.</strong> The application layer hands the call down to the session layer, which offers only three plain calls: send, arrived, send-finished. The rich label rides down as the session layer's own address fields.</span><span class="jp"><strong>上は豊か、下は素っ気ない。</strong> アプリケーション層は呼び出しをセッション層へ渡し、セッション層はたった3つの素っ気ない呼び出しだけを提供します：送る・届いた・送信済み。豊かなラベルは、セッション層自身のアドレス欄として下へ運ばれます。</span></figcaption></div><p class="en">The session layer offers just three calls: <strong>S_Data.request</strong> (send this), <strong>S_Data.indication</strong> (this arrived), and <strong>S_Data.confirm</strong> (your send finished). The rich application-layer label rides down as the session layer's own address fields. This thin, fixed interface is exactly what lets one set of UDS services run unchanged over any wire. <a class="fwd" href="../v8-addressing-transport/index.html">→ V8 · the layers, drawn<span class="fwd-go">↗</span></a></p><p class="jp">セッション層が提供する呼び出しは3つだけ：<strong>S_Data.request</strong>（これを送る）、<strong>S_Data.indication</strong>（これが届いた）、<strong>S_Data.confirm</strong>（あなたの送信が完了した）。豊かなアプリケーション層のラベルは、セッション層自身のアドレス欄として下へ運ばれます。この薄く固定されたインターフェースこそ、1組のUDSサービスをどんな線の上でも変えずに動かせる理由です。<a class="fwd" href="../v8-addressing-transport/index.html">→ V8 · 層を図で見る<span class="fwd-go">↗</span></a></p></div></details></div></div><div class="card-footer"><div class="reading"><div class="rd-h">Further reading · 参考文献</div><ul class="rd-list"><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.7.4.1.1</span><span class="rd-note">The application-layer services carry three mandatory parameters</span></li><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.7.4.1.2–7.4.1.5</span><span class="rd-note">A_Mtype, A_SA, A_TA, and A_TAtype (physical vs functional target)</span></li><li><span class="rd-doc">ISO 14229-2:2021</span><span class="rd-sec">cl.6.1, cl.7.1</span><span class="rd-note">The session-layer interface: S_Data.request / .indication / .confirm</span></li></ul></div></div></div></article><nav class="cardnav"><a class="cln prev" href="#c2"><span class="cln-d">← Prev card</span><span class="cln-t"><span class="en">Who does each</span><span class="jp">誰が行うか</span></span></a><a class="cln next" href="#concl"><span class="cln-d">Next card →</span><span class="cln-t"><span class="en">Recap</span><span class="jp">まとめ</span></span></a></nav></div>
+<div class="page" data-id="concl"><section class="concl" id="concl"><div class="eyebrow"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.4 6.4 11.3 12.5 4.8"/></svg>Section recap · まとめ</div><p class="en">One service exchange is a short, ordered sequence of named steps — <strong>primitives</strong>. The clean round trip is four: <strong>request</strong> (the tester starts), <strong>indication</strong> (the ECU is told), <strong>response</strong> (the ECU answers), <strong>confirmation</strong> (the tester receives). The tester <strong>brackets</strong> the exchange; the ECU serves the <strong>middle</strong>; one side always asks first.</p><p class="en">And every call carries a small <strong>address label</strong> across a service access point — the kind of message (<strong>A_Mtype</strong>), who is asking (<strong>A_SA</strong>), who should answer (<strong>A_TA</strong>) — with the answer's label simply swapped so a reply always goes home.</p><p class="jp">1回のサービスのやり取りは、名前のついたステップ ― <strong>プリミティブ</strong> ― の、短く順序だった並びです。きれいな往復は4つ：<strong>リクエスト</strong>（テスターが始める）、<strong>通知</strong>（ECUが知らされる）、<strong>応答</strong>（ECUが答える）、<strong>確認</strong>（テスターが受け取る）。テスターがやり取りを<strong>挟み</strong>、ECUが<strong>中間</strong>に応じ、片側が必ず先に尋ねます。</p><p class="jp">そして、どの呼び出しも小さな<strong>宛先ラベル</strong>をサービスアクセスポイント越しに携えます ― メッセージの種類（<strong>A_Mtype</strong>）、誰が尋ねているか（<strong>A_SA</strong>）、誰が答えるべきか（<strong>A_TA</strong>） ― 答えのラベルは単純に入れ替わり、返答はいつも帰るべき所へ帰ります。</p><div class="callout key"><span class="lbl">You can now · できること</span><span class="en">You can describe any UDS service as a named sequence of steps, tell the tester's steps (request, confirmation) from the ECU's (indication, response), say why a service with no reply has three steps and one with a reply has six, and name the address label — message type, source, target — that every call carries.</span><span class="jp">どのUDSサービスも、名前のついたステップの並びとして説明でき、テスターのステップ（リクエスト、確認）とECUのステップ（通知、応答）を見分け、返答なしのサービスが3ステップ・返答ありが6ステップである理由を言え、どの呼び出しも運ぶ宛先ラベル ― メッセージの種類、送信元、宛先 ― を挙げられます。</span></div><div class="recall"><div class="rc-q"><span class="lbl">Your turn · あなたの番</span><span class="en"><strong>(a)</strong> A service that expects no reply — how many steps does it use, and which ones? <strong>(b)</strong> When the answer comes back, which of the four steps belongs to the tester?</span><span class="jp"><strong>(a)</strong> 返答を期待しないサービスは、何ステップを使い、どれですか？ <strong>(b)</strong> 答えが返ってくるとき、4つのうちどのステップがテスターのものですか？</span></div><details class="rc-a"><summary><span class="en">Show answer</span><span class="jp">答えを見る</span></summary><div class="rc-body"><span class="en"><strong>(a)</strong> <strong>Three</strong> — request, request-confirmation, indication. The call goes out and arrives; nothing comes back. <strong>(b)</strong> <strong>confirmation</strong> — the tester receives the answer. (The tester also owns request, which opened the exchange.)</span><span class="jp"><strong>(a) 3つ</strong> ― リクエスト、リクエスト確認、通知。呼び出しは出て届き、何も戻りません。<strong>(b) 確認</strong> ― テスターが答えを受け取ります。（テスターは、やり取りを開いたリクエストも担います。）</span></div></details></div><p class="en">That is the whole skeleton — the shape under every UDS service, with no bytes yet. Next, in <strong>H2</strong>, we send one real request and watch actual bytes travel this exact path: request out, one answer back.</p><p class="jp">これが骨組みの全体です ― どのUDSサービスの下にもある形で、まだバイトはありません。次に <strong>H2</strong> で、実際のリクエストを1つ送り、バイトがまさにこの経路 ― リクエストが出て、答えが1つ戻る ― を進む様子を見ます。</p></section><nav class="cardnav"><a class="cln prev" href="#c3"><span class="cln-d">← Prev card</span><span class="cln-t"><span class="en">The address label</span><span class="jp">宛先ラベル</span></span></a><span class="cln next disabled" aria-hidden="true"></span></nav></div></main></div></div><script>
 (function(){var root=document.querySelector('.stage');if(!root)return;
 function stick(){var t=document.querySelector('.topbar'),c=document.querySelector('.crumbs');
   var th=t?t.offsetHeight:0,ch=c?c.offsetHeight:0,d=document.documentElement.style;
@@ -8,4 +870,28 @@ var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=documen
 if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];stick();});
 var tb=document.getElementById('themebtn');if(tb)tb.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});
 })();
+</script><script>
+// PAGER — one card at a time; the top strip is the always-on progress + jump nav
+var pages=[].slice.call(document.querySelectorAll('.stream.pager > .page'));
+var strip=document.querySelector('.cardmap'),links=[].slice.call(document.querySelectorAll('.cardmap a'));
+var pr=document.getElementById('progress'),wrap=document.querySelector('.cardmap-wrap'),idx=-1;
+function show(i,scroll){
+  i=Math.max(0,Math.min(pages.length-1,i));if(i===idx||!pages.length)return;idx=i;
+  pages.forEach(function(p,k){p.classList.toggle('on',k===i)});
+  var id=pages[i].getAttribute('data-id');
+  links.forEach(function(a){var on=a.getAttribute('href')==='#'+id;a.classList.toggle('on',on);
+    if(on&&strip){var ar=a.getBoundingClientRect(),cr=strip.getBoundingClientRect();strip.scrollLeft+=(ar.left-cr.left)-(cr.width-ar.width)/2;}});
+  if(pr)pr.style.width=(pages.length>1?i/(pages.length-1)*100:100)+'%';
+  if(scroll){
+    if(history.replaceState)history.replaceState(null,'','#'+id);
+    if(wrap){var off=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--stick'))||44;var top=wrap.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo(0,Math.max(0,top));}
+  }
+}
+function jump(id){for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===id){show(k,true);return true}}return false;}
+document.addEventListener('click',function(e){var a=e.target.closest('.cardmap a, .cardnav a');if(!a)return;var h=a.getAttribute('href')||'';if(h.charAt(0)==='#'&&jump(h.slice(1)))e.preventDefault();});
+addEventListener('keydown',function(e){var t=e.target.tagName;if(t==='INPUT'||t==='TEXTAREA')return;if(e.key==='ArrowRight')show(idx+1,true);else if(e.key==='ArrowLeft')show(idx-1,true);});
+var start=(location.hash||'').slice(1),si=0,deep=!!start;
+if(start)for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===start){si=k;break}}
+show(si,deep);
+if(!deep)window.scrollTo(0,0);
 </script></body></html>

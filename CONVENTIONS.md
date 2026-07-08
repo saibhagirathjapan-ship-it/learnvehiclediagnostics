@@ -178,7 +178,13 @@ contract (source of truth = those files):
 
 - A module is a **sequence of nuggets**, each carrying exactly one idea. Card types:
   - **Divider** — chapter/section marker: title only.
-  - **Brief** — sets up / summarizes; header band + short body. Not teaching.
+  - **Brief** — sets up; header band + short body. **Not teaching.** A brief is a **3-part advance
+    organizer** (LOCKED 2026-07-08, user-approved): **(1) why this** — recall the prior card + open the
+    gap; **(2) what's inside** — the concept cards as a short list + the optional depth areas; **(3) what
+    you'll be able to do** — 2–3 competence outcomes. Derive parts 2–3 from the module's `STRUCTURE.md`
+    card list + its *Leaves:* line so the brief can't drift. Keep it to one screen; close with a `:::key`
+    (label `By the end · この章を終えると`). Plain, clear language — never cryptic. *(H1/H2/H3 briefs
+    predate this format and are to be retrofitted.)*
   - **Concept** (default) — the teaching, built as a **T** (§1c): title-block + high-level
     **bar** with **one** canonical illustration, then collapsible **detail legs**.
   - **Conclusion** — 1–2-sentence recap + bridge to next, at each section end.

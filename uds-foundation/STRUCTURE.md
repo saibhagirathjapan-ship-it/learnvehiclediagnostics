@@ -302,8 +302,8 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 Figure ID = `<CARD>-F<k>` (card-scoped: `F1` = the card's bar figure, `F2…` = its go-deeper leg
 sketches in reading order). Filename = `<card>-f<k>_<kebab-title>.svg` in `<module>/assets/figures/`,
 globally unique by the `h1-/h2-` prefix. Kept 1:1 with the on-disk SVGs (verified by `checkmod.js`).
-V-drills are unbuilt — their registers are authored when each module is built. **H3 is now built**
-(6 cards, 10 figures — all still labelled-dashed-box **placeholders**; real SVGs are the next H3 task).
+V-drills are unbuilt — their registers are authored when each module is built. **H3 is now fully built**
+(6 cards, 10 figures — **all real SVGs drawn + geometry-audited 2026-07-08**, light + dark close-ups; §7a clean).
 
 ### H1 — The diagnostics landscape
 
@@ -335,14 +335,14 @@ V-drills are unbuilt — their registers are authored when each module is built.
 | H2-C6-F1 | `$11` reset — reboot to default, re-locked | C6 · bar | `h2-c6-f1_reset.svg` |
 | H2-C7-F1 | A session's life — open · hold · close | C7 · bar | `h2-c7-f1_session-life.svg` |
 
-### H3 — What UDS can do & how the ECU decides *(6-card build; all 10 figures are placeholders)*
+### H3 — What UDS can do & how the ECU decides *(6-card build; all 10 figures drawn + audited 2026-07-08)*
 
 | ID | Title (takeaway) | Card / leg | Filename |
 |----|------------------|------------|----------|
 | H3-B-F1 | One request, a whole menu behind it — the sealed box offered a way in | brief · bar | `h3-b-f1_a-whole-menu.svg` |
-| H3-C1-F1 | The fixed shape of a service — one in, one of a fixed set out, only if | C1 · bar | `h3-c1-f1_service-shape.svg` |
-| H3-C1-F2 | The primitives of vehicle diagnostics — read, test, check, update | C1 · leg *diagnostic* | `h3-c1-f2_diagnostic-scene.svg` |
-| H3-C1-F3 | Provide vs use — the tester asks; the server offers, does the job, or refuses | C1 · leg *provide* | `h3-c1-f3_provide-vs-use.svg` |
+| H3-C1-F1 | A service is a capability the ECU provides | C1 · bar | `h3-c1-f1_capability.svg` |
+| H3-C1-F2 | Atomic primitives combine into the diagnosis | C1 · leg *diagnostic* | `h3-c1-f2_primitives-to-diagnosis.svg` |
+| H3-C1-F3 | One asks; the other does the work — “server” is a role, not a box | C1 · leg *provide* | `h3-c1-f3_provide-vs-use.svg` |
 | H3-C2-F1 | Every service belongs to one of six families | C2 · bar | `h3-c2-f1_six-families.svg` |
 | H3-C2-F2 | The three you know live in the first family (`$10`/`$11`/`$3E`) | C2 · leg *comms* | `h3-c2-f2_comms-family.svg` |
 | H3-C2-F3 | Security gates the risky services (`$27`) | C2 · leg *security* | `h3-c2-f3_security-gate.svg` |

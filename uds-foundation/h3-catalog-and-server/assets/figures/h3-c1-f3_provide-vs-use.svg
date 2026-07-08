@@ -1,6 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" class="dgm" role="img" aria-label="Placeholder figure — Two roles, asking versus providing">
-  <rect x="10" y="10" width="620" height="300" fill="none" stroke="currentColor" stroke-opacity="0.34" stroke-width="2" stroke-dasharray="9 7"/>
-  <text x="320" y="140" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="2" fill="currentColor" fill-opacity="0.5">SVG PLACEHOLDER · 次セッションで作図</text>
-  <text x="320" y="174" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-size="17" fill="currentColor" fill-opacity="0.64">Two roles — the tester asks; the server offers, honours, or refuses</text>
-  <text x="320" y="202" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="12" fill="currentColor" fill-opacity="0.4">h3-c1-f3_provide-vs-use.svg</text>
+<svg class="dgm" viewBox="0 0 720 240" role="img" aria-label="One side asks, the other does the work. The tester is small: it sends the request and waits. The ECU, in its server role, is large and loaded: it recognises the request, does the job, and answers or refuses. Below: the server is a role, not a box — a tiny sensor module and a large control unit each wear the server role when they answer.">
+  <text x="360" y="22" text-anchor="middle" class="acc mono-t" font-size="9.5" letter-spacing="1">ONE ASKS · ONE DOES THE WORK · 頼む側と担う側</text>
+
+  <!-- tester: small, trivial -->
+  <rect x="40" y="68" width="146" height="60" rx="8" class="plate ln" stroke-width="1.3"/>
+  <text x="113" y="92" text-anchor="middle" class="ink w7" font-size="12.5">TESTER</text>
+  <text x="113" y="108" text-anchor="middle" class="mut" font-size="9">uses</text>
+  <text x="113" y="122" text-anchor="middle" class="mut" font-size="8">ask, then wait</text>
+
+  <!-- request / reply -->
+  <text x="243" y="84" text-anchor="middle" class="acc mono-t" font-size="8.5">asks →</text>
+  <path d="M 186 92 H 300 M 293 88 L 300 92 L 293 96" class="acc-s" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 300 116 H 186 M 193 112 L 186 116 L 193 120" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="243" y="130" text-anchor="middle" class="mut mono-t" font-size="8">the answer</text>
+
+  <!-- provider: large, loaded (focal) -->
+  <rect x="300" y="54" width="300" height="98" rx="8" class="plate acc-s" stroke-width="1.7"/>
+  <text x="318" y="74" class="acc mono-t" font-size="9">SERVER provides — all the work is here:</text>
+  <text x="322" y="98" class="ink" font-size="9.5"><tspan class="acc mono-t">1</tspan>  recognise the request</text>
+  <text x="322" y="118" class="ink" font-size="9.5"><tspan class="acc mono-t">2</tspan>  do the job</text>
+  <text x="322" y="138" class="ink" font-size="9.5"><tspan class="acc mono-t">3</tspan>  answer <tspan class="grn w7">✓</tspan>  or refuse <tspan class="red w7">✕</tspan>  with a reason</text>
+
+  <!-- band 2: role, not a box -->
+  <line x1="40" y1="166" x2="680" y2="166" class="ln" stroke-width="1"/>
+  <text x="40" y="189" class="ink w7" font-size="9.5">“server” = a role, not a box</text>
+  <text x="40" y="204" class="mut" font-size="8.5">whichever ECU answers wears it — tiny or large</text>
+
+  <rect x="470" y="174" width="104" height="20" rx="10" class="fl acc-s" stroke-width="1.3"/>
+  <text x="522" y="188" text-anchor="middle" class="acc mono-t" font-size="9.5">SERVER</text>
+  <path d="M 512 194 L 492 202" class="ln" stroke-width="1" fill="none"/>
+  <path d="M 532 194 L 546 198" class="ln" stroke-width="1" fill="none"/>
+  <rect x="479" y="202" width="26" height="16" rx="3" class="fl ln" stroke-width="1.1"/>
+  <text x="492" y="233" text-anchor="middle" class="mut" font-size="7.5">a sensor</text>
+  <rect x="524" y="198" width="44" height="24" rx="3" class="fl ln" stroke-width="1.1"/>
+  <text x="546" y="233" text-anchor="middle" class="mut" font-size="7.5">a big unit</text>
 </svg>

@@ -312,24 +312,38 @@ only ResponseOnEvent changed.
   folded into C2), per the OK/NG gate. `checkmod . 3` green; grep confirms **no stale pipeline terms**;
   forward-pointers verified in DOM. Bar-coverage now **V7a/b/c←C2 · V5←C3 · V9←C3**. Record:
   `uds-foundation/STRUCTURE.md` H3 § + `h3-catalog-and-server/NOTES.md`.
-- **✅ All 6 H3 cards USER-APPROVED 2026-07-07** ("H3 looks good") — prose is final. **Figures are ALL
-  PLACEHOLDERS** (labelled dashed-box `.dgm`, 10 of them); drawing them is the only open H3 item, deferred
-  to a focused next-session pass (per user).
+- **✅ All 6 H3 cards USER-APPROVED 2026-07-07** ("H3 looks good") — prose is final. **✅ All 10 real SVGs
+  DRAWN + geometry-audited (session 15, 2026-07-08):** §7a clean (connectors touch anchors; icons recognizable
+  — warning-triangle/dial/gear/shield-check/download/padlocks; zero overflow), theme-aware light + dark,
+  `checkmod . 3` green, 0 console errors. One fix landed (`h3-c1-f2` wiring-label overrun + sun-like actuator
+  glyph → shortened label, redrew the gear). **H3 is fully complete — the whole breadth spine H1·H2·H3 is now
+  built to the bar with real figures.** Register: `uds-foundation/STRUCTURE.md` §7c H3.
 
-**Done this session (2026-07-07, session 14):** H3 9→6 restructure (above) · **folded the shell/reading-UX
-decisions into [[CONVENTIONS]] §1f + a [[PEDAGOGY]] cross-link** (locked) · **published the learner persona**
-as a "Who this is for" note on the hub (data-driven from `course.yml` `whoFor`, rendered by `render-hub.js`,
-`.whofor` in `blueprint.css`; browser-verified light/dark + lang isolation).
+- **✅ H3 figure review pass — CLOSED session 16, 2026-07-08 ("H3 review is okay").** Redesigned all three **C1**
+  figures with the user (source prose/captions updated, files renamed): **f1 → `capability`** ("a service = a
+  capability the ECU provides"; you-ask→ECU→provides, 3 varied capabilities; caption off "one fixed shape") ·
+  **f2 → `primitives-to-diagnosis`** (3 atomic primitives converge → "The Diagnosis", pieces fused = "made sense
+  of") · **f3** recast to carry the **asymmetry** (tiny asker vs loaded provider) + **"server = a role, not a
+  box"** in *both* text and image. **C3-C1 polish:** title → "The ECU decides: serve or refuse"; cut a filler
+  paragraph; flipped a negation-first line positive; anchored c3-f1's two floating labels. c3-f2/c3-f3 left as-is.
+  **Doctor↔patient = a SPINE analogy → deferred to the H1 rebuild** (see Next-up #1), not sprung at a C1 leg.
+
+**Done this session (2026-07-08, session 15):** drew all 10 H3 SVGs from the STRUCTURE.md §7c register (brief 1
+· primer 3 · C2 3 · C3 3) through the `.dgm` design system, geometry-audited via per-figure light/dark close-ups.
+**Session 16:** the C1 redesign + C3 polish above; "lead positive / no negative framing" added to memory.
 
 **Next up**
-1. **Draw the real H3 SVGs — a FOCUSED next-session pass** (H3 prose is signed off; card/figure set settled —
-   **10 figs**: brief 1 · primer 3 · C2 3 · C3 3, all listed with titles/filenames in STRUCTURE.md §7c H3
-   register). Replace each labelled-dashed-box placeholder with a real §7a-geometry schematic to its caption
-   takeaway; register/geometry-audit each (light + dark close-ups). Then re-render + `checkmod . 3`.
-2. **Future H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
+1. **Future H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
    (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.
-3. **Then** the V drills (V1–V9) and the pillar modules M2–M9, each its own H/V.
+   - **Plant the doctor↔patient SPINE analogy in this opener** and carry it as a light through-line:
+     "you can't open the patient up, so you interrogate it" → **consultation = session `$10` · symptoms =
+     stored faults `$19` · vitals = live data `$22` · provoked tests = routines/actuator `$2F`/`$31` ·
+     treatment = reprogram `$34`.** It's a *spine* analogy (structures the whole subject), so it MUST be
+     seeded early, not sprung mid-course; **H3-C1's primitive leg then nods back to it.** (Decided session 15:
+     a spine analogy introduced cold at a C1 leg reads as off — so it was **deferred out of the H3-C1 `f2`
+     redraw**, which now stands alone [atoms → "The Diagnosis"] without the doctor.)
+2. **Then** the V drills (V1–V9) and the pillar modules M2–M9, each its own H/V.
 
 **Open build-phase decisions (unchanged):** V8 density (keep the 5-card stack incl. DoIP vs spin the
 IP/DoIP half to M7) · a `:::table` directive (for M2/M3) · bundle EN fonts base64 (map + modules still

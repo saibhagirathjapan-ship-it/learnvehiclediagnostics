@@ -7,10 +7,10 @@ title:
   en: "What a service is — and what makes it diagnostic"
   jp: "サービスとは何か ― そして何が「診断」たらしめるのか"
 short: { en: "What a service is", jp: "サービスとは" }
-illustration: figures/h3-c1-f1_service-shape.svg
+illustration: figures/h3-c1-f1_capability.svg
 caption:
-  en: "**One fixed shape.** One request goes in. One reply comes back, from a fixed set — and only if the ECU is in the right state to serve it."
-  jp: "**1つの決まった型。** 要求が1つ入る。決まった集合の中から返答が1つ返る ― しかもECUが応じられる状態にあるときだけ。"
+  en: "**A service is a capability.** One named job the ECU can do for you — read a fault, report a value, move a part. You ask by name; the ECU provides it."
+  jp: "**サービスとは能力です。** ECUがあなたのためにできる、名前のついた仕事 ― 故障を読む、値を返す、部品を動かす。名前で頼めば、ECUがそれを差し出します。"
 legs:
   - id: diagnostic
     title: { en: "What makes it diagnostic — the primitives you diagnose with", jp: "何が「診断」にするのか ― 診断の基本操作" }
@@ -63,9 +63,9 @@ A service is *diagnostic* because of what you do with it. These services are the
 サービスを*診断*たらしめるのは、それで何をするかです。これらのサービスは、車全体を診断し保守するための基本操作 ― **プリミティブ** ― です。
 :::
 
-:::figure src=figures/h3-c1-f2_diagnostic-scene.svg
-en: **The primitives of vehicle diagnostics.** With these services you read faults and sensor data, test parts, and check or update ECU software — all from outside, over the car's own wiring.
-jp: **車両診断のプリミティブ。** これらのサービスで、故障やセンサーデータを読み、部品を試し、ECUのソフトを確認・更新します ― すべて外側から、車自身の配線を通じて。
+:::figure src=figures/h3-c1-f2_primitives-to-diagnosis.svg
+en: **The primitives of diagnosis.** Each service returns one atomic piece of information; the technician combines them to find the root cause of the problem — all from outside, over the car's own wiring.
+jp: **診断のプリミティブ。** 各サービスは、原子的な情報を1つ返します。技術者はそれらを組み合わせ、問題の根本原因を突き止めます ― すべて外側から、車自身の配線を通じて。
 :::
 
 :::en
@@ -96,26 +96,29 @@ Put together, these let you diagnose a vehicle from the **outside** — over the
 
 ## leg:provide
 :::en
-Every request has two sides, and they play different parts. H1 introduced the **server** — the ECU in its answering role. The point here: to **provide** a service is active work by the ECU's software — it must recognise the request, do the job, and build a reply.
+A request has two sides, and they do very different jobs. One side **asks**; the other does **all the real work**.
 :::
 :::jp
-どの要求にも2つの側があり、それぞれ別の役を演じます。H1では**サーバー** ― 答える役のECU ― を紹介しました。ここでの要点：サービスを**差し出す**のは、ECUのソフトウェアの能動的な仕事です ― 要求を認識し、仕事をし、返答を組み立てます。
-:::
-
-:::figure src=figures/h3-c1-f3_provide-vs-use.svg
-en: **Two roles.** The tester **uses** a service — it asks and waits. The server **provides** it — it does the job and replies, or turns the request down with a reason.
-jp: **2つの役割。** テスターはサービスを**使う** ― 頼んで待ちます。サーバーはそれを**差し出す** ― 仕事をして答えるか、理由をつけて断ります。
+1つの要求には2つの側があり、担う仕事はまるで違います。片方は**頼む**だけ。もう片方が**実際の仕事すべて**を担います。
 :::
 
 :::en
-- The **tester** *uses* the service. It sends the request and waits for the answer.
-- The **server** *provides* the service. It offers the service, then either does the job and sends the positive reply, or turns the request down with one of the listed reasons.
-- {key} "Server" is a **role**, not a size. It is the part of the ECU's software that answers. Any ECU can hold one — so the same service can come from a tiny sensor module or a large control unit. {{→ V9 · inside the server}} · {{→ V1 · the service model}}
+The **tester uses** the service — it sends the request, then waits. That is the easy side. The **ECU provides** it — it recognises the request, does the job, and returns the answer, or refuses with a reason. All the work, and the decision whether to serve, sits on the providing side.
 :::
 :::jp
-- **テスター**はサービスを*使い*ます。要求を送り、答えを待ちます。
-- **サーバー**はサービスを*差し出し*ます。サービスを提示し、そして仕事をして肯定応答を送るか、並べられた理由の1つをつけて断ります。
-- {key} 「サーバー」は大きさではなく**役割**です。ECUのソフトウェアのうち「答える」部分です。どのECUにも宿れます ― だから同じサービスを、小さなセンサーモジュールでも大きな制御ユニットでも差し出せます。{{→ V9 · サーバーの内部}} · {{→ V1 · サービスモデル}}
+**テスターはサービスを使う** ― 要求を送り、あとは待つだけ。こちらは楽な側です。**ECUはそれを差し出す** ― 要求を受け取り、仕事をして、答えを返すか、理由をつけて断ります。仕事のすべても、応じるか否かの判断も、差し出す側にあります。
+:::
+
+:::figure src=figures/h3-c1-f3_provide-vs-use.svg
+en: **One asks; the other does the work.** The tester sends and waits. The ECU — in its *server* role — recognises the request, does the job, and answers or refuses. "Server" is a role any ECU plays when it answers, not a box.
+jp: **片方は頼み、もう片方が担う。** テスターは送って待つだけ。ECUは*サーバー*の役割で、要求を受け取り、仕事をし、答えるか断ります。「サーバー」は、答えるとき任意のECUが担う役割で、箱ではありません。
+:::
+
+:::en
+- {key} That providing side has a name you met in H1 — the **server** — and it is a **role, not a box**. Whichever software answers a request is the server for it. A tiny sensor module and a large control unit each act as the server when they answer; one ECU can even be a server to the tester and a client to its neighbour. {{→ V9 · inside the server}} · {{→ V1 · the service model}}
+:::
+:::jp
+- {key} その差し出す側には、H1で出会った名前があります ― **サーバー** ― そしてそれは**箱ではなく役割**です。要求に答えるソフトウェアが、その要求のサーバーです。小さなセンサーモジュールも大きな制御ユニットも、答えるときはサーバーとして働きます。1つのECUが、テスターに対してはサーバー、隣のECUに対してはクライアントにもなれます。{{→ V9 · サーバーの内部}} · {{→ V1 · サービスモデル}}
 :::
 
 ## footer

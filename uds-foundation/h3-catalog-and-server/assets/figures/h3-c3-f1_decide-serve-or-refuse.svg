@@ -1,6 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" class="dgm" role="img" aria-label="Placeholder figure — Vet, then serve or refuse">
-  <rect x="10" y="10" width="620" height="300" fill="none" stroke="currentColor" stroke-opacity="0.34" stroke-width="2" stroke-dasharray="9 7"/>
-  <text x="320" y="140" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="2" fill="currentColor" fill-opacity="0.5">SVG PLACEHOLDER · 次セッションで作図</text>
-  <text x="320" y="174" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-size="17" fill="currentColor" fill-opacity="0.64">Vet, then serve or refuse</text>
-  <text x="320" y="202" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="12" fill="currentColor" fill-opacity="0.4">h3-c3-f1_decide-serve-or-refuse.svg</text>
+<svg class="dgm" viewBox="0 0 720 200" role="img" aria-label="The ECU vets every request through three checks in a row — right session, security unlocked, request supported. If all pass, it serves and sends a positive reply. If any one fails, it refuses with a negative reply: 7F, the SID, and a reason code.">
+  <text x="360" y="22" text-anchor="middle" class="acc mono-t" font-size="9.5" letter-spacing="1.2">THE ECU VETS EVERY REQUEST · ECUは吟味する</text>
+
+  <!-- request in -->
+  <rect x="39" y="64" width="88" height="40" rx="6" class="plate acc-s" stroke-width="1.5"/>
+  <text x="83" y="82" text-anchor="middle" class="acc w7" font-size="9.5">one request</text>
+  <text x="83" y="95" text-anchor="middle" class="mut mono-t" font-size="8.5">SID …</text>
+
+  <!-- pass line + three checks -->
+  <path d="M 127 84 H 171 M 164 80 L 171 84 L 164 88" class="grn-s" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="171" y="58" width="96" height="52" rx="8" class="fl ln" stroke-width="1.3"/>
+  <text x="219" y="82" text-anchor="middle" class="ink w7" font-size="9.5">session</text>
+  <text x="219" y="96" text-anchor="middle" class="mut" font-size="8.5">right one?</text>
+
+  <path d="M 267 84 H 311 M 304 80 L 311 84 L 304 88" class="grn-s" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="311" y="58" width="96" height="52" rx="8" class="fl ln" stroke-width="1.3"/>
+  <text x="359" y="82" text-anchor="middle" class="ink w7" font-size="9.5">security</text>
+  <text x="359" y="96" text-anchor="middle" class="mut" font-size="8.5">unlocked?</text>
+
+  <path d="M 407 84 H 451 M 444 80 L 451 84 L 444 88" class="grn-s" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="451" y="58" width="96" height="52" rx="8" class="fl ln" stroke-width="1.3"/>
+  <text x="499" y="82" text-anchor="middle" class="ink w7" font-size="9.5">request</text>
+  <text x="499" y="96" text-anchor="middle" class="mut" font-size="8.5">supported?</text>
+
+  <text x="636" y="48" text-anchor="middle" class="grn mono-t" font-size="8.5">all pass</text>
+  <path d="M 547 84 H 591 M 584 80 L 591 84 L 584 88" class="grn-s" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="591" y="58" width="90" height="52" rx="8" class="plate grn-s" stroke-width="1.5"/>
+  <text x="636" y="82" text-anchor="middle" class="grn w7" font-size="11">✓ SERVE</text>
+  <text x="636" y="96" text-anchor="middle" class="mut" font-size="8.5">positive</text>
+
+  <!-- fail drops -> collector -> refuse -->
+  <path d="M 219 110 V 132" class="red-s" stroke-width="1.5" fill="none"/>
+  <path d="M 359 110 V 132" class="red-s" stroke-width="1.5" fill="none"/>
+  <path d="M 499 110 V 132" class="red-s" stroke-width="1.5" fill="none"/>
+  <path d="M 219 132 H 499" class="red-s" stroke-width="1.5" fill="none"/>
+  <text x="289" y="125" text-anchor="middle" class="red mono-t" font-size="8.5">if any check fails</text>
+  <path d="M 359 132 V 142 M 355 135 L 359 142 L 363 135" class="red-s" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="254" y="142" width="210" height="44" rx="8" class="plate red-s" stroke-width="1.5"/>
+  <text x="359" y="162" text-anchor="middle" class="red w7" font-size="11">✕ REFUSE</text>
+  <text x="359" y="177" text-anchor="middle" class="red mono-t" font-size="9">7F + SID + reason code</text>
 </svg>

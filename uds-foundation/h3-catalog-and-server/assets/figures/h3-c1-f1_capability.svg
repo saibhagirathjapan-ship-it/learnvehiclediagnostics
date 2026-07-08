@@ -1,0 +1,41 @@
+<svg class="dgm" viewBox="0 0 720 210" role="img" aria-label="A service is a capability the ECU provides. In plain words you ask the ECU to do a named job — read me the faults (19), get me the engine speed (22), lower the window (2F) — and the ECU provides it: the fault list, 2400 rpm, the window drops. Reading a code, reporting a value, or moving a part are all services.">
+  <text x="360" y="22" text-anchor="middle" class="acc mono-t" font-size="9.5" letter-spacing="1">A SERVICE = A CAPABILITY THE ECU PROVIDES · ECUが差し出す能力</text>
+
+  <text x="159" y="48" text-anchor="middle" class="mut mono-t" font-size="8.5">you ask…</text>
+  <text x="568" y="48" text-anchor="middle" class="mut mono-t" font-size="8.5">…the ECU provides</text>
+
+  <!-- the ECU: the provider (focal) -->
+  <rect x="300" y="54" width="120" height="124" rx="10" class="plate acc-s" stroke-width="1.8"/>
+  <text x="360" y="112" text-anchor="middle" class="acc w7" font-size="14">ECU</text>
+  <text x="360" y="129" text-anchor="middle" class="mut" font-size="8.5">the provider</text>
+
+  <!-- row 1: read me the faults -->
+  <rect x="44" y="61" width="230" height="30" rx="8" class="plate ln" stroke-width="1.3"/>
+  <text x="60" y="80" class="ink" font-size="10.5">“read me the faults”</text>
+  <rect x="236" y="67" width="30" height="18" rx="3" class="fl ln" stroke-width="1"/><text x="251" y="80" text-anchor="middle" class="ink mono-t" font-size="9.5">19</text>
+  <path d="M 274 76 H 300 M 293 72 L 300 76 L 293 80" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 420 76 H 446 M 439 72 L 446 76 L 439 80" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="446" y="61" width="244" height="30" rx="8" class="plate ln" stroke-width="1.3"/>
+  <path d="M 462 70 L 469 82 L 455 82 Z" class="amb-s" stroke-width="1.3" fill="none" stroke-linejoin="round"/><text x="462" y="81" text-anchor="middle" class="amb w7" font-size="7.5">!</text>
+  <text x="480" y="80" class="ink" font-size="10.5">the stored fault list</text>
+
+  <!-- row 2: get me the engine speed -->
+  <rect x="44" y="101" width="230" height="30" rx="8" class="plate ln" stroke-width="1.3"/>
+  <text x="60" y="120" class="ink" font-size="10.5">“get me the engine speed”</text>
+  <rect x="236" y="107" width="30" height="18" rx="3" class="fl ln" stroke-width="1"/><text x="251" y="120" text-anchor="middle" class="ink mono-t" font-size="9.5">22</text>
+  <path d="M 274 116 H 300 M 293 112 L 300 116 L 293 120" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 420 116 H 446 M 439 112 L 446 116 L 439 120" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="446" y="101" width="244" height="30" rx="8" class="plate ln" stroke-width="1.3"/>
+  <circle cx="462" cy="116" r="7" class="ln" fill="none" stroke-width="1.3"/><path d="M 462 116 L 466 111" class="acc-s" stroke-width="1.4" stroke-linecap="round"/><circle cx="462" cy="116" r="1.1" class="acc"/>
+  <text x="480" y="120" class="ink" font-size="10.5">2400 rpm</text>
+
+  <!-- row 3: lower the window -->
+  <rect x="44" y="141" width="230" height="30" rx="8" class="plate ln" stroke-width="1.3"/>
+  <text x="60" y="160" class="ink" font-size="10.5">“lower the window”</text>
+  <rect x="236" y="147" width="30" height="18" rx="3" class="fl ln" stroke-width="1"/><text x="251" y="160" text-anchor="middle" class="ink mono-t" font-size="9.5">2F</text>
+  <path d="M 274 156 H 300 M 293 152 L 300 156 L 293 160" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 420 156 H 446 M 439 152 L 446 156 L 439 160" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="446" y="141" width="244" height="30" rx="8" class="plate ln" stroke-width="1.3"/>
+  <rect x="456" y="149" width="13" height="10" rx="1.5" class="fl ln" stroke-width="1.1"/><path d="M 462 161 V 167 M 459 164 L 462 167 L 465 164" class="acc-s" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="480" y="160" class="ink" font-size="10.5">the window drops</text>
+</svg>

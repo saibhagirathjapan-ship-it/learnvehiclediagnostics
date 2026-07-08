@@ -1,6 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" class="dgm" role="img" aria-label="Placeholder figure — Security gates the risky services">
-  <rect x="10" y="10" width="620" height="300" fill="none" stroke="currentColor" stroke-opacity="0.34" stroke-width="2" stroke-dasharray="9 7"/>
-  <text x="320" y="140" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="2" fill="currentColor" fill-opacity="0.5">SVG PLACEHOLDER · 次セッションで作図</text>
-  <text x="320" y="174" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-size="17" fill="currentColor" fill-opacity="0.64">Security gates the risky services</text>
-  <text x="320" y="202" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="12" fill="currentColor" fill-opacity="0.4">h3-c2-f3_security-gate.svg</text>
+<svg class="dgm" viewBox="0 0 720 206" role="img" aria-label="Security gates the risky services. Reading (22, 19) is harmless and flows straight through, always open. Changing things (2E, 31, 34) is locked behind a padlock and only passes once the ECU is unlocked with 27.">
+  <text x="360" y="22" text-anchor="middle" class="acc mono-t" font-size="9.5" letter-spacing="1.2">SECURITY GATES THE RISKY SERVICES · $27で解錠</text>
+
+  <!-- top lane: READ — always open -->
+  <text x="44" y="56" class="acc mono-t" font-size="9">READ</text>
+  <rect x="44" y="62" width="156" height="38" rx="6" class="plate grn-s" stroke-width="1.4"/>
+  <text x="122" y="79" text-anchor="middle" class="grn w7" font-size="10.5">read a value / fault</text>
+  <text x="122" y="93" text-anchor="middle" class="mut mono-t" font-size="9">22 · 19</text>
+  <text x="378" y="73" text-anchor="middle" class="mut mono-t" font-size="8.5">harmless — always open</text>
+  <path d="M 200 81 H 558 M 551 77 L 558 81 L 551 85" class="grn-s" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="560" y="62" width="130" height="38" rx="6" class="plate grn-s" stroke-width="1.4"/>
+  <text x="625" y="86" text-anchor="middle" class="grn w7" font-size="11">✓ served</text>
+
+  <!-- bottom lane: CHANGE — locked until $27 -->
+  <text x="44" y="132" class="acc mono-t" font-size="9">CHANGE</text>
+  <rect x="44" y="138" width="156" height="38" rx="6" class="plate ln" stroke-width="1.3"/>
+  <text x="122" y="155" text-anchor="middle" class="ink w7" font-size="10.5">write / run / flash</text>
+  <text x="122" y="169" text-anchor="middle" class="mut mono-t" font-size="9">2E · 31 · 34</text>
+
+  <path d="M 200 157 H 352" class="ln" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- padlock (closed) -->
+  <path d="M 359 146 v-3 a5 5 0 0 1 10 0 v3" class="amb-s" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <rect x="356" y="146" width="16" height="12" rx="1.6" class="plate amb-s" stroke-width="1.4"/>
+  <circle cx="364" cy="152" r="1.4" class="amb"/>
+  <text x="466" y="149" text-anchor="middle" class="amb mono-t" font-size="8.5">locked until $27</text>
+  <path d="M 378 157 H 558 M 551 153 L 558 157 L 551 161" class="ln" stroke-width="1.7" fill="none" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="560" y="138" width="130" height="38" rx="6" class="plate ln" stroke-width="1.3"/>
+  <text x="625" y="162" text-anchor="middle" class="ink w7" font-size="11">✓ after unlock</text>
+
+  <!-- $27 unlocks the padlock -->
+  <path d="M 364 194 V 162 M 360 169 L 364 162 L 368 169" class="acc-s" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="392" y="192" text-anchor="start" class="acc mono-t" font-size="9">$27 unlocks it</text>
 </svg>

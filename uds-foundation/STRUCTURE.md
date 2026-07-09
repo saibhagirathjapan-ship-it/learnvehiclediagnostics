@@ -148,15 +148,63 @@ go-deeper leg sketches; the story rebuild folds their content into steps/footer,
 longer referenced — kept on disk, not rendered.)*
 
 ## V3 — Negative responses & the NRC catalog
-*Enters:* neg = 7F+SID+NRC; 0x78 = busy. *Leaves:* can decode the fixed shape, navigate the global catalog + always-supported set, explain 0x78.
+*Enters:* neg = 7F+SID+NRC named (H2-C2); 0x78 named as "the one no that means wait" (H2-C2/C3); pos =
+SID+0x40 (V2); P2/P2* numbers owned by H2-C3/V6. *Leaves:* can decode any negative (7F marker · echoed
+SID = which · NRC = why); navigate the one global NRC catalog by range **and** by the check that raises
+each code; explain the key common NRCs incl. the confused pairs (11/7F · 12/7E · 22/31); predict what a
+"no" does to the ECU (usually nothing changes — session stays, no reset — **except** the security counter
+increments); and react correctly (0x78 wait · 0x21 repeat · security back-off).
 
-| card | type | covers | go-deeper |
+> **RE-DERIVED & EXPANDED 2026-07-10 (session — `[D-HV]`).** A full documents-first re-derivation
+> (double-derived + continuity-checked; research artifacts in the session plan) **expanded V3 from 3 → 6
+> concept cards** to carry user-mandated non-negotiable learning: all key NRCs explained well (not just
+> 0x78), organized **by the service-processing check that raises each** (grep-recovered from Dcm
+> `SWS_Dcm_01535`/`00827`); the **state-effects** of a negative ("does a rejected `$10` change the
+> session?" → no, "the current session shall continue", ISO cl.10.2); and the **retrial strategies**
+> (0x78/0x21/0x37/0x36). The old standalone 0x78 card dissolves into C6 (its essence is "how to react").
+> Scope · bar-coverage (V3←H2-C2) · drill-slot are COURSE.md-locked and **unchanged**. Collapse seam: if
+> fewer cards wanted, merge C3+C4 into one "check→NRC gauntlet" card (~7 steps) → 5 concepts.
+
+**Load-bearing:** **C2** (the one-global-catalog architecture — the `/teach-back` target; V9's
+dependency); **C1** secondary (§2c derivation gate); **C5** recommended secondary teach-back (subtle).
+
+| card | type | covers | go-deeper (step beats) |
 |---|---|---|---|
-| V3-B | Brief | when the answer is no | — |
-| V3-C1 | Concept | a negative is always 3 bytes: 7F, requested SID, one NRC | why 7F not SID+0x40 · SID echoed so tester knows what failed |
-| V3-C2 | Concept | one global NRC catalog (3 ranges) + an always-supported set | the 3 ranges · common codes (SNS/SFNS/CNC) |
-| V3-C3 | Concept | 0x78 (RCRRP) = still working, real answer still comes | 0x78 opens the extended P2* window (→V6) · final response still sent |
-| V3-K | Conclusion | recap + bridge to the suppress bit | — |
+| V3-B | Brief | when the answer is no (advance organizer, no teaching) | why-this (V2 gave the yes; now the no) · what's-inside (shape · one catalog · the checks behind the codes · what a no does · how to react) · what-you'll-be-able-to-do · `:::key` By-the-end |
+| V3-C1 | Concept | a negative is 7F + echoed SID + one NRC; **7F (not SID+0x40) is what marks it a refusal** | the same `7F 10 22` from H2 opened up (object constancy) · byte 1 = 7F, a distinct marker (contrast 50) → reply-type from byte 1 · byte 2 = SID echoed → *which* · byte 3 = NRC → *why*; carries both which+why so it can't overload one byte like +0x40 · a physical request is always answered (→V4 suppress, →V8 broadcast). Framed as *why*, never re-stating "a negative is three bytes" |
+| V3-C2 | Concept | **one global NRC table** for the whole protocol; the number's range tells you the kind of reason | reasons aren't per-service invented — one shared dictionary · the 3 ranges: 00 never on the wire · 01–7F communication/protocol · 80–FF a specific condition ("be more specific than 22") · generic (10/11/12/13/14/22/31/78/7E/7F, any service) vs service-specific (most) — **honest framing, no "mandatory set" claim** · the reference **NRC table** lands here + in `:::reading` |
+| V3-C3 | Concept | **the structural gate — "is this even a real request?"**: the ECU vets a request through an ordered gauntlet, first failed check names the NRC | the gauntlet idea (ordered, stop-at-first-fail) — *mechanism/pipeline is V9's* (→V9), here = which check → which code · SID unknown → 11 · sub-fn unknown → 12 · wrong length/format → 13. Anchored on real requests; sets up the seam to C4 |
+| V3-C4 | Concept | **the state & permission gate — "will I do it *now*?"**: a well-formed request can still be refused by state / permission / a bad value | not in this session → 7F (svc) / 7E (sub-fn) — **confused pairs 11-vs-7F, 12-vs-7E** (not-at-all vs not-in-this-session) · locked → 33 (→M4) · wrong order → 24 (key before seed) · bad value/ID or wrong conditions → **31 "not that" vs 22 "not now"** (third pair). Security/flash codes as examples (→M4, →M6) |
+| V3-C5 | Concept | **what a "no" does inside the ECU**: a negative almost always means the action did NOT happen — with one exception | the safe rule: refused ⇒ nothing changed · rejected `$10` → session does not change ("the current session shall continue", ISO cl.10.2); rejected `$11` → no reset · **exception:** wrong key 35 → stays locked **and increments the failed-attempt counter** — a no that *bites* (→M4) · honest caveat: whether a reset clears a security lockout is **ECU-configured** (don't assume power-cycling helps) · 0x78 = action still *in progress* (bridge to C6) |
+| V3-C6 | Concept | **reacting to a "no" — the retrial strategies**: some no's are instructions (wait / retry), and reacting wrong makes it worse | 0x78 "still working" → real final answer will come; **reload the timer to P2*, wait, do NOT resend** (→V6); canonical use = flash (→M6) · 0x21 busyRepeatRequest → **repeat after a short delay** · security back-off — 37 "too soon, wait the delay", 36 "locked out, stop hammering" (→M4) · honest note: the *reaction* is standardized, the exact delays/counts are **configured per ECU** (footer, not taught as tooling) |
+| V3-K | Conclusion | recap + generative retrieval + bridge to the suppress bit | recap (shape · one catalog · the check→code gauntlet · what a no does · how to react) · generative `:::recall` (decode a `7F xx yy`; 11 vs 7F?; did a rejected `$10` change the session?; what do you do on 0x78?) · competence beat · bridge to V4 (the bit that silences the *yes*) |
+
+**Altitude fences (reference-don't-re-teach — lint):** **V3↔V9** — V3 teaches *which check → which NRC* +
+the "ordered gauntlet, first-fail-wins" idea; V9 keeps the exact Dcm pipeline (PduR/DSL/DSD/DSP), the
+precise `SWS_Dcm_01535` order, stop-on-first-failure mechanics, 0x78 at the P2 boundary. *V3 must not
+present itself as the definitive ordered gate — (→V9) for the mechanism.* (**Downstream note:** V9's §
+may want a light revisit so the two don't duplicate.) **V3↔V4** — V4 owns the suppress bit; V3-C1 only
+plants "a physical request is always answered" (→V4). **V3↔V6** — V6 owns the P2/P2* numbers; V3-C6 says
+"0x78 reloads the timer to P2*" with **no numbers** (→V6). **V3↔M4/M6** — security (33/35/36/37) & flash
+(70/72/73) NRCs are *examples* here; the SecurityAccess seed/key mechanism → M4, the flash sequence → M6.
+Tooling (D-PDU/ODX ComParams) is out-of-scope — footer citation only.
+
+**V3 figure register skeleton (§7c — one evolving figure per concept; B-PAGE finalizes filenames):**
+
+| ID | title (takeaway) | card |
+|----|------------------|------|
+| V3-B-F1 | when the answer is "no" (orienting) | brief |
+| V3-C1-F1 | a refusal is 7F + your SID + one reason (evolves; 50 vs 7F byte 1) | C1 |
+| V3-C2-F1 | one shared catalog, split into 3 ranges (evolves; the 00…FF number line banded) | C2 |
+| V3-C3-F1 | the request runs a gauntlet — the first failed check names the NRC | C3 |
+| V3-C4-F1 | same gauntlet, state/permission checks — 7F/33/24/31/22 (continues C3's figure) | C4 |
+| V3-C5-F1 | a "no" usually changes nothing — except the security counter ticks (state before/after) | C5 |
+| V3-C6-F1 | 0x78 / 0x21 = instructions: wait or retry — the react-flow (evolves; timeline) | C6 |
+
+*(C3-F1 & C4-F1 may be two states of ONE shared "gauntlet" figure for object constancy — decided at G2.)*
+*(B-PAGE research handoff — park in V3 NOTES.md: cited NRC table + explanations · state-effect quotes ·
+retrial framework; **3 flags** — 0x23 is NOT a UDS NRC (transient code is 0x94); security-lockout
+reset-persistence is OEM-config; verify Annex A.1 verbatim vs `raw/` before publishing prose.)*
 
 ## V4 — Sub-functions & the suppressPosRsp bit
 *Enters:* the sub-fn top bit is a reserved flag (H2-C1); echo clears it (V2); negatives always sent (V3). *Leaves:* can split the byte into suppress bit + value and explain suppression mutes only the positive.

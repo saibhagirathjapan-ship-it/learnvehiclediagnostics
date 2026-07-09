@@ -22,13 +22,21 @@ per-session narrative lives in `wiki/log.md` + git history — this is a **dashb
   ladder G0–G5 ([[CONVENTIONS]] build recipe) · `INCIDENTS.md` · session rituals + the 3-layer
   forcing function (see `work-types.md` §Enforcement). *(Commands/hook status: see the meta-session
   entry in `wiki/log.md`.)*
+- **V3 STRUCTURE re-derived & expanded (2026-07-10 `[D-HV]`):** the negative-responses drill grew
+  **3 → 6 concept cards** (documents-first, double-derived) — shape · **one global catalog**
+  (load-bearing) · structural gate · state & permission gate · what-a-no-does-to-the-ECU · retrial.
+  Key NRCs grouped by the Dcm check that raises each; state-effects + retrial strategies added.
+  STRUCTURE.md V3 § + the COURSE.md V3 row are final. B-PAGE research (NRC table, state-effect quotes,
+  retrial framework, 3 flags) is captured in the session plan → park in V3 `NOTES.md` at build open.
 - **Published:** GitHub Pages, git root = `wiki/learn/`, branch `main` (memory `reference-github-repo`).
 
 ## Suggested next session
 
 **V3 — Negative responses & the NRC catalog** (`B·PAGE`, the first build run fully under the
-governance system: G0–G5 ladder + `/teach-back` on the load-bearing card). Read
-`uds-foundation/STRUCTURE.md` V3 § first.
+governance system: G0–G5 ladder + `/teach-back`). **Now a 6-concept build** (STRUCTURE re-derived
+2026-07-10 — read the V3 § first). Load-bearing / teach-back target = **C2 (one global catalog)**;
+C1 gets the §2c derivation gate; C5 (state-effects) is a recommended secondary teach-back. First
+build step G0: open `NOTES.md` and park the B-PAGE research handoff + the 3 flags from the D-HV.
 
 ## Queue (in order)
 

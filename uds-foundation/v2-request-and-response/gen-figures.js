@@ -85,54 +85,79 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   wr('v2-c1-f3_first-byte-key.svg', svg('578 190', body, 'The first byte decides the format: any value other than 7F is a normal message, 7F alone flags a negative response.'));
 })();
 
-// ---------- V2-C2-F1 — positive response flips bit 6: 10 → 50 (panel, 4 steps) ----------
-// data-until = hide after step N; data-stage = show from step N. The 10 box gives way to 50; bit 6
-// toggles 0→1; step 4 names +0x40 and generalises.
+// ---------- V2-C2-F1 — service IDs in binary: bit 6 always 0, bit 7 NOT free (evolves, 3 steps) ----------
+// The corrected fact (ISO 14229-1 cl.9.3 NOTE): "All request messages have SI bit 6 = 0" — shown across
+// several SIDs incl. 85 (ControlDTCSetting, cl.10.8) whose bit 7 IS set, so "why bit 6 not bit 7" is
+// visible: bit 7 is already used. Bit 6 is the only bit that is 0 on every service.
 (function c2f1() {
-  const cw = 40, gap = 6, y = 66, h = 44, x0 = 44, bx = 452;   // 8 bit cells, then "=", then the hex box
-  const bitsOf10 = [0, 0, 0, 1, 0, 0, 0, 0];                    // b7..b0 for 0x10 (bit 4 set)
-  const cx = i => x0 + i * (cw + gap);
+  const bits = { '10': [0,0,0,1,0,0,0,0], '22': [0,0,1,0,0,0,1,0], '3E': [0,0,1,1,1,1,1,0], '85': [1,0,0,0,0,1,0,1] };
+  const order = ['10', '22', '3E', '85'];
+  const cw = 40, ch = 26, gy = 5, x0 = 100, y0 = 62;     // bit cells; hex label sits left of x0
+  const cx = i => x0 + i * (cw + gy);                     // i=0 → bit 7 … i=7 → bit 0
+  const rowY = r => y0 + r * (ch + gy);
+  const b6 = 1, b7 = 0;                                   // column indices (bit 7 is leftmost)
+  const midX = (x0 + cx(7) + cw) / 2;
+  const bottom = rowY(3) + ch;
+  let body = '';
+  const hd = (s, t) => `<g data-stage="${s}" data-until="${s}"><text x="${midX}" y="28" text-anchor="middle" class="ink w7" font-size="14.5">${t}</text></g>`;
+  body += hd(1, 'Read a service identifier in binary') + hd(2, 'Bit 6 is 0 on every request') + hd(3, 'Bit 6 is the only always-free bit');
+  // bit-6 column highlight band (from stage 2)
+  body += `<g data-stage="2"><rect x="${cx(b6) - 3}" y="${y0 - 22}" width="${cw + 6}" height="${bottom - (y0 - 22) + 22}" class="acc" opacity="0.12"/></g>`;
+  // bit-number header
+  for (let i = 0; i < 8; i++) body += `<text x="${cx(i) + cw / 2}" y="${y0 - 10}" text-anchor="middle" class="mut" font-size="9">bit ${7 - i}</text>`;
+  // rows (10 at stage 1; 22/3E/85 at stage 2)
+  order.forEach((sid, r) => {
+    const stg = r === 0 ? 1 : 2, y = rowY(r);
+    body += `<g data-stage="${stg}">`;
+    body += `<text x="${x0 - 18}" y="${y + ch / 2 + 5}" text-anchor="end" class="acc mono-t w7" font-size="14">${sid}</text>`;
+    bits[sid].forEach((b, i) => {
+      const isB6 = i === b6;
+      body += `<rect x="${cx(i)}" y="${y}" width="${cw}" height="${ch}" class="${isB6 ? 'acc-s' : 'ln'}" stroke-width="${isB6 ? 1.7 : 1}" fill="none"/>`;
+      body += `<text x="${cx(i) + cw / 2}" y="${y + ch / 2 + 5}" text-anchor="middle" class="${b ? 'ink' : 'mut'} mono-t" font-size="13">${b}</text>`;
+    });
+    body += `</g>`;
+  });
+  // stage 3 — a clean caption row BELOW the table (no overlap): bit 6 free on all vs bit 7 taken by 85,
+  // with a red outline on 85's set bit-7 cell so the "not free" claim is anchored to the art.
+  const y85 = rowY(3);
+  body += `<g data-stage="3">` +
+    `<rect x="${cx(b7) - 1}" y="${y85 - 1}" width="${cw + 2}" height="${ch + 2}" class="cross" stroke-width="1.9" fill="none"/>` +
+    `<text x="${midX - 98}" y="${bottom + 22}" text-anchor="middle" class="acc mono-t w7" font-size="10.5">bit 6: 0 on all → free</text>` +
+    `<text x="${midX + 98}" y="${bottom + 22}" text-anchor="middle" class="red mono-t w7" font-size="10.5">bit 7: used by 85</text>` +
+    `</g>`;
+  const W = cx(7) + cw + x0;
+  wr('v2-c2-f1_sid-bit6-free.svg', svg(`${W} ${bottom + 36}`, body, 'Service identifiers 10, 22, 3E and 85 in binary: bit 6 is 0 on every one, so +0x40 can claim it; bit 7 is already used by 85 (ControlDTCSetting) so it is not free.'));
+})();
+
+// ---------- V2-C2-F2 — set bit 6: 10 → 50 = +0x40, same every service (static, 1 step) ----------
+(function c2f2() {
+  const cw = 38, gy = 5, y = 60, h = 40, x0 = 44, bx = 442;
+  const bits10 = [0,0,0,1,0,0,0,0];
+  const cx = i => x0 + i * (cw + gy);
+  const midX = (x0 + bx + BOX_W) / 2;
   let cells = '';
   for (let i = 0; i < 8; i++) {
     const bitNo = 7 - i, x = cx(i), isFlip = (bitNo === 6);
-    cells += `<rect x="${x}" y="${y}" width="${cw}" height="${h}" class="${isFlip ? 'acc-s' : 'ln'}" stroke-width="${isFlip ? 2.4 : 1.6}" fill="none"/>`;
-    if (!isFlip) {
-      cells += `<text x="${x + cw / 2}" y="${y + h / 2 + 6}" text-anchor="middle" class="${bitsOf10[i] ? 'ink' : 'mut'} mono-t" font-size="18">${bitsOf10[i]}</text>`;
-    } else {
-      cells += `<g data-until="2"><text x="${x + cw / 2}" y="${y + h / 2 + 6}" text-anchor="middle" class="mut mono-t" font-size="18">0</text></g>`;
-      cells += `<g data-stage="3"><rect x="${x + 2}" y="${y + 2}" width="${cw - 4}" height="${h - 4}" class="acc" opacity="0.16"/>` +
-        `<text x="${x + cw / 2}" y="${y + h / 2 + 6}" text-anchor="middle" class="acc mono-t w8" font-size="18">1</text></g>`;
-    }
-    cells += `<text x="${x + cw / 2}" y="${y + h + 15}" text-anchor="middle" class="mut" font-size="9.5">bit ${bitNo}</text>`;
+    cells += `<rect x="${x}" y="${y}" width="${cw}" height="${h}" class="${isFlip ? 'acc-s' : 'ln'}" stroke-width="${isFlip ? 2.2 : 1.3}" fill="none"/>`;
+    if (isFlip) cells += `<rect x="${x + 2}" y="${y + 2}" width="${cw - 4}" height="${h - 4}" class="acc" opacity="0.16"/>`;
+    cells += `<text x="${x + cw / 2}" y="${y + h / 2 + 6}" text-anchor="middle" class="${isFlip ? 'acc' : (bits10[i] ? 'ink' : 'mut')} mono-t ${isFlip ? 'w8' : ''}" font-size="16">${isFlip ? 1 : bits10[i]}</text>`;
+    cells += `<text x="${x + cw / 2}" y="${y + h + 14}" text-anchor="middle" class="mut" font-size="9">bit ${bitNo}</text>`;
   }
-  // bit-6 callout: "unused / free" (steps 2) then "set → +0x40" (step 3), on a padded lane below
-  const b6cx = cx(1) + cw / 2, calY = y + h + 42;
-  const callout =
-    `<g data-stage="2" data-until="2"><path d="M ${b6cx} ${y + h + 22} V ${calY - 12}" class="acc-s" stroke-width="1.4"/>` +
-    `<text x="${b6cx}" y="${calY}" text-anchor="middle" class="acc mono-t" font-size="11">unused — free</text></g>` +
-    `<g data-stage="3"><path d="M ${b6cx} ${y + h + 22} V ${calY - 12}" class="acc-s" stroke-width="1.4"/>` +
-    `<text x="${b6cx}" y="${calY}" text-anchor="middle" class="acc mono-t w7" font-size="11">set it</text></g>`;
-  // the hex box: 10 (until step 2) becomes 50 (from step 3), same spot
-  const hy = y + (h - 50) / 2;
-  const box10 = `<g data-until="2">${byteBox({ hex: '10', x: bx, y: hy, role: 'data' })}</g>`;
-  const box50 = `<g data-stage="3">${byteBox({ hex: '50', x: bx, y: hy, role: 'pos' })}</g>` +
-    `<g data-stage="3"><text x="${bx + 29}" y="${hy + 50 + 17}" text-anchor="middle" class="acc mono-t w7" font-size="12">= 10 + 0x40</text></g>`;   // name it, on the spot
-  const eq = `<text x="430" y="${y + h / 2 + 7}" text-anchor="middle" class="mut mono-t w8" font-size="20">=</text>`;
-  // step 4 — generalise: how to READ any first byte, plus the worked pairs
-  const sumY = y + h + 80;   // pulled up to trim the reserved bottom band (2026-07-09 FB)
-  const summary =
-    `<g data-stage="4"><path d="M 44 ${sumY - 28} H 520" class="ln" stroke-width="1"/>` +
-    `<text x="282" y="${sumY}" text-anchor="middle" class="ink w7" font-size="13.5">bit 6 = 0 → a request      bit 6 = 1 → its positive reply</text>` +
-    `<text x="282" y="${sumY + 22}" text-anchor="middle" class="acc mono-t w7" font-size="12.5">22 → 62   ·   3E → 7E   ·   27 → 67</text></g>`;
-  // stage-gated headline: tracks THIS step's point, never the card conclusion (§1c)
-  const hd = (stg, txt) => `<g data-stage="${stg}" data-until="${stg}"><text x="282" y="30" text-anchor="middle" class="ink w7" font-size="15">${txt}</text></g>`;
-  const hd4 = `<g data-stage="4"><text x="282" y="30" text-anchor="middle" class="ink w7" font-size="15">One rule, every service</text></g>`;
-  const headline = hd(1, 'Make 10 into its own answer — for free') + hd(2, 'Bit 6 is never used — it is free') + hd(3, 'Set bit 6: 10 becomes 50') + hd4;
-  const body = headline + cells + eq + box10 + box50 + callout + summary;
-  wr('v2-c2-f1_plus-0x40-bitflip.svg', svg('564 226', body, 'The request byte 10 in bits has bit 6 unused; setting bit 6 makes the byte 50 — that fixed step is +0x40, and it works for every service.'));
+  const b6cx = cx(1) + cw / 2;
+  const callout = `<text x="${b6cx}" y="${y - 8}" text-anchor="middle" class="acc mono-t w7" font-size="11">set bit 6</text>`;
+  const hy = y + (h - BOX_H) / 2;
+  const eq = `<text x="${bx - 22}" y="${y + h / 2 + 7}" text-anchor="middle" class="mut mono-t w8" font-size="20">=</text>`;
+  const box50 = byteBox({ hex: '50', x: bx, y: hy, role: 'pos' }) +
+    `<text x="${bx + BOX_W / 2}" y="${hy + BOX_H + 16}" text-anchor="middle" class="acc mono-t w7" font-size="12">= 10 + 0x40</text>`;
+  const sumY = y + h + 52;
+  const summary = `<path d="M ${x0} ${sumY - 20} H ${bx + BOX_W}" class="ln" stroke-width="1"/>` +
+    `<text x="${midX}" y="${sumY}" text-anchor="middle" class="ink w7" font-size="12.5">the same +0x40 on every service</text>` +
+    `<text x="${midX}" y="${sumY + 20}" text-anchor="middle" class="acc mono-t w7" font-size="12">22 → 62   ·   3E → 7E   ·   85 → C5</text>`;
+  const body = `<text x="${midX}" y="28" text-anchor="middle" class="ink w7" font-size="14.5">Set bit 6: 10 becomes 50</text>` + cells + callout + eq + box50 + summary;
+  wr('v2-c2-f2_plus-0x40-bitflip.svg', svg(`${bx + BOX_W + x0} ${sumY + 32}`, body, 'Setting bit 6 of the request 10 makes 50 — that fixed step is +0x40, and it applies to every service: 22 to 62, 3E to 7E, 85 to C5.'));
 })();
 
-// ---------- V2-C2-F2 — a computed RULE vs a stored type FIELD (static contrast, step 5) ----------
+// ---------- V2-C2-F3 — a computed RULE vs a stored type FIELD (static contrast) ----------
 // The deeper why: +0x40 is derived from the request, not a byte the ECU stores. Contrast the two designs
 // so the consequences (free · unambiguous · can't lie) are visible, using ✓/✕ glyphs (§7d-2), not hue.
 (function c2f2() {
@@ -174,7 +199,7 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   const body =
     `<text x="280" y="30" text-anchor="middle" class="ink w7" font-size="15">Computed each time — not stored as a byte</text>` +
     rowA + rowB;
-  wr('v2-c2-f2_rule-not-field.svg', svg('586 244', body, 'A computed +0x40 rule derives the answer SID from the request for free and can never contradict it; a stored type field would cost one byte per message and could disagree with the SID.'));
+  wr('v2-c2-f3_rule-not-field.svg', svg('586 244', body, 'A computed +0x40 rule derives the answer SID from the request for free and can never contradict it; a stored type field would cost one byte per message and could disagree with the SID.'));
 })();
 
 // ---------- V2-C3-F1 — 10 03 → 50 03, echo (evolves, 4 steps) ----------
@@ -193,8 +218,8 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   const plus = `<g data-stage="2"><text x="${gSvcX + BOX_W / 2}" y="${y - 10}" text-anchor="middle" class="acc mono-t" font-size="11">+0x40</text></g>`;
   const echo = `<g data-stage="3"><text x="${gSubX + BOX_W / 2}" y="${y - 10}" text-anchor="middle" class="ecu mono-t" font-size="11">echoed</text></g>`;
   const caps =
-    `<text x="${sMid}" y="${y + BOX_H + 22}" text-anchor="middle" class="mut mono-t" font-size="11">you send</text>` +
-    `<g data-stage="3"><text x="${gMid}" y="${y + BOX_H + 22}" text-anchor="middle" class="mut mono-t" font-size="11">you get</text></g>`;
+    `<text x="${sMid}" y="${y + BOX_H + 22}" text-anchor="middle" class="mut mono-t" font-size="11">request</text>` +
+    `<g data-stage="3"><text x="${gMid}" y="${y + BOX_H + 22}" text-anchor="middle" class="mut mono-t" font-size="11">reply</text></g>`;
   const s4 = `<g data-stage="4"><text x="${gMid}" y="${y + BOX_H + 44}" text-anchor="middle" class="acc mono-t" font-size="10.5">top bit → 0 (a flag → V4)</text></g>`;
   const hd = (stg, txt) => `<g data-stage="${stg}" data-until="${stg}"><text x="${cx}" y="28" text-anchor="middle" class="ink w7" font-size="15">${txt}</text></g>`;
   const headline = hd(1, 'You send 10 03 — what comes back?') + hd(2, '10 returns as 50   (+0x40)') + hd(3, '03 comes straight back — echoed') + hd(4, 'The top bit comes back 0');

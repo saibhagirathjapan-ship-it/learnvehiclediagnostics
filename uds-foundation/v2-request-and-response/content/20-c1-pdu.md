@@ -13,14 +13,14 @@ short: { en: "A wrapped unit", jp: "包まれた1単位" }
 fig: figures/v2-c1-f1_pdu-layout.svg
 en: Here are the six bytes of the good reply from the start of this drill: `50 03 00 32 01 F4`.
 
-On the wire they are just a stream. An address label rides along (you met it in V1: who is talking to whom), but the bytes themselves have **no seams** — nothing marks:
+On the wire they are just a stream. An address label rides along — who is talking to whom — but the bytes themselves have **no seams** — nothing marks:
 
 - where "which service" stops,
 - where the data begins,
 - or how long the whole thing runs.
 jp: この章の冒頭で見た、うまくいった応答の6バイトです：`50 03 00 32 01 F4`。
 
-線の上では、ただの流れ。宛先ラベル（V1で出会った「誰と誰か」）は一緒に運ばれますが、バイト自体には**継ぎ目がありません** ― 何も示していません：
+線の上では、ただの流れ。宛先ラベル ― 誰と誰か ― は一緒に運ばれますが、バイト自体には**継ぎ目がありません** ― 何も示していません：
 
 - 「どのサービスか」がどこで終わるか、
 - データがどこから始まるか、

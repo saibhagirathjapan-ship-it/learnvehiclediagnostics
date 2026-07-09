@@ -200,6 +200,33 @@ contract (source of truth = those files):
   told to write. Give the substance directly. Provenance goes in a small footer, not a banner.
 - **JP alongside EN**, natural teaching register (not machine-literal).
 
+### 2b. Prose-&-term rigor — the per-sentence lint (LOCKED 2026-07-09, from user FB)
+
+**The recurring failure is careless prose that "reads fine" but is imprecise, term-drifting, or leans on
+the reader's memory. Run this lint on EVERY teaching sentence, in the reader's persona.** It is a
+MASTER-CHECKLIST item and a pressure-test gate ([[feedback-build-pressure-tests]]). The five checks:
+
+1. **Canonical term, every time.** Each concept has exactly ONE name, used verbatim throughout — from the
+   **[[GLOSSARY]]** (the EN/JP term contract). Never let a synonym drift in ("**service identifier / SID**",
+   never "service number / service code / the first-byte value"). A new term is defined on first use, then
+   reused unchanged. Lint: scan a finished card for two words that mean the same thing.
+2. **Precise, not vague.** No hand-wavy quantifier for a technical fact. "the low ones / some bits / a few"
+   → name them: **bits 0–5**, `10`–`3E`, "the top bit (bit 7)". If you reference a field/bit/range, say
+   *which*. Vague-but-true is still a defect.
+3. **Say the actual claim.** Each teaching sentence must state the real technical point, not a proxy for
+   it. Ask: *what exact fact am I asserting, and does the sentence say THAT?* ("it only uses the low ones"
+   fails — the real claim is "**bit 6 is 0 on every request**"). This is also the guard against a
+   **plausible-but-wrong** claim: double-derive the fact against the clause before it ships (the C2 catch —
+   "all SIDs are small" was false; `85` ControlDTCSetting has bit 7 set).
+4. **Right actor; no false agency.** Protocol actions belong to the **tester** (sends) and the **ECU**
+   (replies), not to the reader. Never attribute a past action *or past learning* to the reader
+   ("**you sent** `10 03`", "you saw in H2"). Present-tense operator "you" is allowed only where it reads
+   literally true; when in doubt name the real actor ("the request goes to the ECU", "the ECU echoes it").
+5. **Self-contained; prior modules are optional pointers, never load-bearing.** A card must teach without
+   the reader recalling a *named* earlier module. Do **not** open a beat with "In H2 …" / "as you learned
+   in V1 …". State the fact the card needs directly; a back-reference may ride as a `{{→}}` pointer, and the
+   concept must still land if the reader never followed it.
+
 ## 3. Structure & content position
 
 - Structure for scanning: bullets, **tables**, short labelled sub-sections. Prefer a small
@@ -508,6 +535,10 @@ animation frame) — don't judge from the source.
    — what we're exploring & why — and is the **return signposted**? are the hand-offs **clean**?) — then
    add / cut / emphasize / edit. Exit question, asked **in the learner persona**: *"am I understanding
    this card?"* (V2-C1 example: this gate caught "the bytes came back in V1" — V1 was byte-free.)
+   **Then run the §2b prose-&-term lint over every sentence** (canonical term · precise not vague · states
+   the REAL claim, double-derived · right actor / no false agency · self-contained) — the session-24 catch
+   (C2 "all SIDs are small" was false; C3 "in H2 you sent"). Term drift, a vague quantifier, a
+   plausible-but-unverified claim, false agency, or a load-bearing "in H2 …" is a **blocker**, not a nit.
 4. Reuse the **shared template + renderer** (do not restyle): author each concept as a **content MD
    file** (§1d) — a `## story` of `:::step`s (§1c stepped-story model) — and render to the self-contained
    HTML page; bilingual EN/JP, bundled fonts, `.dgm` diagrams, accent-highlight, notation (`$xx`,
@@ -586,6 +617,11 @@ Any ❌/uncertain = fix before shipping.
       Concept = T · Conclusion = recap+bridge) (§4)
 - [ ] One idea per card = **one teachable chunk** (= §8.7 Q1 at card scale) (§4, PEDAGOGY 2)
 - [ ] Very simple English; **jargon defined on first use**; key terms **bold → accent (ochre)** (§2)
+- [ ] **Prose-&-term lint (§2b), run per sentence in persona:** (1) canonical term every time (from
+      [[GLOSSARY]] — no synonym drift, e.g. always "service identifier / SID") · (2) precise not vague
+      (name the bits/range, not "the low ones") · (3) the sentence states the REAL claim, double-derived
+      against the clause (no plausible-but-wrong) · (4) right actor, no false agency ("**you sent**"→ the
+      tester sends) · (5) self-contained, no load-bearing "in H2 …" recall
 - [ ] **Bilingual EN + JP** both present; JP natural register, upright emphasis (§2)
 - [ ] **No meta-framing** in the body (provenance → the `:::reading` footer, see B) (§2)
 - [ ] **Bullets used consciously** — prose where ≤~3 lines suffice · **numbered** only for a real

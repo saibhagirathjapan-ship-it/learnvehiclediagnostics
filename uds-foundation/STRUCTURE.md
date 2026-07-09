@@ -93,7 +93,7 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 |---|---|---|---|
 | V2-B | Brief | inside the good reply | — |
 | V2-C1 | Concept | a PDU = SDU + PCI + params + length | story steps: naked bytes → A_PCI (first byte = key) → parameters → Length/A_PDU |
-| V2-C2 | Concept | positive response sets bit 6 of the SID (adds 0x40) | story steps: bit 6 free → set it (+0x40) → one rule every service → computed rule, not a stored field |
+| V2-C2 | Concept | positive response sets bit 6 of the SID (adds 0x40) | story steps: read a SID in binary → **bit 6 = 0 on every request** (10/22/3E/85) → **why bit 6 not bit 7** (bit 7 used by 85 ControlDTCSetting) → set bit 6 = +0x40, same every service → computed rule, not a stored field |
 | V2-C3 | Concept | sub-fn services echo the sub-fn value with top bit cleared | story steps: 10→50 (+0x40) → 03 echoed (why: exactly-which) → top bit forced 0 (→V4) → the byte split (flag + value) |
 | V2-K | Conclusion | recap + bridge to the negative case | — |
 
@@ -137,9 +137,10 @@ story steps** (`data-stage`/`data-until`); the headline text is itself stage-gat
 | V2-C1-F1 | naked bytes → A_PCI → parameters → Length = one A_PDU | C1 (evolves, 4 steps) | `v2-c1-f1_pdu-layout.svg` | stage-gated headline + seams build |
 | V2-C1-F2 | the recipe: A_PDU = A_SDU + A_PCI | C1 (retired leg fig — unused) | `v2-c1-f2_pdu-recipe.svg` | static |
 | V2-C1-F3 | the first byte routes everything (≠7F vs 7F) | C1 (retired leg fig — unused) | `v2-c1-f3_first-byte-key.svg` | static |
-| V2-C2-F1 | bit 6 free → set it (+0x40) → one rule, every service | C2 (evolves, steps 1–4) | `v2-c2-f1_plus-0x40-bitflip.svg` | bit toggles `0→1`, box `10`→`50`; stage-gated headline |
-| V2-C2-F2 | computed rule vs a stored type-field (the trade-off) | C2 (swap, step 5) | `v2-c2-f2_rule-not-field.svg` | static contrast (✓/✕) |
-| V2-C3-F1 | `10 03` → `50 03`: +0x40 on the SID, sub-fn echoed, top bit 0 | C3 (evolves, steps 1–4) | `v2-c3-f1_echoed-subfn.svg` | **horizontal** send→get (fills the wide box); shared `50`/`03` sprites; stage-gated headline |
+| V2-C2-F1 | SIDs in binary — bit 6 = 0 on all (10/22/3E/85), bit 7 used by 85 | C2 (evolves, steps 1–3) | `v2-c2-f1_sid-bit6-free.svg` | rows reveal; bit-6 column band; red outline on 85's set bit 7 |
+| V2-C2-F2 | set bit 6: `10`→`50` = +0x40, same every service (`85`→`C5`) | C2 (step 4) | `v2-c2-f2_plus-0x40-bitflip.svg` | static; bit 6 highlighted set; `50` pos sprite |
+| V2-C2-F3 | computed rule vs a stored type-field (the trade-off) | C2 (steps 5–6) | `v2-c2-f3_rule-not-field.svg` | static contrast (✓/✕) |
+| V2-C3-F1 | `10 03` → `50 03`: +0x40 on the SID, sub-fn echoed, top bit 0 | C3 (evolves, steps 1–4) | `v2-c3-f1_echoed-subfn.svg` | **horizontal** request→reply (fills the wide box); shared `50`/`03` sprites; stage-gated headline |
 | V2-C3-F2 | one byte, two jobs (top-bit flag · value) | C3 (swap, step 5) | `v2-c3-f2_subfn-byte.svg` | static split |
 
 *(Object constancy holds: the `50`/`03` sprites are pixel-identical across C1/C2/C3. C1's F2/F3 were the old

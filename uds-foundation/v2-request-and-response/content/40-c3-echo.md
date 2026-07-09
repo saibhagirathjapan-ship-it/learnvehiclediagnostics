@@ -11,22 +11,22 @@ short: { en: "The echo", jp: "エコー" }
 
 ## story
 fig: figures/v2-c3-f1_echoed-subfn.svg
-en: In H2 you sent `10 03` — service `10`, and a second byte `03` that picks *which* session (Extended). That second byte has a name: the **sub-function**.
+en: A request can carry a second byte. Take a session-change request — `10 03`: the **service identifier** `10`, then `03` to select *which* session (here, Extended). That second byte has a name: the **sub-function**.
 
-Two bytes went out. What comes back?
-jp: H2 では `10 03` を送りました ― サービス `10` と、*どの*セッションかを選ぶ2バイト目 `03`（拡張）。この2バイト目には名前があります ― **サブファンクション**です。
+The request goes to the ECU. What comes back?
+jp: リクエストは2バイト目を運べます。セッション変更のリクエストを例に ― `10 03`：**サービス識別子** `10`、続いて*どの*セッションかを選ぶ `03`（ここでは拡張）。この2バイト目には名前があります ― **サブファンクション**です。
 
-2バイトが出て行きました。何が返るでしょう？
+リクエストが ECU へ届きます。何が返るでしょう？
 --
-en: The service byte you already know: `10` comes back as `50` — that is **+0x40**, the move from the last card.
-jp: サービスバイトはもう分かります：`10` は `50` になって返ります ― これは前のカードの一手、**+0x40**。
+en: The service identifier is the straightforward half: `10` comes back as `50` — that is **+0x40**, the rule from the last card.
+jp: サービス識別子は分かりやすい方です：`10` は `50` になって返ります ― 前のカードの規則、**+0x40** です。
 --
-en: And the sub-function? The ECU hands your `03` **straight back, unchanged** — an **echo**.
+en: And the sub-function? The ECU hands the request's `03` **straight back, unchanged** — an **echo**.
 
 And that is the whole point of it: a bare `50` would only say "some session change worked"; `50 03` says *exactly which one*. You asked for session `03`, and `50 03` answers "done — you are in session `03`."
 
 The tester never has to assume.
-jp: では、サブファンクションは？　ECUはあなたの `03` を**そのまま、変えずに返します** ― **エコー**です。
+jp: では、サブファンクションは？　ECUはリクエストの `03` を**そのまま、変えずに返します** ― **エコー**です。
 
 そしてこれこそが要点：`50` だけなら「何らかのセッション変更が成功した」としか言えませんが、`50 03` は*まさにどれか*を告げます。セッション `03` を頼み、`50 03` が「完了 ― 今あなたはセッション `03` にいる」と答えます。
 

@@ -132,22 +132,43 @@ function renderRecall(raw){
     `<details class="rc-a"><summary><span class="en">Show answer</span><span class="jp">答えを見る</span></summary>`+
     `<div class="rc-body">${a}</div></details></div>`;
 }
+// :::elaborate — a divergent, learner-GENERATED retrieval beat (§4, piloted in V2). Same shape as
+// :::recall (q_en/q_jp prompt · a_en/a_jp a MODEL answer in <details>) but framed "in your own words".
+function renderElaborate(raw){
+  const o=kv(raw);
+  const q=(o.q_en?`<span class="en">${inline(o.q_en)}</span>`:'')+(o.q_jp?`<span class="jp">${inline(o.q_jp)}</span>`:'');
+  const a=(o.a_en?`<span class="en">${inline(o.a_en)}</span>`:'')+(o.a_jp?`<span class="jp">${inline(o.a_jp)}</span>`:'');
+  return `<div class="recall elaborate"><div class="rc-q"><span class="lbl">In your own words · 自分の言葉で</span>${q}</div>`+
+    `<details class="rc-a"><summary><span class="en">Show a model answer</span><span class="jp">模範解答を見る</span></summary>`+
+    `<div class="rc-body">${a}</div></details></div>`;
+}
 const namespaceSvg = (svg,uid)=> svg.replace(/<\?xml[\s\S]*?\?>/,'').trim()
   .replace(/id="([^"]+)"/g,(m,id)=>`id="${uid}_${id}"`)
   .replace(/url\(#([^)]+)\)/g,(m,id)=>`url(#${uid}_${id})`);
+// A figure marked `build-order` (§7d-5) is a STAGED reveal: the SVG tags elements with
+// data-stage="1..N"; the controller (SCRIPT below) hides future stages so the reader steps
+// through, click-to-advance. Raw SVG (no JS) shows all stages, so it degrades gracefully.
+function revealCtl(){
+  return `<div class="rv-ctl"><button class="rv-btn" type="button">`+
+    `<span class="rv-lead"><span class="en">Build it up</span><span class="jp">組み立てる</span></span>`+
+    `<span class="rv-ar" aria-hidden="true">▸</span></button><span class="rv-lbl"></span>`+
+    `<span class="rv-hint"><span class="en">click to advance</span><span class="jp">クリックで進む</span></span></div>`;
+}
 function renderFigure(args,raw,assetsDir){
   const src=(args.match(/src=(\S+)/)||[])[1];
+  const staged=/\bbuild-order\b/.test(args);
   const o=kv(raw); const uid='u'+(uidc++);
   const svg = src ? namespaceSvg(fs.readFileSync(path.join(assetsDir,src),'utf8'),uid) : '';
   let cap='';
   if(o.en||o.jp) cap=`<figcaption>${o.en?`<span class="en">${inline(o.en)}</span>`:''}${o.jp?`<span class="jp">${inline(o.jp)}</span>`:''}</figcaption>`;
-  return `<div class="fig">${svg}${cap}</div>`;
+  return `<div class="fig${staged?' staged':''}">${svg}${staged?revealCtl():''}${cap}</div>`;
 }
 const renderBlocks = (blocks,assetsDir,lead)=> blocks.map(b=>{
   if(b.type==='en'||b.type==='jp') return renderProse(b.raw,b.type,lead);
   if(b.type==='bytes') return renderBytes(b.raw);
   if(b.type==='key'||b.type==='warn') return renderCallout(b.type,b.raw);
   if(b.type==='recall') return renderRecall(b.raw);
+  if(b.type==='elaborate') return renderElaborate(b.raw);
   if(b.type==='reading') return renderReading(b.raw);
   if(b.type==='figure') return renderFigure(b.args,b.raw,assetsDir);
   return '';
@@ -170,7 +191,7 @@ function renderConcept(meta,sections,assetsDir){
   if(meta.illustration){
     let cap='';
     if(meta.caption) cap=(meta.caption.en?`en: ${meta.caption.en}\n`:'')+(meta.caption.jp?`jp: ${meta.caption.jp}`:'');
-    bar+=renderFigure('src='+meta.illustration,cap,assetsDir);
+    bar+=renderFigure('src='+meta.illustration+(meta.reveal?' '+meta.reveal:''),cap,assetsDir);
   }
   bar+=`</div>`;
   let stem='';
@@ -314,6 +335,31 @@ var start=(location.hash||'').slice(1),si=0,deep=!!start;
 if(start)for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===start){si=k;break}}
 show(si,deep);
 if(!deep)window.scrollTo(0,0);
+
+// STAGED FIGURES — click-to-advance reveal (§7d-5). Raw SVG shows all stages; here we hide the
+// future ones and step through. Reduced-motion → leave everything shown (the end frame must teach).
+var mqReduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+[].forEach.call(document.querySelectorAll('.fig.staged'),function(fig){
+  var els=[].slice.call(fig.querySelectorAll('[data-stage]')),max=0;
+  els.forEach(function(el){max=Math.max(max,+el.getAttribute('data-stage')||0)});
+  var ctl=fig.querySelector('.rv-ctl'),btn=fig.querySelector('.rv-btn'),lbl=fig.querySelector('.rv-lbl');
+  if(mqReduce||max<2){fig.classList.add('rv-done');if(ctl)ctl.style.display='none';return;}
+  fig.classList.add('can-step');
+  var lead=btn&&btn.querySelector('.rv-lead'),ar=btn&&btn.querySelector('.rv-ar'),shown=1;
+  function paint(){
+    els.forEach(function(el){el.classList.toggle('rv-hide',(+el.getAttribute('data-stage'))>shown)});
+    if(lbl)lbl.textContent=shown+' / '+max;
+    var done=shown>=max;fig.classList.toggle('rv-done',done);
+    if(ar)ar.textContent=done?'↺':'▸';
+    if(lead){var e=lead.querySelector('.en'),j=lead.querySelector('.jp');
+      if(e)e.textContent=done?'Replay':(shown===1?'Build it up':'Next');
+      if(j)j.textContent=done?'もう一度':(shown===1?'組み立てる':'次へ');}
+  }
+  function adv(){shown=shown>=max?1:shown+1;paint();}
+  paint();
+  if(btn)btn.addEventListener('click',function(e){e.preventDefault();adv();});
+  var svg=fig.querySelector('svg');if(svg)svg.addEventListener('click',adv);
+});
 </script>`;
 function page(mod,cards,stops){
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">`+

@@ -16,11 +16,13 @@ html,body{margin:0}
 .stage[data-theme="light"]{--bg:#f4f5f6;--card:#ffffff;--ink:#23262c;--ink-soft:#565b63;--ink-faint:#7a7f88;--line:#dde0e4;--line-soft:#eceef0;
   --accent:#96650f;--accent-soft:#ecd9ad;--ok:#4f6a24;--neg:#a5352a;--warn:#a5521a;--warn-bg:#f6e7cf;--warn-ln:#ddb57c;
   --chip:#f9f3e1;--code-bg:#eef0f2;--on-accent:#ffffff;--chrome:#23262c;--on-chrome:#f3f4f5;--shadow:0 1px 2px rgba(20,22,26,.08);
-  --dgm-plate:#f7f8f9;--dgm-ink:#23262c;--dgm-muted:#6a6f77;--dgm-line:#b3b8bf;--dgm-fill:#e7e9ec}
+  --dgm-plate:#f7f8f9;--dgm-ink:#23262c;--dgm-muted:#6a6f77;--dgm-line:#b3b8bf;--dgm-fill:#e7e9ec;
+  --actor-tester:#96650f;--actor-ecu:#2f6d86}   /* §7d visual cast: tester=ochre object · ECU=steel-blue (distinct from olive --ok) */
 .stage[data-theme="dark"]{--bg:#14161a;--card:#1c1f24;--ink:#e9ebee;--ink-soft:#9aa0a8;--ink-faint:#6f757d;--line:#2c3037;--line-soft:#1f2228;
   --accent:#dea945;--accent-soft:#3a2c12;--ok:#a7bd61;--neg:#e68173;--warn:#e59240;--warn-bg:#33280f;--warn-ln:#6b5320;
   --chip:#38300f;--code-bg:#15171c;--on-accent:#1b160e;--chrome:#262a31;--on-chrome:#e9ebee;--shadow:0 1px 2px rgba(0,0,0,.45);
-  --dgm-plate:#15171c;--dgm-ink:#e9ebee;--dgm-muted:#8b929b;--dgm-line:#3a3f47;--dgm-fill:#1f232a}
+  --dgm-plate:#15171c;--dgm-ink:#e9ebee;--dgm-muted:#8b929b;--dgm-line:#3a3f47;--dgm-fill:#1f232a;
+  --actor-tester:#dea945;--actor-ecu:#6fb2cf}
 .wrap{max-width:840px;margin:0 auto}
 .stage[data-lang="en"] .jp{display:none}
 .stage[data-lang="jp"] .en{display:none}
@@ -90,6 +92,11 @@ ul.blist.jp li{font-family:var(--f-jp);color:var(--ink-soft);font-size:15px;line
 .dgm .red{fill:var(--neg)} .dgm .red-s{stroke:var(--neg)} .dgm .plate{fill:var(--card)} .dgm .lnf{fill:var(--dgm-line)}
 .dgm text{font-family:var(--f-body)} .dgm .mono-t{font-family:var(--f-mono);font-weight:600}
 .dgm .amb{fill:var(--warn)} .dgm .amb-s{stroke:var(--warn)} .dgm .w7{font-weight:700} .dgm .w8{font-weight:800}
+/* §7d visual-cast lexicon: one object = one class/token. Actors carry their OWN token (never the
+   semantic hues). Positive/negative is signalled by a ✓/✕ glyph + stroke, NOT by re-using a hue. */
+.dgm .tester{fill:var(--actor-tester)} .dgm .tester-s{stroke:var(--actor-tester)}
+.dgm .ecu{fill:var(--actor-ecu)} .dgm .ecu-s{stroke:var(--actor-ecu)}
+.dgm .tick{stroke:var(--ok);fill:none} .dgm .cross{stroke:var(--neg);fill:none}   /* pos ✓ · neg ✕ (glyph, not hue) */
 figcaption{margin-top:9px;font-size:12px;color:var(--ink-soft);text-align:center;font-family:var(--f-body)}
 
 /* ===== vertical stem = detail legs ===== */
@@ -434,4 +441,38 @@ td .mono{color:var(--accent);font-weight:600}
   .hbar{grid-template-columns:1fr}
   .vstem{width:100%}
   .fhero h1{font-size:26px}
+}
+
+/* ============================================================
+   §7d — STAGED FIGURE REVEAL + MOTION GRAMMAR + :::elaborate
+   Adopted 2026-07-09 (session 20). Progressive enhancement: a raw .svg shows ALL stages
+   (teaches with no JS); the reveal controller (render.js) hides future stages so a reader
+   steps through, click-to-advance. Reduced-motion → all stages shown, transitions off.
+   ============================================================ */
+/* stage elements fade/settle in; the frame (unlabelled elements) is always visible */
+.fig.staged svg [data-stage]{transition:opacity .5s ease, transform .5s ease}
+.fig.staged svg [data-stage].rv-hide{opacity:0}
+.fig.staged.can-step svg{cursor:pointer}
+/* motion-grammar helpers: a bit toggling / a piece settling = a computed transform */
+.dgm .mg-flip{transition:fill .55s ease, stroke .55s ease}
+.dgm .mg-settle{transition:opacity .5s ease, transform .5s ease}
+/* the reveal control */
+.rv-ctl{display:flex;align-items:center;justify-content:center;gap:13px;margin-top:13px;flex-wrap:wrap}
+.rv-btn{font-family:var(--f-mono);font-size:12px;font-weight:700;letter-spacing:.03em;color:var(--on-accent);background:var(--accent);border:1px solid var(--accent);padding:7px 15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.rv-btn:hover{filter:brightness(1.07)}
+.rv-btn .rv-ar{font-size:13px;line-height:1}
+.fig.staged.rv-done .rv-btn{background:var(--card);color:var(--accent)}
+.rv-lbl{font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--ink-soft);letter-spacing:.05em;min-width:44px;text-align:center}
+.rv-hint{font-family:var(--f-mono);font-size:10px;color:var(--ink-faint);letter-spacing:.04em}
+.fig.staged.rv-done .rv-hint{visibility:hidden}
+
+/* :::elaborate — a divergent, learner-generated retrieval beat (green/olive vs recall's ochre) */
+.recall.elaborate{border-color:var(--ok);border-left-color:var(--ok)}
+.recall.elaborate .rc-q .lbl{color:var(--ok)}
+.recall.elaborate .rc-q .lbl::before{content:"✎";border-color:var(--ok);color:var(--ok);font-weight:700}
+.recall.elaborate .rc-a>summary{background:var(--ok);border-color:var(--ok)}
+
+@media (prefers-reduced-motion: reduce){
+  .dgm *{animation-duration:.001s!important;animation-iteration-count:1!important;transition:none!important}
+  .fig.staged svg [data-stage].rv-hide{opacity:1!important}   /* freeze at the end frame — everything shown */
 }

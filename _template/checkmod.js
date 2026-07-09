@@ -61,6 +61,20 @@ const SHOT = path.join(dir, 'assets', '_check'); fs.mkdirSync(SHOT, { recursive:
   N(!iso.enVisibleOnJp, 'JP mode hides EN');
   N(errs.length === 0, 'no console errors' + (errs.length ? ': ' + JSON.stringify(errs) : ''));
 
+  // §7d-7 cast lint: an actor box must carry its OWN token, never a semantic hue. Fail if any
+  // figure element combines an actor class (ecu/tester) with grn/red — the ECU-as-olive collision.
+  const figDir = path.join(dir, 'assets', 'figures');
+  const castViol = [];
+  if (fs.existsSync(figDir)) {
+    for (const f of fs.readdirSync(figDir).filter(x => x.endsWith('.svg'))) {
+      const svg = fs.readFileSync(path.join(figDir, f), 'utf8');
+      for (const c of (svg.match(/class="[^"]*"/g) || [])) {
+        if (/\b(ecu|tester)\b/.test(c) && /\b(grn|grn-s|red|red-s)\b/.test(c)) castViol.push(f + ' → ' + c);
+      }
+    }
+  }
+  N(castViol.length === 0, '§7d cast lint: no actor painted a semantic hue' + (castViol.length ? ': ' + JSON.stringify(castViol.slice(0, 5)) : ''));
+
   // screenshots of named cards (navigate the pager by clicking the strip link), light + dark
   for (const id of shots) {
     for (const theme of ['light', 'dark']) {

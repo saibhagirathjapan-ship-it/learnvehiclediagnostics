@@ -1,0 +1,10 @@
+id: v2-request-and-response
+title: { en: "Request & positive response, byte by byte", jp: "リクエストと肯定応答 ― バイト単位で" }
+standard: "ISO 14229 · Foundation V2"
+tagline:
+  en: "Open up a good reply and read it: how a message is wrapped, why the answer's first byte is the request's plus 0x40, and how a sub-function comes back echoed."
+  jp: "うまくいった応答を開いて読む：メッセージがどう包まれるか、なぜ答えの先頭バイトはリクエスト+0x40なのか、サブファンクションはどう反射されて返るのか。"
+arc: { pos: 5, total: 12 }
+nav:
+  prev: { id: "v1-service-model", label: { en: "The service model", jp: "サービスモデル" } }
+  next: { id: "v3-negative-responses", label: { en: "Negative responses & the NRC catalog", jp: "否定応答とNRCカタログ" } }

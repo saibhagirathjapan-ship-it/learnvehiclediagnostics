@@ -1,4 +1,489 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Request & positive response — coming soon</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../_template/blueprint.css"><style>.stub{max-width:640px;margin:0 auto;padding:70px 20px 90px;text-align:center}.stub .tag{display:inline-block;font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);background:var(--chip);padding:5px 12px;margin-bottom:20px}.stub h1{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.15;margin:0 0 6px;color:var(--ink)}.stub .jp{font-family:var(--f-jp);font-size:17px;color:var(--ink-soft);font-weight:600;margin-bottom:22px}.stub p{color:var(--ink-soft);font-size:15.5px;line-height:1.6;margin:0 auto 28px;max-width:52ch}.stub a.back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--on-accent);background:var(--accent);padding:10px 18px}.stub a.back:hover{filter:brightness(1.07)}</style></head><body><div class="stage" data-theme="light" data-lang="en"><header class="topbar"><div class="topbar-in"><a class="brand" href="../../index.html" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a><div class="tb-spacer"></div><div class="tb-ctl"><button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg><span class="tb-lc">EN</span></button><button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme"><svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg></button></div></div></header><div class="stub"><span class="tag">Coming soon · 準備中</span><h1>Request & positive response</h1><div class="jp">リクエストと肯定応答</div><p>This drill isn't written yet. It's part of the course roadmap and will be built out card by card — check back soon.</p><a class="back" href="../index.html">← Back to the Foundation map</a></div></div><script>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Request &amp; positive response, byte by byte — ISO 14229 · Foundation V2</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"><style>/* ============================================================
+   BLUEPRINT — canonical design system for the UDS→SOVD course
+   LOCKED 2026-07-04. Do not restyle per module (see CONVENTIONS §1b–1c).
+   Theme via .stage[data-theme=light|dark]; language via .stage[data-lang].
+   Fonts: Space Grotesk (display) · IBM Plex Sans (body) · IBM Plex Mono
+   (mono) · Noto Sans JP (jp). Bundle as @font-face at module build.
+   ============================================================ */
+*{box-sizing:border-box}
+html,body{margin:0}
+
+.stage{--f-display:"Space Grotesk";--f-body:"IBM Plex Sans";--f-mono:"IBM Plex Mono";--f-jp:"Noto Sans JP";--dt:-.3px;
+  min-height:100vh;background:var(--bg);padding:34px 20px 90px;font-family:var(--f-body)}
+/* Palette "Ochre & Olive" (LOCKED 2026-07-05): warm cream/charcoal neutrals · ochre = key accent ·
+   olive = positive/OK · brick-red = negative/danger · burnt-amber = warn · grey = neutral/disabled.
+   Semantic hues (red/green/grey) OVERRIDE thematic use. Body text meets WCAG AA (≥4.5:1). */
+.stage[data-theme="light"]{--bg:#f4f5f6;--card:#ffffff;--ink:#23262c;--ink-soft:#565b63;--ink-faint:#7a7f88;--line:#dde0e4;--line-soft:#eceef0;
+  --accent:#96650f;--accent-soft:#ecd9ad;--ok:#4f6a24;--neg:#a5352a;--warn:#a5521a;--warn-bg:#f6e7cf;--warn-ln:#ddb57c;
+  --chip:#f9f3e1;--code-bg:#eef0f2;--on-accent:#ffffff;--chrome:#23262c;--on-chrome:#f3f4f5;--shadow:0 1px 2px rgba(20,22,26,.08);
+  --dgm-plate:#f7f8f9;--dgm-ink:#23262c;--dgm-muted:#6a6f77;--dgm-line:#b3b8bf;--dgm-fill:#e7e9ec;
+  --actor-tester:#96650f;--actor-ecu:#2f6d86}   /* §7d visual cast: tester=ochre object · ECU=steel-blue (distinct from olive --ok) */
+.stage[data-theme="dark"]{--bg:#14161a;--card:#1c1f24;--ink:#e9ebee;--ink-soft:#9aa0a8;--ink-faint:#6f757d;--line:#2c3037;--line-soft:#1f2228;
+  --accent:#dea945;--accent-soft:#3a2c12;--ok:#a7bd61;--neg:#e68173;--warn:#e59240;--warn-bg:#33280f;--warn-ln:#6b5320;
+  --chip:#38300f;--code-bg:#15171c;--on-accent:#1b160e;--chrome:#262a31;--on-chrome:#e9ebee;--shadow:0 1px 2px rgba(0,0,0,.45);
+  --dgm-plate:#15171c;--dgm-ink:#e9ebee;--dgm-muted:#8b929b;--dgm-line:#3a3f47;--dgm-fill:#1f232a;
+  --actor-tester:#dea945;--actor-ecu:#6fb2cf}
+.wrap{max-width:840px;margin:0 auto}
+.stage[data-lang="en"] .jp{display:none}
+.stage[data-lang="jp"] .en{display:none}
+.mono{font-family:var(--f-mono)}
+strong{color:var(--accent);font-weight:600}
+.callout.warn strong{color:var(--warn)}
+em{font-style:italic;color:var(--ink-soft)}
+.jp em{font-style:normal;color:var(--ink)}   /* Japanese doesn't slant; give upright emphasis instead */
+/* forward-pointer pill ({{→ V9 · …}}) — spiral signpost to where a topic is drilled */
+.fwd{font-family:var(--f-mono);font-size:.8em;font-weight:600;color:var(--accent);background:var(--chip);padding:1px 6px;white-space:nowrap;letter-spacing:.01em;text-decoration:none;border:1px solid transparent}
+a.fwd{cursor:pointer;transition:background .13s,color .13s,border-color .13s}
+a.fwd:hover{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+.fwd-go{margin-left:3px;font-size:.9em;opacity:.7}
+
+/* ===== concept card (schematic identity) ===== */
+.card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);
+  box-shadow:0 2px 10px rgba(20,22,26,.06);padding:0;overflow:hidden;margin:0 0 26px;scroll-margin-top:88px}
+.stage[data-theme="dark"] .card{box-shadow:0 2px 12px rgba(0,0,0,.4)}
+.card-in{padding:22px 24px}
+.brief,.concl,.divider{scroll-margin-top:88px}
+
+/* title-block header */
+.tblock{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:0 0 16px;background:var(--card)}
+.tf{padding:8px 12px;border-right:1px solid var(--line-soft);display:flex;flex-direction:column;justify-content:center}
+.tf:last-child{border-right:0}
+.tf.idx{font-family:var(--f-mono);font-weight:600;font-size:13px;color:var(--accent);background:var(--code-bg);justify-content:center}
+.tf.idx small{color:var(--ink-faint);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.tf.grow{flex:1;min-width:0}
+.tf.grow h3{margin:0;font-family:var(--f-display);font-weight:600;font-size:19px;line-height:1.2;color:var(--ink);letter-spacing:var(--dt)}
+.tf.grow .jp{margin-top:2px;font-family:var(--f-jp);font-size:13.5px;color:var(--ink-soft);font-weight:500}
+.tf.sid{justify-content:center}
+.tf.sid .chip{font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--on-accent);background:var(--ink);padding:5px 9px;border-radius:6px}
+.tf.tgcell{justify-content:center;align-items:center;background:var(--code-bg)}
+
+/* T-glyph */
+.tg{width:34px;height:32px;display:block}
+.tg .bar{fill:var(--dgm-line)} .tg .seg{fill:var(--dgm-line)}
+.tg.barlit .bar{fill:var(--accent)}
+.tg.s1 .g1{fill:var(--accent)} .tg.s2 .g2{fill:var(--accent)} .tg.s3 .g3{fill:var(--accent)} .tg.s4 .g4{fill:var(--accent)}
+.tgmini{width:22px;height:21px;flex:none}
+
+/* high-level bar */
+.barzone .kicker{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.barzone .kicker::after{content:"";height:1px;flex:1;background:var(--line)}
+.card p{margin:0 0 11px;font-size:16px;line-height:1.58;color:var(--ink)}
+.card p.jp{font-family:var(--f-jp);color:var(--ink-soft);line-height:1.82;font-size:15px}
+.card p.lead{font-size:16.5px}
+
+/* bullet list with SEMANTIC markers — normal · {key} · {warn} (conscious icon choice) */
+ul.blist{margin:2px 0 12px;padding:0;list-style:none}
+ul.blist li{position:relative;padding:5px 0 5px 22px;font-size:16px;line-height:1.5;color:var(--ink)}
+ul.blist li::before{content:"";position:absolute;left:2px;top:13px;width:9px;height:2px;background:var(--dgm-line)}          /* normal: understated bar */
+ul.blist li.bl-key{font-weight:500}
+ul.blist li.bl-key::before{left:1px;top:10px;width:7px;height:7px;background:var(--accent);transform:rotate(45deg)}        /* key point: accent diamond */
+ul.blist li.bl-warn::before{left:0;top:8px;width:0;height:2px;background:none;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:7px solid var(--warn)}  /* caution: amber triangle */
+ul.blist.jp li{font-family:var(--f-jp);color:var(--ink-soft);font-size:15px;line-height:1.75}
+.brief ul.blist li,.concl ul.blist li{font-size:15.5px}
+/* numbered steps (ordered list) also carry the lang class */
+.steps.jp li{font-family:var(--f-jp);color:var(--ink-soft)}
+/* concept-card footer (e.g. Further reading at the bottom of a T-card) */
+.card-footer{margin-top:15px}
+
+.fig{margin:15px 0 2px;border:1px solid var(--line);border-radius:8px;background:var(--dgm-plate);padding:15px}
+.fig svg{display:block;width:100%;height:auto}
+.dgm .ink{fill:var(--dgm-ink)} .dgm .mut{fill:var(--dgm-muted)} .dgm .acc{fill:var(--accent)} .dgm .acc-s{stroke:var(--accent)}
+.dgm .grn{fill:var(--ok)} .dgm .grn-s{stroke:var(--ok)} .dgm .ln{stroke:var(--dgm-line)} .dgm .fl{fill:var(--dgm-fill)} .dgm .fl-s{stroke:var(--dgm-fill)}
+.dgm .red{fill:var(--neg)} .dgm .red-s{stroke:var(--neg)} .dgm .plate{fill:var(--card)} .dgm .lnf{fill:var(--dgm-line)}
+.dgm text{font-family:var(--f-body)} .dgm .mono-t{font-family:var(--f-mono);font-weight:600}
+.dgm .amb{fill:var(--warn)} .dgm .amb-s{stroke:var(--warn)} .dgm .w7{font-weight:700} .dgm .w8{font-weight:800}
+/* §7d visual-cast lexicon: one object = one class/token. Actors carry their OWN token (never the
+   semantic hues). Positive/negative is signalled by a ✓/✕ glyph + stroke, NOT by re-using a hue. */
+.dgm .tester{fill:var(--actor-tester)} .dgm .tester-s{stroke:var(--actor-tester)}
+.dgm .ecu{fill:var(--actor-ecu)} .dgm .ecu-s{stroke:var(--actor-ecu)}
+.dgm .tick{stroke:var(--ok);fill:none} .dgm .cross{stroke:var(--neg);fill:none}   /* pos ✓ · neg ✕ (glyph, not hue) */
+figcaption{margin-top:9px;font-size:12px;color:var(--ink-soft);text-align:center;font-family:var(--f-body)}
+
+/* ===== vertical stem = detail legs ===== */
+.stem{margin:28px 0 0;border-top:2px solid var(--accent-soft);padding-top:16px}
+/* "GO DEEPER" announces itself as a tinted accent banner, not a faint mono line */
+.stem-h{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin:0 0 14px;display:flex;align-items:center;gap:10px;background:var(--chip);border-left:3px solid var(--accent);padding:9px 13px}
+.stem-h .stem-n{font-weight:700;letter-spacing:.02em;text-transform:none;font-size:11px;background:var(--accent);color:var(--on-accent);padding:2px 8px}
+.stem-h .stem-hint{margin-left:auto;font-weight:500;letter-spacing:.01em;text-transform:none;font-size:11px;color:var(--ink-soft);font-family:var(--f-body)}
+.legs{border-left:3px solid var(--accent)}
+.leg{border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--card);margin:0 0 10px 18px;position:relative;overflow:hidden}
+.leg::before{content:"";position:absolute;left:-18px;top:25px;width:18px;height:2px;background:var(--accent)}
+.leg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 15px;background:var(--dgm-plate);transition:background .13s}
+.leg>summary::-webkit-details-marker{display:none}
+.leg>summary:hover{background:var(--chip)}
+.leg .lg-txt{flex:1;min-width:0}
+.lg-txt .en,.lg-txt .jp{display:block}
+.leg .lg-en{font-family:var(--f-display);font-weight:600;font-size:15px;color:var(--ink);letter-spacing:var(--dt)}
+.leg .lg-jp{font-family:var(--f-jp);font-size:12.5px;color:var(--ink-soft);margin-top:1px}
+/* the +/− cue is a SOLID accent button — the clearest "this row opens" signal */
+.leg .lg-cue{flex:none;width:28px;height:28px;background:var(--accent);color:var(--on-accent);border:0;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:20px;line-height:1;transition:filter .13s}
+.leg .lg-cue::before{content:"+"}
+.leg[open] .lg-cue::before{content:"\2212"}
+.leg>summary:hover .lg-cue{filter:brightness(1.12)}
+.leg[open]>summary{border-bottom:1px solid var(--line-soft);background:var(--code-bg)}
+.leg[open] .tgmini .bar{fill:var(--dgm-line)}
+.lg-body{padding:15px 16px 16px}
+.lg-body p{font-size:15px;margin:0 0 10px}
+
+/* cards nested inside a deep leg (a leg may hold up to ~4) */
+.subcard{border:1px solid var(--line-soft);border-radius:7px;padding:13px 15px;margin:12px 0 0;background:var(--dgm-plate)}
+.subcard:first-child{margin-top:2px}
+.subcard .sc-h{display:flex;align-items:center;gap:8px;margin:0 0 7px}
+.subcard .sc-n{font-family:var(--f-mono);font-size:10.5px;font-weight:600;color:var(--accent);background:var(--chip);border-radius:4px;padding:2px 6px;flex:none}
+.subcard .sc-t{font-family:var(--f-display);font-weight:600;font-size:14px;color:var(--ink);letter-spacing:var(--dt)}
+.subcard .sc-jp{font-family:var(--f-jp);font-size:12px;color:var(--ink-soft)}
+.subcard p{margin:0 0 8px}
+
+/* byte-boxes */
+.bytes{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}
+.byte{flex:0 0 auto;min-width:54px;text-align:center;border:1.5px solid var(--line);border-radius:7px;overflow:hidden;background:var(--card)}
+.byte .hex{font-family:var(--f-mono);font-weight:600;font-size:17px;padding:7px 9px;color:var(--ink);background:var(--code-bg)}
+.byte .cap{font-size:10px;padding:4px 5px;color:var(--ink-soft);border-top:1px solid var(--line-soft)}
+.byte.pos .hex{background:var(--ok);color:var(--on-accent)} .byte.sub .hex{background:var(--chip);color:var(--accent)} .byte.neg .hex{background:var(--neg);color:var(--on-accent)} .byte.sid .hex{background:var(--accent);color:var(--on-accent)}
+
+/* numbered steps */
+.steps{list-style:none;counter-reset:s;padding:0;margin:6px 0 4px}
+.steps li{counter-increment:s;position:relative;padding:6px 0 6px 34px;font-size:14.5px;color:var(--ink);border-bottom:1px dashed var(--line-soft)}
+.steps li:last-child{border-bottom:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:6px;width:22px;height:22px;border-radius:5px;background:var(--chip);color:var(--accent);
+  font-family:var(--f-mono);font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center}
+
+/* tables */
+table{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0 2px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink)}
+th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;border-bottom:1.5px solid var(--line);font-family:var(--f-mono)}
+td .mono{color:var(--accent);font-weight:600}
+
+/* callouts */
+.callout{border-radius:8px;padding:12px 14px;margin:12px 0 0;font-size:14px;border:1px solid transparent;line-height:1.5}
+.callout .lbl{font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px;font-family:var(--f-mono)}
+.callout.key{background:var(--chip);border-color:color-mix(in srgb,var(--accent) 34%,transparent)} .callout.key .lbl{color:var(--accent)}
+.callout.warn{background:var(--warn-bg);border-color:var(--warn-ln)} .callout.warn .lbl{color:var(--warn)}
+.callout .en,.callout .jp{display:block} .callout .jp{margin-top:5px}
+.fig figcaption .en,.fig figcaption .jp{display:block}
+
+/* retrieval-practice beat (:::recall) — question shown, answer hidden */
+.recall{border:1.5px solid var(--accent);border-left-width:5px;background:var(--chip);padding:16px 18px;margin:18px 0 2px;box-shadow:0 2px 10px rgba(20,22,26,.05)}
+.recall .rc-q{font-size:15.5px;color:var(--ink);line-height:1.55}
+.recall .rc-q .lbl{font-family:var(--f-mono);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.recall .rc-q .lbl::before{content:"?";font-size:12px;width:20px;height:20px;border:1.5px solid var(--accent);border-radius:50%;display:grid;place-items:center;flex:none}
+.recall .rc-a{margin-top:13px}
+.recall .rc-a>summary{list-style:none;cursor:pointer;font-family:var(--f-mono);font-size:12.5px;font-weight:700;color:var(--on-accent);background:var(--accent);display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border:1px solid var(--accent)}
+.recall .rc-a>summary:hover{filter:brightness(1.07)}
+.recall .rc-a>summary::-webkit-details-marker{display:none}
+.recall .rc-a>summary::before{content:"▸";font-size:10px}
+.recall .rc-a[open]>summary::before{content:"▾"}
+.recall .rc-body{margin-top:11px;font-size:14.5px;color:var(--ink);line-height:1.55}
+/* keep these selectors at <=2 classes so the .stage[data-lang] hide rule (3) still wins */
+.rc-q .en,.rc-q .jp,.rc-body .en,.rc-body .jp{display:block}
+.rc-q .jp,.rc-body .jp{font-family:var(--f-jp);color:var(--ink-soft)}
+.rc-q .jp{margin-top:3px} .rc-body .jp{margin-top:4px}
+
+/* "Further reading" panel (:::reading) — compact; standards get doc + clause */
+.reading{border:1px solid var(--line-soft);border-left:2px solid var(--dgm-line);background:var(--dgm-plate);padding:8px 12px;margin:14px 0 2px}
+.reading .rd-h{font-family:var(--f-mono);font-weight:700;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 5px}
+.reading .rd-list{list-style:none;margin:0;padding:0}
+.reading .rd-list li{padding:4px 0;display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px}
+.rd-doc{font-family:var(--f-mono);font-weight:600;font-size:11.5px;color:var(--ink-soft)}
+.rd-sec{font-family:var(--f-mono);font-size:10.5px;font-weight:600;color:var(--accent)}
+.rd-note{flex:1 1 100%;font-size:11.5px;color:var(--ink-soft);line-height:1.45;margin-top:1px}
+
+/* ============================================================
+   MODULE SHELL — topbar · hero · TOC · dividers · nav
+   ============================================================ */
+.stage{padding:0}
+.progress{position:fixed;left:0;top:0;height:2px;background:var(--accent);width:0;z-index:40}
+
+/* top bar — dark-grey chrome */
+.topbar{position:sticky;top:0;z-index:30;background:var(--chrome);border-bottom:1px solid rgba(0,0,0,.28)}
+.topbar-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:9px 20px}
+.brand{font-family:var(--f-display);font-weight:700;color:var(--on-chrome);font-size:15px;display:flex;align-items:center;gap:9px;min-width:0}
+.brand .dot{width:9px;height:9px;border-radius:2px;background:var(--accent);flex:none}
+.brand .std{font-family:var(--f-mono);font-size:11px;color:color-mix(in srgb,var(--on-chrome) 52%,transparent);font-weight:500;white-space:nowrap}
+.tb-spacer{flex:1}
+.tb-ctl{display:flex;gap:7px;align-items:center}
+/* brand is now the HOME link */
+.brand{text-decoration:none}
+.brand:hover .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 42%,transparent)}
+.brand:hover .std{color:color-mix(in srgb,var(--on-chrome) 72%,transparent)}
+/* single-icon toggles — one globe (cycles EN/日本語/EN+JP) + one theme flip (sun↔moon) */
+.tb-icobtn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;cursor:pointer;color:color-mix(in srgb,var(--on-chrome) 82%,transparent);background:color-mix(in srgb,var(--on-chrome) 8%,transparent);border:1px solid color-mix(in srgb,var(--on-chrome) 20%,transparent);padding:6px 9px;line-height:1}
+.tb-icobtn:hover{border-color:var(--accent);color:var(--on-chrome)}
+.tb-icobtn svg{flex:none;transition:transform .25s ease}
+.tb-icobtn .tb-lc{font-family:"IBM Plex Mono","Noto Sans JP",monospace;font-size:11.5px;min-width:38px;text-align:center}
+.tb-theme .ic-moon{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-sun{display:none}
+.stage[data-theme="dark"] .tb-theme .ic-moon{display:inline-block}
+.tb-theme:hover svg{transform:rotate(30deg)}
+
+/* breadcrumb bar — sticky, pinned directly under the topbar (FB4). Stacks below .topbar at --tbh;
+   the overview strip below then pins at --stick (= topbar + crumbs). Opaque bg so page content
+   scrolls under it cleanly; z between topbar (30) and the overview strip (20). */
+.crumbs{position:sticky;top:var(--tbh,44px);z-index:29;background:var(--bg);border-bottom:1px solid var(--line)}
+.crumbs-in{max-width:1120px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;gap:14px}
+.cr-trail{display:flex;align-items:center;gap:8px;min-width:0;flex:1;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px}
+.cr-trail a{color:var(--ink-soft);text-decoration:none}
+.cr-trail a:hover{color:var(--accent)}
+.cr-sep{color:var(--ink-faint)}
+.cr-cur{color:var(--ink);font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cr-cur .jp{font-family:var(--f-jp);color:var(--ink-soft);margin-left:6px}
+.cr-nav{display:flex;gap:8px;align-items:center;flex:none}
+.cn{display:inline-flex;flex-direction:column;gap:1px;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:5px 11px;max-width:210px}
+.cn:hover{border-color:var(--accent)}
+.cn.next{text-align:right;align-items:flex-end}
+.cn-d{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.cn-t{font-family:var(--f-display);font-weight:600;font-size:12.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cn-t .jp{font-family:var(--f-jp);color:var(--ink-soft);margin-left:5px}
+.cn.disabled{opacity:.3;pointer-events:none;min-width:64px}
+
+/* hero */
+.hero{max-width:1120px;margin:0 auto;padding:44px 20px 6px;text-align:center}
+.hero .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1.12;margin:12px 0 6px;color:var(--ink);letter-spacing:-.5px}
+.hero .jp{font-family:var(--f-jp);font-size:19px;color:var(--ink-soft);font-weight:600}
+.hero .tagline{max-width:58ch;margin:16px auto 0;color:var(--ink-soft);font-size:16.5px}
+.hero .tagline.jp{font-family:var(--f-jp)}
+.arc{display:inline-flex;gap:7px;align-items:center;margin:24px auto 0;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+.arc .dot{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.arc .dot.on{background:var(--accent);box-shadow:0 0 0 3px var(--chip)}
+.arc .lbl{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);margin-left:6px}
+
+/* layout: sidebar TOC + stream */
+.layout{max-width:820px;margin:0 auto;display:block;padding:0 20px}
+/* pager: one card at a time (each .page = a card + its prev/next) */
+.stream.pager>.page{display:none;scroll-margin-top:calc(var(--stick,44px) + 60px)}
+.stream.pager>.page.on{display:block}
+.toc{position:sticky;top:70px;width:212px;flex:none;align-self:flex-start;max-height:calc(100vh - 90px);overflow:auto;padding:20px 0;font-size:13px}
+.toc h4{margin:0 0 8px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.toc a{display:flex;gap:9px;align-items:baseline;text-decoration:none;color:var(--ink-soft);padding:6px 10px;border-radius:7px;border-left:2px solid transparent;line-height:1.3}
+.toc a .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);flex:none}
+.toc a:hover{background:var(--bg);color:var(--ink)}
+.toc a.on{color:var(--accent);border-left-color:var(--accent);background:var(--chip)}
+.stream{min-width:0;padding:20px 0 60px}
+
+/* ===== overview strip: this module's cards, in order (sits after the hero) ===== */
+.cardmap-wrap{position:sticky;top:var(--stick,44px);z-index:20;margin-top:18px;padding:9px 20px;background:var(--bg);border-bottom:1px solid var(--line-soft)}
+.cardmap{max-width:1120px;margin:0 auto;border:0;background:transparent;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cardmap-in{display:flex;align-items:center;gap:2px;padding:11px 13px;width:max-content;min-width:100%}
+.cm-lead{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-right:9px;white-space:nowrap;flex:none}
+.cm-stop{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;text-decoration:none;border:1px solid var(--line);background:var(--bg);white-space:nowrap;flex:none;transition:border-color .13s,background .13s}
+.cm-stop:hover{border-color:var(--accent)}
+.cm-stop.on{border-color:var(--accent);background:var(--chip)}
+.cm-t{font-family:var(--f-display);font-weight:600;font-size:13px;color:var(--ink);letter-spacing:var(--dt)}
+.cm-brief .cm-t,.cm-conclusion .cm-t{color:var(--ink-soft);font-weight:500}
+.cm-arr{color:var(--ink-soft);font-family:var(--f-mono);font-size:13px;padding:0 4px;flex:none}
+/* stop number/icon badge — shared by the strip + the rail */
+.st-n{font-family:var(--f-mono);font-weight:700;font-size:11px;color:var(--on-accent);background:var(--accent);min-width:22px;height:20px;padding:0 4px;display:grid;place-items:center;flex:none}
+.st-ic{background:var(--ink-soft);font-size:12px}
+
+/* ===== left rail = card list (repurposes the .toc sidebar) ===== */
+.rail a{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--ink-soft);padding:7px 9px;border-left:2px solid transparent;line-height:1.25;margin-bottom:1px}
+.rail a .rl-t{font-size:12.5px;min-width:0}
+.rl-t .en,.rl-t .jp{display:block}
+.rl-t .jp{font-family:var(--f-jp);font-size:11px;color:var(--ink-faint)}
+.rail a:hover{background:var(--bg);color:var(--ink)}
+.rail a.on{color:var(--accent);background:var(--chip);border-left-color:var(--accent)}
+
+/* divider — a dark-grey section bar with an ochre rule */
+.divider{background:var(--chrome);border:0;border-left:4px solid var(--accent);border-radius:10px;padding:20px 22px;margin:0 0 18px;scroll-margin-top:72px}
+.divider .sec{font-family:var(--f-mono);font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--accent)}
+.divider h2{margin:7px 0 0;font-family:var(--f-display);font-weight:700;font-size:23px;line-height:1.2;color:var(--on-chrome);letter-spacing:var(--dt)}
+.divider h2 .jp{display:block;font-family:var(--f-jp);font-size:16px;color:color-mix(in srgb,var(--on-chrome) 68%,transparent);font-weight:600;margin-top:3px}
+.divider .sub{margin:11px 0 0;font-size:14.5px;color:color-mix(in srgb,var(--on-chrome) 74%,transparent);max-width:62ch}
+.divider .sub.jp{font-family:var(--f-jp)}
+
+/* brief + conclusion */
+.brief{background:var(--dgm-plate);border:1px dashed var(--line);border-radius:10px;padding:18px 20px;margin:0 0 18px}
+.concl{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:10px;padding:18px 20px;margin:0 0 18px}
+.brief .eyebrow,.concl .eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}
+.brief .eyebrow{color:var(--accent)} .concl .eyebrow{color:var(--ok)}
+.brief .eyebrow,.concl .eyebrow{display:inline-flex;align-items:center;gap:7px}
+.lbl-ic{width:14px;height:14px;flex:none}
+.brief p{font-size:16px;margin:0 0 9px;color:var(--ink)} .concl p{font-size:15.5px;margin:0 0 9px;color:var(--ink)}
+.brief p:last-child,.concl p:last-child{margin-bottom:0}
+.brief p.jp,.concl p.jp{font-family:var(--f-jp);color:var(--ink-soft)}
+
+/* cross-module nav */
+.modnav{max-width:1120px;margin:6px auto 0;padding:24px 20px 64px;display:flex;gap:14px;border-top:1px solid var(--line)}
+.modnav a{flex:1;min-width:0;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:13px 16px;background:var(--card)}
+.modnav a:hover{border-color:var(--accent)}
+.modnav .dir{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em}
+.modnav .t{font-family:var(--f-display);font-weight:600;margin-top:3px;color:var(--ink)}
+.modnav .t .jp{font-family:var(--f-jp);font-weight:500;color:var(--ink-soft);font-size:13px}
+.modnav .jp{display:block}
+.modnav .next{text-align:right}
+.modnav .disabled{opacity:.4;pointer-events:none}
+
+/* card-level nav — prev/next between adjacent cards, appended under each card (lighter than .cn) */
+.cardnav{display:flex;gap:12px;margin:16px 0 30px}
+.cln{flex:1;min-width:0;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:10px 13px;display:flex;flex-direction:column;gap:2px}
+.cln.next{text-align:right;align-items:flex-end}
+.cln:hover{border-color:var(--accent)}
+.cln-d{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.cln-t{font-family:var(--f-display);font-weight:600;font-size:13.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cln-t .jp{font-family:var(--f-jp);font-weight:500;font-size:11px;color:var(--ink-soft);display:block}
+.cln.disabled{opacity:0;pointer-events:none}
+
+@media(max-width:860px){
+  .toc{display:none}
+  .layout,.hero,.topbar-in,.modnav,.cardmap-wrap{padding-left:14px;padding-right:14px}
+  .hero h1{font-size:27px}
+  .brand .std{display:none}
+  .brand{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar-in{gap:8px}
+  .fwd{white-space:normal;overflow-wrap:anywhere}   /* let a long pointer pill wrap rather than overflow the card */
+  .cardmap-wrap{top:var(--stick,40px);margin-top:0;padding-top:8px;padding-bottom:8px}
+  .crumbs-in{padding-left:14px;padding-right:14px;gap:8px;flex-wrap:wrap}
+  .cr-nav{flex:1 0 100%;order:2}
+  .cn{flex:1;max-width:none}
+  .cn-t{max-width:38vw}
+  .cardnav{gap:8px;margin:12px 0 24px}
+}
+
+/* ============================================================
+   RECTANGULAR "blueprint sheet" corners (LOCKED 2026-07-04).
+   Sharp panels suit the schematic identity. Tune radii here.
+   ============================================================ */
+.card,.tblock,.tf.idx,.tf.sid .chip,.leg,.subcard,.sc-n,.callout,.byte,
+.fig,.divider,.brief,.concl,.modnav a,.arc,.modcard,.mc-n,
+.recall,.recall .rc-a>summary,.reading,.rd-sec{border-radius:0}
+
+/* ============================================================
+   COURSE HUB (wiki/learn/index.html) — all modules as cards
+   ============================================================ */
+.hub{max-width:1080px;margin:0 auto;padding:6px 20px 74px}
+.hub-h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:26px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.modcard{display:flex;flex-direction:column;text-decoration:none;background:var(--card);border:1px solid var(--line);border-top:2px solid var(--accent);padding:15px 18px 16px;color:var(--ink);transition:border-color .15s,transform .12s}
+.modcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.modcard.upcoming{border-top-color:var(--line);opacity:.7}
+.mc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mc-n{font-family:var(--f-mono);font-weight:700;font-size:12px;color:var(--on-accent);background:var(--accent);padding:3px 8px}
+.modcard.upcoming .mc-n{color:var(--ink-faint);background:var(--code-bg)}
+.mc-sovd{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em}
+.modcard h3{font-family:var(--f-display);font-weight:600;font-size:17px;margin:13px 0 0;color:var(--ink);letter-spacing:var(--dt)}
+.modcard h3 .jp{display:block;font-family:var(--f-jp);font-size:12.5px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+.mc-scope{font-size:12.5px;color:var(--ink-soft);margin:10px 0 0;line-height:1.5}
+.mc-scope.jp{font-family:var(--f-jp)}
+.mc-thumb{margin:14px 0 2px;border:1px solid var(--line-soft);background:var(--dgm-plate);padding:10px 12px}
+.mc-thumb svg{display:block;width:100%;height:auto}
+.mc-status{margin-top:auto;padding-top:13px;font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--ok)}
+.modcard.upcoming .mc-status{color:var(--ink-faint)}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+/* hub — "who this is for" learner-persona note */
+.whofor{max-width:1080px;margin:20px auto 0;padding:0 20px}
+.whofor-in{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);padding:15px 20px}
+.wf-lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 7px}
+.whofor p{margin:0;font-size:14.5px;line-height:1.62;color:var(--ink-soft);max-width:80ch}
+.whofor p.jp{font-family:var(--f-jp);margin-top:7px;line-height:1.8}
+
+/* ============================================================
+   FOUNDATION MAP (uds-foundation/index.html) — the T-shaped module chooser.
+   Rendered through _template/render-map.js (was a hand-copied inline block; moved here
+   2026-07-07 so the map cannot drift from the design system — FB1).
+   ============================================================ */
+.fhero{max-width:1080px;margin:0 auto;padding:40px 20px 4px;text-align:center}
+.fhero .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.fhero h1{font-family:var(--f-display);font-weight:700;font-size:32px;line-height:1.12;margin:11px 0 6px;color:var(--ink);letter-spacing:-.5px}
+.fhero h1 .jp{font-family:var(--f-jp);font-size:20px;color:var(--ink-soft);font-weight:600}
+.fhero .ftag{max-width:60ch;margin:14px auto 0;color:var(--ink-soft);font-size:16px}
+.fhero .ftag.jp{font-family:var(--f-jp)}
+
+.fmap{max-width:1040px;margin:0 auto;padding:22px 20px 90px}
+
+/* how-to-learn guidance indicator */
+.guide{border:1px dashed var(--line);background:var(--dgm-plate);padding:15px 18px;margin:0 0 34px}
+.guide .g-h{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.guide .g-row{display:flex;flex-wrap:wrap;gap:9px 26px}
+.guide .g{display:inline-flex;align-items:baseline;gap:10px;font-size:14px;color:var(--ink-soft);line-height:1.5}
+.guide .g b{color:var(--ink)}
+.guide .ar{font-family:var(--f-mono);color:var(--accent);font-weight:700;font-size:17px;flex:none;line-height:1}
+.guide .g.jp,.guide .g-h.jp{font-family:var(--f-jp)}
+
+/* section tags */
+.axis{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin:0 0 13px}
+.axis.breadth::after{content:"";height:1px;flex:1;background:var(--line)}
+.axis.depth{justify-content:center}
+.axis .n{font-family:var(--f-mono);color:var(--on-accent);background:var(--accent);padding:2px 7px}
+
+/* the horizontal bar (breadth spine) */
+.hbar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* the trunk connecting bar -> stem */
+.trunk{height:36px;position:relative}
+.trunk::before{content:"";position:absolute;left:50%;top:0;bottom:-8px;width:2px;transform:translateX(-1px);background:var(--line)}
+.trunk::after{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;transform:translate(-50%,0) rotate(45deg);background:var(--accent)}
+
+/* the vertical stem (depth drills) */
+.vstem{width:min(470px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;position:relative}
+.vstem::before{content:"";position:absolute;left:50%;top:-18px;bottom:26px;width:2px;transform:translateX(-1px);background:var(--line);z-index:0}
+
+/* map cards */
+.fcard{display:flex;flex-direction:column;text-decoration:none;background:var(--card);border:1px solid var(--line);padding:14px 16px;color:var(--ink);transition:border-color .15s,transform .12s;position:relative;z-index:1}
+.fcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.hcard{border-top:2px solid var(--accent)}
+.vcard{border-left:3px solid var(--accent)}
+.vcard::before{content:"";position:absolute;left:50%;top:-11px;width:10px;height:10px;transform:translate(-50%,0) rotate(45deg);background:var(--accent);z-index:2}
+.tc-top{display:flex;align-items:center;gap:8px}
+.tc-id{font-family:var(--f-mono);font-weight:700;font-size:12px;color:var(--on-accent);background:var(--accent);padding:3px 8px}
+.tc-kind{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--ink-faint)}
+.tc-bar{margin-left:auto;font-family:var(--f-mono);font-size:10px;color:var(--accent);background:var(--chip);padding:2px 6px}
+.tc-title{font-family:var(--f-display);font-weight:600;font-size:15.5px;margin:11px 0 0;color:var(--ink);letter-spacing:var(--dt);line-height:1.22}
+.tc-title .jp{display:block;font-family:var(--f-jp);font-size:12px;color:var(--ink-soft);font-weight:500;margin-top:2px}
+.tc-line{font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.5}
+.tc-line.jp{font-family:var(--f-jp)}
+.tc-go{margin-top:11px;font-family:var(--f-mono);font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em}
+.tc-go .ar{color:var(--accent)}
+.tc-stub{margin-left:6px;color:var(--ink-faint);text-transform:none;letter-spacing:0}
+.fcard,.tc-id,.tc-bar,.axis .n{border-radius:0}
+
+@media(max-width:720px){
+  .hbar{grid-template-columns:1fr}
+  .vstem{width:100%}
+  .fhero h1{font-size:26px}
+}
+
+/* ============================================================
+   §7d — STAGED FIGURE REVEAL + MOTION GRAMMAR + :::elaborate
+   Adopted 2026-07-09 (session 20). Progressive enhancement: a raw .svg shows ALL stages
+   (teaches with no JS); the reveal controller (render.js) hides future stages so a reader
+   steps through, click-to-advance. Reduced-motion → all stages shown, transitions off.
+   ============================================================ */
+/* stage elements fade/settle in; the frame (unlabelled elements) is always visible */
+.fig.staged svg [data-stage]{transition:opacity .5s ease, transform .5s ease}
+.fig.staged svg [data-stage].rv-hide{opacity:0}
+.fig.staged.can-step svg{cursor:pointer}
+/* motion-grammar helpers: a bit toggling / a piece settling = a computed transform */
+.dgm .mg-flip{transition:fill .55s ease, stroke .55s ease}
+.dgm .mg-settle{transition:opacity .5s ease, transform .5s ease}
+/* the reveal control */
+.rv-ctl{display:flex;align-items:center;justify-content:center;gap:13px;margin-top:13px;flex-wrap:wrap}
+.rv-btn{font-family:var(--f-mono);font-size:12px;font-weight:700;letter-spacing:.03em;color:var(--on-accent);background:var(--accent);border:1px solid var(--accent);padding:7px 15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.rv-btn:hover{filter:brightness(1.07)}
+.rv-btn .rv-ar{font-size:13px;line-height:1}
+.fig.staged.rv-done .rv-btn{background:var(--card);color:var(--accent)}
+.rv-lbl{font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--ink-soft);letter-spacing:.05em;min-width:44px;text-align:center}
+.rv-hint{font-family:var(--f-mono);font-size:10px;color:var(--ink-faint);letter-spacing:.04em}
+.fig.staged.rv-done .rv-hint{visibility:hidden}
+
+/* :::elaborate — a divergent, learner-generated retrieval beat (green/olive vs recall's ochre) */
+.recall.elaborate{border-color:var(--ok);border-left-color:var(--ok)}
+.recall.elaborate .rc-q .lbl{color:var(--ok)}
+.recall.elaborate .rc-q .lbl::before{content:"✎";border-color:var(--ok);color:var(--ok);font-weight:700}
+.recall.elaborate .rc-a>summary{background:var(--ok);border-color:var(--ok)}
+
+@media (prefers-reduced-motion: reduce){
+  .dgm *{animation-duration:.001s!important;animation-iteration-count:1!important;transition:none!important}
+  .fig.staged svg [data-stage].rv-hide{opacity:1!important}   /* freeze at the end frame — everything shown */
+}
+</style></head><body><div class="stage" data-theme="light" data-lang="en"><div class="progress" id="progress"></div><header class="topbar"><div class="topbar-in"><a class="brand" href="../../index.html" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">Automotive Diagnostics</span></a><div class="tb-spacer"></div><div class="tb-ctl"><button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7.5"/><path d="M2.6 10h14.8M10 2.5c2.2 2 2.2 13 0 15M10 2.5c-2.2 2-2.2 13 0 15"/></svg><span class="tb-lc">EN</span></button><button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme"><svg class="ic-sun" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="3.4"/><g stroke-linecap="round"><path d="M10 2.4v2M10 15.6v2M2.4 10h2M15.6 10h2M4.6 4.6l1.4 1.4M14 14l1.4 1.4M15.4 4.6L14 6M6 14l-1.4 1.4"/></g></svg><svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M12.9 2.5a7.5 7.5 0 1 0 4.6 9.4 6 6 0 0 1-4.6-9.4z"/></svg></button></div></div></header><nav class="crumbs" aria-label="Breadcrumb"><div class="crumbs-in"><div class="cr-trail"><a href="../../index.html">Course</a><span class="cr-sep" aria-hidden="true">›</span><a href="../index.html">Foundation</a><span class="cr-sep" aria-hidden="true">›</span><span class="cr-cur" aria-current="page"><span class="en">Request &amp; positive response, byte by byte</span><span class="jp">リクエストと肯定応答 ― バイト単位で</span></span></div></div></nav><section class="hero"><div class="kicker">Automotive Diagnostics · 自動車診断</div><h1>Request &amp; positive response, byte by byte</h1><div class="jp">リクエストと肯定応答 ― バイト単位で</div><p class="tagline en">Open up a good reply and read it: how a message is wrapped, why the answer's first byte is the request's plus 0x40, and how a sub-function comes back echoed.</p><p class="tagline jp">うまくいった応答を開いて読む：メッセージがどう包まれるか、なぜ答えの先頭バイトはリクエスト+0x40なのか、サブファンクションはどう反射されて返るのか。</p></section><div class="cardmap-wrap"><nav class="cardmap" aria-label="Cards in this module"><div class="cardmap-in"><span class="cm-lead"><span class="en">In this module</span><span class="jp">この章</span></span><a class="cm-stop cm-brief" href="#brief"><span class="st-n st-ic">▸</span><span class="cm-t"><span class="en">Start here</span><span class="jp">まずここから</span></span></a><span class="cm-arr" aria-hidden="true">→</span><a class="cm-stop cm-concept" href="#c1"><span class="st-n">01</span><span class="cm-t"><span class="en">A wrapped unit</span><span class="jp">包まれた1単位</span></span></a></div></nav></div><div class="layout"><main class="stream pager"><div class="page" data-id="brief"><section class="brief" id="brief"><div class="eyebrow"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14V2.4"/><path d="M4 3.1h7l-1.6 2.4L11 8H4"/></svg>Start here · まずここから</div><p class="en">In <strong>V1</strong> you slowed one exchange down to its shape: four named steps, two roles, and an address label riding along. That model had <strong>no bytes in it</strong> — it was the skeleton. Now we put the bytes back and read a reply that <strong>worked</strong>.</p><p class="jp"><strong>V1</strong> では、1回のやり取りをその形まで遅くして見ました ― 名前のついた4ステップ、2つの役割、そして一緒に運ばれる宛先ラベル。あのモデルには<strong>バイトが1つもありません</strong>でした ― 骨組みだったのです。ここでバイトを戻し、<strong>うまくいった</strong>応答を読みます。</p><p class="en">This drill opens up a good reply in three parts:</p><ol class="steps en"><li><strong>A reply is a wrapped unit</strong> — the meaningful content travels inside a small control header, with a length.</li><li><strong><span class="mono">+0x40</span> makes it positive</strong> — the answer's first byte is just the request's first byte with one bit set.</li><li><strong>The sub-function comes back echoed</strong> — the server hands your sub-function value straight back, with its top bit cleared.</li></ol><p class="jp">この章では、うまくいった応答を3部構成で開きます：</p><ol class="steps jp"><li><strong>応答は「包まれた1単位」</strong> ― 意味のある中身は、小さな制御ヘッダと長さとともに運ばれます。</li><li><strong><span class="mono">+0x40</span> が「肯定」にする</strong> ― 答えの先頭バイトは、リクエストの先頭バイトに1ビット立てただけ。</li><li><strong>サブファンクションは反射されて返る</strong> ― サーバはあなたのサブファンクション値をそのまま返します。上位ビットは0にして。</li></ol><div class="fig"><svg class="dgm" viewBox="0 0 600 176" role="img" aria-label="A good reply, six bytes, about to be opened up and read."><text x="300" y="34" text-anchor="middle" class="ink w7" font-size="14">A reply that worked</text><text x="300" y="52" text-anchor="middle" class="mut" font-size="11">six bytes ・ 6バイト</text><rect x="83" y="61" width="434" height="76" class="acc-s" stroke-width="1.4" stroke-dasharray="5 5" fill="none"/><g><rect x="96" y="74" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="125" y="106.14" text-anchor="middle" class="ink mono-t" font-size="21">50</text></g><g><rect x="166" y="74" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="195" y="106.14" text-anchor="middle" class="ink mono-t" font-size="21">03</text></g><g><rect x="236" y="74" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="265" y="106.14" text-anchor="middle" class="ink mono-t" font-size="21">00</text></g><g><rect x="306" y="74" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="335" y="106.14" text-anchor="middle" class="ink mono-t" font-size="21">32</text></g><g><rect x="376" y="74" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="405" y="106.14" text-anchor="middle" class="ink mono-t" font-size="21">01</text></g><g><rect x="446" y="74" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="475" y="106.14" text-anchor="middle" class="ink mono-t" font-size="21">F4</text></g><text x="300" y="162" text-anchor="middle" class="acc mono-t" font-size="11">we are about to open this up ↑</text></svg><figcaption><span class="en"><strong>A reply that worked, still sealed.</strong> Six bytes came back and the request succeeded. By the end of this drill you can read every one of them.</span><span class="jp"><strong>うまくいった応答、まだ封をしたまま。</strong> 6バイトが返り、リクエストは成功しました。この章を終える頃には、その1バイトずつを読めます。</span></figcaption></div><div class="callout key"><span class="lbl">By the end · この章を終えると</span><span class="en">You can lay out the parts of a reply (content, control header, length), decode <span class="mono">+0x40</span> to turn a request SID into its positive-response SID (<span class="mono">10</span>→<span class="mono">50</span>, <span class="mono">22</span>→<span class="mono">62</span>), and read a sub-function echoed back in the answer.</span><span class="jp">応答の各部（中身・制御ヘッダ・長さ）を並べて示せ、<span class="mono">+0x40</span> を解いてリクエストSIDを肯定応答SIDに変換でき（<span class="mono">10</span>→<span class="mono">50</span>、<span class="mono">22</span>→<span class="mono">62</span>）、答えに反射されて返るサブファンクションを読めます。</span></div><div class="reading"><div class="rd-h">Further reading · 参考文献</div><ul class="rd-list"><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.8.2</span><span class="rd-note">The application protocol data unit A_PDU = A_SDU + A_PCI + parameters + Length</span></li><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.8.4 &amp; cl.9.3</span><span class="rd-note">Service identifier (SI) and the positive response message</span></li></ul></div></section><nav class="cardnav"><span class="cln prev disabled" aria-hidden="true"></span><a class="cln next" href="#c1"><span class="cln-d">Next card →</span><span class="cln-t"><span class="en">A wrapped unit</span><span class="jp">包まれた1単位</span></span></a></nav></div>
+<div class="page" data-id="c1"><article class="card" id="c1"><div class="card-in"><div class="tblock"><div class="tf idx"><small>Card</small>C1</div><div class="tf grow"><h3>A reply is a wrapped unit, not naked bytes</h3><div class="jp">応答は「包まれた1単位」― むき出しのバイトではない</div></div><div class="tf tgcell"><svg class="tg barlit" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg></div></div><div class="barzone"><p class="kicker"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.4 8h11.2"/><path d="M5 5.3 2.3 8 5 10.7"/><path d="M11 5.3 13.7 8 11 10.7"/></svg>High level · 概要</p><p class="en lead">Up close, the reply from V1 is a run of bytes: <span class="mono">50 03 00 32 01 F4</span>. But bytes on a wire are just a stream. Nothing in the stream itself says where the "which service" part stops and the data begins, or how long the whole message runs.</p><p class="en lead">So how does the receiver find the seams? Picture handing someone a bare pile of bytes and asking them to make sense of it — what would you <em>add</em> to the pile to make it self-describing?</p><p class="jp lead">近くで見ると、V1の応答はバイトの並びです：<span class="mono">50 03 00 32 01 F4</span>。でも線の上のバイトは、ただの流れ。流れそのものには、「どのサービスか」の部分がどこで終わり、データがどこから始まるか、メッセージ全体が何バイトか ― どれも書かれていません。</p><p class="jp lead">では受け手はどうやって「継ぎ目」を見つけるのでしょう？　むき出しのバイトの山を誰かに渡して「意味を読み取って」と頼む場面を思い浮かべてください ― 山に何を<em>足せば</em>、自分で自分を説明できるようになるでしょう？</p><p class="en lead">You would put a small header on the front — one that says <em>how to read what follows</em> — and you would note <em>how long</em> the whole thing is. That is exactly what a UDS message does. The content never travels naked. It travels <strong>wrapped</strong>:</p><ul class="blist en"><li>A short <strong>control header</strong> goes first. Its very <strong>first byte is the key</strong>: its value tells the receiver how to read everything after it.</li><li>Then the service's own <strong>parameters</strong> — the data bytes that header introduces.</li><li>And the message carries a <strong>length</strong> — how many bytes in all.</li></ul><p class="jp lead">先頭に小さなヘッダを付けるでしょう ― <em>続きの読み方</em>を示すヘッダを ― そして全体が<em>何バイト</em>かを記すでしょう。UDSのメッセージがまさにそれをします。中身がむき出しで運ばれることはありません。<strong>包まれて</strong>運ばれます：</p><ul class="blist jp"><li>短い<strong>制御ヘッダ</strong>が先頭に来ます。その<strong>先頭バイトこそ鍵</strong>：その値が、後続をどう読むかを受け手に伝えます。</li><li>続いてサービス自身の<strong>パラメータ</strong> ― ヘッダが導くデータバイト。</li><li>そしてメッセージは<strong>長さ</strong>を運びます ― 全部で何バイトか。</li></ul><p class="en lead">This wrapped unit has a name: the <strong>A_PDU</strong> — the <em>application protocol data unit</em>. The control header is the <strong>A_PCI</strong> (<em>protocol control information</em>); the meaningful data it carries is the <strong>A_SDU</strong> (<em>service data unit</em>). One message = one A_PDU. From here on, "a message" means exactly this shape.</p><p class="jp lead">この包まれた単位には名前があります：<strong>A_PDU</strong> ―「アプリケーション層プロトコルデータユニット」。制御ヘッダが <strong>A_PCI</strong>（プロトコル制御情報）、それが運ぶ意味のあるデータが <strong>A_SDU</strong>（サービスデータユニット）。1メッセージ = 1 A_PDU。これ以降、「メッセージ」とはまさにこの形を指します。</p><div class="fig staged"><svg class="dgm" viewBox="0 0 700 246" role="img" aria-label="A reply built up as a PDU: an address label, a control header A_PCI whose first byte is the key, the service parameters, and a Length — together one A_PDU.">
+<text x="350" y="34" text-anchor="middle" class="ink w7" font-size="15">A reply is one wrapped unit</text><g data-stage="1"><rect x="210" y="52" width="280" height="26" class="tester-s" stroke-width="1.5" fill="none"/><text x="350" y="69" text-anchor="middle" class="mut mono-t" font-size="10.5">Mtype · SA · TA — who ↔ who (from V1)</text></g><g data-stage="2"><text x="175" y="96" text-anchor="middle" class="acc mono-t w7" font-size="11">A_PCI</text></g><g data-stage="2"><rect x="146" y="104" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="175" y="136.14" text-anchor="middle" class="ink mono-t" font-size="21">50</text></g><g data-stage="2"><text x="175" y="172" text-anchor="middle" class="acc" font-size="10.5">first byte = the key</text></g><g data-stage="3"><text x="385" y="96" text-anchor="middle" class="mut mono-t w7" font-size="11">parameters</text></g><g data-stage="3"><rect x="216" y="104" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="245" y="136.14" text-anchor="middle" class="ink mono-t" font-size="21">03</text></g><g data-stage="3"><rect x="286" y="104" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="315" y="136.14" text-anchor="middle" class="ink mono-t" font-size="21">00</text></g><g data-stage="3"><rect x="356" y="104" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="385" y="136.14" text-anchor="middle" class="ink mono-t" font-size="21">32</text></g><g data-stage="3"><rect x="426" y="104" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="455" y="136.14" text-anchor="middle" class="ink mono-t" font-size="21">01</text></g><g data-stage="3"><rect x="496" y="104" width="58" height="50" rx="0" class="plate ln" stroke-width="2.4"/><text x="525" y="136.14" text-anchor="middle" class="ink mono-t" font-size="21">F4</text></g><g data-stage="4"><path d="M 146 180 V 188 H 554 V 180" class="ln" stroke-width="1.5" fill="none"/><text x="350" y="206" text-anchor="middle" class="ink mono-t" font-size="12">Length = 6 bytes</text><text x="350" y="226" text-anchor="middle" class="acc w7" font-size="13">= one A_PDU (protocol data unit)</text></g>
+</svg><div class="rv-ctl"><button class="rv-btn" type="button"><span class="rv-lead"><span class="en">Build it up</span><span class="jp">組み立てる</span></span><span class="rv-ar" aria-hidden="true">▸</span></button><span class="rv-lbl"></span><span class="rv-hint"><span class="en">click to advance</span><span class="jp">クリックで進む</span></span></div><figcaption><span class="en"><strong>Click to build it up.</strong> An address label rides along; the first byte is the control header (<strong>A_PCI</strong>) — the key to reading the rest; then the parameters; then a length. Together: one <strong>A_PDU</strong>.</span><span class="jp"><strong>クリックで組み立て。</strong> 宛先ラベルが一緒に運ばれ、先頭バイトが制御ヘッダ（<strong>A_PCI</strong>）― 残りを読む鍵。続いてパラメータ、そして長さ。合わせて1つの <strong>A_PDU</strong>。</span></figcaption></div></div><div class="stem"><div class="stem-h"><svg class="lbl-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3.5h12" stroke-opacity=".36"/><path d="M8 3.5v6.8"/><path d="M5.4 8.2 8 10.8l2.6-2.6"/></svg><span class="sh-t"><span class="en">Go deeper</span><span class="jp">もっと詳しく</span></span><span class="stem-n"><span class="en">2 more</span><span class="jp">あと2</span></span><span class="stem-hint"><span class="en">tap a row to expand ↓</span><span class="jp">各行をタップで展開 ↓</span></span></div><div class="legs"><details class="leg"><summary><svg class="tg tgmini s1" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg><span class="lg-txt"><span class="lg-en en">The exact recipe: A_PDU = A_SDU + A_PCI</span><span class="lg-jp jp">正確なレシピ：A_PDU = A_SDU + A_PCI</span></span><span class="lg-cue" aria-hidden="true"></span></summary><div class="lg-body"><p class="en">The standard writes the recipe out exactly. An A_PDU is built from the data the service hands down (the <strong>A_SDU</strong>) plus the layer's own control byte (the <strong>A_PCI</strong>):</p><p class="jp">標準はレシピをそのまま書き出しています。A_PDUは、サービスが渡すデータ（<strong>A_SDU</strong>）と、層自身の制御バイト（<strong>A_PCI</strong>）から組み立てられます：</p><div class="fig"><svg class="dgm" viewBox="0 0 614 148" role="img" aria-label="A_PDU equals A_SDU plus A_PCI: the data handed down, plus the control byte, make one protocol data unit.">
+<text x="315" y="34" text-anchor="middle" class="ink w7" font-size="15">Two ingredients make the unit</text><rect x="28" y="66" width="150" height="52" class="ln" stroke-width="2" fill="none"/><text x="103" y="90" text-anchor="middle" class="mono-t ink w7" font-size="14">A_SDU</text><text x="103" y="107" text-anchor="middle" class="mut" font-size="10.5">the data handed down</text><text x="196" y="98" text-anchor="middle" class="acc mono-t w8" font-size="20">+</text><rect x="214" y="66" width="122" height="52" class="acc-s" stroke-width="2" fill="none"/><text x="275" y="90" text-anchor="middle" class="mono-t ink w7" font-size="14">A_PCI</text><text x="275" y="107" text-anchor="middle" class="mut" font-size="10.5">the control byte</text><text x="354" y="98" text-anchor="middle" class="acc mono-t w8" font-size="20">=</text><rect x="372" y="66" width="214" height="52" class="acc-s" stroke-width="2" fill="none"/><text x="479" y="90" text-anchor="middle" class="mono-t ink w7" font-size="14">A_PDU</text><text x="479" y="107" text-anchor="middle" class="mut" font-size="10.5">A_PCI + parameters + length</text><rect x="372" y="66" width="214" height="4" class="acc"/>
+</svg><figcaption><span class="en"><strong>One recipe, two ingredients.</strong> The service hands down its data (A_SDU); the application layer adds the control header (A_PCI). Laid out on the wire, the A_Data is <em>A_PCI followed by the parameters</em>, carried with the addressing and a length.</span><span class="jp"><strong>1つのレシピ、2つの材料。</strong> サービスがデータ（A_SDU）を渡し、アプリケーション層が制御ヘッダ（A_PCI）を足す。線上では、A_Dataは<em>A_PCIに続いてパラメータ</em>で、宛先情報と長さとともに運ばれます。</span></figcaption></div><p class="en">On the wire, the carried data (called the <strong>A_Data</strong>) is simply the A_PCI followed by the parameters. That whole thing rides inside the addressing you met in V1 (<span class="mono">Mtype</span>, <span class="mono">SA</span>, <span class="mono">TA</span>) with a <span class="mono">Length</span>. So the full shape is: <strong>address label · A_PCI + parameters · length</strong>.</p><p class="jp">線上では、運ばれるデータ（<strong>A_Data</strong> と呼ばれます）は、単に A_PCI に続いてパラメータです。それ全体が、V1で出会った宛先情報（<span class="mono">Mtype</span>・<span class="mono">SA</span>・<span class="mono">TA</span>）と <span class="mono">Length</span> の中に乗ります。だから完全な形はこうです：<strong>宛先ラベル・A_PCI＋パラメータ・長さ</strong>。</p></div></details><details class="leg"><summary><svg class="tg tgmini s2" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/><rect class="seg g1" x="16.5" y="13.0" width="7" height="9.2" rx="1.4"/><rect class="seg g2" x="16.5" y="23.8" width="7" height="9.2" rx="1.4"/></svg><span class="lg-txt"><span class="lg-en en">Why the first byte is the key</span><span class="lg-jp jp">なぜ先頭バイトが鍵なのか</span></span><span class="lg-cue" aria-hidden="true"></span></summary><div class="lg-body"><p class="en">Why does the <em>first</em> byte matter so much? Because the receiver reads it before anything else, and its value decides how the rest is read. One value says "this is a normal message — read the next bytes as a service and its data." One special value, <span class="mono">7F</span>, says "this is a refusal — read it as a negative response instead."</p><p class="jp">なぜ<em>先頭</em>バイトがそんなに重要なのでしょう？　受け手が何より先にそれを読み、その値が残りの読み方を決めるからです。ある値は「これは普通のメッセージ ― 続くバイトをサービスとそのデータとして読め」と言い、<span class="mono">7F</span> という特別な値だけは「これは拒否 ― 否定応答として読め」と言います。</p><div class="fig"><svg class="dgm" viewBox="0 0 578 190" role="img" aria-label="The first byte decides the format: any value other than 7F is a normal message, 7F alone flags a negative response.">
+<text x="310" y="26" text-anchor="middle" class="ink w7" font-size="15">Read the first byte first</text><rect x="40" y="78" width="92" height="54" class="acc-s" stroke-width="2.2" fill="none"/><text x="86" y="104" text-anchor="middle" class="acc mono-t w8" font-size="17">1st</text><text x="86" y="122" text-anchor="middle" class="mut" font-size="10">byte</text><path d="M 132 105 H 216 V 67 H 300 M 294 62 L 300 67 L 294 72" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M 132 105 H 216 V 153 H 300 M 294 148 L 300 153 L 294 158" class="red-s" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="222" y="59" class="mut mono-t" font-size="10.5">≠ 7F</text><text x="222" y="173" class="red mono-t" font-size="10.5">= 7F</text><rect x="300" y="44" width="238" height="46" class="ln" stroke-width="1.8" fill="none"/><text x="314" y="64" class="ink mono-t w7" font-size="12">normal message</text><text x="314" y="81" class="mut" font-size="10.5">read as a service + its data</text><rect x="300" y="130" width="238" height="46" class="red-s" stroke-width="1.8" fill="none"/><text x="314" y="150" class="ink mono-t w7" font-size="12">negative response</text><text x="314" y="167" class="mut" font-size="10.5">a refusal → V3</text>
+</svg><figcaption><span class="en"><strong>The first byte routes everything.</strong> Read it first: any value other than <span class="mono">7F</span> means a normal request or positive response; <span class="mono">7F</span> alone flags a negative response. The one byte tells the receiver which format follows.</span><span class="jp"><strong>先頭バイトがすべてを振り分ける。</strong> まずそれを読む：<span class="mono">7F</span> 以外のどの値も通常のリクエストか肯定応答、<span class="mono">7F</span> だけが否定応答の合図。この1バイトが、続く書式を受け手に伝えます。</span></figcaption></div><ul class="blist en"><li class="bl-key">For a request or a positive response, that first byte <em>is</em> the <strong>service identifier</strong> — you will meet it as <span class="mono">50</span> in the very next card.</li><li>The negative case (first byte <span class="mono">7F</span>) is its own card. <a class="fwd" href="../v3-negative-responses/index.html">→ V3 · negative responses<span class="fwd-go">↗</span></a></li></ul><ul class="blist jp"><li class="bl-key">リクエストや肯定応答では、その先頭バイトが<strong>サービス識別子</strong>そのものです ― 次のカードで <span class="mono">50</span> として出会います。</li><li>否定のケース（先頭バイト <span class="mono">7F</span>）は独立したカードです。<a class="fwd" href="../v3-negative-responses/index.html">→ V3 · 否定応答<span class="fwd-go">↗</span></a></li></ul></div></details></div></div><div class="card-footer"><div class="reading"><div class="rd-h">Further reading · 参考文献</div><ul class="rd-list"><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.8.2</span><span class="rd-note">A_PDU = ( Mtype, SA, TA, TA_type, [RA,] A_Data = A_PCI + [parameters], Length ) — the A_PDU is constructed from the A_SDU and the A_PCI</span></li><li><span class="rd-doc">ISO 14229-1:2020</span><span class="rd-sec">cl.8.3</span><span class="rd-note">A_PCI: "the format is identified by the value of the first byte of the A_PDU parameter"; first byte ≠ 7F for requests and positive responses</span></li></ul></div></div></div></article><nav class="cardnav"><a class="cln prev" href="#brief"><span class="cln-d">← Prev card</span><span class="cln-t"><span class="en">Start here</span><span class="jp">まずここから</span></span></a><span class="cln next disabled" aria-hidden="true"></span></nav></div></main></div></div><script>
 (function(){var root=document.querySelector('.stage');if(!root)return;
 function stick(){var t=document.querySelector('.topbar'),c=document.querySelector('.crumbs');
   var th=t?t.offsetHeight:0,ch=c?c.offsetHeight:0,d=document.documentElement.style;
@@ -7,5 +492,59 @@ stick();addEventListener('resize',stick);addEventListener('load',stick);
 var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=document.getElementById('langbtn');
 if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];stick();});
 var tb=document.getElementById('themebtn');if(tb)tb.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});
+// §7d-6 reduced-motion: CSS freezes CSS transitions/animations; SMIL needs pausing too (legacy
+// figures). Best-effort: pause every SVG's declarative animations so nothing loops.
+if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){
+  [].forEach.call(document.querySelectorAll('svg'),function(s){if(s.pauseAnimations){try{s.pauseAnimations();}catch(e){}}});
+}
 })();
+</script><script>
+// PAGER — one card at a time; the top strip is the always-on progress + jump nav
+var pages=[].slice.call(document.querySelectorAll('.stream.pager > .page'));
+var strip=document.querySelector('.cardmap'),links=[].slice.call(document.querySelectorAll('.cardmap a'));
+var pr=document.getElementById('progress'),wrap=document.querySelector('.cardmap-wrap'),idx=-1;
+function show(i,scroll){
+  i=Math.max(0,Math.min(pages.length-1,i));if(i===idx||!pages.length)return;idx=i;
+  pages.forEach(function(p,k){p.classList.toggle('on',k===i)});
+  var id=pages[i].getAttribute('data-id');
+  links.forEach(function(a){var on=a.getAttribute('href')==='#'+id;a.classList.toggle('on',on);
+    if(on&&strip){var ar=a.getBoundingClientRect(),cr=strip.getBoundingClientRect();strip.scrollLeft+=(ar.left-cr.left)-(cr.width-ar.width)/2;}});
+  if(pr)pr.style.width=(pages.length>1?i/(pages.length-1)*100:100)+'%';
+  if(scroll){
+    if(history.replaceState)history.replaceState(null,'','#'+id);
+    if(wrap){var off=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--stick'))||44;var top=wrap.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo(0,Math.max(0,top));}
+  }
+}
+function jump(id){for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===id){show(k,true);return true}}return false;}
+document.addEventListener('click',function(e){var a=e.target.closest('.cardmap a, .cardnav a');if(!a)return;var h=a.getAttribute('href')||'';if(h.charAt(0)==='#'&&jump(h.slice(1)))e.preventDefault();});
+addEventListener('keydown',function(e){var t=e.target.tagName;if(t==='INPUT'||t==='TEXTAREA')return;if(e.key==='ArrowRight')show(idx+1,true);else if(e.key==='ArrowLeft')show(idx-1,true);});
+var start=(location.hash||'').slice(1),si=0,deep=!!start;
+if(start)for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===start){si=k;break}}
+show(si,deep);
+if(!deep)window.scrollTo(0,0);
+
+// STAGED FIGURES — click-to-advance reveal (§7d-5). Raw SVG shows all stages; here we hide the
+// future ones and step through. Reduced-motion → leave everything shown (the end frame must teach).
+var mqReduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+[].forEach.call(document.querySelectorAll('.fig.staged'),function(fig){
+  var els=[].slice.call(fig.querySelectorAll('[data-stage]')),max=0;
+  els.forEach(function(el){max=Math.max(max,+el.getAttribute('data-stage')||0)});
+  var ctl=fig.querySelector('.rv-ctl'),btn=fig.querySelector('.rv-btn'),lbl=fig.querySelector('.rv-lbl');
+  if(mqReduce||max<2){fig.classList.add('rv-done');if(ctl)ctl.style.display='none';return;}
+  fig.classList.add('can-step');
+  var lead=btn&&btn.querySelector('.rv-lead'),ar=btn&&btn.querySelector('.rv-ar'),shown=1;
+  function paint(){
+    els.forEach(function(el){el.classList.toggle('rv-hide',(+el.getAttribute('data-stage'))>shown)});
+    if(lbl)lbl.textContent=shown+' / '+max;
+    var done=shown>=max;fig.classList.toggle('rv-done',done);
+    if(ar)ar.textContent=done?'↺':'▸';
+    if(lead){var e=lead.querySelector('.en'),j=lead.querySelector('.jp');
+      if(e)e.textContent=done?'Replay':(shown===1?'Build it up':'Next');
+      if(j)j.textContent=done?'もう一度':(shown===1?'組み立てる':'次へ');}
+  }
+  function adv(){shown=shown>=max?1:shown+1;paint();}
+  paint();
+  if(btn)btn.addEventListener('click',function(e){e.preventDefault();adv();});
+  var svg=fig.querySelector('svg');if(svg)svg.addEventListener('click',adv);
+});
 </script></body></html>

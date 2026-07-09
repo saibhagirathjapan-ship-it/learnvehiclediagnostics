@@ -44,6 +44,11 @@ stick();addEventListener('resize',stick);addEventListener('load',stick);
 var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=document.getElementById('langbtn');
 if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];stick();});
 var tb=document.getElementById('themebtn');if(tb)tb.addEventListener('click',function(){root.setAttribute('data-theme',root.getAttribute('data-theme')==='dark'?'light':'dark');});
+// §7d-6 reduced-motion: CSS freezes CSS transitions/animations; SMIL needs pausing too (legacy
+// figures). Best-effort: pause every SVG's declarative animations so nothing loops.
+if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){
+  [].forEach.call(document.querySelectorAll('svg'),function(s){if(s.pauseAnimations){try{s.pauseAnimations();}catch(e){}}});
+}
 })();
 </script>`;
 

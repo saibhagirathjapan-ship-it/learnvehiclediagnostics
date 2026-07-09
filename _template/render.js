@@ -105,7 +105,8 @@ function renderReading(raw){
       (sec?`<span class="rd-sec">${inline(sec)}</span>`:'')+
       (note?`<span class="rd-note">${inline(note)}</span>`:'')+`</li>`;
   }).join('');
-  return `<div class="reading"><div class="rd-h">Further reading · 参考文献</div><ul class="rd-list">${items}</ul></div>`;
+  // collapsible (2026-07-09 FB) — collapsed by default so citations never force a scroll
+  return `<details class="reading"><summary class="rd-h"><span class="rd-lbl">Sources · 参考文献</span></summary><ul class="rd-list">${items}</ul></details>`;
 }
 function renderBytes(raw){
   const rows = raw.trim().split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{
@@ -228,7 +229,7 @@ function parseSteps(raw){
     return { en:o.en, jp:o.jp, fig:o.fig };
   });
 }
-function renderStory(meta,sections,assetsDir){
+function renderStory(meta,sections,assetsDir,cardNum){
   const steps=parseSteps(sections['story']||'');
   const figs=[]; let cur=null, runFig=null, runStage=0;
   steps.forEach(s=>{
@@ -246,17 +247,21 @@ function renderStory(meta,sections,assetsDir){
     `<div class="st-step${i===0?' on':''}" data-step="${i+1}" data-figidx="${s.figIdx}" data-figstage="${s.stage}">`+
     (s.en?`<span class="en">${inline(s.en)}</span>`:'')+(s.jp?`<span class="jp">${inline(s.jp)}</span>`:'')+`</div>`).join('');
   const N=steps.length;
-  const nums = steps.map((_,i)=>`<button class="st-num${i===0?' on':''}" type="button" data-i="${i+1}" aria-label="Step ${i+1} of ${N}">${i+1}</button>`).join('');
-  return `<div class="story" data-steps="${N}">`+
+  // mid-screen flanking arrows (2026-07-09 FB): left = step/card (e.g. 3/1), right = steps remaining;
+  // at the last step the right arrow rolls into the next card. Swipe drives the same on mobile.
+  const dots = steps.map((_,i)=>`<span class="st-dot${i===0?' on':''}" data-i="${i+1}"></span>`).join('');
+  return `<div class="story" data-steps="${N}" data-card="${esc(cardNum||'')}">`+
     `<div class="st-text">${stepsHtml}</div>`+
     (figs.length?`<div class="st-stage">${stageSvgs}</div>`:'')+
-    `<div class="st-nav"><button class="st-prev" type="button" aria-label="Previous step">‹</button>`+
-    `<div class="st-nums" role="tablist">${nums}</div>`+
-    `<button class="st-fwd" type="button" aria-label="Next step">›</button>`+
-    `<button class="st-all" type="button"><span class="en">Show all</span><span class="jp">全て表示</span></button></div>`+
+    `<div class="st-nav">`+
+    `<button class="st-arw st-prev" type="button" aria-label="Previous step"><span class="st-ar">‹</span><span class="st-cnt"></span></button>`+
+    `<div class="st-dots" aria-hidden="true">${dots}</div>`+
+    `<button class="st-arw st-fwd" type="button" aria-label="Next"><span class="st-ar">›</span><span class="st-cnt"></span></button>`+
+    `</div>`+
+    `<button class="st-all" type="button"><span class="en">Show all</span><span class="jp">全て表示</span></button>`+
     `</div>`;
 }
-function renderConcept(meta,sections,assetsDir,kind){
+function renderConcept(meta,sections,assetsDir,kind,cardNum){
   const legs=meta.legs||[]; const n=legs.length||1;
   const sid = meta.sid?`<div class="tf sid"><span class="chip">${esc(meta.sid)}</span></div>`:'';
   const tblock=`<div class="tblock"><div class="tf idx"><small>Card</small>${esc(String(meta.id).toUpperCase())}</div>`+
@@ -266,7 +271,7 @@ function renderConcept(meta,sections,assetsDir,kind){
   if((sections['story']||'').trim()){
     let footer='';
     if((sections['footer']||'').trim()) footer=`<div class="card-footer">${renderBlocks(parseBlocks(sections['footer']),assetsDir,false)}</div>`;
-    return `<article class="card story-card" id="${esc(meta.id)}"><div class="card-in">${tblock}${renderStory(meta,sections,assetsDir)}${footer}</div></article>`;
+    return `<article class="card story-card" id="${esc(meta.id)}"><div class="card-in">${tblock}${renderStory(meta,sections,assetsDir,cardNum)}${footer}</div></article>`;
   }
   let bar=`<div class="barzone"><p class="kicker">${IC_HIGH}High level · 概要</p>`+
     renderBlocks(parseBlocks(sections['bar']||''),assetsDir,true);
@@ -323,12 +328,12 @@ function renderConclusion(meta,sections,assetsDir){
   const eb=meta.eyebrow||'Section recap · まとめ';
   return `<section class="concl" id="${esc(meta.id||'concl')}"><div class="eyebrow">${IC_RECAP}${esc(eb)}</div>${renderBlocks(parseBlocks(sections['body']||''),assetsDir,false)}</section>`;
 }
-function renderCard(meta,sections,assetsDir,kind){
+function renderCard(meta,sections,assetsDir,kind,cardNum){
   switch(meta.type){
     case 'divider': return renderDivider(meta);
     case 'brief': return renderBrief(meta,sections,assetsDir);
     case 'conclusion': return renderConclusion(meta,sections,assetsDir);
-    default: return renderConcept(meta,sections,assetsDir,kind);
+    default: return renderConcept(meta,sections,assetsDir,kind,cardNum);
   }
 }
 function renderHero(mod){
@@ -336,6 +341,24 @@ function renderHero(mod){
     `<h1>${inline(mod.title.en)}</h1><div class="jp">${inline(mod.title.jp)}</div>`+
     (mod.tagline?`<p class="tagline en">${inline(mod.tagline.en)}</p><p class="tagline jp">${inline(mod.tagline.jp)}</p>`:'')+
     `</section>`;
+}
+// compact module header (2026-07-09 FB): tiny breadcrumb trail + a small module title, no tagline/
+// hero block — reclaims vertical space so the card can fit the viewport. Replaces the big hero + crumbs.
+function renderModHead(mod){
+  const p = mod.parent || { label:'Foundation', href:'../index.html' };
+  return `<header class="modhead"><div class="modhead-in">`+
+    `<nav class="mh-crumbs" aria-label="Breadcrumb"><a href="../../index.html">Course</a>`+
+    `<span class="mh-sep" aria-hidden="true">›</span><a href="${esc(p.href)}">${esc(p.label)}</a></nav>`+
+    `<h1 class="mh-title"><span class="en">${inline(mod.title.en)}</span><span class="jp">${inline(mod.title.jp)}</span></h1>`+
+    `</div></header>`;
+}
+// floating card nav (FAB) — replaces the bottom Prev/Next-card bar (2026-07-09 FB). Fixed corner
+// cluster; the pager script wires prev/next + the current-card label. The web-native "FAB".
+function fabCard(){
+  return `<div class="fab" role="navigation" aria-label="Move between cards">`+
+    `<button class="fab-btn fab-prev" type="button" aria-label="Previous card">‹</button>`+
+    `<span class="fab-lbl" aria-live="polite"></span>`+
+    `<button class="fab-btn fab-next" type="button" aria-label="Next card">›</button></div>`;
 }
 // Topbar comes from the shared partial (partials.topbar) — see FB1. Identical on every surface
 // (no page-specific segments); home is the course hub two levels up.
@@ -407,36 +430,32 @@ function renderModNav(mod){
 // Page-specific behaviour only (chrome behaviour is in partials.TOPBAR_SCRIPT). This block owns
 // the one-card-at-a-time pager. (Legs are expanded individually via each Go-Deeper <details>.)
 const SCRIPT=`<script>
-// PAGER — one card at a time; the top strip is the always-on progress + jump nav
+// PAGER — one card (slide) at a time. Card nav = the FAB; within-card step nav = the story arrows.
+// Each slide fits the viewport (CSS --chrome), so a card change just resets scroll to the top.
 var pages=[].slice.call(document.querySelectorAll('.stream.pager > .page'));
-var strip=document.querySelector('.cardmap'),links=[].slice.call(document.querySelectorAll('.cardmap a'));
-var pr=document.getElementById('progress'),wrap=document.querySelector('.cardmap-wrap'),idx=-1;
+var pr=document.getElementById('progress'),idx=-1;
+var fabPrev=document.querySelector('.fab-prev'),fabNext=document.querySelector('.fab-next'),fabLbl=document.querySelector('.fab-lbl');
 function show(i,scroll){
-  i=Math.max(0,Math.min(pages.length-1,i));if(i===idx||!pages.length)return;idx=i;
+  i=Math.max(0,Math.min(pages.length-1,i));if(!pages.length)return;var same=(i===idx);idx=i;
   pages.forEach(function(p,k){p.classList.toggle('on',k===i)});
   var id=pages[i].getAttribute('data-id');
-  links.forEach(function(a){var on=a.getAttribute('href')==='#'+id;a.classList.toggle('on',on);
-    if(on&&strip){var ar=a.getBoundingClientRect(),cr=strip.getBoundingClientRect();strip.scrollLeft+=(ar.left-cr.left)-(cr.width-ar.width)/2;}});
   if(pr)pr.style.width=(pages.length>1?i/(pages.length-1)*100:100)+'%';
-  if(scroll){
-    if(history.replaceState)history.replaceState(null,'','#'+id);
-    // FB4: land the CARD's content just under the sticky stack (topbar+crumbs = --stick, plus the
-    // sticky overview strip), not at the previous card's bottom. Presents the new card's top-of-content.
-    var pageEl=pages[i];
-    var stick=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--stick'))||44;
-    var stripH=wrap?wrap.offsetHeight:0;
-    var off=stick+stripH+16;
-    var top=pageEl.getBoundingClientRect().top+window.pageYOffset-off;
-    window.scrollTo(0,Math.max(0,top));
-  }
+  if(fabLbl)fabLbl.textContent=(i+1)+' / '+pages.length;
+  if(fabPrev)fabPrev.disabled=(i===0);
+  if(fabNext)fabNext.disabled=(i===pages.length-1);
+  if(scroll){if(history.replaceState)history.replaceState(null,'','#'+id);window.scrollTo(0,0);}
 }
 function jump(id){for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===id){show(k,true);return true}}return false;}
-document.addEventListener('click',function(e){var a=e.target.closest('.cardmap a, .cardnav a');if(!a)return;var h=a.getAttribute('href')||'';if(h.charAt(0)==='#'&&jump(h.slice(1)))e.preventDefault();});
-addEventListener('keydown',function(e){var t=e.target.tagName;if(t==='INPUT'||t==='TEXTAREA')return;if(e.key==='ArrowRight')show(idx+1,true);else if(e.key==='ArrowLeft')show(idx-1,true);});
-var start=(location.hash||'').slice(1),si=0,deep=!!start;
+// step the active card's story, rolling into the adjacent CARD at its ends (so a swipe walks the module)
+function stepActive(dir){var s=document.querySelector('.page.on .story');
+  if(s&&(dir>0?s.__next:s.__prev)){(dir>0?s.__next:s.__prev)();}else{show(idx+dir,true);} }
+document.addEventListener('click',function(e){var a=e.target.closest('.cardnav a');if(!a)return;var h=a.getAttribute('href')||'';if(h.charAt(0)==='#'&&jump(h.slice(1)))e.preventDefault();});
+if(fabPrev)fabPrev.addEventListener('click',function(){show(idx-1,true)});
+if(fabNext)fabNext.addEventListener('click',function(){show(idx+1,true)});
+addEventListener('keydown',function(e){var t=e.target.tagName;if(t==='INPUT'||t==='TEXTAREA')return;if(e.key==='ArrowRight')stepActive(1);else if(e.key==='ArrowLeft')stepActive(-1);});
+var start=(location.hash||'').slice(1),si=0;
 if(start)for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===start){si=k;break}}
-show(si,deep);
-if(!deep)window.scrollTo(0,0);
+show(si,true);window.scrollTo(0,0);
 
 // STAGED FIGURES — click-to-advance reveal (§7d-5). Raw SVG shows all stages; here we hide the
 // future ones and step through. Reduced-motion → leave everything shown (the end frame must teach).
@@ -510,36 +529,41 @@ var panelFits=[];
   var figsEls=[].slice.call(st.querySelectorAll('.st-fig'));
   var nums=[].slice.call(st.querySelectorAll('.st-num'));
   var prevb=st.querySelector('.st-prev'),fwdb=st.querySelector('.st-fwd'),allb=st.querySelector('.st-all'),stage=st.querySelector('.st-stage');
-  var cur=1,allOn=false,figMax={};
+  var dots=[].slice.call(st.querySelectorAll('.st-dot'));
+  var cardNo=st.getAttribute('data-card')||'',cur=1,allOn=false,figMax={};
+  var pcnt=prevb&&prevb.querySelector('.st-cnt'),fcnt=fwdb&&fwdb.querySelector('.st-cnt');
   steps.forEach(function(s){var fi=+s.getAttribute('data-figidx'),fg=+s.getAttribute('data-figstage');if(fi>=0)figMax[fi]=Math.max(figMax[fi]||0,fg);});
   function paintFig(figIdx,figStage){
     figsEls.forEach(function(f){var on=(+f.getAttribute('data-fig'))===figIdx;f.classList.toggle('on',on);if(on)paintStages(f,figStage);});
   }
   function render(){
     steps.forEach(function(s,i){var d=(i+1)-cur;s.classList.toggle('on',d===0);s.classList.toggle('past',d<0);s.classList.toggle('future',d>0);});
-    nums.forEach(function(b,i){b.classList.toggle('on',(i+1)===cur);b.classList.toggle('done',(i+1)<cur);});
+    dots.forEach(function(d,i){d.classList.toggle('on',(i+1)===cur);d.classList.toggle('done',(i+1)<cur);});
     var act=steps[cur-1];
     if(act&&figsEls.length)paintFig(+act.getAttribute('data-figidx'),+act.getAttribute('data-figstage'));
-    if(prevb)prevb.disabled=(cur===1);
-    if(fwdb)fwdb.classList.toggle('to-next',cur>=N);
+    // left = step/card (e.g. 3/1) · right = steps remaining; last step's forward rolls to the next card
+    if(pcnt)pcnt.textContent=cur+(cardNo?'/'+cardNo:'');
+    var rem=N-cur; if(fcnt)fcnt.textContent=rem>0?String(rem):'';
+    if(fwdb)fwdb.classList.toggle('to-next',rem<=0);
   }
   function setAll(on){allOn=on;st.classList.toggle('st-all-on',on);
     if(on){figsEls.forEach(function(f){f.classList.add('on');paintStages(f,figMax[+f.getAttribute('data-fig')]||99);});}
     else{render();}
     if(allb){var e=allb.querySelector('.en'),j=allb.querySelector('.jp');if(e)e.textContent=on?'Step through':'Show all';if(j)j.textContent=on?'順に見る':'全て表示';}}
   function go(to){if(allOn)setAll(false);cur=Math.max(1,Math.min(N,to));render();}
+  // __next/__prev roll into the adjacent CARD at the story's ends (walk the whole module by swipe/arrow)
+  st.__next=function(){if(!allOn&&cur<N){go(cur+1);}else{show(idx+1,true);}};
+  st.__prev=function(){if(!allOn&&cur>1){go(cur-1);}else{show(idx-1,true);}};
   render();
-  nums.forEach(function(b){b.addEventListener('click',function(){go(+b.getAttribute('data-i'))})});
-  if(prevb)prevb.addEventListener('click',function(){go(cur-1)});
-  if(fwdb)fwdb.addEventListener('click',function(){
-    if(!allOn&&cur<N){go(cur+1);return;}
-    var page=st.closest('.page'),nx=page&&page.querySelector('.cardnav a.next');if(nx)nx.click();
-  });
+  dots.forEach(function(d){d.addEventListener('click',function(){go(+d.getAttribute('data-i'))})});
+  if(prevb)prevb.addEventListener('click',st.__prev);
+  if(fwdb)fwdb.addEventListener('click',st.__next);
   if(allb)allb.addEventListener('click',function(){setAll(!allOn)});
-  if(stage)stage.addEventListener('click',function(){if(!allOn&&cur<N)go(cur+1)});
-  var x0=null;
-  st.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
-  st.addEventListener('touchend',function(e){if(x0==null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(dx<0?cur+1:cur-1);x0=null},{passive:true});
+  if(stage)stage.addEventListener('click',function(){if(!allOn)st.__next();});
+  var x0=null,y0=null;
+  st.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  st.addEventListener('touchend',function(e){if(x0==null)return;var dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;
+    if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.4){dx<0?st.__next():st.__prev();}x0=null},{passive:true});
   if(mqReduce)setAll(true);
 });
 
@@ -556,8 +580,8 @@ function page(mod,cards,stops){
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">`+
     `<title>${esc(mod.title.en)} — ${esc(mod.standard||'')}</title>${FONTS}<style>${CSS}</style></head><body>`+
     `<div class="stage" data-theme="light" data-lang="en"><div class="progress" id="progress"></div>`+
-    topbar({home: mod.home || '../../index.html'})+renderCrumbs(mod)+renderHero(mod)+renderCardMap(stops)+
-    `<div class="layout"><main class="stream pager">${cards}</main></div>`+
+    topbar({home: mod.home || '../../index.html', compact:true})+renderModHead(mod)+
+    `<div class="layout"><main class="stream pager">${cards}</main></div>`+fabCard()+
     `</div>${TOPBAR_SCRIPT}${SCRIPT}</body></html>`;
 }
 
@@ -579,9 +603,10 @@ const stopIx = {}; stops.forEach((s,i)=>{ stopIx[s.id]=i; });
 const cards = items.map(it=>{
   const i = stopIx[String(it.meta.id)];
   if(i===undefined) return '';                       // skip dividers (not a pager page)
-  const html = renderCard(it.meta,it.sections,assetsDir,kind);
-  const nav = cardNav(stops[i-1]||null, stops[i+1]||null);
-  return `<div class="page" data-id="${esc(it.meta.id)}">${html}${nav}</div>`;
+  const cardNum = stops[i].num ? String(parseInt(stops[i].num,10)) : '';   // concept number (1,2,3…) for the step/card readout
+  const html = renderCard(it.meta,it.sections,assetsDir,kind,cardNum);
+  const isStory = it.meta.type==='concept' && (it.sections.story||'').trim();   // viewport-fit centering applies to story cards only (mixed-migration safe)
+  return `<div class="page${isStory?' page-story':''}" data-id="${esc(it.meta.id)}">${html}</div>`;   // card nav is now the FAB, not a bottom bar
 }).filter(Boolean).join('\n');
 const outName = process.argv[3] || '_preview.html';   // pass 'index.html' when migration is complete
 fs.writeFileSync(path.join(moduleDir,outName), page(mod,cards,stops));

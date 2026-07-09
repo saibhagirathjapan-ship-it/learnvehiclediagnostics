@@ -23,9 +23,14 @@ const IC_MOON = '<svg class="ic-moon" viewBox="0 0 20 20" width="15" height="15"
 // `home` = relative path to the course hub from this page. `brand` overrides the label
 // (default is the constant). The bar is IDENTICAL on every surface — hub, map, stub, module —
 // so there is nothing page-specific to diverge (Expand/Collapse-all removed 2026-07-07 per FB).
-function topbar({ home = '../../index.html', brand = 'Automotive Diagnostics' } = {}) {
-  return `<header class="topbar"><div class="topbar-in">` +
-    `<a class="brand" href="${esc(home)}" aria-label="Automotive Diagnostics — home"><span class="dot"></span><span class="btxt">${esc(brand)}</span></a>` +
+// `compact` (module reading pages) → a slim bar: home ICON only, no wordmark, to reclaim vertical
+// space for the app-like viewport-fit slide (2026-07-09 FB). Hub/map/stubs keep the full wordmark.
+function topbar({ home = '../../index.html', brand = 'Automotive Diagnostics', compact = false } = {}) {
+  const brandEl = compact
+    ? `<a class="brand brand-ico" href="${esc(home)}" aria-label="${esc(brand)} — home" title="${esc(brand)} — home"><span class="dot"></span></a>`
+    : `<a class="brand" href="${esc(home)}" aria-label="${esc(brand)} — home"><span class="dot"></span><span class="btxt">${esc(brand)}</span></a>`;
+  return `<header class="topbar${compact ? ' tb-compact' : ''}"><div class="topbar-in">` +
+    brandEl +
     `<div class="tb-spacer"></div><div class="tb-ctl">` +
     `<button class="tb-icobtn" id="langbtn" data-v="en" title="Language · 言語" aria-label="Change language">${IC_GLOBE}<span class="tb-lc">EN</span></button>` +
     `<button class="tb-icobtn tb-theme" id="themebtn" title="Toggle light / dark" aria-label="Toggle light / dark theme">${IC_SUN}${IC_MOON}</button>` +
@@ -37,9 +42,13 @@ function topbar({ home = '../../index.html', brand = 'Automotive Diagnostics' } 
 // --tbh / --crh / --stick so every sticky offset below stays honest (FB4).
 const TOPBAR_SCRIPT = `<script>
 (function(){var root=document.querySelector('.stage');if(!root)return;
-function stick(){var t=document.querySelector('.topbar'),c=document.querySelector('.crumbs');
-  var th=t?t.offsetHeight:0,ch=c?c.offsetHeight:0,d=document.documentElement.style;
-  d.setProperty('--tbh',th+'px');d.setProperty('--crh',ch+'px');d.setProperty('--stick',(th+ch)+'px');}
+// measure the fixed chrome so the viewport-fit slide can size to the rest (--chrome), and keep
+// --stick/--tbh/--crh for any legacy sticky offsets. modhead (module reading pages) is the compact
+// header; crumbs is the legacy breadcrumb (hub/map/stubs).
+function stick(){var t=document.querySelector('.topbar'),c=document.querySelector('.crumbs'),m=document.querySelector('.modhead');
+  var th=t?t.offsetHeight:0,ch=c?c.offsetHeight:0,mh=m?m.offsetHeight:0,d=document.documentElement.style;
+  d.setProperty('--tbh',th+'px');d.setProperty('--crh',ch+'px');d.setProperty('--stick',(th+ch)+'px');
+  d.setProperty('--chrome',(th+mh)+'px');}
 stick();addEventListener('resize',stick);addEventListener('load',stick);
 var order=['en','jp','both'],lbl={en:'EN',jp:'日本語',both:'EN+JP'},b=document.getElementById('langbtn');
 if(b)b.addEventListener('click',function(){var v=order[(order.indexOf(b.dataset.v)+1)%3];b.dataset.v=v;root.setAttribute('data-lang',v);var t=b.querySelector('.tb-lc');if(t)t.textContent=lbl[v];stick();});

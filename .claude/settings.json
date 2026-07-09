@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"_template/rigor.js\" --all",
+            "timeout": 15,
+            "statusMessage": "rigor L1 — course content lint"
+          }
+        ]
+      }
+    ]
+  }
+}

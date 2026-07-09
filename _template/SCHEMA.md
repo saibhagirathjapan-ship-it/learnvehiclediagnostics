@@ -34,6 +34,29 @@ legs:                          # the T-stem: 3–4 max (CONVENTIONS §1c)
 ---
 ```
 
+*(The `legs:` block is the LEGACY T-card shape; new cards use the stepped-story model — a
+`## story` of `:::step`s, [[CONVENTIONS]] §1c — with the same front-matter minus `legs`.)*
+
+### Rigor fields (LOCKED 2026-07-10 — governance session; checked by `_template/rigor.js`)
+
+```yaml
+load_bearing: >                # REQUIRED on every type:concept card (G0, CONVENTIONS §2c move 1):
+  Setting bit 6 adds 40h because bit 6's place value IS 40h — so a positive reply's
+  first byte is always the request SID + 40h, computed, not stored.
+crux: true                     # OPTIONAL — marks a LOAD-BEARING card (the module hinges on it):
+                               # /teach-back (L2) is mandatory at G1; Glassbox is the natural mode.
+derivation:                    # REQUIRED on crux cards — one entry per asserted equivalence/term:
+  - claim: "set bit 6 = add 40h"
+    why: "bit 6 place value = 0100 0000 = 40h; stated on-card in step 4"
+    clause: "ISO 14229-1 cl.8.4"
+```
+
+**Contract:** `load_bearing:` is the ONE sentence the reader must end up able to say — the
+*insight*, not a label; written **before** authoring (G0), delivered by the finished card (G1).
+`derivation:` records, per claim, where the WHY lives **on the card** and the clause it was
+double-derived against. These fields are authoring metadata — the renderer ignores them; the
+teach-back agent must **never** be shown them (they are the answer key).
+
 ## 2. Body — labelled sections, bilingual blocks
 
 Prose lives under headings that match the structure. Each block carries EN and JP:

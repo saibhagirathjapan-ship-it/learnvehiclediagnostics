@@ -1,25 +1,29 @@
 # Course: Automotive Diagnostics — from UDS to SOVD
 
-**This file is the single source of truth for the learning-course build.**
-Read it first, every session. It holds the roadmap, the locked conventions, and the
-current focus. Granular per-card status lives in each module's `NOTES.md`.
+**This file is the single source of truth for the learning-course build** — the **standing**
+material: roadmap, locked conventions, the Foundation H/V block. The **volatile** state (current
+status · queue · deferred) lives in **`NEXT.md`** (the dashboard); granular per-card status in
+each module's `NOTES.md`. Session kinds + their rigor curation: **`work-types.md`**.
 
 ---
 
 ## Resume protocol (do this at the start / end of every session)
 
-**At session start**
-1. Read this file (`wiki/learn/COURSE.md`) — roadmap, conventions, Current Focus.
-2. Read the active module's `NOTES.md` (see Current Focus for which module).
-3. Seed the task list from "Current Focus → Next up."
+**At session start** *(ritualized as `/session-open` — the command walks these steps)*
+1. Read this file (`wiki/learn/COURSE.md`) — roadmap, conventions. *(Auto-loaded via CLAUDE.md.)*
+2. **Read `NEXT.md`** — current state, suggested next session, the queue.
+3. Read the active module's `NOTES.md`; identify the session's **work-type** (`work-types.md`)
+   and confirm the proposal + execution mode with the user before building.
 4. If anything in Conventions is unclear or seems stale, confirm with the user before building.
 
-**At session end**
-1. Update the active module's `NOTES.md` (card statuses, TODOs, verification state).
-2. Append a dated entry to `wiki/log.md` (what changed).
-3. Update "Current Focus" below (what's done, what's next).
-4. Save any durable, cross-session fact to memory (user prefs, locked decisions).
-5. **Commit + push** (git root = `wiki/learn/`, branch `main`) — the live GitHub Pages site is the
+**At session end** *(ritualized as `/session-wrap`)*
+1. **Incident ask + hardening ask** — a Claude-side miss worth learning from → `INCIDENTS.md`;
+   a generic reusable rigor discovered → [[CONVENTIONS]] / the work-type (deliberate edit).
+2. Update the active module's `NOTES.md` (card statuses, gate scorecard, TODOs).
+3. Append a dated entry to `wiki/log.md` (what changed).
+4. **Refresh `NEXT.md`** (current state, suggested next, queue, deferrals — dashboard, not journal).
+5. Save any durable, cross-session fact to memory (user prefs, locked decisions).
+6. **Commit + push** (git root = `wiki/learn/`, branch `main`) — the live GitHub Pages site is the
    deliverable, so a session/drill is **not done until it's pushed**. Confirm the push landed.
 
 ---
@@ -242,219 +246,15 @@ only ResponseOnEvent changed.
 
 ---
 
-## Current Focus
+## Current Focus → `NEXT.md`
 
-**Current status (updated 2026-07-07)**
+The volatile dashboard — current status · suggested next session · the queue · deferred backlog —
+**lives in `NEXT.md`** (moved at the 2026-07-10 governance meta-session: it was the
+heaviest-churn content inside an auto-loaded file, against [[CONVENTIONS]] §10 token discipline).
+**Read `NEXT.md` at every session start; refresh it at every wrap.** Per-session narrative:
+`wiki/log.md` + this file's git history.
 
-- **Built & pressure-tested:** Foundation **H1** (3 concept cards) and **H2** (**7 concept cards** after
-  the FB3 re-author) — clause-grounded, browser-verified light/dark/mobile. The hub + the Foundation
-  T-map are live (map now rendered through the pipeline). Legacy **M1** (`uds/`) remains a figure donor.
-- **Shared template overhauled (session 9):** overview strip · card-level left rail (scroll-spy) ·
-  distinct cards · real forward-pointer links (+ stub pages for V1–V9 / M2–M9 / H3) · a prominent
-  Go-Deeper affordance (accent banner + solid `+/−`) · prominent `:::recall` · byte-box travel
-  animation. All in `_template/render.js` + `blueprint.css`; H1 + hub inherit.
-- **Published to GitHub (2026-07-06):** git root = `wiki/learn/`, branch `main`, public repo. Publish
-  a change with `git add -A && commit && push`. See memory `reference-github-repo`.
-- **Done 2026-07-06 — governance + Foundation shell (2 feedback rounds).** Token-discipline →
-  [[CONVENTIONS]] §10; Current Focus trimmed (history → `wiki/log.md` + git). **Shell** (shared
-  `render.js` + `blueprint.css`, re-rendered H1/H2; the hand-authored map patched to match): constant
-  **"Automotive Diagnostics"** home-link brand · `Course › Foundation › module` breadcrumb (trail only)
-  · **single globe** toggle (EN→日本語→EN+JP) + **single theme** toggle (sun↔moon) · **pager — one card
-  at a time** (top strip = always-on, de-boxed, sticky, highlights the current card; Prev/Next + strip +
-  arrow keys drive it; dividers dropped on module pages) · Foundation **map CSS fixed** (self-contained).
-  *Debt:* the V1–V9 / M2–M9 **stub pages** are hand-authored and don't inherit the shell (they get it when
-  built); the map's inlined CSS can drift on future theme edits — best long-term fix is to render the map
-  through the pipeline.
-- **✅ Shell round SIGNED OFF 2026-07-07.** All five build items (FB1 · FB4 · Task4 · Task5 · FB3) done +
-  browser-verified; then one **post-review feedback round** landed and was resolved: **topbar parity +
-  Expand/Collapse removed** — the only home-vs-module bar difference was an Expand/Collapse-all segment
-  `render.js` appended (`topbar({expand:true})`); deleting it made every topbar byte-identical *and*
-  dropped the unwanted control (dead `.tb-seg`/`#allseg` markup + CSS gone; H1/H2/map/hub re-rendered;
-  `verify_shell.js` green on all 5 page types + mobile; topbar close-up confirms hub==module). User: "none
-  on the shell feedback." Full write-ups in `wiki/log.md` (2026-07-07 ×2). Build-item status (each was the
-  "to-do" below, now **done**):
-  - **FB1 — topbar is NOT a shared component (HELD as a shell build-item).** The top bar diverges across
-    levels because it lives in 3 code paths (`render.js` module shell · `render-hub.js` hub, still on the
-    OLD text `EN/日本語/EN+JP` seg + non-link brand · `make-stubs.js` stubs, Light/Dark only) **plus** a
-    hand-copy in the Foundation map (`uds-foundation/index.html`). **Fix (when doing the shell round):**
-    extract one shared `topbar()` partial all three renderers call, and render the map through the pipeline
-    so the hand-copy dies. **✅ DONE** — `_template/partials.js` `topbar()`/`TOPBAR_SCRIPT`/`FONTS` used by
-    `render.js` + `render-hub.js` + `make-stubs.js`; map now renders via `_template/render-map.js` (map CSS
-    moved into `blueprint.css`; hand-copied topbar + inline-CSS drift gone).
-  - **FB2 — `$10`/`$11`/`$3E` service-axis restructure: RESOLVED & LOCKED 2026-07-07** (see the
-    "Service-axis restructure" note in the Foundation H/V block). Plan updated to **3H + 11V**
-    (V7→V7a `$10`+V7b `$11`, new V7c `$3E` use-case drill, + H3 comms-family bar). This is a *content-plan*
-    change; the V-stub pages must be regenerated for the new numbering when the shell work happens.
-  - **FB3 — continuity pass: full card-level flow speced + shipped-H1/H2 random fitments found
-    (2026-07-07).** After confirming the learner baseline (persona → open item), an 8-agent continuity
-    workflow designed the ideal card-level flow for all 14 modules FRESH and audited every seam. Result
-    in [`uds-foundation/STRUCTURE.md`](uds-foundation/STRUCTURE.md) (the build spec). **Decisions:** (1)
-    **V8 moves after V4**; (2) **fold the shipped-H1/H2 continuity re-author into THIS shell round** (one
-    pass — re-order H2, split the "four-rules" card into C4–C7, add the `11 01 → 51 01` trace, trim the
-    subfn/security legs, cut H1-C3's addressing dup); (3) **H2 = 7 concept cards** (one idea each). The
-    worst shipped fitments: H2's "four rules" bucket-card, addressing taught twice (H1+H2), suppression
-    explained before the positive reply is defined, `security` inline-defined in a breadth leg.
-  - **FB4 — sticky breadcrumb. ✅ DONE** — `.crumbs` `position:sticky` at `--tbh`; overview strip stacks at
-    `--stick` (= topbar+crumbs, measured in `TOPBAR_SCRIPT`); pager scroll-offset uses `--stick`. Verified
-    on hub/map/stub/H1/H2 + mobile.
-  - **Task4 — V-renumber. ✅ DONE** — V7→V7a/V7b/V7c (stub slugs + `render.js` LINKS + `fwd` `[VMH]\d+[a-c]?`);
-    orphan `v7-archetypes/` removed; stubs regenerated; map V-stem = V1–V6,V7a/b/c,V8,V9 + H3 comms-family line.
-  - **Task5 — STRUCTURE + figure register. ✅ DONE** — course-level `wiki/learn/STRUCTURE.md` authored (hub
-    source of truth, §1e); all H1/H2 figures renamed to §7c `h#-<card>-f<k>_<title>.svg` (collision resolved
-    by construction); figure registers populated in `uds-foundation/STRUCTURE.md`.
-  - **FB3 — H1/H2 re-author (structure/flow). ✅ DONE** — H2 → **7 concept cards** (trace→C3; four-rules
-    split into C4–C7; `11 01 → 51 01` trace in C6; subfn/security legs trimmed). H1 = the 3 Decision-#2
-    trims (cut C3 addressing dup · soften C1 SID pre-empt · cut C2 SOVD teaser). **Deferred (future H1
-    rebuild, per STRUCTURE scoping):** the larger H1 **3→4 re-split** (new "why diagnostics" C1 +
-    neighbours→C4) is NOT shell-round scope.
-
-**H3 — 6-card build DONE (restructured 2026-07-07, session 14).** `uds-foundation/h3-catalog-and-server/`.
-- ✅ **9→6 restructure executed + browser-verified.** Cards: divider · brief · **C1 primer** (user-approved)
-  · **C2** the six functional units (+ a comms-family leg placing `$10`/`$11`/`$3E` →V7a/b/c · a DID/RID
-  one-liner →M2/M5 · the security-guard leg) · **C3** "The ECU decides what it will serve" (vet →
-  serve/refuse; legs = two gates →V5/M4 and where-a-no-is-born →V9) · **K** conclusion. Dropped the old
-  standalone C4 (DID/RID), C5 (4-stage pipeline → V9 depth, only the *decision* kept), C6 (comms family →
-  folded into C2), per the OK/NG gate. `checkmod . 3` green; grep confirms **no stale pipeline terms**;
-  forward-pointers verified in DOM. Bar-coverage now **V7a/b/c←C2 · V5←C3 · V9←C3**. Record:
-  `uds-foundation/STRUCTURE.md` H3 § + `h3-catalog-and-server/NOTES.md`.
-- **✅ All 6 H3 cards USER-APPROVED 2026-07-07** ("H3 looks good") — prose is final. **✅ All 10 real SVGs
-  DRAWN + geometry-audited (session 15, 2026-07-08):** §7a clean (connectors touch anchors; icons recognizable
-  — warning-triangle/dial/gear/shield-check/download/padlocks; zero overflow), theme-aware light + dark,
-  `checkmod . 3` green, 0 console errors. One fix landed (`h3-c1-f2` wiring-label overrun + sun-like actuator
-  glyph → shortened label, redrew the gear). **H3 is fully complete — the whole breadth spine H1·H2·H3 is now
-  built to the bar with real figures.** Register: `uds-foundation/STRUCTURE.md` §7c H3.
-
-- **✅ H3 figure review pass — CLOSED session 16, 2026-07-08 ("H3 review is okay").** Redesigned all three **C1**
-  figures with the user (source prose/captions updated, files renamed): **f1 → `capability`** ("a service = a
-  capability the ECU provides"; you-ask→ECU→provides, 3 varied capabilities; caption off "one fixed shape") ·
-  **f2 → `primitives-to-diagnosis`** (3 atomic primitives converge → "The Diagnosis", pieces fused = "made sense
-  of") · **f3** recast to carry the **asymmetry** (tiny asker vs loaded provider) + **"server = a role, not a
-  box"** in *both* text and image. **C3-C1 polish:** title → "The ECU decides: serve or refuse"; cut a filler
-  paragraph; flipped a negation-first line positive; anchored c3-f1's two floating labels. c3-f2/c3-f3 left as-is.
-  **Doctor↔patient = a SPINE analogy → deferred to the H1 rebuild** (see Next-up #1), not sprung at a C1 leg.
-
-**Done this session (2026-07-08, session 15):** drew all 10 H3 SVGs from the STRUCTURE.md §7c register (brief 1
-· primer 3 · C2 3 · C3 3) through the `.dgm` design system, geometry-audited via per-figure light/dark close-ups.
-**Session 16:** the C1 redesign + C3 polish above; "lead positive / no negative framing" added to memory.
-
-**✅ V1 (service model) BUILT + SIGNED-OFF-PENDING 2026-07-08 (session 17).** 5 cards (Brief + C1–C3 + Conclusion),
-byte-free abstract skeleton; 10 `.dgm` figures **all animated where motion teaches** (per-user directive) —
-sequence-diagram of the 4 primitives, the 6-vs-3 count, reading-an-arrow, the owner zig-zag, by-side sort,
-symmetry, the SAP address-label swap, the param-name label, the layer hand-down. Verified: `checkmod` green
-(3 concepts, EN-on-load, lang isolation, zero overflow, no console errors); all 10 figures geometry-audited
-light+dark; **4-lens adversarial review** (ISO accuracy vs 14229-1/-2 — all 8 target claims hold; pedagogy/
-continuity; bilingual; figures) + a re-run pedagogy pass — all findings folded (citation fixes, C1 opener
-leads positive, conclusion params **bold** not mono, `A_TAtype`/physical-functional glossed "→V8", C3-F1 now
-shows all 3 label facts, C3-F3 dropped untaught params). Record: `v1-service-model/NOTES.md` + STRUCTURE §7c.
-**New locked convention:** the **Brief = 3-part advance organizer** (why-this / what's-inside / what-you'll-be-
-able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need retrofitting** (follow-up).
-
-**Next up**
-
-> **⛔ NEXT SESSION = a GOVERNANCE META-SESSION, not a build (set 2026-07-10).** Do **not** start V3.
-> Step back and plan how we develop / operationalise / enforce / evolve the content-creation rigors —
-> centre of gravity = the three **"convey the core"** moves ([[CONVENTIONS]] §2c: load-bearing sentence ·
-> derivation gate · **no-context teach-back subagent**), alongside §2b, the pressure-test gates, PEDAGOGY,
-> and the MASTER CHECKLIST. Kickoff prompt + intent recorded in memory `project-governance-meta-session`.
-> The user will specify the focus in that session; come with proposals, ask before locking. **Then** V3.
-
-> **Session-20 DONE (2026-07-09) — the exemplar⇄course comparison pass; adopted set locked, all pilot in V2.**
-> The four exemplar studies (`_derive/exemplar-rigors.md` TLDR·Jigsaw·3B1B + `…-learning-how-to-learn.md`)
-> were analyzed against the shipped course and decided with the user **item-by-item**. **ADOPTED → pilot in
-> V2 (session 21)**, all now written into [[CONVENTIONS]]: (1) **§7d visual-cast lexicon + actor tokens** —
-> fixes the live ochre/olive collision, encodes pos/neg by ✓/✕ glyph+stroke not hue; (2) **§7d staged/
-> progressive figure reveal, click-to-advance** (the 3-of-4-exemplar signal) — pilot on V2-C1 (PDU builds
-> field-by-field) + V2-C2 (`10` sets bit 6 → `50`, "animate the consequence"); (3) **§7d motion grammar +
-> shared byte-box generator** (object constancy); (4) **§7d-6 `prefers-reduced-motion` + static-end-frame
-> teaches** (a11y gate); (5) **§6 motivate-before-define + "you-could-have-invented" + the 4-beat bar**
-> (Tension→guess→Reveal→Name, term last) — piloted, not yet checklist-locked; (6) **§4 generative recall
-> (not recognition)** + the new **`:::elaborate`** learner beat (pilot one in V2); (7) **§7b dual-channel
-> term parity**. Per-card V2 scope + figure register: `uds-foundation/STRUCTURE.md` V2 §. **PARKED / REJECTED**
-> sets are in the backlog below. User steer: *make V2 a visible upgrade — apply everything needed to prove
-> the research.* **The V2 build is session 21** (applies all the above).
-
-> **Session-22 DONE (2026-07-09) — the reading-model overhaul; NEW card + shell model LOCKED.** Four
-> user-FB rounds on V2-C1 turned the continuous-story pilot into a whole new model, now **locked in
-> [[CONVENTIONS]] §1c + §1f** (they *supersede* the T-with-legs card and the session-9 scroll shell):
-> **(1) a concept card = one stepped STORY** — a `## story` of `:::step`s (narration + a figure that
-> evolves or swaps; teaching drives the figure; steps take bullet lists), no collapsible legs; **(2) an
-> app-like viewport-fit SLIDE** — content centred, vertical scroll ≈ 0, slim chrome (icon-home topbar +
-> compact one-line header; hero/strip/rail dropped); **(3) nav** = plain `‹ ›` arrows + dots, **swipe =
-> a drag-pan** (finger-follows, full-width slide, rolls into the adjacent card at the ends), **card nav =
-> a FAB** whose label opens a "Jump to card" menu; **(4) Further reading collapses**; **(5) the module
-> T-glyph marks H vs V** (`kind:` in module.yml). Two **pressure-test gates** added to the build recipe
-> (story-gate after writing the story, diagram-gate after figures — [[feedback-build-pressure-tests]]).
-> Template rewrite: `render.js` (story renderer + controller + drag + FAB + modhead) · `blueprint.css`
-> (story/app-shell/FAB) · `partials.js` (compact topbar + `--chrome`) · `checkmod.js` (story-aware).
-> **This is now the DEFAULT for every future card and the RETROFIT target for H1/H2/H3/V1.**
-
-1. **✅ V2 (request & positive response) — FULLY BUILT on the app-slide model (session 23, 2026-07-09).**
-   All 5 cards on the stepped-story model: **C1** (4 steps, ✅ session 22) · **C2 `+0x40`** (6 steps —
-   bit-6-free → set→+0x40 → one-rule-every-service+$2A → *computed rule, not a stored field* ×2; figure
-   `v2-c2-f1` evolves steps 1–4 then swaps to a **rebuilt rule-vs-field ✓/✕ contrast** `v2-c2-f2`; footer =
-   the pilot `:::elaborate`) · **C3 the echo** (5 steps — 10→50 → 03 echoed+why → top-bit-0→V4 → the byte
-   split→V4; figure evolves then swaps) · brief + conclusion reviewed (already in the locked formats).
-   Figure headlines are **stage-gated** to track each step's point, not the conclusion. Verified: `checkmod`
-   green · `_storyshot.js` fit (C1 ≈8 / C2 136 [residual = the below-story `:::elaborate` beat] / C3 0 px) ·
-   geometry close-ups light+dark for all 4 concept figures · **both pressure-test gates run in-persona**,
-   fixes folded (C3 "sub-function" named on the spot; C2 long step split 5→6; c2-f2 consequence-column
-   spacing). Records: `v2…/NOTES.md`, `STRUCTURE.md` V2 §.
-   - **Post-build FB round (session 23) landed + verified:** (1) **illustrations enlarged** — box padding
-     14→6px, figure cap 31→40vh, figures authored WIDE to fill the box (C3's echo redrawn horizontal); new
-     shell rule in [[CONVENTIONS]] §1f. (2) **prose newlines + emphasis** across C1/C2/C3. (3) **side `‹ ›`
-     card-nav arrows added to Brief + Conclusion** (`pageArrows()`), end-arrow hidden where no card.
-   **Next: continue the V drills in STRUCTURE reading order — V1 ✅ → V2 ✅ → V3 → V4 → V8 → V5 → V6 → V7a →
-   V7b → V7c → V9** on the locked model.
-2. **Then the H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
-   many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
-   (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.
-   - **Plant the doctor↔patient SPINE analogy in this opener** and carry it as a light through-line:
-     "you can't open the patient up, so you interrogate it" → **consultation = session `$10` · symptoms =
-     stored faults `$19` · vitals = live data `$22` · provoked tests = routines/actuator `$2F`/`$31` ·
-     treatment = reprogram `$34`.** It's a *spine* analogy (structures the whole subject), so it MUST be
-     seeded early, not sprung mid-course; **H3-C1's primitive leg then nods back to it.** (Decided session 15:
-     a spine analogy introduced cold at a C1 leg reads as off — so it was **deferred out of the H3-C1 `f2`
-     redraw**, which now stands alone [atoms → "The Diagnosis"] without the doctor.)
-3. **Then** the pillar modules M2–M9, each its own H/V.
-
-**Open points / backlog (tracked, not blocking the active build):**
-- **OP — 3-part Brief retrofit.** H1/H2/H3 briefs predate the locked **3-part advance-organizer** Brief format
-  ([[CONVENTIONS]] §4) and read as hook-only. Retrofit them (why-this / what's-inside / what-you'll-be-able-to-do,
-  derived from each module's STRUCTURE.md card list + *Leaves:* line, `:::key` "By the end"). A small pass; do
-  opportunistically, not before V2 (user 2026-07-08).
-- **OP — exemplar-rigor PARKED backlog (triaged & signed off session 20, 2026-07-09).** The *adopted* set is
-  now in [[CONVENTIONS]] §7d/§6/§4/§7b + `uds-foundation/STRUCTURE.md` V2 § (all pilot in V2). **PARKED ≠
-  undecided: the user's intent (confirmed 2026-07-09) is that ALL these learnings are applied eventually** —
-  the V2/park split was only *sequencing* (V2 pilots what byte-mechanics can prove; the rest waits for its
-  natural trigger: the shipped-figure repaint after the V2 pilot validates §7d, the hub pass, the H1 rebuild,
-  before-M2 for GLOSSARY, per-module for service beats, M9 for change-of-basis). Work them at their triggers;
-  don't re-litigate. Only the REJECTED list at the bottom is actually dropped. Full detail in
-  `_derive/exemplar-rigors.md`:
-  - **Repaint / retrofit shipped figures** to §7d actor tokens (V1/H1–H3) + **retrofit-animate** the shipped
-    static bars (`h2-c7` session-life, `h2-c3` decode, `h2-c4` addressing, `h2-c6` reset, `h3-c3`, `h3-c2-f3`).
-  - **Hub package:** road-to-SOVD **spine strip** + "you are here → SOVD" · **F0-style "How this course works"**
-    orientation panel · per-module **level chips** · LHTL's honest **"space it / sleep on it"** line (the one
-    thing our one-sitting framing under-serves) — all in `render-hub.js` + `course.yml`.
-  - **The "Essence" through-line** ("a diagnostic request is a typed message a state machine agrees to serve —
-    and SOVD is that same conversation re-dressed as web resources") on hub + course `STRUCTURE.md`, + a "grows
-    the essence by:" per-module field.
-  - **Doctor↔patient spine** as standalone H1-C1 (already Next-up #2, the H1 rebuild) · **`GLOSSARY.md`** EN+JP
-    canonical-term contract (before M2) · **between-module bridges + cross-module/interleaved recall** (from M2)
-    · **"what breaks without this"** beat on *service* cards (V7a/b/c, M2–M6) · per-module **size budget** ·
-    **"why now" bridge** before SOVD (M9) · **M8-placement** note · **voice-exemplar set** in PEDAGOGY ·
-    **title-grammar** normalization + hooky-title nudge · **motion-grammar** full alignment of V1's 9 figures ·
-    **spatial reification** (NRC address-space strip, V3/V9/M4) · **zoom-continuity** (leg = zoom of bar region)
-    · **3B1B change-of-basis M9** signature animation · **B-roll ≠ schematic** (H1) · **analogy-as-retired-beat**
-    directive · **3-part-Brief retrofit** of H1/H2/H3 (already the OP above).
-  - **REJECTED (session 20):** embodied green-screen instructor / vary-position / bigger-than-life persona /
-    teleprompter voice (all presuppose a talking-head video — we are silent self-paced HTML; LHTL itself flags
-    them non-adoptable) · "graded visual complexity per altitude" (restates the T-model) · "let the reader sit
-    with the crux" (already the pager) · a hub visual-grammar **KEY card** (leverage is the §7d lexicon+lint) ·
-    "practice what you preach" as new machinery (already the MASTER CHECKLIST).
-
-**Open build-phase decisions (unchanged):** V8 density (keep the 5-card stack incl. DoIP vs spin the
-IP/DoIP half to M7) · a `:::table` directive (for M2/M3) · bundle EN fonts base64 (map + modules still
-use the Google-fonts link) · per-pillar T derivations for M2–M9 (each its own H/V, when built).
+## Learner persona (authoring reference)
 
 **Learner persona — PUBLISHED 2026-07-07** as a "Who this is for" note on the hub (`course.yml` `whoFor`).
 The confirmed baseline, kept here as the **authoring reference** for every card: a *motivated professional
@@ -474,6 +274,9 @@ engineer with zero automotive-diagnostics background* (engineer, not technician)
 ```
 wiki/learn/
   COURSE.md · CONVENTIONS.md · PEDAGOGY.md   <- governing docs (auto-loaded; read first)
+  NEXT.md                 <- the DASHBOARD (volatile state; read at open, refresh at wrap)
+  work-types.md           <- session kinds (JDs) + curated gates + the 3-layer enforcement
+  INCIDENTS.md            <- Claude-side misses worth learning from (via /session-wrap)
   pedagogy-research.md    <- verbatim long-form pedagogy (NOT auto-loaded; open for content work)
   course.yml              <- roadmap data for the hub
   index.html              <- COURSE HUB (rendered by _template/render-hub.js)

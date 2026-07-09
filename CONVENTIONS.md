@@ -564,40 +564,61 @@ animation frame) — don't judge from the source.
 
 ---
 
-## Module build recipe (apply to M2…M10)
+## Module build recipe — the GATE LADDER G0–G5 (restructured 2026-07-10, governance session)
 
-1. Read [[COURSE]] → this file → the module's `STRUCTURE.md` and `NOTES.md` (create them if new).
-2. Author/refresh the module's **`STRUCTURE.md`** (§1e) — the ordered card list + go-deeper legs +
-   flow links + figure register — and show the user before auto-running. This *is* the card scaffold;
-   the `content/` MD is derived from it, never organized independently.
-3. **STORY pressure-test — after writing the story, before authoring prose/figures (LOCKED 2026-07-09,
-   [[feedback-build-pressure-tests]]).** Interrogate the step flow for **gaps · continuity** (does each
-   card/step flow from the last and into the next? if continuity *must* break, is the break **stated**
-   — what we're exploring & why — and is the **return signposted**? are the hand-offs **clean**?) — then
-   add / cut / emphasize / edit. Exit question, asked **in the learner persona**: *"am I understanding
-   this card?"* (V2-C1 example: this gate caught "the bytes came back in V1" — V1 was byte-free.)
-   **FIRST run the §2c derivation gate (the CENTRAL check):** write the card's load-bearing sentence; then
-   interrogate every claim/label — *why true? how known? is the WHY on the card or only in my head?* — and
-   add any missing rung (the `40h` place-value miss). For a **load-bearing** card, externalise the judge —
-   a no-context teach-back subagent (§2c move 3). **Then run the §2b prose-&-term lint over every sentence**
-   (canonical term · precise not vague · REAL claim double-derived · right actor · self-contained). An
-   unearned claim, a missing rung, a conveyed *proxy* instead of the core, term drift, a vague quantifier, a
-   plausible-but-unverified claim, false agency, or a load-bearing "in H2 …" is a **blocker**, not a nit.
-4. Reuse the **shared template + renderer** (do not restyle): author each concept as a **content MD
-   file** (§1d) — a `## story` of `:::step`s (§1c stepped-story model) — and render to the self-contained
-   HTML page; bilingual EN/JP, bundled fonts, `.dgm` diagrams, accent-highlight, notation (`$xx`,
-   byte-boxes, +0x40, 7F+NRC). Build **unit by unit** (§8); double-derive each technical claim against
-   the standard. **Teaching drives the figure**, and each figure **headlines its step's key point**, not
-   the card's conclusion (§1c). Then run the **DIAGRAM pressure-test** (same rigor as gate 3 + the
-   §7a/§7d geometry & cast checks) after the figures.
-5. End each UDS module with a bridge card mapping the capability to its **SOVD resource
-   category** (see [[COURSE]] roadmap).
-6. Verify in-browser (§9). Update `NOTES.md`, append `wiki/log.md`, update [[COURSE]] Current
-   Focus.
-7. **Publish — `git add -A && git commit && git push`** (git root = `wiki/learn/`, branch `main`).
-   The live GitHub Pages site **is** the deliverable, so a module is **not "done" until it's pushed**
-   — don't leave it local. `.gitignore` already excludes screenshots (`*.png`), `node_modules/`, and
-   `_derive/`, so `git add -A` is safe. Confirm the push landed (see [[reference-github-repo]]).
+> **Gates fire in this order, per card, regardless of prompt order.** Which gates bite for a given
+> session is *curated by its work-type* (`work-types.md` — e.g. `B-PAGE` runs all; `R-FIG` runs only
+> G2–G5). Enforcement is 3-layered (work-types.md §Enforcement): **L1** mechanical (`checkmod`),
+> **L2** adversarial fresh-context (`/teach-back`, figure judge), **L3** the human sign-off.
+> This ladder *supersedes* the older 7-step recipe; the two 2026-07-09 pressure-tests
+> ([[feedback-build-pressure-tests]]) live on as G1 and G3.
+
+**Pre-work (before any card):** read [[COURSE]] → `NEXT.md` → this file → the module's
+`STRUCTURE.md` + `NOTES.md` (create if new). If the module's `STRUCTURE.md` § is missing or stale,
+that is a **`D-HV` session first** (§1e — the card scaffold is derived, never improvised), shown to
+the user before building.
+
+- **G0 — Structure (pre-flight).** The card exists in `STRUCTURE.md` with its flow links; its
+  **load-bearing sentence is written FIRST** (§2c move 1) into the card's `load_bearing:`
+  front-matter — the one sentence the reader must end up able to say, fixed *before* authoring can
+  substitute a weaker proxy.
+- **G1 — Story pressure-test** (after writing the story, before prose polish/figures).
+  **FIRST the §2c derivation gate (the CENTRAL check):** interrogate every claim/label — *why true?
+  how known? is the WHY on the card or only in my head?* — add any missing rung (the `40h`
+  place-value miss); a load-bearing claim's `derivation:` note is recorded in the front-matter. For
+  a **load-bearing card, externalise the judge — the `/teach-back` no-context subagent** (§2c move
+  3); its faith-list is the gap list, fix every rung. **Then the §2b prose-&-term lint per sentence**
+  (canonical term · precise not vague · REAL claim double-derived against the clause · right actor ·
+  self-contained). **Then gaps · continuity** (each card/step flows from the last into the next; a
+  necessary break is *stated* and the return signposted; hand-offs clean). Exit question, in the
+  learner persona: *"am I understanding this card?"* An unearned claim, missing rung, conveyed
+  proxy, term drift, vague quantifier, false agency, or load-bearing "in H2 …" is a **blocker**.
+- **G2 — Figure plan** (per figure, before drawing). State the figure's **objective** and write the
+  **caption first** (§7b — the takeaway fixes the goal); choose the elements; lay them out **on a
+  grid with named anchors** (§7a, layout framework + named constants); assign the **§7d cast**
+  (actor tokens, glyphs, motion vocabulary); fix the **reveal order** if staged (recorded in the
+  figure register). Drawing before planning is the "by eye" failure §8 exists to prevent.
+- **G3 — Figure audit** (after drawing — the old DIAGRAM pressure-test). §7a geometry via
+  **close-up, light + dark (+ a mid-motion frame)**: connectors touch anchors, motion rides the
+  drawn path, labels anchored, nothing floats/touches. §7d cast + motion-grammar lint; the
+  `prefers-reduced-motion` **end-frame teaches alone**; the figure **headlines its step's point**,
+  not the card's conclusion (§1c). Then the same gaps/continuity/persona interrogation as G1,
+  applied to the figures. *(Optional L2: a fresh-eyes agent reads the figure cold — "what does this
+  teach?" — a mismatch with the intended takeaway is a finding.)*
+- **G4 — Verify (whole page, in-browser, §9).** `checkmod` green: card list matches `STRUCTURE.md`
+  1:1, `load_bearing:` present, EN-on-load + lang isolation, **zero overflow**, **zero console
+  errors**, cast lint; storyshot viewport-fit. Update the **gate scorecard in `NOTES.md`** (per
+  card: G0–G4 ✅/❌ + whether teach-back ran and its faith-list closed).
+- **G5 — Publish.** Append `wiki/log.md`; refresh `NEXT.md`; **`git add -A && git commit && git
+  push`** (git root = `wiki/learn/`, branch `main`) — the live site is the deliverable, **not done
+  until pushed**; confirm the push landed ([[reference-github-repo]]). `.gitignore` already excludes
+  `*.png`, `node_modules/`, `_derive/`.
+
+**Standing build rules (inside G1–G3):** reuse the shared template + renderer, never restyle (§1d/
+§1f); author each concept as a `## story` of `:::step`s (§1c); bilingual EN/JP; notation per
+[[COURSE]] (hex `h`-suffix); build **unit by unit** (§8); **teaching drives the figure** (§1c).
+**Module exit (the last page's G5):** every V has an H bar (bar-coverage); the module reads
+top-to-bottom as one story; UDS modules end with the **SOVD-bridge card** ([[COURSE]] roadmap).
 
 ## Notation & shared facts
 
@@ -642,9 +663,9 @@ these ban a capability; they say *when* it earns its cost.
   console errors, lang isolation). Read an **image into context only** for the figure/geometry audit
   that genuinely needs eyes (§9), and only that close-up — not full-page light/dark/mobile as images.
 - **Keep the auto-loaded floor lean.** Auto-loaded docs (`COURSE.md`, this file, `PEDAGOGY.md`) carry
-  only durable roadmap / rules / current status. **Session-by-session narrative → `wiki/log.md` + git
-  history**; long derivations stay in `_derive/` and are *referenced*, never inlined. Trim `COURSE.md`
-  Current Focus each session.
+  only durable roadmap / rules. **Volatile state → `NEXT.md`** (the dashboard, not auto-loaded; read
+  at open, refreshed at wrap); **session-by-session narrative → `wiki/log.md` + git history**; long
+  derivations stay in `_derive/` and are *referenced*, never inlined.
 - **Tool hygiene.** Redirect noisy output (`2>/dev/null`), read only the lines/regions needed, and do
   not re-read a file already in context unless a tool requires it.
 
@@ -728,7 +749,7 @@ Any ❌/uncertain = fix before shipping.
 - [ ] **Per-element self-critique** run (§8.7): goal? looks good? conveys? anything off
       (align/pad/geometry/size)? — judged from a **close-up**, not source
 - [ ] **SVG-internal overflow / floating connectors** checked via close-up (the DOM check can't see them)
-- [ ] `NOTES.md` + `wiki/log.md` + [[COURSE]] Current Focus updated
+- [ ] `NOTES.md` (incl. the gate scorecard) + `wiki/log.md` + `NEXT.md` updated
 
 **(module exit, not per-card)** Every V drill has a bar in the H-spine — **bar-coverage invariant**
 (§1c-scale); the module reads top-to-bottom as one story.

@@ -222,11 +222,18 @@ function moduleGlyph(kind){
 // fixes the first-paint overflow, FB2) and pan horizontally; the figure pane holds every figure used,
 // showing one at a time. Separate sections (In-your-own-words, Further reading) live in `## footer`.
 function parseSteps(raw){
-  // split on a line that is only dashes; keep the ::: not relevant here — steps are plain kv blocks
+  // steps split on a line of dashes. Each step: an optional `fig: path` (swap directive), then an
+  // `en:` block and a `jp:` block — each MAY span multiple lines, so a step can carry a bullet list
+  // ("- …" lines) or numbered steps, rendered through renderProse like any other prose.
   return raw.split(/\n-{2,}\s*\n/).map(s=>s.trim()).filter(Boolean).map(block=>{
-    const o=kv(block);
-    // a step may carry `fig: path` as its first kv line (the swap directive)
-    return { en:o.en, jp:o.jp, fig:o.fig };
+    const step={fig:null,en:'',jp:''}; let cur=null;
+    block.split('\n').forEach(line=>{
+      const m=line.match(/^(fig|en|jp):\s?(.*)$/);
+      if(m){ if(m[1]==='fig'){step.fig=m[2].trim();cur=null;} else {cur=m[1];step[cur]=m[2];} }
+      else if(cur){ step[cur]+='\n'+line; }
+    });
+    step.en=step.en.trim(); step.jp=step.jp.trim();
+    return step;
   });
 }
 function renderStory(meta,sections,assetsDir,cardNum){
@@ -245,18 +252,18 @@ function renderStory(meta,sections,assetsDir,cardNum){
   }).join('');
   const stepsHtml = steps.map((s,i)=>
     `<div class="st-step${i===0?' on':''}" data-step="${i+1}" data-figidx="${s.figIdx}" data-figstage="${s.stage}">`+
-    (s.en?`<span class="en">${inline(s.en)}</span>`:'')+(s.jp?`<span class="jp">${inline(s.jp)}</span>`:'')+`</div>`).join('');
+    (s.en?renderProse(s.en,'en',false):'')+(s.jp?renderProse(s.jp,'jp',false):'')+`</div>`).join('');
   const N=steps.length;
-  // mid-screen flanking arrows (2026-07-09 FB): left = step/card (e.g. 3/1), right = steps remaining;
-  // at the last step the right arrow rolls into the next card. Swipe drives the same on mobile.
+  // step nav = plain ‹ › arrows (2026-07-09 FB — no counts); the dots show position; the forward arrow
+  // rolls into the next card at the last step, and a swipe DRAG-pans + rolls into adjacent cards at ends.
   const dots = steps.map((_,i)=>`<span class="st-dot${i===0?' on':''}" data-i="${i+1}"></span>`).join('');
-  return `<div class="story" data-steps="${N}" data-card="${esc(cardNum||'')}">`+
+  return `<div class="story" data-steps="${N}">`+
     `<div class="st-text">${stepsHtml}</div>`+
     (figs.length?`<div class="st-stage">${stageSvgs}</div>`:'')+
     `<div class="st-nav">`+
-    `<button class="st-arw st-prev" type="button" aria-label="Previous step"><span class="st-ar">‹</span><span class="st-cnt"></span></button>`+
+    `<button class="st-arw st-prev" type="button" aria-label="Previous"><span class="st-ar">‹</span></button>`+
     `<div class="st-dots" aria-hidden="true">${dots}</div>`+
-    `<button class="st-arw st-fwd" type="button" aria-label="Next"><span class="st-ar">›</span><span class="st-cnt"></span></button>`+
+    `<button class="st-arw st-fwd" type="button" aria-label="Next"><span class="st-ar">›</span></button>`+
     `</div>`+
     `<button class="st-all" type="button"><span class="en">Show all</span><span class="jp">全て表示</span></button>`+
     `</div>`;
@@ -353,12 +360,18 @@ function renderModHead(mod){
     `</div></header>`;
 }
 // floating card nav (FAB) — replaces the bottom Prev/Next-card bar (2026-07-09 FB). Fixed corner
-// cluster; the pager script wires prev/next + the current-card label. The web-native "FAB".
-function fabCard(){
-  return `<div class="fab" role="navigation" aria-label="Move between cards">`+
+// cluster: prev · a tappable label that opens a CARD-TITLE menu · next. The web-native "FAB".
+function fabCard(stops){
+  const badge = s => s.role==='concept' ? esc(s.num) : (s.role==='brief'?'▸':'✓');
+  const items = (stops||[]).map(s=>`<button class="fab-item" type="button" data-id="${esc(s.id)}">`+
+    `<span class="fab-i-badge fab-${s.role}">${badge(s)}</span>`+
+    `<span class="fab-i-t"><span class="en">${inline(s.en)}</span><span class="jp">${inline(s.jp)}</span></span></button>`).join('');
+  return `<div class="fab-wrap">`+
+    `<div class="fab-menu" id="fabmenu" hidden><div class="fab-menu-h"><span class="en">Jump to card</span><span class="jp">カードへ移動</span></div>${items}</div>`+
+    `<div class="fab" role="navigation" aria-label="Move between cards">`+
     `<button class="fab-btn fab-prev" type="button" aria-label="Previous card">‹</button>`+
-    `<span class="fab-lbl" aria-live="polite"></span>`+
-    `<button class="fab-btn fab-next" type="button" aria-label="Next card">›</button></div>`;
+    `<button class="fab-lbl" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="fabmenu" title="Jump to a card"></button>`+
+    `<button class="fab-btn fab-next" type="button" aria-label="Next card">›</button></div></div>`;
 }
 // Topbar comes from the shared partial (partials.topbar) — see FB1. Identical on every surface
 // (no page-specific segments); home is the course hub two levels up.
@@ -435,6 +448,8 @@ const SCRIPT=`<script>
 var pages=[].slice.call(document.querySelectorAll('.stream.pager > .page'));
 var pr=document.getElementById('progress'),idx=-1;
 var fabPrev=document.querySelector('.fab-prev'),fabNext=document.querySelector('.fab-next'),fabLbl=document.querySelector('.fab-lbl');
+var fabMenu=document.getElementById('fabmenu'),fabItems=[].slice.call(document.querySelectorAll('.fab-item'));
+function fabMenuOpen(on){if(!fabMenu)return;fabMenu.hidden=!on;if(fabLbl)fabLbl.setAttribute('aria-expanded',on?'true':'false');}
 function show(i,scroll){
   i=Math.max(0,Math.min(pages.length-1,i));if(!pages.length)return;var same=(i===idx);idx=i;
   pages.forEach(function(p,k){p.classList.toggle('on',k===i)});
@@ -443,9 +458,14 @@ function show(i,scroll){
   if(fabLbl)fabLbl.textContent=(i+1)+' / '+pages.length;
   if(fabPrev)fabPrev.disabled=(i===0);
   if(fabNext)fabNext.disabled=(i===pages.length-1);
+  fabItems.forEach(function(b){b.classList.toggle('on',b.getAttribute('data-id')===id)});
   if(scroll){if(history.replaceState)history.replaceState(null,'','#'+id);window.scrollTo(0,0);}
 }
 function jump(id){for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===id){show(k,true);return true}}return false;}
+// FAB menu: the label opens a list of card titles; a title jumps + closes; outside click closes.
+if(fabLbl)fabLbl.addEventListener('click',function(e){e.stopPropagation();fabMenuOpen(fabMenu&&fabMenu.hidden);});
+fabItems.forEach(function(b){b.addEventListener('click',function(){jump(b.getAttribute('data-id'));fabMenuOpen(false);});});
+document.addEventListener('click',function(e){if(fabMenu&&!fabMenu.hidden&&!e.target.closest('.fab-wrap'))fabMenuOpen(false);});
 // step the active card's story, rolling into the adjacent CARD at its ends (so a swipe walks the module)
 function stepActive(dir){var s=document.querySelector('.page.on .story');
   if(s&&(dir>0?s.__next:s.__prev)){(dir>0?s.__next:s.__prev)();}else{show(idx+dir,true);} }
@@ -529,22 +549,20 @@ var panelFits=[];
   var figsEls=[].slice.call(st.querySelectorAll('.st-fig'));
   var nums=[].slice.call(st.querySelectorAll('.st-num'));
   var prevb=st.querySelector('.st-prev'),fwdb=st.querySelector('.st-fwd'),allb=st.querySelector('.st-all'),stage=st.querySelector('.st-stage');
-  var dots=[].slice.call(st.querySelectorAll('.st-dot'));
-  var cardNo=st.getAttribute('data-card')||'',cur=1,allOn=false,figMax={};
-  var pcnt=prevb&&prevb.querySelector('.st-cnt'),fcnt=fwdb&&fwdb.querySelector('.st-cnt');
+  var dots=[].slice.call(st.querySelectorAll('.st-dot')),txt=st.querySelector('.st-text');
+  var cur=1,allOn=false,figMax={};
   steps.forEach(function(s){var fi=+s.getAttribute('data-figidx'),fg=+s.getAttribute('data-figstage');if(fi>=0)figMax[fi]=Math.max(figMax[fi]||0,fg);});
   function paintFig(figIdx,figStage){
     figsEls.forEach(function(f){var on=(+f.getAttribute('data-fig'))===figIdx;f.classList.toggle('on',on);if(on)paintStages(f,figStage);});
   }
+  function clearDrag(){steps.forEach(function(s){s.style.transform='';s.style.opacity='';});}
   function render(){
+    clearDrag();
     steps.forEach(function(s,i){var d=(i+1)-cur;s.classList.toggle('on',d===0);s.classList.toggle('past',d<0);s.classList.toggle('future',d>0);});
     dots.forEach(function(d,i){d.classList.toggle('on',(i+1)===cur);d.classList.toggle('done',(i+1)<cur);});
     var act=steps[cur-1];
     if(act&&figsEls.length)paintFig(+act.getAttribute('data-figidx'),+act.getAttribute('data-figstage'));
-    // left = step/card (e.g. 3/1) · right = steps remaining; last step's forward rolls to the next card
-    if(pcnt)pcnt.textContent=cur+(cardNo?'/'+cardNo:'');
-    var rem=N-cur; if(fcnt)fcnt.textContent=rem>0?String(rem):'';
-    if(fwdb)fwdb.classList.toggle('to-next',rem<=0);
+    if(fwdb)fwdb.classList.toggle('to-next',cur>=N);   // last step → the arrow rolls into the next card
   }
   function setAll(on){allOn=on;st.classList.toggle('st-all-on',on);
     if(on){figsEls.forEach(function(f){f.classList.add('on');paintStages(f,figMax[+f.getAttribute('data-fig')]||99);});}
@@ -560,10 +578,23 @@ var panelFits=[];
   if(fwdb)fwdb.addEventListener('click',st.__next);
   if(allb)allb.addEventListener('click',function(){setAll(!allOn)});
   if(stage)stage.addEventListener('click',function(){if(!allOn)st.__next();});
-  var x0=null,y0=null;
-  st.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
-  st.addEventListener('touchend',function(e){if(x0==null)return;var dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;
-    if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.4){dx<0?st.__next():st.__prev();}x0=null},{passive:true});
+  // DRAG-PAN (2026-07-09 FB): the content follows the finger; releasing snaps to the nearest step, or
+  // rolls into the adjacent CARD at the story's ends — one continuous swipe walks the whole module.
+  var x0=null,y0=null,drag=false,W=1;
+  st.addEventListener('touchstart',function(e){if(allOn){x0=null;return;}x0=e.touches[0].clientX;y0=e.touches[0].clientY;drag=false;W=(txt&&txt.offsetWidth)||1;},{passive:true});
+  st.addEventListener('touchmove',function(e){
+    if(x0==null||allOn)return;var dx=e.touches[0].clientX-x0,dy=e.touches[0].clientY-y0;
+    if(!drag){ if(Math.abs(dx)<8)return; if(Math.abs(dx)<=Math.abs(dy)){x0=null;return;} drag=true; if(txt)txt.classList.add('dragging'); }
+    e.preventDefault();
+    var cs=steps[cur-1],nb=dx<0?steps[cur]:steps[cur-2],r=Math.max(-1,Math.min(1,dx/W));
+    if(cs){cs.style.transform='translateX('+dx+'px)';cs.style.opacity=String(1-Math.abs(r)*0.45);}
+    if(nb){nb.classList.remove('future','past');nb.style.transform='translateX('+((dx<0?W:-W)+dx)+'px)';nb.style.opacity=String(Math.abs(r));}
+  },{passive:false});
+  st.addEventListener('touchend',function(e){
+    if(x0==null)return;var dx=e.changedTouches[0].clientX-x0;if(txt)txt.classList.remove('dragging');
+    var wasDrag=drag;x0=null;drag=false;
+    if(wasDrag&&Math.abs(dx)>W*0.24){dx<0?st.__next():st.__prev();}else{render();}
+  },{passive:true});
   if(mqReduce)setAll(true);
 });
 
@@ -581,7 +612,7 @@ function page(mod,cards,stops){
     `<title>${esc(mod.title.en)} — ${esc(mod.standard||'')}</title>${FONTS}<style>${CSS}</style></head><body>`+
     `<div class="stage" data-theme="light" data-lang="en"><div class="progress" id="progress"></div>`+
     topbar({home: mod.home || '../../index.html', compact:true})+renderModHead(mod)+
-    `<div class="layout"><main class="stream pager">${cards}</main></div>`+fabCard()+
+    `<div class="layout"><main class="stream pager">${cards}</main></div>`+fabCard(stops)+
     `</div>${TOPBAR_SCRIPT}${SCRIPT}</body></html>`;
 }
 

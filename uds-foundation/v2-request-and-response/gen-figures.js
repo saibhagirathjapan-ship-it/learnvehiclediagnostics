@@ -10,36 +10,35 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
 
 // ---------- V2-C1-F1 — a reply is a PDU: SDU + PCI + params + length (staged, 4 stages) ----------
 (function c1f1() {
-  const y = 104, x0 = 146;
-  // one continuous row of the real reply 50 03 00 32 01 F4 — the bytes are NAKED from stage 1
-  // (that is the tension: an unlabelled stream). The LABELS then build: A_PCI (2), parameters (3), Length (4).
+  // Step 1's KEY POINT is: the raw bytes have NO SEAMS. So stage 1 headlines that (not "a wrapped
+  // unit" — that is the CONCLUSION, saved for stage 4). Bytes are naked from stage 1; the labels then
+  // build the seams: A_PCI (2), parameters (3), Length + "one A_PDU" (4). Tight margins → a big figure.
+  const y = 92, x0 = 66;
   const first = byteBox({ hex: '50', x: x0, y, role: 'data' });
   const rest = byteRow(
     [{ hex: '03', role: 'data' }, { hex: '00', role: 'data' }, { hex: '32', role: 'data' },
      { hex: '01', role: 'data' }, { hex: 'F4', role: 'data' }],
     x0 + BOX_W + GAP, y);
-  const rowEnd = rest.endX;          // right edge of the last box
+  const rowEnd = rest.endX;
   const cx = (x0 + rowEnd) / 2;
   const pciCx = x0 + BOX_W / 2;
   const parCx = (x0 + BOX_W + GAP + rowEnd) / 2;
   const body =
-    `<text x="${cx}" y="34" text-anchor="middle" class="ink w7" font-size="15">A reply is one wrapped unit</text>` +
-    // stage 1 — the address label (from V1), riding along
-    `<g data-stage="1"><rect x="${cx - 140}" y="52" width="280" height="26" class="tester-s" stroke-width="1.5" fill="none"/>` +
-    `<text x="${cx}" y="69" text-anchor="middle" class="mut mono-t" font-size="10.5">Mtype · SA · TA — who ↔ who (from V1)</text></g>` +
+    // stage 1 — the naked stream + the "no seams" point (the whole message of this step)
+    `<g data-until="1"><text x="${cx}" y="36" text-anchor="middle" class="ink w7" font-size="16">Just a stream — no seams marked</text>` +
+    `<text x="${cx}" y="${y + BOX_H + 32}" text-anchor="middle" class="mut" font-size="12.5">where does the service end?   ·   how long is it?</text></g>` +
+    first + rest.svg +
     // stage 2 — A_PCI (first byte = the key)
-    `<g data-stage="2"><text x="${pciCx}" y="96" text-anchor="middle" class="acc mono-t w7" font-size="11">A_PCI</text></g>` +
-    first +
-    `<g data-stage="2"><text x="${pciCx}" y="${y + BOX_H + 18}" text-anchor="middle" class="acc" font-size="10.5">first byte = the key</text></g>` +
+    `<g data-stage="2"><text x="${pciCx}" y="${y - 14}" text-anchor="middle" class="acc mono-t w7" font-size="12">A_PCI</text>` +
+    `<text x="${pciCx}" y="${y + BOX_H + 20}" text-anchor="middle" class="acc" font-size="11.5">first byte = the key</text></g>` +
     // stage 3 — the parameters
-    `<g data-stage="3"><text x="${parCx}" y="96" text-anchor="middle" class="mut mono-t w7" font-size="11">parameters</text></g>` +
-    rest.svg +
-    // stage 4 — the Length brace + the name
+    `<g data-stage="3"><text x="${parCx}" y="${y - 14}" text-anchor="middle" class="mut mono-t w7" font-size="12">parameters</text></g>` +
+    // stage 4 — the Length brace + the wrapped-unit conclusion (now it earns the name)
     `<g data-stage="4"><path d="M ${x0} ${y + BOX_H + 26} V ${y + BOX_H + 34} H ${rowEnd} V ${y + BOX_H + 26}" class="ln" stroke-width="1.5" fill="none"/>` +
-    `<text x="${cx}" y="${y + BOX_H + 52}" text-anchor="middle" class="ink mono-t" font-size="12">Length = 6 bytes</text>` +
-    `<text x="${cx}" y="${y + BOX_H + 72}" text-anchor="middle" class="acc w7" font-size="13">= one A_PDU (protocol data unit)</text></g>`;
+    `<text x="${cx}" y="${y + BOX_H + 54}" text-anchor="middle" class="ink mono-t" font-size="13">Length = 6 bytes</text>` +
+    `<text x="${cx}" y="36" text-anchor="middle" class="acc w7" font-size="16">= one A_PDU (a wrapped unit)</text></g>`;
   const w = rowEnd + x0;   // symmetric margins
-  wr('v2-c1-f1_pdu-layout.svg', svg(`${w} 246`, body, 'A reply built up as a PDU: an address label, a control header A_PCI whose first byte is the key, the service parameters, and a Length — together one A_PDU.'));
+  wr('v2-c1-f1_pdu-layout.svg', svg(`${w} ${y + BOX_H + 74}`, body, 'The reply bytes have no seams at first; a control header A_PCI (first byte = the key), the parameters, and a Length build the seams — together one A_PDU.'));
 })();
 
 // ---------- V2-C1-F2 — the recipe: A_PDU = A_SDU + A_PCI (static) ----------

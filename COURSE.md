@@ -351,6 +351,13 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
 
 **Next up**
 
+> **⛔ NEXT SESSION = a GOVERNANCE META-SESSION, not a build (set 2026-07-10).** Do **not** start V3.
+> Step back and plan how we develop / operationalise / enforce / evolve the content-creation rigors —
+> centre of gravity = the three **"convey the core"** moves ([[CONVENTIONS]] §2c: load-bearing sentence ·
+> derivation gate · **no-context teach-back subagent**), alongside §2b, the pressure-test gates, PEDAGOGY,
+> and the MASTER CHECKLIST. Kickoff prompt + intent recorded in memory `project-governance-meta-session`.
+> The user will specify the focus in that session; come with proposals, ask before locking. **Then** V3.
+
 > **Session-20 DONE (2026-07-09) — the exemplar⇄course comparison pass; adopted set locked, all pilot in V2.**
 > The four exemplar studies (`_derive/exemplar-rigors.md` TLDR·Jigsaw·3B1B + `…-learning-how-to-learn.md`)
 > were analyzed against the shipped course and decided with the user **item-by-item**. **ADOPTED → pilot in

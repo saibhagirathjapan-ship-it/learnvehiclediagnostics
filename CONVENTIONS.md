@@ -227,6 +227,47 @@ MASTER-CHECKLIST item and a pressure-test gate ([[feedback-build-pressure-tests]
    in V1 …". State the fact the card needs directly; a back-reference may ride as a `{{→}}` pointer, and the
    concept must still land if the reader never followed it.
 
+### 2c. Convey the CORE — the derivation gate (THE CENTRAL CREATION DISCIPLINE, LOCKED 2026-07-10)
+
+**This is the primary quality gate — above every surface check.** §2b catches *prose* defects (a
+term, a vague word, an actor). §2c catches the deeper failure the user is most exacting about: **the card
+reads fine but does not actually convey the core idea — the reader can *recognise* it but not *reconstruct*
+it.** Both misses that triggered this (SIDs: "uses the low bits" instead of "bit 6 = 0 on every request";
+`+40h`: asserting "set bit 6 = add 40h" without the place-value rung) have the SAME shape: **a conclusion
+or a label stated without the derivation under it.**
+
+> **Root cause — the curse of knowledge.** Once I know the answer I cannot un-know it, so my own
+> "is this conveyed?" self-check *always passes* — I fill the missing rung from my head. That is why the
+> abstract directives ("be the learner", "is it giving the message?") **do not work**: they ask me to
+> simulate ignorance I cannot simulate. The fixes below **do not rely on my judgement** — they are
+> mechanical, or they hand the judging to someone who genuinely lacks the knowledge.
+
+**"Conveyed well" ≡ a no-context reader could RECONSTRUCT the idea and its WHY, not merely accept it.**
+Three moves make that checkable — the first two on **every** concept card, the third for **load-bearing**
+cards:
+
+1. **Load-bearing sentence FIRST.** Before authoring, write the single sentence the reader must end up able
+   to say — the *insight*, not a label ("bit 6 is `0` on every request, so it is free to repurpose"). It
+   fixes the target *before* I can fool myself that a weaker proxy hit it. Then check the finished card
+   delivers **that** sentence, not an adjacent/surface one. (Catches the SID-proxy miss.)
+2. **Derivation gate — no unearned claims.** For every "X is Y" / "X = Y" / named term / asserted
+   equivalence, interrogate the **card, not myself**: *Why is that true? How do I know? — is the answer ON
+   the card, or only in my head?* If a reader would have to **accept it on faith**, a rung is missing → add
+   the step. Run mechanically it catches the `40h` gap automatically (equivalence claimed, "why" absent →
+   insert the place-value step). A named term/notation with no on-card derivation of *why it works* is a
+   defect, same standing as text overflow.
+3. **Externalise the judge — a no-context teach-back (the curse-of-knowledge breaker; reserved for
+   load-bearing cards).** Because my judgement is compromised, hand it to a reader who lacks the knowledge:
+   spawn a fresh subagent primed with **zero** UDS/domain knowledge, give it **only** the rendered card, and
+   have it (a) explain the core idea back in its own words, (b) list **what it had to take on faith / could
+   not derive**, (c) say where it got lost. Its *faith list* is the gap list — fix each rung. An agent that
+   genuinely lacks the knowledge cannot paper over the hole the way I do. **Size to stakes** (§10): run it
+   on the cards a module hinges on (a service's core mechanism, the crux card), not every card; moves 1–2
+   are the every-card floor.
+
+Run §2c inside the STORY pressure-test gate (build-recipe step 3), *before* prose polish — a missing rung
+is a **blocker**, not a nit. Keep §2b/§2c growing each session as new failure modes surface.
+
 ## 3. Structure & content position
 
 - Structure for scanning: bullets, **tables**, short labelled sub-sections. Prefer a small
@@ -535,9 +576,12 @@ animation frame) — don't judge from the source.
    — what we're exploring & why — and is the **return signposted**? are the hand-offs **clean**?) — then
    add / cut / emphasize / edit. Exit question, asked **in the learner persona**: *"am I understanding
    this card?"* (V2-C1 example: this gate caught "the bytes came back in V1" — V1 was byte-free.)
-   **Then run the §2b prose-&-term lint over every sentence** (canonical term · precise not vague · states
-   the REAL claim, double-derived · right actor / no false agency · self-contained) — the session-24 catch
-   (C2 "all SIDs are small" was false; C3 "in H2 you sent"). Term drift, a vague quantifier, a
+   **FIRST run the §2c derivation gate (the CENTRAL check):** write the card's load-bearing sentence; then
+   interrogate every claim/label — *why true? how known? is the WHY on the card or only in my head?* — and
+   add any missing rung (the `40h` place-value miss). For a **load-bearing** card, externalise the judge —
+   a no-context teach-back subagent (§2c move 3). **Then run the §2b prose-&-term lint over every sentence**
+   (canonical term · precise not vague · REAL claim double-derived · right actor · self-contained). An
+   unearned claim, a missing rung, a conveyed *proxy* instead of the core, term drift, a vague quantifier, a
    plausible-but-unverified claim, false agency, or a load-bearing "in H2 …" is a **blocker**, not a nit.
 4. Reuse the **shared template + renderer** (do not restyle): author each concept as a **content MD
    file** (§1d) — a `## story` of `:::step`s (§1c stepped-story model) — and render to the self-contained

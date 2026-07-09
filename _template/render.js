@@ -201,12 +201,73 @@ function tglyph(n,active,mini){
     segs+=`<rect class="seg g${i+1}" x="16.5" y="${y}" width="7" height="${h.toFixed(1)}" rx="1.4"/>`; }
   return `<svg class="${cls}" viewBox="0 0 40 34" aria-hidden="true"><rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/>${segs}</svg>`;
 }
-function renderConcept(meta,sections,assetsDir){
+// MODULE T-glyph (2026-07-09 FB): a card no longer has its own horizontal/vertical — the whole
+// MODULE is either an H (breadth) or a V (depth) node, and the T lights the matching handle:
+// H → the horizontal bar; V → the vertical stem. One consistent wayfinding mark per module.
+function moduleGlyph(kind){
+  const lit = kind==='H' ? 'barlit' : 'stemlit';
+  const title = kind==='H' ? 'Breadth (H) module' : 'Depth (V) module';
+  return `<svg class="tg tgmod ${lit}" viewBox="0 0 40 34" role="img" aria-label="${title}"><title>${title}</title>`+
+    `<rect class="bar" x="3" y="3" width="34" height="7" rx="1.6"/>`+
+    `<rect class="seg stem" x="16.5" y="13" width="7" height="20" rx="1.4"/></svg>`;
+}
+// ---- STORY card (2026-07-09 FB): a concept card told as ONE stepped story ----
+// Authored as a `## story` section of `:::step` blocks separated by a line of "--". Each step:
+//   en:/jp:  the narration for this step
+//   fig=…    (optional, on the ::: line) the SVG shown from here on. Omit to STAY on the previous
+//            figure and advance its internal stage (data-stage/data-until) — that is an "evolve".
+//            Name a new file to SWAP the figure. Teaching drives the figure, not the other way round.
+// The narration steps stack in one CSS-grid cell (region auto-sizes to the tallest → no height-race,
+// fixes the first-paint overflow, FB2) and pan horizontally; the figure pane holds every figure used,
+// showing one at a time. Separate sections (In-your-own-words, Further reading) live in `## footer`.
+function parseSteps(raw){
+  // split on a line that is only dashes; keep the ::: not relevant here — steps are plain kv blocks
+  return raw.split(/\n-{2,}\s*\n/).map(s=>s.trim()).filter(Boolean).map(block=>{
+    const o=kv(block);
+    // a step may carry `fig: path` as its first kv line (the swap directive)
+    return { en:o.en, jp:o.jp, fig:o.fig };
+  });
+}
+function renderStory(meta,sections,assetsDir){
+  const steps=parseSteps(sections['story']||'');
+  const figs=[]; let cur=null, runFig=null, runStage=0;
+  steps.forEach(s=>{
+    if(s.fig){ cur=s.fig; }
+    if(cur && !figs.includes(cur)) figs.push(cur);
+    if(cur!==runFig){ runFig=cur; runStage=1; } else { runStage++; }
+    s.figIdx = cur?figs.indexOf(cur):-1; s.stage=runStage;
+  });
+  const stageSvgs = figs.map((src,i)=>{
+    const uid='u'+(uidc++);
+    const svg = namespaceSvg(fs.readFileSync(path.join(assetsDir,src),'utf8'),uid);
+    return `<div class="st-fig${i===0?' on':''}" data-fig="${i}">${svg}</div>`;
+  }).join('');
+  const stepsHtml = steps.map((s,i)=>
+    `<div class="st-step${i===0?' on':''}" data-step="${i+1}" data-figidx="${s.figIdx}" data-figstage="${s.stage}">`+
+    (s.en?`<span class="en">${inline(s.en)}</span>`:'')+(s.jp?`<span class="jp">${inline(s.jp)}</span>`:'')+`</div>`).join('');
+  const N=steps.length;
+  const nums = steps.map((_,i)=>`<button class="st-num${i===0?' on':''}" type="button" data-i="${i+1}" aria-label="Step ${i+1} of ${N}">${i+1}</button>`).join('');
+  return `<div class="story" data-steps="${N}">`+
+    `<div class="st-text">${stepsHtml}</div>`+
+    (figs.length?`<div class="st-stage">${stageSvgs}</div>`:'')+
+    `<div class="st-nav"><button class="st-prev" type="button" aria-label="Previous step">‹</button>`+
+    `<div class="st-nums" role="tablist">${nums}</div>`+
+    `<button class="st-fwd" type="button" aria-label="Next step">›</button>`+
+    `<button class="st-all" type="button"><span class="en">Show all</span><span class="jp">全て表示</span></button></div>`+
+    `</div>`;
+}
+function renderConcept(meta,sections,assetsDir,kind){
   const legs=meta.legs||[]; const n=legs.length||1;
   const sid = meta.sid?`<div class="tf sid"><span class="chip">${esc(meta.sid)}</span></div>`:'';
   const tblock=`<div class="tblock"><div class="tf idx"><small>Card</small>${esc(String(meta.id).toUpperCase())}</div>`+
     `<div class="tf grow"><h3>${inline(meta.title.en)}</h3><div class="jp">${inline(meta.title.jp)}</div></div>`+
-    `${sid}<div class="tf tgcell">${tglyph(n,0,false)}</div></div>`;
+    `${sid}<div class="tf tgcell">${moduleGlyph(kind)}</div></div>`;
+  // STORY mode (2026-07-09): the whole teaching is one stepped story; no barzone kicker, no legs.
+  if((sections['story']||'').trim()){
+    let footer='';
+    if((sections['footer']||'').trim()) footer=`<div class="card-footer">${renderBlocks(parseBlocks(sections['footer']),assetsDir,false)}</div>`;
+    return `<article class="card story-card" id="${esc(meta.id)}"><div class="card-in">${tblock}${renderStory(meta,sections,assetsDir)}${footer}</div></article>`;
+  }
   let bar=`<div class="barzone"><p class="kicker">${IC_HIGH}High level · 概要</p>`+
     renderBlocks(parseBlocks(sections['bar']||''),assetsDir,true);
   if(meta.illustration){
@@ -262,12 +323,12 @@ function renderConclusion(meta,sections,assetsDir){
   const eb=meta.eyebrow||'Section recap · まとめ';
   return `<section class="concl" id="${esc(meta.id||'concl')}"><div class="eyebrow">${IC_RECAP}${esc(eb)}</div>${renderBlocks(parseBlocks(sections['body']||''),assetsDir,false)}</section>`;
 }
-function renderCard(meta,sections,assetsDir){
+function renderCard(meta,sections,assetsDir,kind){
   switch(meta.type){
     case 'divider': return renderDivider(meta);
     case 'brief': return renderBrief(meta,sections,assetsDir);
     case 'conclusion': return renderConclusion(meta,sections,assetsDir);
-    default: return renderConcept(meta,sections,assetsDir);
+    default: return renderConcept(meta,sections,assetsDir,kind);
   }
 }
 function renderHero(mod){
@@ -359,7 +420,14 @@ function show(i,scroll){
   if(pr)pr.style.width=(pages.length>1?i/(pages.length-1)*100:100)+'%';
   if(scroll){
     if(history.replaceState)history.replaceState(null,'','#'+id);
-    if(wrap){var off=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--stick'))||44;var top=wrap.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo(0,Math.max(0,top));}
+    // FB4: land the CARD's content just under the sticky stack (topbar+crumbs = --stick, plus the
+    // sticky overview strip), not at the previous card's bottom. Presents the new card's top-of-content.
+    var pageEl=pages[i];
+    var stick=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--stick'))||44;
+    var stripH=wrap?wrap.offsetHeight:0;
+    var off=stick+stripH+16;
+    var top=pageEl.getBoundingClientRect().top+window.pageYOffset-off;
+    window.scrollTo(0,Math.max(0,top));
   }
 }
 function jump(id){for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===id){show(k,true);return true}}return false;}
@@ -432,6 +500,49 @@ var panelFits=[];
   panelFits.push(fit);
   if(mqReduce)setAll(true);
 });
+// STORY — the whole concept card as ONE stepped story (2026-07-09 FB). Narration steps stack in a
+// grid cell (auto-sizes to the tallest → no height race, fixes FB2) and PAN horizontally; the figure
+// pane holds every figure used and shows one at a time, evolving via data-stage/data-until. The
+// forward control rolls into the NEXT CARD once the story's last step is reached.
+[].forEach.call(document.querySelectorAll('.story'),function(st){
+  var N=+st.getAttribute('data-steps')||1;
+  var steps=[].slice.call(st.querySelectorAll('.st-step'));
+  var figsEls=[].slice.call(st.querySelectorAll('.st-fig'));
+  var nums=[].slice.call(st.querySelectorAll('.st-num'));
+  var prevb=st.querySelector('.st-prev'),fwdb=st.querySelector('.st-fwd'),allb=st.querySelector('.st-all'),stage=st.querySelector('.st-stage');
+  var cur=1,allOn=false,figMax={};
+  steps.forEach(function(s){var fi=+s.getAttribute('data-figidx'),fg=+s.getAttribute('data-figstage');if(fi>=0)figMax[fi]=Math.max(figMax[fi]||0,fg);});
+  function paintFig(figIdx,figStage){
+    figsEls.forEach(function(f){var on=(+f.getAttribute('data-fig'))===figIdx;f.classList.toggle('on',on);if(on)paintStages(f,figStage);});
+  }
+  function render(){
+    steps.forEach(function(s,i){var d=(i+1)-cur;s.classList.toggle('on',d===0);s.classList.toggle('past',d<0);s.classList.toggle('future',d>0);});
+    nums.forEach(function(b,i){b.classList.toggle('on',(i+1)===cur);b.classList.toggle('done',(i+1)<cur);});
+    var act=steps[cur-1];
+    if(act&&figsEls.length)paintFig(+act.getAttribute('data-figidx'),+act.getAttribute('data-figstage'));
+    if(prevb)prevb.disabled=(cur===1);
+    if(fwdb)fwdb.classList.toggle('to-next',cur>=N);
+  }
+  function setAll(on){allOn=on;st.classList.toggle('st-all-on',on);
+    if(on){figsEls.forEach(function(f){f.classList.add('on');paintStages(f,figMax[+f.getAttribute('data-fig')]||99);});}
+    else{render();}
+    if(allb){var e=allb.querySelector('.en'),j=allb.querySelector('.jp');if(e)e.textContent=on?'Step through':'Show all';if(j)j.textContent=on?'順に見る':'全て表示';}}
+  function go(to){if(allOn)setAll(false);cur=Math.max(1,Math.min(N,to));render();}
+  render();
+  nums.forEach(function(b){b.addEventListener('click',function(){go(+b.getAttribute('data-i'))})});
+  if(prevb)prevb.addEventListener('click',function(){go(cur-1)});
+  if(fwdb)fwdb.addEventListener('click',function(){
+    if(!allOn&&cur<N){go(cur+1);return;}
+    var page=st.closest('.page'),nx=page&&page.querySelector('.cardnav a.next');if(nx)nx.click();
+  });
+  if(allb)allb.addEventListener('click',function(){setAll(!allOn)});
+  if(stage)stage.addEventListener('click',function(){if(!allOn&&cur<N)go(cur+1)});
+  var x0=null;
+  st.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  st.addEventListener('touchend',function(e){if(x0==null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(dx<0?cur+1:cur-1);x0=null},{passive:true});
+  if(mqReduce)setAll(true);
+});
+
 // re-fit panel heights after fonts load, on resize, and on language change (EN/JP differ in height)
 if(panelFits.length){
   var refit=function(){panelFits.forEach(function(f){f()})};
@@ -458,6 +569,9 @@ const assetsDir = path.join(moduleDir,'assets');
 const items = fs.readdirSync(path.join(moduleDir,'content')).filter(f=>f.endsWith('.md'))
   .map(f=>({f, ...parseFile(fs.readFileSync(path.join(moduleDir,'content',f),'utf8'))}))
   .sort((a,b)=>((a.meta.order??999)-(b.meta.order??999)) || a.f.localeCompare(b.f));
+// module kind (H = breadth, V = depth) drives the module T-glyph. Explicit `kind:` in module.yml
+// wins; else infer from the id prefix (h1/h2/h3 → H, everything else → V).
+const kind = (mod.kind || (/^h\d/i.test(mod.id||'')?'H':'V')).toUpperCase();
 const stops = buildStops(items);
 const stopIx = {}; stops.forEach((s,i)=>{ stopIx[s.id]=i; });
 // PAGER: each stop is one page (a card + its prev/next). Dividers are dropped on module pages —
@@ -465,7 +579,7 @@ const stopIx = {}; stops.forEach((s,i)=>{ stopIx[s.id]=i; });
 const cards = items.map(it=>{
   const i = stopIx[String(it.meta.id)];
   if(i===undefined) return '';                       // skip dividers (not a pager page)
-  const html = renderCard(it.meta,it.sections,assetsDir);
+  const html = renderCard(it.meta,it.sections,assetsDir,kind);
   const nav = cardNav(stops[i-1]||null, stops[i+1]||null);
   return `<div class="page" data-id="${esc(it.meta.id)}">${html}${nav}</div>`;
 }).filter(Boolean).join('\n');

@@ -63,6 +63,8 @@ a.fwd:hover{border-color:var(--accent);background:var(--accent);color:var(--on-a
 .tg.barlit .bar{fill:var(--accent)}
 .tg.s1 .g1{fill:var(--accent)} .tg.s2 .g2{fill:var(--accent)} .tg.s3 .g3{fill:var(--accent)} .tg.s4 .g4{fill:var(--accent)}
 .tgmini{width:22px;height:21px;flex:none}
+/* module T-glyph: H lights the bar, V lights the stem (2026-07-09 FB — the T now marks the MODULE) */
+.tg.tgmod .stem{fill:var(--dgm-line)} .tg.tgmod.stemlit .stem{fill:var(--accent)}
 
 /* high-level bar */
 .barzone .kicker{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-family:var(--f-mono);margin:0 0 8px;display:flex;align-items:center;gap:8px}
@@ -507,8 +509,51 @@ td .mono{color:var(--accent);font-weight:600}
 .fs-h{font-family:var(--f-display);font-weight:600;font-size:16.5px;color:var(--ink);letter-spacing:var(--dt);margin:0 0 9px}
 .fs-h .jp{display:block;font-family:var(--f-jp);font-size:12.5px;color:var(--ink-soft);font-weight:500;margin-top:2px}
 
+/* ===== STORY card — the whole concept card as one stepped, panning story (2026-07-09 FB) ===== */
+.story{margin:18px 0 2px}
+.story-card .card-in{padding-bottom:20px}
+/* narration: every step occupies the SAME grid cell → the region auto-sizes to the TALLEST step,
+   so the figure below never jumps AND there is no JS height-measure to lose to a font load (FB2). */
+.st-text{display:grid;margin-bottom:14px;overflow:hidden}   /* clip the panning steps so off-screen ones never widen the page */
+.st-step{grid-area:1/1;transition:transform .34s cubic-bezier(.4,0,.2,1),opacity .28s ease;pointer-events:none}
+.st-step.past{transform:translateX(-30px);opacity:0}
+.st-step.future{transform:translateX(30px);opacity:0}
+.st-step.on{transform:none;opacity:1;pointer-events:auto}
+.st-step .en,.st-step .jp{display:block;font-size:16.5px;line-height:1.58;color:var(--ink)}
+.st-step .jp{font-family:var(--f-jp);color:var(--ink-soft);font-size:15px;line-height:1.8;margin-top:5px}
+.st-step .en+.jp{margin-top:8px}
+/* figure pane: one figure visible at a time; each evolves via data-stage / data-until */
+.st-stage{background:var(--dgm-plate);border:1px solid var(--line);border-radius:8px;padding:14px;cursor:pointer;position:relative}
+.st-fig{display:none} .st-fig.on{display:block}
+.st-fig svg{display:block;width:100%;height:auto}
+.st-fig [data-stage],.st-fig [data-until]{transition:opacity .45s ease,transform .45s ease}
+.st-fig [data-stage].rv-hide,.st-fig [data-until].rv-hide{opacity:0}
+/* numbered nav, centred under the figure pane; the ‹ › chevrons flank the numbers */
+.st-nav{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:15px;position:relative}
+.st-nums{display:flex;align-items:center;gap:6px}
+.st-num{font-family:var(--f-mono);font-weight:600;font-size:12px;width:26px;height:26px;padding:0;display:grid;place-items:center;
+  border:1px solid var(--line);background:var(--bg);color:var(--ink-soft);cursor:pointer;transition:border-color .13s,background .13s,color .13s}
+.st-num:hover{border-color:var(--accent);color:var(--accent)}
+.st-num.done{color:var(--on-accent);background:var(--ink-faint);border-color:var(--ink-faint)}
+.st-num.on{color:var(--on-accent);background:var(--accent);border-color:var(--accent)}
+.st-prev,.st-fwd{font-family:var(--f-body);font-size:19px;line-height:1;width:28px;height:28px;display:grid;place-items:center;
+  border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;transition:border-color .13s,background .13s}
+.st-prev:hover,.st-fwd:hover{border-color:var(--accent);color:var(--accent)}
+.st-prev:disabled{opacity:.32;cursor:default;border-color:var(--line-soft)}
+.st-fwd.to-next{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}   /* last step → next card */
+.st-all{position:absolute;right:0;font-family:var(--f-mono);font-size:10px;font-weight:600;color:var(--ink-faint);
+  background:none;border:1px solid var(--line);padding:6px 9px;cursor:pointer}
+.st-all:hover{border-color:var(--accent);color:var(--accent)}
+/* show-all (scannable / reduced-motion): every step stacks as prose, every figure frozen shown */
+.story.st-all-on .st-text{display:block}
+.story.st-all-on .st-step{transform:none;opacity:1;pointer-events:auto;margin-bottom:14px}
+.story.st-all-on .st-fig{display:block;margin-bottom:12px}
+.story.st-all-on .st-nums,.story.st-all-on .st-prev,.story.st-all-on .st-fwd{display:none}
+@media (max-width:560px){ .st-all{position:static;margin-left:4px} .st-nav{flex-wrap:wrap} }
+
 @media (prefers-reduced-motion: reduce){
   .dgm *{animation-duration:.001s!important;animation-iteration-count:1!important;transition:none!important}
   .fig.staged svg [data-stage].rv-hide{opacity:1!important}   /* freeze at the end frame — everything shown */
   .pn-step{transition:none}
+  .st-step{transition:none}   /* story steps: no pan under reduced-motion (JS also flips to show-all) */
 }

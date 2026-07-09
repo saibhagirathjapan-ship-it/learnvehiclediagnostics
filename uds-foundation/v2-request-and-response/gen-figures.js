@@ -11,11 +11,12 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
 // ---------- V2-C1-F1 — a reply is a PDU: SDU + PCI + params + length (staged, 4 stages) ----------
 (function c1f1() {
   const y = 104, x0 = 146;
-  // one continuous row of the real reply 50 03 00 32 01 F4. 50 = A_PCI (stage 2); the rest = parameters (stage 3).
-  const first = byteBox({ hex: '50', x: x0, y, role: 'data', stage: 2 });
+  // one continuous row of the real reply 50 03 00 32 01 F4 — the bytes are NAKED from stage 1
+  // (that is the tension: an unlabelled stream). The LABELS then build: A_PCI (2), parameters (3), Length (4).
+  const first = byteBox({ hex: '50', x: x0, y, role: 'data' });
   const rest = byteRow(
-    [{ hex: '03', role: 'data', stage: 3 }, { hex: '00', role: 'data', stage: 3 }, { hex: '32', role: 'data', stage: 3 },
-     { hex: '01', role: 'data', stage: 3 }, { hex: 'F4', role: 'data', stage: 3 }],
+    [{ hex: '03', role: 'data' }, { hex: '00', role: 'data' }, { hex: '32', role: 'data' },
+     { hex: '01', role: 'data' }, { hex: 'F4', role: 'data' }],
     x0 + BOX_W + GAP, y);
   const rowEnd = rest.endX;          // right edge of the last box
   const cx = (x0 + rowEnd) / 2;

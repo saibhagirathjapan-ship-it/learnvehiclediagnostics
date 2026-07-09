@@ -24,8 +24,9 @@ const SHOT = path.join(dir, 'assets', '_check'); fs.mkdirSync(SHOT, { recursive:
   // measure: concept pages, figure-per-concept, EN on load
   const m = await p.evaluate(() => {
     const pages = [...document.querySelectorAll('.stream.pager > .page')];
-    const concept = pages.filter(pg => pg.querySelector('.card .barzone'));
-    const noFig = concept.filter(pg => !pg.querySelector('.card .barzone .fig svg, .card .barzone .panel svg')).map(pg => pg.getAttribute('data-id'));
+    // a concept card is either the legacy barzone model or the stepped-story model (2026-07-09)
+    const concept = pages.filter(pg => pg.querySelector('.card .barzone, .card .story'));
+    const noFig = concept.filter(pg => !pg.querySelector('.card .barzone .fig svg, .card .barzone .panel svg, .card .story .st-fig svg')).map(pg => pg.getAttribute('data-id'));
     const jpVisibleOnEn = [...document.querySelectorAll('.stage[data-lang="en"] .jp')].some(el => el.offsetParent !== null);
     return { pages: pages.length, concept: concept.length, noFig, jpVisibleOnEn,
       lang: document.querySelector('.stage').getAttribute('data-lang') };

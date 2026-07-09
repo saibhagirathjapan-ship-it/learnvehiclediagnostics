@@ -1,4 +1,5 @@
 id: v2-request-and-response
+kind: V          # depth drill — the module T-glyph lights the vertical stem
 title: { en: "Request & positive response, byte by byte", jp: "リクエストと肯定応答 ― バイト単位で" }
 standard: "ISO 14229 · Foundation V2"
 tagline:

@@ -92,10 +92,17 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 | card | type | covers | go-deeper |
 |---|---|---|---|
 | V2-B | Brief | inside the good reply | — |
-| V2-C1 | Concept | a PDU = SDU + PCI + params + length | A_PDU layout · first byte = PCI key |
-| V2-C2 | Concept | positive response sets bit 6 of the SID (adds 0x40) | bit 6 = response-type; 10→50, 22→62 · why a constant not a field |
-| V2-C3 | Concept | sub-fn services echo the sub-fn value with top bit cleared | bit7=0 on echo (→V4) · reading 10 03→50 03 (session byte 03 everywhere) |
+| V2-C1 | Concept | a PDU = SDU + PCI + params + length | story steps: naked bytes → A_PCI (first byte = key) → parameters → Length/A_PDU |
+| V2-C2 | Concept | positive response sets bit 6 of the SID (adds 0x40) | story steps: bit 6 free → set it (+0x40) → one rule every service → computed rule, not a stored field |
+| V2-C3 | Concept | sub-fn services echo the sub-fn value with top bit cleared | story steps: 10→50 (+0x40) → 03 echoed (why: exactly-which) → top bit forced 0 (→V4) → the byte split (flag + value) |
 | V2-K | Conclusion | recap + bridge to the negative case | — |
+
+> **Card model — REBUILT on the app-slide stepped-story ([[CONVENTIONS]] §1c/§1f, session 22).** Every
+> V2 concept card is one `## story` of steps (no `:::panel`, no go-deeper legs). C1 shipped this way; C2/C3
+> rebuilt to match. Each card's former "bar + legs" becomes an ordered step flow whose single figure
+> **evolves** (its `data-stage`/`data-until` elements advance with the narration) or **swaps** to a new
+> figure. The figure headline tracks **each step's** point, never the card's conclusion. `:::elaborate` /
+> `:::reading` are separate `## footer` sections, not woven into the steps.
 
 **V2 is the session-20 exemplar-rigor PILOT (see [[CONVENTIONS]] §7d, §6 motivate-first, §4 retrieval).**
 V2 is chosen because it is pure byte-mechanics with a positive-response semantic at its core — the exact
@@ -120,22 +127,24 @@ place the animation/colour/reveal rigors bite. Apply, per card:
 - **Colour:** all V2 figures are the **first drawn under §7d** — tester = `--actor-tester`, ECU =
   `--actor-ecu` (distinct from olive `--ok`); positive reply marked by a **✓ glyph + stroke**, not green.
 
-**V2 figure register (§7c) — BUILT 2026-07-09.** All from `_template/bytebox.js` (object constancy);
-source = `gen-figures.js`. C2/C3 bars are **`:::panel`s** (synced narration + illustration, stepped).
+**V2 figure register (§7c) — REBUILT 2026-07-09 (app-slide stepped-story).** All from `_template/bytebox.js`
+(object constancy); source = `gen-figures.js`. Each concept card's figure **evolves in lockstep with the
+story steps** (`data-stage`/`data-until`); the headline text is itself stage-gated so it tracks the step.
 
-| ID | title | card/leg | filename | reveal / motion |
-|----|-------|----------|----------|-----------------|
-| V2-B-F1 | a reply that worked, still sealed | brief bar | `v2-b-f1_good-reply.svg` | static (orienting) |
-| V2-C1-F1 | a reply is one wrapped unit (address · A_PCI · params · Length) | C1 bar | `v2-c1-f1_pdu-layout.svg` | **staged build-order** (4 stages), click-to-advance |
-| V2-C1-F2 | the recipe: A_PDU = A_SDU + A_PCI | C1 leg *layout* | `v2-c1-f2_pdu-recipe.svg` | static |
-| V2-C1-F3 | the first byte routes everything (≠7F vs 7F) | C1 leg *pcikey* | `v2-c1-f3_first-byte-key.svg` | static |
-| V2-C2-F1 | positive response flips bit 6: `10` → `50` (+0x40) | C2 bar | `v2-c2-f1_plus-0x40-bitflip.svg` | **panel** (4 steps): bit toggles + box `10`→`50` (data-until/data-stage) |
-| V2-C2-F2 | one rule, every service (`10/50`,`22/62`,`27/67`,`31/71`) | C2 leg *examples* | `v2-c2-f2_plus-0x40-examples.svg` | static |
-| V2-C3-F1 | `10 03` comes back as `50 03` (service +0x40, sub-fn echoed) | C3 bar | `v2-c3-f1_echoed-subfn.svg` | **panel** (4 steps); reuses the shared `50`/`03` sprites |
-| V2-C3-F2 | one byte, two jobs (top-bit flag · value) | C3 leg *topbit* | `v2-c3-f2_subfn-byte.svg` | static |
+| ID | title | card | filename | reveal / motion |
+|----|-------|------|----------|-----------------|
+| V2-B-F1 | a reply that worked, still sealed | brief | `v2-b-f1_good-reply.svg` | static (orienting) |
+| V2-C1-F1 | naked bytes → A_PCI → parameters → Length = one A_PDU | C1 (evolves, 4 steps) | `v2-c1-f1_pdu-layout.svg` | stage-gated headline + seams build |
+| V2-C1-F2 | the recipe: A_PDU = A_SDU + A_PCI | C1 (retired leg fig — unused) | `v2-c1-f2_pdu-recipe.svg` | static |
+| V2-C1-F3 | the first byte routes everything (≠7F vs 7F) | C1 (retired leg fig — unused) | `v2-c1-f3_first-byte-key.svg` | static |
+| V2-C2-F1 | bit 6 free → set it (+0x40) → one rule, every service | C2 (evolves, steps 1–4) | `v2-c2-f1_plus-0x40-bitflip.svg` | bit toggles `0→1`, box `10`→`50`; stage-gated headline |
+| V2-C2-F2 | computed rule vs a stored type-field (the trade-off) | C2 (swap, step 5) | `v2-c2-f2_rule-not-field.svg` | static contrast (✓/✕) |
+| V2-C3-F1 | `10 03` → `50 03`: +0x40 on the SID, sub-fn echoed, top bit 0 | C3 (evolves, steps 1–4) | `v2-c3-f1_echoed-subfn.svg` | reuses the shared `50`/`03` sprites; stage-gated headline |
+| V2-C3-F2 | one byte, two jobs (top-bit flag · value) | C3 (swap, step 5) | `v2-c3-f2_subfn-byte.svg` | static split |
 
-*(C2 leg* constant *and C3 leg* why *carry no figure — the depth work there is the `:::elaborate` /
-the reasoning; per user "illustrate as much as needed to learn", a forced figure would be decoration.)*
+*(Object constancy holds: the `50`/`03` sprites are pixel-identical across C1/C2/C3. C1's F2/F3 were the old
+go-deeper leg sketches; the story rebuild folds their content into steps/footer, so those two SVGs are no
+longer referenced — kept on disk, not rendered.)*
 
 ## V3 — Negative responses & the NRC catalog
 *Enters:* neg = 7F+SID+NRC; 0x78 = busy. *Leaves:* can decode the fixed shape, navigate the global catalog + always-supported set, explain 0x78.

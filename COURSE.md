@@ -378,16 +378,18 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
 > (story/app-shell/FAB) · `partials.js` (compact topbar + `--chrome`) · `checkmod.js` (story-aware).
 > **This is now the DEFAULT for every future card and the RETROFIT target for H1/H2/H3/V1.**
 
-1. **🚧 V2 (request & positive response) — MID-REBUILD on the new model.** **C1 rebuilt + pushed** as a
-   4-step app-slide (verified: checkmod green · desktop ≈8px / mobile ≈15px beyond viewport · no console
-   errors). C1 pressure-test applied (fixed the "bytes from V1" continuity bug; figure now headlines the
-   step's key point "no seams"; question moved to its answer; recipe/A_SDU redundancy trimmed; text
-   bulleted). **`_storyshot.js`** (scroll-height probe) is the per-card fit check. **NEXT SESSION: rebuild
-   C2, C3, the brief, and the conclusion** on the same model (weave the old panels + `:::elaborate` /
-   `:::recall` as the separate sections), each run through **both pressure-test gates**; then re-verify +
-   push. *(The old `:::panel`/`continuous:true`/`.flowsec` machinery is superseded by `## story`.)*
-   **Then continue the V drills in STRUCTURE reading order: V1 ✅ → V2 → V3 → V4 → V8 → V5 → V6 → V7a → V7b
-   → V7c → V9** on the locked model.
+1. **✅ V2 (request & positive response) — FULLY BUILT on the app-slide model (session 23, 2026-07-09).**
+   All 5 cards on the stepped-story model: **C1** (4 steps, ✅ session 22) · **C2 `+0x40`** (6 steps —
+   bit-6-free → set→+0x40 → one-rule-every-service+$2A → *computed rule, not a stored field* ×2; figure
+   `v2-c2-f1` evolves steps 1–4 then swaps to a **rebuilt rule-vs-field ✓/✕ contrast** `v2-c2-f2`; footer =
+   the pilot `:::elaborate`) · **C3 the echo** (5 steps — 10→50 → 03 echoed+why → top-bit-0→V4 → the byte
+   split→V4; figure evolves then swaps) · brief + conclusion reviewed (already in the locked formats).
+   Figure headlines are **stage-gated** to track each step's point, not the conclusion. Verified: `checkmod`
+   green · `_storyshot.js` fit (C1 ≈8 / C2 136 [residual = the below-story `:::elaborate` beat] / C3 0 px) ·
+   geometry close-ups light+dark for all 4 concept figures · **both pressure-test gates run in-persona**,
+   fixes folded (C3 "sub-function" named on the spot; C2 long step split 5→6; c2-f2 consequence-column
+   spacing). Records: `v2…/NOTES.md`, `STRUCTURE.md` V2 §. **Next: continue the V drills in STRUCTURE
+   reading order — V1 ✅ → V2 ✅ → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9** on the locked model.
 2. **Then the H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
    (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.

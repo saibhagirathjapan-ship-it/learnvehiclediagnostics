@@ -1,18 +1,29 @@
 # V2 — Request & positive response, byte by byte · build notes
 
-**Status (session 22, 2026-07-09): MID-REBUILD on the NEW stepped-story / app-slide model** (locked
-[[CONVENTIONS]] §1c + §1f). This model was *shaken out on V2* across four user-FB rounds and now
-supersedes the session-21 `:::panel`/`continuous:true` build below.
-- **C1 — DONE + pushed** on the new model: a `## story` of **4 `:::step`s** (naked bytes → A_PCI →
-  parameters → Length/A_PDU), one evolving figure (`v2-c1-f1`, no swap), text **bulleted**, Sources
-  collapsed. Verified: `checkmod` green · desktop ≈8px / mobile ≈15px beyond viewport (`_storyshot.js`
-  scroll probe) · no console errors. Pressure-test fixes folded (V1→brief continuity; figure headlines
-  the step key-point "no seams"; question moved to step 2; recipe/A_SDU redundancy cut).
-- **C2 · C3 · Brief · Conclusion — NEXT SESSION:** rebuild on `## story` (weave the old C2/C3 panels +
-  the `:::elaborate` / `:::recall` as the separate sections), each through **both pressure-test gates**.
-- New per-card fit check: **`_storyshot.js`** (renders + measures px beyond viewport, light/dark/mobile).
-- Interaction now: plain `‹ ›` arrows + dots · **swipe drag-pan** (full-width slide, rolls to adjacent
-  card at ends) · **FAB** "Jump to card" menu · module **T-glyph = V** (`kind: V` in module.yml).
+**Status (session 23, 2026-07-09): FULLY BUILT on the stepped-story / app-slide model** (locked
+[[CONVENTIONS]] §1c + §1f). All 5 cards now on `## story` (concepts) / brief / conclusion. The
+session-21 `:::panel`/`continuous:true` build is fully superseded.
+- **C1 — DONE + pushed** (session 22): `## story` of **4 steps** (naked bytes → A_PCI → parameters →
+  Length/A_PDU), one evolving figure (`v2-c1-f1`), text bulleted, Sources collapsed.
+- **C2 (+0x40) — DONE (session 23):** `## story` of **6 steps** — bit-6-free → set it (+0x40, named on
+  the spot) → one rule every service (+$2A carve-out) → *computed rule, not a stored field* (2 steps).
+  Figure `v2-c2-f1` **evolves** (stage-gated headline + bit `0→1` + `10`→`50`, steps 1–4), then **swaps**
+  to `v2-c2-f2` (a rebuilt **rule-vs-field** ✓/✕ contrast, steps 5–6). Footer = the pilot `:::elaborate`
+  ("why a rule not a field") + `:::reading`. The long final step was split 5→6 to keep the story
+  viewport-fit; residual scroll (desktop 136 / mobile 212 px) is the below-story `:::elaborate` beat.
+- **C3 (the echo) — DONE (session 23):** `## story` of **5 steps** — `10`→`50` (+0x40) → `03` echoed +
+  *why* (bare `50` ambiguous) → top bit forced 0 (→V4) → the byte split (flag + value, →V4). Figure
+  `v2-c3-f1` **evolves** (stage-gated headline; object-constant `50`/`03` sprites), then **swaps** to
+  `v2-c3-f2` (byte split). Fits viewport (0 px). "sub-function" named on the spot in step 1 (FB fold).
+- **Brief + Conclusion** — reviewed, continuity clean with the rebuilt concepts; already in the LOCKED
+  formats (3-part advance-organizer brief; generative `:::recall` conclusion, `62 F1 90` / `50 03`).
+- **Verified:** `checkmod . 3` green (3 concepts, EN-on-load, full lang isolation, zero overflow
+  light/dark/mobile, no console errors, §7d cast lint) · `_storyshot.js` fit (C1 ≈8 / C2 136 / C3 0 px) ·
+  geometry close-ups light+dark for all four concept figures (connectors touch, ✓/✕ semantic glyphs,
+  spacing clear). Both **pressure-test gates** ([[feedback-build-pressure-tests]]) run in-persona — fixes
+  folded (C3 "sub-function" naming; C2 step split; c2-f2 consequence-column spacing).
+- Interaction: plain `‹ ›` arrows + dots · **swipe drag-pan** · **FAB** "Jump to card" · module
+  **T-glyph = V** (`kind: V`).
 
 ---
 
@@ -22,17 +33,18 @@ pilot** (§7d visual cast · staged reveal · the synced `:::panel` · §6 motiv
 
 ## Card scaffold (matches content/ 1:1 — checked by checkmod)
 
-| # | file | id | type | figure(s) | reveal |
-|---|------|----|------|-----------|--------|
-| 1 | 10-brief.md | brief | brief | v2-b-f1 | — |
-| 2 | 20-c1-pdu.md | c1 | concept | v2-c1-f1 (bar) · f2 · f3 | **staged build-order** (4) |
-| 3 | 30-c2-plus40.md | c2 | concept | v2-c2-f1 (bar, **panel**) · f2 | **panel** (4 steps) + `:::elaborate` |
-| 4 | 40-c3-echo.md | c3 | concept | v2-c3-f1 (bar, **panel**) · f2 | **panel** (4 steps) |
-| 5 | 50-conclusion.md | concl | conclusion | — | 2× generative `:::recall` |
+| # | file | id | type | story | figure(s) |
+|---|------|----|------|-------|-----------|
+| 1 | 10-brief.md | brief | brief | — (3-part advance-organizer) | v2-b-f1 |
+| 2 | 20-c1-pdu.md | c1 | concept | 4 steps | v2-c1-f1 (evolves) |
+| 3 | 30-c2-plus40.md | c2 | concept | 6 steps | v2-c2-f1 (evolves, 1–4) → v2-c2-f2 (swap, 5–6) · footer `:::elaborate` |
+| 4 | 40-c3-echo.md | c3 | concept | 5 steps | v2-c3-f1 (evolves, 1–4) → v2-c3-f2 (swap, 5) |
+| 5 | 50-conclusion.md | concl | conclusion | — | — · 2× generative `:::recall` |
 
-checkmod: 3 concept cards · every concept has a bar figure (`.panel svg` counts) · EN-on-load +
-lang isolation · zero overflow (light/dark + **mobile 380px**) · zero console errors · **§7d cast
-lint green**. Reduced-motion: C1 staged fig freezes to all-shown; panels default to Show-all.
+checkmod: 3 concept cards · every concept has a bar figure (`.st-fig svg` counts) · EN-on-load +
+lang isolation · zero overflow (light/dark + **mobile 390px**) · zero console errors · **§7d cast
+lint green**. Reduced-motion / Show-all: each concept figure freezes at its END stage (figMax) — the
+end frame teaches the whole idea (c2-f1 → `50` + summary; c3-f1 → `50 03` + top-bit note).
 
 ## Pilot decisions (this module proved the rigors)
 

@@ -118,34 +118,63 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   const box50 = `<g data-stage="3">${byteBox({ hex: '50', x: bx, y: hy, role: 'pos' })}</g>` +
     `<g data-stage="3"><text x="${bx + 29}" y="${hy + 50 + 17}" text-anchor="middle" class="acc mono-t w7" font-size="12">= 10 + 0x40</text></g>`;   // name it, on the spot
   const eq = `<text x="430" y="${y + h / 2 + 7}" text-anchor="middle" class="mut mono-t w8" font-size="20">=</text>`;
-  // step 4 — generalise
+  // step 4 — generalise: how to READ any first byte, plus the worked pairs
   const sumY = y + h + 96;
   const summary =
     `<g data-stage="4"><path d="M 44 ${sumY - 28} H 520" class="ln" stroke-width="1"/>` +
-    `<text x="282" y="${sumY}" text-anchor="middle" class="acc w8" font-size="14.5">+ 0x40 is the same for every service</text>` +
-    `<text x="282" y="${sumY + 22}" text-anchor="middle" class="mut mono-t" font-size="12">22 → 62   ·   3E → 7E   ·   27 → 67</text></g>`;
-  const body =
-    `<text x="282" y="30" text-anchor="middle" class="ink w7" font-size="15">Turn a request into its own answer — for free</text>` +
-    cells + eq + box10 + box50 + callout + summary;
+    `<text x="282" y="${sumY}" text-anchor="middle" class="ink w7" font-size="13.5">bit 6 = 0 → a request      bit 6 = 1 → its positive reply</text>` +
+    `<text x="282" y="${sumY + 22}" text-anchor="middle" class="acc mono-t w7" font-size="12.5">22 → 62   ·   3E → 7E   ·   27 → 67</text></g>`;
+  // stage-gated headline: tracks THIS step's point, never the card conclusion (§1c)
+  const hd = (stg, txt) => `<g data-stage="${stg}" data-until="${stg}"><text x="282" y="30" text-anchor="middle" class="ink w7" font-size="15">${txt}</text></g>`;
+  const hd4 = `<g data-stage="4"><text x="282" y="30" text-anchor="middle" class="ink w7" font-size="15">One rule, every service</text></g>`;
+  const headline = hd(1, 'Make 10 into its own answer — for free') + hd(2, 'Bit 6 is never used — it is free') + hd(3, 'Set bit 6: 10 becomes 50') + hd4;
+  const body = headline + cells + eq + box10 + box50 + callout + summary;
   wr('v2-c2-f1_plus-0x40-bitflip.svg', svg('564 254', body, 'The request byte 10 in bits has bit 6 unused; setting bit 6 makes the byte 50 — that fixed step is +0x40, and it works for every service.'));
 })();
 
-// ---------- V2-C2-F2 — +0x40 across services (static table) ----------
+// ---------- V2-C2-F2 — a computed RULE vs a stored type FIELD (static contrast, step 5) ----------
+// The deeper why: +0x40 is derived from the request, not a byte the ECU stores. Contrast the two designs
+// so the consequences (free · unambiguous · can't lie) are visible, using ✓/✕ glyphs (§7d-2), not hue.
 (function c2f2() {
-  const rows = [['10', '50', 'DiagnosticSessionControl'], ['22', '62', 'ReadDataByIdentifier'],
-    ['27', '67', 'SecurityAccess'], ['31', '71', 'RoutineControl']];
-  const rqx = 60, rsx = 232, ny = 30, gapY = 52;
-  let body = `<text x="250" y="22" text-anchor="middle" class="ink w7" font-size="14">One rule, every service</text>`;
-  rows.forEach((r, i) => {
-    const y = ny + 8 + i * gapY;
-    body += byteBox({ hex: r[0], x: rqx, y, role: 'data' });
-    const ax0 = rqx + BOX_W + 10, ax1 = rsx - 10, amid = (ax0 + ax1) / 2, ay = y + BOX_H / 2;
-    body += `<path d="M ${ax0} ${ay} H ${ax1} M ${ax1 - 6} ${ay - 5} L ${ax1} ${ay} L ${ax1 - 6} ${ay + 5}" class="ln" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
-      `<text x="${amid}" y="${ay - 9}" text-anchor="middle" class="acc mono-t" font-size="11">+0x40</text>`;
-    body += byteBox({ hex: r[1], x: rsx, y, role: 'pos' });
-    body += `<text x="${rsx + BOX_W + 16}" y="${ay + 4}" class="mut mono-t" font-size="11.5">${r[2]}</text>`;
-  });
-  wr('v2-c2-f2_plus-0x40-examples.svg', svg('512 250', body, 'Request to positive-response SIDs all differ by 0x40: 10 to 50, 22 to 62, 27 to 67, 31 to 71.'));
+  const arrow = (x0, x1, y, cls) => `<path d="M ${x0} ${y} H ${x1} M ${x1 - 6} ${y - 5} L ${x1} ${y} L ${x1 - 6} ${y + 5}" class="${cls}" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const mark = (x, y, ok, txt) => {
+    const c = ok ? 'tick' : 'cross';
+    let g = `<circle cx="${x}" cy="${y - 4}" r="7" class="plate ${c}" stroke-width="1.3"/>`;
+    g += ok
+      ? `<path d="M ${x - 3.1} ${y - 4} l 1.9 2.1 L ${x + 3.4} ${y - 7}" class="${c}" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`
+      : `<path d="M ${x - 2.7} ${y - 6.7} l 5.4 5.4 M ${x + 2.7} ${y - 6.7} l -5.4 5.4" class="${c}" stroke-width="1.6" stroke-linecap="round"/>`;
+    g += `<text x="${x + 13}" y="${y}" class="ink" font-size="12">${txt}</text>`;
+    return g;
+  };
+  const rowLbl = (y, t) => `<text x="30" y="${y}" class="mut mono-t w7" font-size="10.5">${t}</text>`;
+  const txX = 320;   // consequences column — clear of the 50 box's right edge (300) + its corner glyph
+  // Row A — THE RULE: 10 --set bit 6--> 50, derived
+  const ay = 66, aMid = ay + BOX_H / 2;
+  const rowA =
+    rowLbl(ay - 14, 'THE RULE — UDS') +
+    byteBox({ hex: '10', x: 118, y: ay, role: 'data' }) +
+    arrow(118 + BOX_W + 6, 236, aMid, 'ln') +
+    `<text x="${(118 + BOX_W + 6 + 236) / 2}" y="${aMid - 9}" text-anchor="middle" class="acc mono-t" font-size="10.5">set bit 6</text>` +
+    byteBox({ hex: '50', x: 242, y: ay, role: 'pos' }) +
+    mark(txX, ay + 12, true, 'costs no extra byte') +
+    mark(txX, ay + 40, true, 'always agrees with the SID');
+  // Row B — A TYPE FIELD: 10 + [type] --> 50, stored
+  const by = 168, bMid = by + BOX_H / 2;
+  const typeX = 132;
+  const rowB =
+    rowLbl(by - 14, 'A STORED FIELD') +
+    byteBox({ hex: '10', x: 44, y: by, role: 'data' }) +
+    `<text x="${44 + BOX_W + 11}" y="${bMid + 6}" text-anchor="middle" class="mut mono-t w8" font-size="18">+</text>` +
+    `<rect x="${typeX}" y="${by}" width="${BOX_W}" height="${BOX_H}" class="plate cross" stroke-width="2.2" stroke-dasharray="5 4"/>` +
+    `<text x="${typeX + BOX_W / 2}" y="${by + BOX_H / 2 + 5}" text-anchor="middle" class="mut mono-t" font-size="12">type</text>` +
+    arrow(typeX + BOX_W + 6, 236, bMid, 'ln') +
+    byteBox({ hex: '50', x: 242, y: by, role: 'data' }) +
+    mark(txX, by + 12, false, 'one extra byte, every message') +
+    mark(txX, by + 40, false, 'could disagree with the SID');
+  const body =
+    `<text x="280" y="30" text-anchor="middle" class="ink w7" font-size="15">Computed each time — not stored as a byte</text>` +
+    rowA + rowB;
+  wr('v2-c2-f2_rule-not-field.svg', svg('586 244', body, 'A computed +0x40 rule derives the answer SID from the request for free and can never contradict it; a stored type field would cost one byte per message and could disagree with the SID.'));
 })();
 
 // ---------- V2-C3-F1 — 10 03 comes back as 50 03 (panel, 4 steps) ----------
@@ -164,8 +193,10 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
     `<text x="${subCx}" y="${reqY - 12}" text-anchor="middle" class="mut" font-size="10">sub-function</text>`;
   const s4 = `<g data-stage="4"><path d="M ${subCx} ${rspY + BOX_H + 4} V ${rspY + BOX_H + 12}" class="acc-s" stroke-width="1.3"/>` +
     `<text x="${subCx}" y="${rspY + BOX_H + 26}" text-anchor="middle" class="acc mono-t" font-size="10.5">top bit forced to 0 — a flag → V4</text></g>`;
-  const body = `<text x="270" y="30" text-anchor="middle" class="ink w7" font-size="15">10 03 comes back as 50 03</text>` +
-    labels + req + rsp + svcArrow + subArrow + s4;
+  // stage-gated headline — tracks each step's point, not the conclusion (§1c)
+  const hd = (stg, txt) => `<g data-stage="${stg}" data-until="${stg}"><text x="270" y="30" text-anchor="middle" class="ink w7" font-size="15">${txt}</text></g>`;
+  const headline = hd(1, 'You send 10 03 — what comes back?') + hd(2, '10 returns as 50   (+0x40)') + hd(3, '03 comes straight back — echoed') + hd(4, 'The top bit comes back 0');
+  const body = headline + labels + req + rsp + svcArrow + subArrow + s4;
   wr('v2-c3-f1_echoed-subfn.svg', svg('540 268', body, 'The request 10 03 returns as 50 03: service 10 becomes 50 by +0x40, and the sub-function 03 is echoed back unchanged except its top bit forced to 0.'));
 })();
 

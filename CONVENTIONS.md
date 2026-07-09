@@ -48,34 +48,41 @@ live in the shared template; the reference prototype is `wiki/learn/_designlab/t
   bold — the prose self-signals what matters. (Warn-callout emphasis stays burnt-amber.)
 - **Diagrams:** `.dgm` theme-aware class system (base set + `.red .plate .lnf`).
 
-## 1c. Concept cards are T-shaped (information architecture)
+## 1c. A concept card is one STEPPED STORY (information architecture) — LOCKED 2026-07-09
 
-> **PILOT 2026-07-09 — "one continuous story" (may supersede the collapsible stem).** User feedback:
-> since the *course* is already a T (breadth H-spine + depth V-drills as the tree/team view), stacking
-> **collapsible** go-deeper legs *inside* a card adds a second interaction model and fights a continuous
-> read. **Piloting in V2** (H *and* V cards): a concept card with `continuous: true` renders its "legs"
-> as **inline flowing sections** (`.flow`/`.flowsec`, a subheading + body + its figure) — no `<details>`,
-> no Go-Deeper banner — so the card reads as **one continuous story**. Keep a collapsible only for a true
-> aside (a citation, a rare edge-case). **If it lands well → make it the default and retrofit built
-> modules + the backlog** (user 2026-07-09). Until then, the T-with-collapsible-stem below is still the
-> shipped default; the pilot is opt-in per card.
+> **This supersedes the old "card = a T with collapsible go-deeper legs" and the 2026-07-09
+> `continuous:true` pilot.** User feedback (session 22): dropping in-card legs must trigger a *rethink
+> of how the card is told*, not a mechanical delete. The T-with-legs and the titled-flowsec pilot are
+> **both retired at the card scale.** The T survives only at the **course scale** (§1c-scale: the
+> breadth H-spine + depth V-drills) — a *card* no longer has its own horizontal/vertical.
 
-Every **concept** is a **T**: a broad, shallow **bar** (high level) over a narrow, deep **stem**.
+**A concept card is one continuous, stepped story.** What used to be the "bar" + "legs" is now a single
+ordered sequence of **steps**, each carrying **one modest screenful** of narration + its illustration,
+told as one flowing argument (no `<details>`, no "Go deeper" banner, no titled sub-sections).
 
-- **Horizontal bar** = the high-level claim, self-sufficient alone, carrying the **one**
-  canonical illustration. A reader who reads only bars still gets the whole module.
-- **Vertical stem** = collapsible **detail legs** (`<details>`) stacked along a real left-hand
-  rule so the layout *is* a T. Each leg = one nuance / mechanism / edge-case. **Collapsed by
-  default** → reading view stays one-idea-per-screen (chunk-safe); depth is opt-in.
-- **T-glyph wayfinding:** header glyph = bar lit ("high level"); each leg lights its own stem
-  segment.
-- **Illustrate depth too:** every leg carries its *own* supporting sketch — text-only depth is
-  an IA failure (see [[PEDAGOGY]]).
-- **Legs can nest cards.** A leg is a *container*: usually **one card**, but a deep leg may
-  hold a short stack of up to **~4 cards** (each a single chunk). Depth grows by *adding cards
-  inside a leg*, never by overstuffing one card.
-- **The ~3–4 cap is per level** (legs on a T · cards inside a leg) — **not** per module, which
-  may hold **many** concept-Ts and cards in total. If a level needs more than ~4, split it.
+- **Authoring:** a `## story` section of `:::step` blocks (separated by a `--` line). Each step:
+  optional `fig: <path>` (the figure shown from here on) + an `en:` and `jp:` body (**each may span
+  multiple lines**, so a step can carry a **bullet list** — bullet where prose gets paragraphy;
+  see [[SCHEMA]] / `render.js parseSteps`).
+- **One figure, teaching-driven.** A step either **evolves** the current figure (its `data-stage` /
+  `data-until` elements build in lockstep with the narration) or **swaps** to a new figure when the
+  teaching needs a different picture. *Teaching drives the figure, never the figure driving the
+  teaching* (user 2026-07-09). A card that makes one clean point may keep **one** evolving figure and
+  never swap — don't force a swap.
+- **The figure headlines the STEP's key point, not the card's conclusion.** (Rigor caught in V2-C1:
+  step 1's point was "raw bytes have no seams", but the figure headlined "a wrapped unit" — the
+  *conclusion*. Align each figure's headline to the point of the step it sits in; save the conclusion
+  for the step that earns it.)
+- **Separate (non-story) sections**, after the story: **In your own words** (`:::elaborate`),
+  **Further reading** (`:::reading`, now a collapsed `<details>`), and the **`:::recall`** retrieval
+  beat (on the Conclusion card). These are *not* woven into the step flow.
+- **"Show all"** renders every step stacked as scannable prose with each figure frozen — the
+  no-JS / reduced-motion / scanning fallback.
+- **One idea per card still holds.** Grow depth by **adding steps** (each a single screenful), never by
+  cramming a step. "I like the amount of information per screen — increase the *scrolls*, don't reduce
+  the content" (user 2026-07-09).
+- **The module T-glyph** by the card title now marks the **module's** role: **H → the bar lights, V →
+  the stem lights** (a card no longer has its own bar/leg glyph). Set `kind: H|V` in `module.yml`.
 
 ## 1c-scale. Horizontal / Vertical is an *altitude*, applied at every scale (LOCKED 2026-07-04)
 
@@ -133,38 +140,48 @@ Content is **derived from these, never hand-organized**:
 - **Build gate:** a module's `content/` cards must match its `STRUCTURE.md` card list 1:1 (checked in
   `verify.js` / `NOTES.md`), the same way DOM card counts are checked against the scaffold.
 
-## 1f. Module shell & reading UX — LOCKED (session 9 · re-confirmed 2026-07-07)
+## 1f. Module shell & reading UX — the APP-LIKE SLIDE model, LOCKED 2026-07-09 (session 22)
+
+> **This supersedes the session-9 "scroll + overview-strip + rail + bottom Prev/Next" shell.** User
+> steer: *design a card like an app UI — content centred, vertical scroll ≈ 0; think slides, not a
+> scroll.* Proven on V2-C1 (desktop ≈ 8px / mobile ≈ 15px beyond the viewport). Verified with
+> `_storyshot.js` (a scroll-height probe) + `checkmod.js`.
 
 The page **chrome + reading UX** are a shared locked system (like §1b's visuals) — **do not re-invent
 per module.** All of it lives in `_template/` (`partials.js` chrome · `render.js` · the hub/map/stub
 renderers · `blueprint.css`); change a behaviour in **one** place and every surface inherits. The
 contract (source of truth = those files):
 
-- **One shared top bar** (`topbar()` in `partials.js`) → **byte-identical on every surface** (module ·
-  hub · map · stub), cannot drift. Carries only: constant **"Automotive Diagnostics"** brand = home
-  link · one **globe** toggle **EN → 日本語 → EN+JP** · one **theme** toggle (sun↔moon). No page-specific
-  controls (Expand/Collapse-all removed 2026-07-07). Edit chrome **only** in `partials.js`.
-- **Sticky stack measured, never hard-coded (FB4):** `TOPBAR_SCRIPT` writes `--tbh`/`--crh`/`--stick`;
-  every sticky offset reads `--stick`. Don't hard-code a top or double-count (§7).
-- **Breadcrumb = trail only** (`.crumbs`, `Course › Foundation › <module>`, sticky at `--tbh`) — not
-  module-to-module nav.
-- **Card-level wayfinding is mandatory:** off one "stops" list (`buildStops`; a stop = one teaching
-  card, dividers excluded) render an always-on top **overview strip** (`.cm-stop`, numbered + arrows)
-  **and** a left scroll-spy **rail** (`.toc.rail`) — the reader always sees how many cards and where.
-- **One card at a time — the pager** (`.stream.pager > .page`): Prev/Next + strip + rail + **arrow
-  keys** drive it, current card highlighted. §1c "one idea per screen" made physical. Dividers ≠ stops.
-- **Depth opt-in and obvious:** T-legs (`.leg`/`.legs`) are `<details>` **collapsed by default**, opened
-  by a prominent accent **Go-Deeper** control (banner + solid `+/−`), never a faint caret (§12 autonomy).
-- **Retrieval prominent:** `:::recall` (`.recall`) is a visible "Your turn" block, answer in `<details>`
-  — not a footnote (the under-served half of [[PEDAGOGY]] 9).
+- **Each card is a viewport-fit SLIDE.** A story card page (`.page-story`) is `min-height:calc(100dvh -
+  --chrome)`, flex-**centred** vertically, so it fits with ~no scroll. If a step can't fit, it becomes
+  **two steps** — never a scroll. `--chrome` (topbar + compact header) is *measured* in `TOPBAR_SCRIPT`,
+  never hard-coded (also `--tbh`/`--crh`/`--stick` for any legacy sticky). *(Viewport-fit centring is
+  scoped to `.page-story`; a not-yet-migrated card renders normally.)*
+- **Minimal chrome on module pages** (hub/map/stubs keep the full identity): a **slim top bar** —
+  `topbar({compact:true})` → a home **icon** only (no "Automotive Diagnostics" wordmark) + the globe +
+  theme toggles; and a **compact one-line header** (`renderModHead` — a tiny `Course › Foundation`
+  breadcrumb + a **small** module title, no hero/tagline block). The big hero + the sticky overview
+  strip + the left rail are **gone** (they ate the vertical budget).
+- **Step nav = plain `‹ ›` arrows** flanking the content (`.st-arw`): desktop = **fixed, vertically
+  centred on the viewport**, just outside the column; below ~960px they drop **inline** beside the
+  dots so they never overlap text. **No counts** — a row of **dots** (`.st-dot`) carries position.
+- **Swipe = a DRAG-pan** (the content tracks the finger 1:1, transition off mid-drag; release **snaps
+  to the nearest step**). The slide is **full-width** (`.past`/`.future` = `±100%`) so a committed drag
+  *continues* in the swipe direction (old exits left / new enters from right) — it must **never snap
+  backwards** (the 2026-07-09 bug: `.past` was `-30px`, so a dragged step animated the wrong way).
+  Arrow keys + the arrows drive the same. At a story's **ends the swipe/arrow rolls into the adjacent
+  CARD** — one continuous gesture walks the whole module.
+- **Card nav = a FAB** (`.fab`, fixed bottom-right): `‹ n/N ›`, and the **label opens a "Jump to card"
+  menu** of card titles (badges, current marked). The bottom Prev/Next-card bar is **removed**.
+- **Further reading collapses** (`:::reading` → a collapsed `<details class="reading">`) so citations
+  never force a scroll. **Retrieval** (`:::recall`) stays a visible "Your turn" block (answer in
+  `<details>`) on the Conclusion.
 - **Forward pointers are real links:** `{{→ where}}` → `.fwd`, resolving to the target page; every
-  deferred target has at least a **stub page** so no pointer dead-ends. Plain-text or 404 = defect (§6).
-- **Byte-boxes travel:** `:::bytes` (`.byte`/`.bytes`) animate the message client→server **only when it
-  teaches** (§7, [[PEDAGOGY]] 4), obeying §7a (the moving element rides the drawn path).
+  deferred target has at least a **stub page**. Plain-text or 404 = defect (§6).
 - **Language isolation — the ≤2-class rule:** visibility = `.stage[data-lang]` (`en`/`jp`/`both`)
-  toggling **at most two** hooks (`.en`/`.jp`); legs, nav, pills and figure captions all obey the **same**
-  two, so a toggle never strands a region in the wrong language. `checkmod.js` enforces EN-on-load +
-  full isolation (EN→0 JP nodes, JP→0 EN).
+  toggling **at most two** hooks (`.en`/`.jp`); steps, nav, figure captions, the FAB menu all obey the
+  **same** two. `checkmod.js` enforces EN-on-load + full isolation (EN→0 JP, JP→0 EN) + zero overflow +
+  the §7d cast lint.
 
 ## 2. Phrasing (audience-facing)
 
@@ -195,11 +212,12 @@ contract (source of truth = those files):
     card list + its *Leaves:* line so the brief can't drift. Keep it to one screen; close with a `:::key`
     (label `By the end · この章を終えると`). Plain, clear language — never cryptic. *(H1/H2/H3 briefs
     predate this format and are to be retrofitted.)*
-  - **Concept** (default) — the teaching, built as a **T** (§1c): title-block + high-level
-    **bar** with **one** canonical illustration, then collapsible **detail legs**.
+  - **Concept** (default) — the teaching, built as a **stepped story** (§1c LOCKED 2026-07-09): a
+    title-block + a `## story` of `:::step`s, each one modest screenful of narration + its figure
+    (which evolves or swaps as the teaching needs). No collapsible legs. Grow depth by adding steps.
   - **Conclusion** — 1–2-sentence recap + bridge to next, at each section end.
-- **One concept = one top-level illustration** (on the bar). Leg figures are *additional*
-  depth sketches — required (illustrate depth), but they are not the top-level one.
+- **One idea per card**, told across as many steps as the idea needs (each step a single screenful).
+  Bullet a step where the prose gets paragraphy (steps accept `- ` lists).
 
 **Retrieval beats — generative, not recognition (ADOPTED 2026-07-09, session 20; from Coursera LHTL's
 illusion-of-competence finding).** A section's `:::recall` must make the reader **produce** an answer
@@ -476,12 +494,19 @@ animation frame) — don't judge from the source.
 2. Author/refresh the module's **`STRUCTURE.md`** (§1e) — the ordered card list + go-deeper legs +
    flow links + figure register — and show the user before auto-running. This *is* the card scaffold;
    the `content/` MD is derived from it, never organized independently.
-3. Reuse the **shared Blueprint template + renderer** (do not restyle): author each concept as
-   a **content MD file** (§1d) and render to the self-contained HTML page; keep the T-card
-   taxonomy (§1c), bilingual EN/JP, bundled fonts, `.dgm` diagrams, accent-highlight, notation
-   (`$xx`, byte-boxes, +0x40, 7F+NRC).
-4. Build **unit by unit** (§8); pressure-test each concept's technical claims (double-derive
-   against the standard) before moving on.
+3. **STORY pressure-test — after writing the story, before authoring prose/figures (LOCKED 2026-07-09,
+   [[feedback-build-pressure-tests]]).** Interrogate the step flow for **gaps · continuity** (does each
+   card/step flow from the last and into the next? if continuity *must* break, is the break **stated**
+   — what we're exploring & why — and is the **return signposted**? are the hand-offs **clean**?) — then
+   add / cut / emphasize / edit. Exit question, asked **in the learner persona**: *"am I understanding
+   this card?"* (V2-C1 example: this gate caught "the bytes came back in V1" — V1 was byte-free.)
+4. Reuse the **shared template + renderer** (do not restyle): author each concept as a **content MD
+   file** (§1d) — a `## story` of `:::step`s (§1c stepped-story model) — and render to the self-contained
+   HTML page; bilingual EN/JP, bundled fonts, `.dgm` diagrams, accent-highlight, notation (`$xx`,
+   byte-boxes, +0x40, 7F+NRC). Build **unit by unit** (§8); double-derive each technical claim against
+   the standard. **Teaching drives the figure**, and each figure **headlines its step's key point**, not
+   the card's conclusion (§1c). Then run the **DIAGRAM pressure-test** (same rigor as gate 3 + the
+   §7a/§7d geometry & cast checks) after the figures.
 5. End each UDS module with a bridge card mapping the capability to its **SOVD resource
    category** (see [[COURSE]] roadmap).
 6. Verify in-browser (§9). Update `NOTES.md`, append `wiki/log.md`, update [[COURSE]] Current

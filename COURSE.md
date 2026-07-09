@@ -363,25 +363,31 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
 > sets are in the backlog below. User steer: *make V2 a visible upgrade — apply everything needed to prove
 > the research.* **The V2 build is session 21** (applies all the above).
 
-1. **✅ V2 (request & positive response) BUILT — session 21, 2026-07-09 (the exemplar-rigor PILOT).** 5 cards,
-   browser-verified (checkmod incl. cast lint · light/dark/mobile · reduced-motion end-frame teaches), pushed.
-   All §7d infra landed template-side (`bytebox.js` · staged reveal · cast lint · reduced-motion); §6
-   motivate-first + **name-on-the-spot** (new §6 rule from user FB); §4 generative recall + one `:::elaborate`;
-   3-part Brief. **NEW `:::panel`** (user idea, adopted): synced narration+illustration stepper (the "video beat"
-   on static material), degrading to scannable prose; piloted on **C2** (bit-flip) + **C3** (echo). One
-   adversarial pass, 3 fixes folded (C2 `+0x40` `$2A` carve-out; brief formula; C3 "control flag"). Records:
-   `v2-request-and-response/NOTES.md` + STRUCTURE V2 register. **Continue the V drills in STRUCTURE reading
-   order: V1 ✅ → V2 ✅ → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9**, same per-drill cadence (confirm plan →
-   build w/ user review → checkmod + close-ups → adversarial pass → NOTES/STRUCTURE/log → **commit + push**).
-   **Round-2 user FB folded 2026-07-09 (V2 re-verified):** SVG hygiene praised as a step-change (credit the
-   `bytebox.js` generator + layout-framework). Fixes: `:::panel` nav → **dots + tap-to-advance + swipe** (no
-   "Step N/M", no ‹ › buttons); **figure position fixed** (text region height locked to the tallest step → no
-   jump); byte-box ✓/✕ badge de-collided + `+0x40` moved above the arrow (global `bytebox.js` fix).
-   **Continuous-story pilot ADOPTED (no go-deeper legs):** per user, pilot in V2 (H+V), and **if it lands →
-   default + retrofit all built modules & backlog**; `continuous: true` renders legs as inline `.flowsec`
-   sections (CONVENTIONS §1c PILOT note). **`:::elaborate` → adopt for future sections** (user).
-   **OPEN (sign-off before rolling out):** does the continuous-story model + panel land well? and do the
-   **4-beat bar** / **`:::elaborate`** / **`:::panel`** earn a MASTER-CHECKLIST lock + course-wide retrofit?
+> **Session-22 DONE (2026-07-09) — the reading-model overhaul; NEW card + shell model LOCKED.** Four
+> user-FB rounds on V2-C1 turned the continuous-story pilot into a whole new model, now **locked in
+> [[CONVENTIONS]] §1c + §1f** (they *supersede* the T-with-legs card and the session-9 scroll shell):
+> **(1) a concept card = one stepped STORY** — a `## story` of `:::step`s (narration + a figure that
+> evolves or swaps; teaching drives the figure; steps take bullet lists), no collapsible legs; **(2) an
+> app-like viewport-fit SLIDE** — content centred, vertical scroll ≈ 0, slim chrome (icon-home topbar +
+> compact one-line header; hero/strip/rail dropped); **(3) nav** = plain `‹ ›` arrows + dots, **swipe =
+> a drag-pan** (finger-follows, full-width slide, rolls into the adjacent card at the ends), **card nav =
+> a FAB** whose label opens a "Jump to card" menu; **(4) Further reading collapses**; **(5) the module
+> T-glyph marks H vs V** (`kind:` in module.yml). Two **pressure-test gates** added to the build recipe
+> (story-gate after writing the story, diagram-gate after figures — [[feedback-build-pressure-tests]]).
+> Template rewrite: `render.js` (story renderer + controller + drag + FAB + modhead) · `blueprint.css`
+> (story/app-shell/FAB) · `partials.js` (compact topbar + `--chrome`) · `checkmod.js` (story-aware).
+> **This is now the DEFAULT for every future card and the RETROFIT target for H1/H2/H3/V1.**
+
+1. **🚧 V2 (request & positive response) — MID-REBUILD on the new model.** **C1 rebuilt + pushed** as a
+   4-step app-slide (verified: checkmod green · desktop ≈8px / mobile ≈15px beyond viewport · no console
+   errors). C1 pressure-test applied (fixed the "bytes from V1" continuity bug; figure now headlines the
+   step's key point "no seams"; question moved to its answer; recipe/A_SDU redundancy trimmed; text
+   bulleted). **`_storyshot.js`** (scroll-height probe) is the per-card fit check. **NEXT SESSION: rebuild
+   C2, C3, the brief, and the conclusion** on the same model (weave the old panels + `:::elaborate` /
+   `:::recall` as the separate sections), each run through **both pressure-test gates**; then re-verify +
+   push. *(The old `:::panel`/`continuous:true`/`.flowsec` machinery is superseded by `## story`.)*
+   **Then continue the V drills in STRUCTURE reading order: V1 ✅ → V2 → V3 → V4 → V8 → V5 → V6 → V7a → V7b
+   → V7c → V9** on the locked model.
 2. **Then the H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
    (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.

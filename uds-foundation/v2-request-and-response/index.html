@@ -517,8 +517,10 @@ td .mono{color:var(--accent);font-weight:600}
    so the figure below never jumps AND there is no JS height-measure to lose to a font load (FB2). */
 .st-text{display:grid;margin-bottom:10px;overflow:hidden}   /* clip the panning steps so off-screen ones never widen the page */
 .st-step{grid-area:1/1;transition:transform .34s cubic-bezier(.4,0,.2,1),opacity .28s ease;pointer-events:none}
-.st-step.past{transform:translateX(-30px);opacity:0}
-.st-step.future{transform:translateX(30px);opacity:0}
+/* full-width slide so a committed drag CONTINUES off-screen (old exits left / new enters from right),
+   never snaps backwards (2026-07-09 FB). Same slide drives click/keyboard nav. */
+.st-step.past{transform:translateX(-100%);opacity:0}
+.st-step.future{transform:translateX(100%);opacity:0}
 .st-step.on{transform:none;opacity:1;pointer-events:auto}
 .st-step p,.st-step li{font-size:15.5px;line-height:1.5;color:var(--ink)}
 .st-step p{margin:0 0 7px} .st-step p:last-child{margin-bottom:0}
@@ -793,8 +795,8 @@ var panelFits=[];
     if(allb){var e=allb.querySelector('.en'),j=allb.querySelector('.jp');if(e)e.textContent=on?'Step through':'Show all';if(j)j.textContent=on?'順に見る':'全て表示';}}
   function go(to){if(allOn)setAll(false);cur=Math.max(1,Math.min(N,to));render();}
   // __next/__prev roll into the adjacent CARD at the story's ends (walk the whole module by swipe/arrow)
-  st.__next=function(){if(!allOn&&cur<N){go(cur+1);}else{show(idx+1,true);}};
-  st.__prev=function(){if(!allOn&&cur>1){go(cur-1);}else{show(idx-1,true);}};
+  st.__next=function(){if(!allOn&&cur<N){go(cur+1);}else{clearDrag();show(idx+1,true);}};
+  st.__prev=function(){if(!allOn&&cur>1){go(cur-1);}else{clearDrag();show(idx-1,true);}};
   render();
   dots.forEach(function(d){d.addEventListener('click',function(){go(+d.getAttribute('data-i'))})});
   if(prevb)prevb.addEventListener('click',st.__prev);
@@ -810,8 +812,9 @@ var panelFits=[];
     if(!drag){ if(Math.abs(dx)<8)return; if(Math.abs(dx)<=Math.abs(dy)){x0=null;return;} drag=true; if(txt)txt.classList.add('dragging'); }
     e.preventDefault();
     var cs=steps[cur-1],nb=dx<0?steps[cur]:steps[cur-2],r=Math.max(-1,Math.min(1,dx/W));
+    // inline transform/opacity override the class; DON'T touch the neighbor's class (render() reconciles)
     if(cs){cs.style.transform='translateX('+dx+'px)';cs.style.opacity=String(1-Math.abs(r)*0.45);}
-    if(nb){nb.classList.remove('future','past');nb.style.transform='translateX('+((dx<0?W:-W)+dx)+'px)';nb.style.opacity=String(Math.abs(r));}
+    if(nb){nb.style.transform='translateX('+((dx<0?W:-W)+dx)+'px)';nb.style.opacity=String(Math.abs(r));}
   },{passive:false});
   st.addEventListener('touchend',function(e){
     if(x0==null)return;var dx=e.changedTouches[0].clientX-x0;if(txt)txt.classList.remove('dragging');

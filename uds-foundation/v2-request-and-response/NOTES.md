@@ -1,7 +1,23 @@
 # V2 — Request & positive response, byte by byte · build notes
 
-**Status:** BUILT 2026-07-09 (session 21). 5 cards, browser-verified. The **exemplar-rigor pilot**
-(§7d visual cast · staged reveal · **the synced `:::panel`** · §6 motivate-first + name-on-the-spot ·
+**Status (session 22, 2026-07-09): MID-REBUILD on the NEW stepped-story / app-slide model** (locked
+[[CONVENTIONS]] §1c + §1f). This model was *shaken out on V2* across four user-FB rounds and now
+supersedes the session-21 `:::panel`/`continuous:true` build below.
+- **C1 — DONE + pushed** on the new model: a `## story` of **4 `:::step`s** (naked bytes → A_PCI →
+  parameters → Length/A_PDU), one evolving figure (`v2-c1-f1`, no swap), text **bulleted**, Sources
+  collapsed. Verified: `checkmod` green · desktop ≈8px / mobile ≈15px beyond viewport (`_storyshot.js`
+  scroll probe) · no console errors. Pressure-test fixes folded (V1→brief continuity; figure headlines
+  the step key-point "no seams"; question moved to step 2; recipe/A_SDU redundancy cut).
+- **C2 · C3 · Brief · Conclusion — NEXT SESSION:** rebuild on `## story` (weave the old C2/C3 panels +
+  the `:::elaborate` / `:::recall` as the separate sections), each through **both pressure-test gates**.
+- New per-card fit check: **`_storyshot.js`** (renders + measures px beyond viewport, light/dark/mobile).
+- Interaction now: plain `‹ ›` arrows + dots · **swipe drag-pan** (full-width slide, rolls to adjacent
+  card at ends) · **FAB** "Jump to card" menu · module **T-glyph = V** (`kind: V` in module.yml).
+
+---
+
+**Session-21 record (superseded model — kept for history).** BUILT 2026-07-09 as the **exemplar-rigor
+pilot** (§7d visual cast · staged reveal · the synced `:::panel` · §6 motivate-first + name-on-the-spot ·
 §4 generative recall + `:::elaborate`). Reading-order slot: V1 ✅ → **V2** → V3.
 
 ## Card scaffold (matches content/ 1:1 — checked by checkmod)

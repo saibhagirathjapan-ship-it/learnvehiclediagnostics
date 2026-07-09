@@ -517,8 +517,10 @@ td .mono{color:var(--accent);font-weight:600}
    so the figure below never jumps AND there is no JS height-measure to lose to a font load (FB2). */
 .st-text{display:grid;margin-bottom:10px;overflow:hidden}   /* clip the panning steps so off-screen ones never widen the page */
 .st-step{grid-area:1/1;transition:transform .34s cubic-bezier(.4,0,.2,1),opacity .28s ease;pointer-events:none}
-.st-step.past{transform:translateX(-30px);opacity:0}
-.st-step.future{transform:translateX(30px);opacity:0}
+/* full-width slide so a committed drag CONTINUES off-screen (old exits left / new enters from right),
+   never snaps backwards (2026-07-09 FB). Same slide drives click/keyboard nav. */
+.st-step.past{transform:translateX(-100%);opacity:0}
+.st-step.future{transform:translateX(100%);opacity:0}
 .st-step.on{transform:none;opacity:1;pointer-events:auto}
 .st-step p,.st-step li{font-size:15.5px;line-height:1.5;color:var(--ink)}
 .st-step p{margin:0 0 7px} .st-step p:last-child{margin-bottom:0}

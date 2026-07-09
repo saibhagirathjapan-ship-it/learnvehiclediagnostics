@@ -684,9 +684,9 @@ function show(i,scroll){
   if(fabLbl)fabLbl.textContent=(i+1)+' / '+pages.length;
   if(fabPrev)fabPrev.disabled=(i===0);
   if(fabNext)fabNext.disabled=(i===pages.length-1);
-  var pgp=pages[i].querySelector('.pg-prev'),pgn=pages[i].querySelector('.pg-fwd');   // brief/concl side arrows: hide the end that has no card
-  if(pgp)pgp.style.visibility=(i===0)?'hidden':'';
-  if(pgn)pgn.style.visibility=(i===pages.length-1)?'hidden':'';
+  var pgp=pages[i].querySelector('.pg-prev'),pgn=pages[i].querySelector('.pg-fwd');   // brief/concl side arrows: drop the end that has no card
+  if(pgp)pgp.style.display=(i===0)?'none':'';                     // display:none (not hidden) so the lone remaining arrow CENTERS in .pg-nav on mobile
+  if(pgn)pgn.style.display=(i===pages.length-1)?'none':'';
   fabItems.forEach(function(b){b.classList.toggle('on',b.getAttribute('data-id')===id)});
   if(scroll){if(history.replaceState)history.replaceState(null,'','#'+id);window.scrollTo(0,0);}
 }

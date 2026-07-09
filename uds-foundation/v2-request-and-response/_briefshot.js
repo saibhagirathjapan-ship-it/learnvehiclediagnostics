@@ -12,6 +12,16 @@ const arrows = p => p.evaluate(() => {
 });
 (async () => {
   const b = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--force-color-profile=srgb'] });
+  // MOBILE brief — the lone › must CENTER (report its x-centre vs viewport centre)
+  const pm = await b.newPage();
+  await pm.setViewport({ width: 390, height: 780, deviceScaleFactor: 2 });
+  await pm.goto(FILE + '#brief', { waitUntil: 'networkidle0' });
+  await pm.evaluate(async () => { await document.fonts.ready; });
+  await wait(400);
+  const centre = await pm.evaluate(() => { const a = document.querySelector('.page.on .pg-fwd'); const r = a.getBoundingClientRect(); return { arrowCentre: Math.round(r.left + r.width / 2), vpCentre: Math.round(innerWidth / 2), prevShown: getComputedStyle(document.querySelector('.page.on .pg-prev')).display !== 'none' }; });
+  console.log('MOBILE brief › centre:', JSON.stringify(centre));
+  await pm.screenshot({ path: `${OUT}/brief-mobile.png` });
+  await pm.close();
   const p = await b.newPage();
   await p.setViewport({ width: 1300, height: 820, deviceScaleFactor: 1.3 });
   await p.goto(FILE + '#brief', { waitUntil: 'networkidle0' });

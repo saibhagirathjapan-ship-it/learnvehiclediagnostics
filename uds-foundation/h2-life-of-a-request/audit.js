@@ -1,9 +1,9 @@
-const puppeteer = require('D:/Bhagirath/Automotive/autodiag_athenaeum/wiki/learn/uds/node_modules/puppeteer-core');
+﻿const puppeteer = require('D:/Bhagirath/Automotive/Diagnostic Learning/wiki/learn/uds/node_modules/puppeteer-core');
 const path = require('path');
 const fs = require('fs');
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const DIR = 'D:/Bhagirath/Automotive/autodiag_athenaeum/wiki/learn/uds-foundation/h2-life-of-a-request';
+const DIR = 'D:/Bhagirath/Automotive/Diagnostic Learning/wiki/learn/uds-foundation/h2-life-of-a-request';
 const URL = 'file:///' + path.join(DIR, 'index.html').replace(/\\/g, '/');
 const OUT = path.join(DIR, 'assets');
 

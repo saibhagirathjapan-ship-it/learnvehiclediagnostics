@@ -348,16 +348,23 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
 
 **Next up**
 
-> **Session-18 decision gate (2026-07-09) — exemplar-rigor review, do this FIRST next session.** A research
-> session studied three explainer exemplars (TLDR News · Vector "EnginEEring the Jigsaw" F0–F28 · 3Blue1Brown)
-> and produced a prioritized rigor report: **`_derive/exemplar-rigors.md`** (+ log 2026-07-09). **Nothing is
-> adopted yet** — several proposals touch LOCKED conventions and need user sign-off. Two are live in-code
-> defects worth fixing regardless: the **ochre/olive actor-colour collision** (ECU painted in `grn-s` = the OK
-> hue) and the **missing `prefers-reduced-motion`** fallback. Decide which proposals to adopt, then either run
-> the **figure-system package** (reduced-motion → `§7d` visual-cast lexicon + actor tokens → staged/driven
-> "animate-the-consequence" figures) or proceed straight to V2 below.
+> **Session-20 plan (SET BY USER at session-19 wrap, 2026-07-09) — the exemplar⇄course comparison pass, do
+> this NEXT session.** Four exemplars are now studied: TLDR News · Vector "EnginEEring the Jigsaw" F0–F28 ·
+> 3Blue1Brown (**`_derive/exemplar-rigors.md`**) + Coursera's *Learning How to Learn*
+> (**`_derive/exemplar-rigors-learning-how-to-learn.md`**, mostly confirmatory — it's the canon PEDAGOGY
+> cites — plus: `:::recall` generative-not-recognition · a `:::elaborate` learner-analogy beat · interleave
+> prior-module facts into recall · a "space it / sleep on it" hub line). **Session 20 = carefully analyze ALL
+> exemplar findings against the shipped course, decide with the user what to adopt, and scope the adopted
+> improvements to be PILOTED IN V2 FIRST.** Rules set by the user: (a) improvements land in **V2 first** —
+> the V2 *build* itself is the session **after** (session 21); (b) any **course-specific modifications**
+> discovered along the way (retrofits to shipped H1–H3/V1, hub changes, template-wide passes) are **PARKED
+> for later**, not executed in session 20. Nothing is adopted yet — several proposals touch LOCKED
+> conventions and need sign-off. Two live in-code defects noted regardless: the **ochre/olive actor-colour
+> collision** and the **missing `prefers-reduced-motion`** fallback. **Strongest signal: 3 of 4 exemplars
+> converge on staged/progressive figure reveal** — treat as decided-in-principle.
 
-1. **V2 (request & positive response) — ACTIVE NEXT SESSION** (user-confirmed 2026-07-08). Continue the V depth
+1. **V2 (request & positive response) — build in SESSION 21** (after the session-20 comparison pass; it applies
+   the rigors adopted there). Continue the V depth
    drills via the H3 pipeline (module.yml + `content/*.md` + `.dgm` figures → rendered `index.html`), in
    **STRUCTURE reading order: V1 ✅ → V2 → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9**. Card-level flow for
    every drill is already speced in `uds-foundation/STRUCTURE.md`; author each drill's §7c figure register there

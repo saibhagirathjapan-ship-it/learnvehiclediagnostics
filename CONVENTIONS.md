@@ -223,6 +223,13 @@ not the goal. In a rigidly-sequenced course, a later recall may **interleave a p
   free." The checkable shape is a **4-beat bar — Tension → invite a guess → Reveal → Name** (term last).
   **Piloted on V2's C1/C2/C3; lock into the MASTER CHECKLIST only after V2 proves it reads well** (do not
   yet mandate course-wide).
+- **Name on the spot — plain idea, then its term, ADJACENT (LOCKED 2026-07-09, user feedback).** The moment
+  a plain-language explanation lands, name it **right there** — never explain several parts plainly and then
+  batch all the real terms into a later summary paragraph. *"A short control header goes first — it is the
+  **A_PCI**"* etches far better than defining A_PCI three sentences on. This **refines** "name it last"
+  above: the *card* still opens on tension before any term (the 4-beat), but *inside* the teaching each plain
+  idea is christened the instant it is understood. And **do not avoid jargon** — give the dumbed-down
+  explanation *plus* the real term openly; don't hide it or paraphrase it away.
 - **Story continuity** — each unit flows from the one before and into the next; read the
   whole top-to-bottom as one story before shipping.
 - **Forward pointers (spiral signposting).** When a card *names* a substantial topic it does **not**

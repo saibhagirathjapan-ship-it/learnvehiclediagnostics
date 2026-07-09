@@ -36,23 +36,23 @@ So how does the receiver find the seams? Picture handing someone a bare pile of 
 :::en
 You would put a small header on the front — one that says *how to read what follows* — and you would note *how long* the whole thing is. That is exactly what a UDS message does. The content never travels naked. It travels **wrapped**:
 
-- A short **control header** goes first. Its very **first byte is the key**: its value tells the receiver how to read everything after it.
+- A short control header goes first. It has a name: the **A_PCI** (*protocol control information*). Its very **first byte is the key** — that value tells the receiver how to read everything after it.
 - Then the service's own **parameters** — the data bytes that header introduces.
-- And the message carries a **length** — how many bytes in all.
+- And the whole thing carries a **length** — how many bytes in all.
 :::
 :::jp
 先頭に小さなヘッダを付けるでしょう ― *続きの読み方*を示すヘッダを ― そして全体が*何バイト*かを記すでしょう。UDSのメッセージがまさにそれをします。中身がむき出しで運ばれることはありません。**包まれて**運ばれます：
 
-- 短い**制御ヘッダ**が先頭に来ます。その**先頭バイトこそ鍵**：その値が、後続をどう読むかを受け手に伝えます。
+- 先頭に短い制御ヘッダが来ます。これには名前があります ― **A_PCI**（プロトコル制御情報）。その**先頭バイトこそ鍵** ― その値が、後続をどう読むかを受け手に伝えます。
 - 続いてサービス自身の**パラメータ** ― ヘッダが導くデータバイト。
-- そしてメッセージは**長さ**を運びます ― 全部で何バイトか。
+- そして全体が**長さ**を運びます ― 全部で何バイトか。
 :::
 
 :::en
-This wrapped unit has a name: the **A_PDU** — the *application protocol data unit*. The control header is the **A_PCI** (*protocol control information*); the meaningful data it carries is the **A_SDU** (*service data unit*). One message = one A_PDU. From here on, "a message" means exactly this shape.
+Put those three together and you have one complete message. That wrapped unit is the **A_PDU** (*application protocol data unit*), and the meaningful data riding inside it is the **A_SDU** (*service data unit*). From here on, "a message" means exactly this shape.
 :::
 :::jp
-この包まれた単位には名前があります：**A_PDU** ―「アプリケーション層プロトコルデータユニット」。制御ヘッダが **A_PCI**（プロトコル制御情報）、それが運ぶ意味のあるデータが **A_SDU**（サービスデータユニット）。1メッセージ = 1 A_PDU。これ以降、「メッセージ」とはまさにこの形を指します。
+この3つを合わせると、1つの完全なメッセージになります。この包まれた単位が **A_PDU**（アプリケーション層プロトコルデータユニット）、その中を運ばれる意味のあるデータが **A_SDU**（サービスデータユニット）です。これ以降、「メッセージ」とはまさにこの形を指します。
 :::
 
 ## leg:layout

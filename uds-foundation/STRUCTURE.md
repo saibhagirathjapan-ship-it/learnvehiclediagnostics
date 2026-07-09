@@ -139,7 +139,7 @@ story steps** (`data-stage`/`data-until`); the headline text is itself stage-gat
 | V2-C1-F3 | the first byte routes everything (≠7F vs 7F) | C1 (retired leg fig — unused) | `v2-c1-f3_first-byte-key.svg` | static |
 | V2-C2-F1 | bit 6 free → set it (+0x40) → one rule, every service | C2 (evolves, steps 1–4) | `v2-c2-f1_plus-0x40-bitflip.svg` | bit toggles `0→1`, box `10`→`50`; stage-gated headline |
 | V2-C2-F2 | computed rule vs a stored type-field (the trade-off) | C2 (swap, step 5) | `v2-c2-f2_rule-not-field.svg` | static contrast (✓/✕) |
-| V2-C3-F1 | `10 03` → `50 03`: +0x40 on the SID, sub-fn echoed, top bit 0 | C3 (evolves, steps 1–4) | `v2-c3-f1_echoed-subfn.svg` | reuses the shared `50`/`03` sprites; stage-gated headline |
+| V2-C3-F1 | `10 03` → `50 03`: +0x40 on the SID, sub-fn echoed, top bit 0 | C3 (evolves, steps 1–4) | `v2-c3-f1_echoed-subfn.svg` | **horizontal** send→get (fills the wide box); shared `50`/`03` sprites; stage-gated headline |
 | V2-C3-F2 | one byte, two jobs (top-bit flag · value) | C3 (swap, step 5) | `v2-c3-f2_subfn-byte.svg` | static split |
 
 *(Object constancy holds: the `50`/`03` sprites are pixel-identical across C1/C2/C3. C1's F2/F3 were the old

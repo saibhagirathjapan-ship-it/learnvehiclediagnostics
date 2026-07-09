@@ -13,7 +13,7 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   // Step 1's KEY POINT is: the raw bytes have NO SEAMS. So stage 1 headlines that (not "a wrapped
   // unit" — that is the CONCLUSION, saved for stage 4). Bytes are naked from stage 1; the labels then
   // build the seams: A_PCI (2), parameters (3), Length + "one A_PDU" (4). Tight margins → a big figure.
-  const y = 92, x0 = 66;
+  const y = 80, x0 = 40;   // tightened margins — content fills the box (2026-07-09 FB)
   const first = byteBox({ hex: '50', x: x0, y, role: 'data' });
   const rest = byteRow(
     [{ hex: '03', role: 'data' }, { hex: '00', role: 'data' }, { hex: '32', role: 'data' },
@@ -38,7 +38,7 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
     `<text x="${cx}" y="${y + BOX_H + 54}" text-anchor="middle" class="ink mono-t" font-size="13">Length = 6 bytes</text>` +
     `<text x="${cx}" y="36" text-anchor="middle" class="acc w7" font-size="16">= one A_PDU (a wrapped unit)</text></g>`;
   const w = rowEnd + x0;   // symmetric margins
-  wr('v2-c1-f1_pdu-layout.svg', svg(`${w} ${y + BOX_H + 74}`, body, 'The reply bytes have no seams at first; a control header A_PCI (first byte = the key), the parameters, and a Length build the seams — together one A_PDU.'));
+  wr('v2-c1-f1_pdu-layout.svg', svg(`${w} ${y + BOX_H + 64}`, body, 'The reply bytes have no seams at first; a control header A_PCI (first byte = the key), the parameters, and a Length build the seams — together one A_PDU.'));
 })();
 
 // ---------- V2-C1-F2 — the recipe: A_PDU = A_SDU + A_PCI (static) ----------
@@ -119,7 +119,7 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
     `<g data-stage="3"><text x="${bx + 29}" y="${hy + 50 + 17}" text-anchor="middle" class="acc mono-t w7" font-size="12">= 10 + 0x40</text></g>`;   // name it, on the spot
   const eq = `<text x="430" y="${y + h / 2 + 7}" text-anchor="middle" class="mut mono-t w8" font-size="20">=</text>`;
   // step 4 — generalise: how to READ any first byte, plus the worked pairs
-  const sumY = y + h + 96;
+  const sumY = y + h + 80;   // pulled up to trim the reserved bottom band (2026-07-09 FB)
   const summary =
     `<g data-stage="4"><path d="M 44 ${sumY - 28} H 520" class="ln" stroke-width="1"/>` +
     `<text x="282" y="${sumY}" text-anchor="middle" class="ink w7" font-size="13.5">bit 6 = 0 → a request      bit 6 = 1 → its positive reply</text>` +
@@ -129,7 +129,7 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   const hd4 = `<g data-stage="4"><text x="282" y="30" text-anchor="middle" class="ink w7" font-size="15">One rule, every service</text></g>`;
   const headline = hd(1, 'Make 10 into its own answer — for free') + hd(2, 'Bit 6 is never used — it is free') + hd(3, 'Set bit 6: 10 becomes 50') + hd4;
   const body = headline + cells + eq + box10 + box50 + callout + summary;
-  wr('v2-c2-f1_plus-0x40-bitflip.svg', svg('564 254', body, 'The request byte 10 in bits has bit 6 unused; setting bit 6 makes the byte 50 — that fixed step is +0x40, and it works for every service.'));
+  wr('v2-c2-f1_plus-0x40-bitflip.svg', svg('564 226', body, 'The request byte 10 in bits has bit 6 unused; setting bit 6 makes the byte 50 — that fixed step is +0x40, and it works for every service.'));
 })();
 
 // ---------- V2-C2-F2 — a computed RULE vs a stored type FIELD (static contrast, step 5) ----------
@@ -177,27 +177,29 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   wr('v2-c2-f2_rule-not-field.svg', svg('586 244', body, 'A computed +0x40 rule derives the answer SID from the request for free and can never contradict it; a stored type field would cost one byte per message and could disagree with the SID.'));
 })();
 
-// ---------- V2-C3-F1 — 10 03 comes back as 50 03 (panel, 4 steps) ----------
+// ---------- V2-C3-F1 — 10 03 → 50 03, echo (evolves, 4 steps) ----------
+// HORIZONTAL send→get so the wide box fills with content (2026-07-09 FB: no floating in a tall canvas).
 (function c3f1() {
-  const svcX = 214, subX = svcX + BOX_W + GAP, reqY = 66, rspY = 172;
-  const svcCx = svcX + BOX_W / 2, subCx = subX + BOX_W / 2, midY = (reqY + BOX_H + rspY) / 2;
-  const req = byteBox({ hex: '10', x: svcX, y: reqY, role: 'data', stage: 1 }) + byteBox({ hex: '03', x: subX, y: reqY, role: 'sub', stage: 1 });
-  const rsp = byteBox({ hex: '50', x: svcX, y: rspY, role: 'pos', stage: 2 }) + byteBox({ hex: '03', x: subX, y: rspY, role: 'sub', stage: 3 });
-  const dArrow = (cx, cls) => `<path d="M ${cx} ${reqY + BOX_H + 4} V ${rspY - 5} M ${cx - 5} ${rspY - 11} L ${cx} ${rspY - 5} L ${cx + 5} ${rspY - 11}" class="${cls}" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
-  const svcArrow = `<g data-stage="2">${dArrow(svcCx, 'acc-s')}<text x="${svcCx - 9}" y="${midY + 4}" text-anchor="end" class="acc mono-t" font-size="11">+0x40</text></g>`;
-  const subArrow = `<g data-stage="3">${dArrow(subCx, 'ecu-s')}<text x="${subCx + 9}" y="${midY + 4}" class="ecu mono-t" font-size="11">echoed</text></g>`;
-  const labels =
-    `<text x="${svcX - 16}" y="${reqY + 30}" text-anchor="end" class="mut mono-t" font-size="11">you send</text>` +
-    `<text x="${svcX - 16}" y="${rspY + 30}" text-anchor="end" class="mut mono-t" font-size="11">you get</text>` +
-    `<text x="${svcCx}" y="${reqY - 12}" text-anchor="middle" class="mut" font-size="10">service</text>` +
-    `<text x="${subCx}" y="${reqY - 12}" text-anchor="middle" class="mut" font-size="10">sub-function</text>`;
-  const s4 = `<g data-stage="4"><path d="M ${subCx} ${rspY + BOX_H + 4} V ${rspY + BOX_H + 12}" class="acc-s" stroke-width="1.3"/>` +
-    `<text x="${subCx}" y="${rspY + BOX_H + 26}" text-anchor="middle" class="acc mono-t" font-size="10.5">top bit forced to 0 — a flag → V4</text></g>`;
-  // stage-gated headline — tracks each step's point, not the conclusion (§1c)
-  const hd = (stg, txt) => `<g data-stage="${stg}" data-until="${stg}"><text x="270" y="30" text-anchor="middle" class="ink w7" font-size="15">${txt}</text></g>`;
+  const y = 60, cx = 204, p = 8;                 // p = gap within a pair
+  const sSvcX = 40, sSubX = sSvcX + BOX_W + p;    // send pair 40..164
+  const gSvcX = 244, gSubX = gSvcX + BOX_W + p;   // get pair 244..368
+  const sMid = (sSvcX + sSubX + BOX_W) / 2, gMid = (gSvcX + gSubX + BOX_W) / 2;
+  const midY = y + BOX_H / 2;
+  const send = byteBox({ hex: '10', x: sSvcX, y, role: 'data', stage: 1 }) + byteBox({ hex: '03', x: sSubX, y, role: 'sub', stage: 1 });
+  const get = byteBox({ hex: '50', x: gSvcX, y, role: 'pos', stage: 2 }) + byteBox({ hex: '03', x: gSubX, y, role: 'sub', stage: 3 });
+  const ax0 = sSubX + BOX_W + 8, ax1 = gSvcX - 8;   // 172 .. 236
+  const arrow = `<g data-stage="2"><path d="M ${ax0} ${midY} H ${ax1} M ${ax1 - 6} ${midY - 5} L ${ax1} ${midY} L ${ax1 - 6} ${midY + 5}" class="ln" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  // per-byte mapping labels, above the two get boxes (name each transform on the spot)
+  const plus = `<g data-stage="2"><text x="${gSvcX + BOX_W / 2}" y="${y - 10}" text-anchor="middle" class="acc mono-t" font-size="11">+0x40</text></g>`;
+  const echo = `<g data-stage="3"><text x="${gSubX + BOX_W / 2}" y="${y - 10}" text-anchor="middle" class="ecu mono-t" font-size="11">echoed</text></g>`;
+  const caps =
+    `<text x="${sMid}" y="${y + BOX_H + 22}" text-anchor="middle" class="mut mono-t" font-size="11">you send</text>` +
+    `<g data-stage="3"><text x="${gMid}" y="${y + BOX_H + 22}" text-anchor="middle" class="mut mono-t" font-size="11">you get</text></g>`;
+  const s4 = `<g data-stage="4"><text x="${gMid}" y="${y + BOX_H + 44}" text-anchor="middle" class="acc mono-t" font-size="10.5">top bit → 0 (a flag → V4)</text></g>`;
+  const hd = (stg, txt) => `<g data-stage="${stg}" data-until="${stg}"><text x="${cx}" y="28" text-anchor="middle" class="ink w7" font-size="15">${txt}</text></g>`;
   const headline = hd(1, 'You send 10 03 — what comes back?') + hd(2, '10 returns as 50   (+0x40)') + hd(3, '03 comes straight back — echoed') + hd(4, 'The top bit comes back 0');
-  const body = headline + labels + req + rsp + svcArrow + subArrow + s4;
-  wr('v2-c3-f1_echoed-subfn.svg', svg('540 268', body, 'The request 10 03 returns as 50 03: service 10 becomes 50 by +0x40, and the sub-function 03 is echoed back unchanged except its top bit forced to 0.'));
+  const body = headline + send + get + arrow + plus + echo + caps + s4;
+  wr('v2-c3-f1_echoed-subfn.svg', svg('408 176', body, 'The request 10 03 returns as 50 03: service 10 becomes 50 by +0x40, and the sub-function 03 is echoed back unchanged except its top bit forced to 0.'));
 })();
 
 // ---------- V2-C3-F2 — the sub-function byte split: top-bit flag + value (static) ----------

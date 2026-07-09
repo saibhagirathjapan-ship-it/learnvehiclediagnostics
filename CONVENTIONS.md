@@ -165,6 +165,14 @@ contract (source of truth = those files):
 - **Step nav = plain `‹ ›` arrows** flanking the content (`.st-arw`): desktop = **fixed, vertically
   centred on the viewport**, just outside the column; below ~960px they drop **inline** beside the
   dots so they never overlap text. **No counts** — a row of **dots** (`.st-dot`) carries position.
+  **Brief + conclusion carry the same flanking arrows** (`.pg-prev`/`.pg-fwd`, `render.js pageArrows()`)
+  — there they move between **cards**, and the pager hides the end that has no card (2026-07-09 FB: every
+  card navigates the same way).
+- **Illustrations are LARGE and drive the narration (2026-07-09 FB).** The figure box (`.st-stage`) uses
+  **tight padding (6px)** and the SVG fills the box width with a **generous height cap (~40vh desktop /
+  37vh mobile)**. A figure only fills the box at that cap if its **aspect ratio ≳ box-width∶cap (~2.3)** —
+  so **author figures WIDE** (a tall/narrow layout floats with big side margins; e.g. C3's echo was redrawn
+  from a vertical 2×2 grid to a horizontal `10 03 → 50 03`). Keep the viewBox tight to the content.
 - **Swipe = a DRAG-pan** (the content tracks the finger 1:1, transition off mid-drag; release **snaps
   to the nearest step**). The slide is **full-width** (`.past`/`.future` = `±100%`) so a committed drag
   *continues* in the swipe direction (old exits left / new enters from right) — it must **never snap

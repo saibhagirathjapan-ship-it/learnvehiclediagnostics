@@ -388,8 +388,13 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
    green · `_storyshot.js` fit (C1 ≈8 / C2 136 [residual = the below-story `:::elaborate` beat] / C3 0 px) ·
    geometry close-ups light+dark for all 4 concept figures · **both pressure-test gates run in-persona**,
    fixes folded (C3 "sub-function" named on the spot; C2 long step split 5→6; c2-f2 consequence-column
-   spacing). Records: `v2…/NOTES.md`, `STRUCTURE.md` V2 §. **Next: continue the V drills in STRUCTURE
-   reading order — V1 ✅ → V2 ✅ → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9** on the locked model.
+   spacing). Records: `v2…/NOTES.md`, `STRUCTURE.md` V2 §.
+   - **Post-build FB round (session 23) landed + verified:** (1) **illustrations enlarged** — box padding
+     14→6px, figure cap 31→40vh, figures authored WIDE to fill the box (C3's echo redrawn horizontal); new
+     shell rule in [[CONVENTIONS]] §1f. (2) **prose newlines + emphasis** across C1/C2/C3. (3) **side `‹ ›`
+     card-nav arrows added to Brief + Conclusion** (`pageArrows()`), end-arrow hidden where no card.
+   **Next: continue the V drills in STRUCTURE reading order — V1 ✅ → V2 ✅ → V3 → V4 → V8 → V5 → V6 → V7a →
+   V7b → V7c → V9** on the locked model.
 2. **Then the H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
    (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.

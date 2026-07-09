@@ -327,13 +327,21 @@ function renderDivider(meta){
   return `<section class="divider" id="${esc(meta.id)}" data-secn="${esc(s.n)}"><div class="sec">SECTION ${esc(s.n)}</div>`+
     `<h2>${inline(s.en)}<span class="jp">${inline(s.jp)}</span></h2>${sub}</section>`;
 }
+// side card-nav arrows (2026-07-09 FB): brief + conclusion get the SAME flanking ‹ › arrows as story
+// cards — fixed at the viewport mid on desktop, inline on mobile — so every card navigates the same way.
+// They move between CARDS (show idx±1); the unavailable end arrow is hidden by the pager (see SCRIPT).
+function pageArrows(){
+  return `<div class="st-nav pg-nav">`+
+    `<button class="st-arw pg-prev" type="button" aria-label="Previous card"><span class="st-ar">‹</span></button>`+
+    `<button class="st-arw pg-fwd" type="button" aria-label="Next card"><span class="st-ar">›</span></button></div>`;
+}
 function renderBrief(meta,sections,assetsDir){
   const eb=meta.eyebrow||'Start here · まずここから';
-  return `<section class="brief" id="${esc(meta.id||'brief')}"><div class="eyebrow">${IC_START}${esc(eb)}</div>${renderBlocks(parseBlocks(sections['body']||''),assetsDir,false)}</section>`;
+  return `<section class="brief" id="${esc(meta.id||'brief')}"><div class="eyebrow">${IC_START}${esc(eb)}</div>${renderBlocks(parseBlocks(sections['body']||''),assetsDir,false)}${pageArrows()}</section>`;
 }
 function renderConclusion(meta,sections,assetsDir){
   const eb=meta.eyebrow||'Section recap · まとめ';
-  return `<section class="concl" id="${esc(meta.id||'concl')}"><div class="eyebrow">${IC_RECAP}${esc(eb)}</div>${renderBlocks(parseBlocks(sections['body']||''),assetsDir,false)}</section>`;
+  return `<section class="concl" id="${esc(meta.id||'concl')}"><div class="eyebrow">${IC_RECAP}${esc(eb)}</div>${renderBlocks(parseBlocks(sections['body']||''),assetsDir,false)}${pageArrows()}</section>`;
 }
 function renderCard(meta,sections,assetsDir,kind,cardNum){
   switch(meta.type){
@@ -458,6 +466,9 @@ function show(i,scroll){
   if(fabLbl)fabLbl.textContent=(i+1)+' / '+pages.length;
   if(fabPrev)fabPrev.disabled=(i===0);
   if(fabNext)fabNext.disabled=(i===pages.length-1);
+  var pgp=pages[i].querySelector('.pg-prev'),pgn=pages[i].querySelector('.pg-fwd');   // brief/concl side arrows: hide the end that has no card
+  if(pgp)pgp.style.visibility=(i===0)?'hidden':'';
+  if(pgn)pgn.style.visibility=(i===pages.length-1)?'hidden':'';
   fabItems.forEach(function(b){b.classList.toggle('on',b.getAttribute('data-id')===id)});
   if(scroll){if(history.replaceState)history.replaceState(null,'','#'+id);window.scrollTo(0,0);}
 }
@@ -472,6 +483,8 @@ function stepActive(dir){var s=document.querySelector('.page.on .story');
 document.addEventListener('click',function(e){var a=e.target.closest('.cardnav a');if(!a)return;var h=a.getAttribute('href')||'';if(h.charAt(0)==='#'&&jump(h.slice(1)))e.preventDefault();});
 if(fabPrev)fabPrev.addEventListener('click',function(){show(idx-1,true)});
 if(fabNext)fabNext.addEventListener('click',function(){show(idx+1,true)});
+// brief/conclusion side arrows (.pg-prev/.pg-fwd) move between cards (story cards have their own .st-arw)
+document.addEventListener('click',function(e){var p=e.target.closest('.pg-prev');if(p){show(idx-1,true);return;}var n=e.target.closest('.pg-fwd');if(n){show(idx+1,true);}});
 addEventListener('keydown',function(e){var t=e.target.tagName;if(t==='INPUT'||t==='TEXTAREA')return;if(e.key==='ArrowRight')stepActive(1);else if(e.key==='ArrowLeft')stepActive(-1);});
 var start=(location.hash||'').slice(1),si=0;
 if(start)for(var k=0;k<pages.length;k++){if(pages[k].getAttribute('data-id')===start){si=k;break}}

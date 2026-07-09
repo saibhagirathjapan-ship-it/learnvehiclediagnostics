@@ -31,6 +31,26 @@ session-21 `:::panel`/`continuous:true` build is fully superseded.
 pilot** (§7d visual cast · staged reveal · the synced `:::panel` · §6 motivate-first + name-on-the-spot ·
 §4 generative recall + `:::elaborate`). Reading-order slot: V1 ✅ → **V2** → V3.
 
+## Feedback round — bigger figures, prose breaks, brief/concl arrows (session 23, 2026-07-09)
+
+Three user-FB items, all applied + verified:
+1. **Illustrations are big / box margins cut a lot.** Template (`blueprint.css`): `.st-stage` padding
+   **14→6px**; `.st-fig svg` height cap **31vh→40vh** (mobile 29→37). At the height cap a figure only
+   fills the box if its aspect ≥ ~2.33, so figures were widened/tightened: `v2-c1-f1` (x0 66→40, viewBox
+   540→488w · 216→194h), `v2-c2-f1` (summary pulled up, 254→226h), and **`v2-c3-f1` REDRAWN horizontal**
+   (`10 03 → 50 03` left-to-right; 540×268 vertical → **408×176** wide) so it fills the box instead of
+   floating in a tall canvas. All four concept figures now fill the box width; residual dead space is only
+   the evolving figures' reserved later-stage band.
+2. **Newlines + emphasis.** Added paragraph breaks at natural beats (after a question, between setup and
+   payoff) and bolded key parts across C1/C2/C3 story steps (EN + JP).
+3. **Side nav arrows on brief + conclusion.** `render.js pageArrows()` adds the same flanking `‹ ›` to the
+   brief and conclusion (fixed on desktop, inline on mobile); they move between CARDS. The pager
+   (`show()`) hides the end with no card. Verified: brief hides `‹`, conclusion hides `›`, brief `›`→C1.
+   New scratch check: `_briefshot.js`.
+
+Fit after the change (`_storyshot.js`): C1 31/16 · **C2 154/237** (residual = the below-story `:::elaborate`
+beat) · C3 0/0. checkmod green.
+
 ## Card scaffold (matches content/ 1:1 — checked by checkmod)
 
 | # | file | id | type | story | figure(s) |

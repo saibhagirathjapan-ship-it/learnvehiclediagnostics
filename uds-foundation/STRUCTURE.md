@@ -97,6 +97,37 @@ tester↔ECU, state UDS = ISO 14229 (application-layer catalog, transport-indepe
 | V2-C3 | Concept | sub-fn services echo the sub-fn value with top bit cleared | bit7=0 on echo (→V4) · reading 10 03→50 03 (session byte 03 everywhere) |
 | V2-K | Conclusion | recap + bridge to the negative case | — |
 
+**V2 is the session-20 exemplar-rigor PILOT (see [[CONVENTIONS]] §7d, §6 motivate-first, §4 retrieval).**
+V2 is chosen because it is pure byte-mechanics with a positive-response semantic at its core — the exact
+place the animation/colour/reveal rigors bite. Apply, per card:
+
+- **V2-B (Brief):** built in the LOCKED 3-part advance-organizer format (§4) — why-this (recall V1's
+  abstract primitives → "now the actual bytes of a good reply") · what's-inside (C1/C2/C3) · what-you'll-
+  be-able-to-do (lay out a PDU, decode `+0x40`, read an echoed sub-fn). Close with `:::key` "By the end."
+- **V2-C1 (PDU = SDU+PCI+params+length):** figure **`v2-c1-f1`** is the pilot **staged reveal** — the PDU
+  **assembles field-by-field** (SDU → PCI → params → Length), each field lighting as the prose names it,
+  **click-to-advance**. Motivate-first opener (what a reply *is* underneath, before naming PCI). Byte-boxes
+  from the **shared generator** (§7d-4).
+- **V2-C2 (positive = SID+0x40):** figure **`v2-c2-f1`** is the pilot **"animate the consequence"** — `10`
+  visibly **sets bit 6 → `50`** (a bit toggling = a computed transform, §7d motion grammar), click-to-
+  advance. Opener uses the **"you could have invented +0x40"** discovery framing (§6). **`:::elaborate`
+  beat** lives here ("why a constant, not a field?"). On-image labels = `$50` / `+0x40` verbatim (§7d-2
+  parity).
+- **V2-C3 (echoed sub-fn, bit7 cleared):** reuse the **same `50 03` byte-box** from C1/C2 (object
+  constancy, §7d-4) — the reader sees the *identical* sprite, reinforcing "session byte `03` everywhere."
+- **V2-K:** `:::recall` is **generative** (§4) — "decode `62 F1 90`" / "what does `50 03` tell the tester?",
+  never a recognition check. Competence beat + bridge to the negative case (V3).
+- **Colour:** all V2 figures are the **first drawn under §7d** — tester = `--actor-tester`, ECU =
+  `--actor-ecu` (distinct from olive `--ok`); positive reply marked by a **✓ glyph + stroke**, not green.
+
+**V2 figure register (§7c):**
+
+| ID | title | card/leg | filename | reveal / motion |
+|----|-------|----------|----------|-----------------|
+| V2-C1-F1 | a reply is a PDU: SDU + PCI + params + length | C1 bar | `v2-c1-f1_pdu-layout.svg` | staged build-order (4 fields), click-to-advance |
+| V2-C2-F1 | positive response flips bit 6: `10` → `50` | C2 bar | `v2-c2-f1_plus-0x40-bitflip.svg` | animate the consequence (bit toggles), click-to-advance |
+| V2-C3-F1 | the sub-fn echoes with the top bit cleared: `10 03` → `50 03` | C3 bar | `v2-c3-f1_echoed-subfn.svg` | reuses the shared `50 03` byte-box (object constancy) |
+
 ## V3 — Negative responses & the NRC catalog
 *Enters:* neg = 7F+SID+NRC; 0x78 = busy. *Leaves:* can decode the fixed shape, navigate the global catalog + always-supported set, explain 0x78.
 

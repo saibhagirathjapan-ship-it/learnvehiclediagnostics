@@ -191,6 +191,18 @@ contract (source of truth = those files):
 - **One concept = one top-level illustration** (on the bar). Leg figures are *additional*
   depth sketches — required (illustrate depth), but they are not the top-level one.
 
+**Retrieval beats — generative, not recognition (ADOPTED 2026-07-09, session 20; from Coursera LHTL's
+illusion-of-competence finding).** A section's `:::recall` must make the reader **produce** an answer
+(decode this byte string · which session re-locks security · what does `50 03` tell you), **never** one
+answerable by mere recognition ("does this look right? ✓") — recognizing familiar material is the trap,
+not the goal. In a rigidly-sequenced course, a later recall may **interleave a prior card's/module's fact**
+("this is `$22`-land — but which byte told the ECU it was a *read*?") to teach selection, not just recap.
+- **`:::elaborate` — a learner-generated beat (NEW directive · piloted in V2).** A second, *divergent*
+  retrieval mode alongside the convergent `:::recall`: prompt the reader to build their own explanation /
+  analogy / example ("In your own words, why is `+0x40` a fixed constant and not a field the ECU fills
+  in?"), with a **model answer** in `<details>`. Elaboration is a distinct memory route (LHTL). Needs a
+  `render.js` directive; **pilot exactly one in V2**, then decide whether to lock it into the card contract.
+
 ## 5. Worked examples
 
 - **Bake the example into each concept, in place** — an expandable
@@ -203,6 +215,14 @@ contract (source of truth = those files):
   widen; concept → evidence → the ask.
 - **Never open with negation.** Lead with what a thing *is*; contrast comes later.
 - **Set up before you validate.** Explain what the thing is and does first.
+- **Motivate the problem before you define the answer (ADOPTED 2026-07-09 · piloted in V2).** A concept
+  bar opens on the *design tension* the mechanism resolves, and reaches the definition as its answer — the
+  term/notation is named **last**, not first. Discovery framing ("you could have invented this"): pose the
+  constraint, let the answer feel inevitable, then name it. *E.g. before naming `+0x40`:* "The service
+  number only uses the low bits — bit 6 is free. Set it, and `$10` becomes `$50`: reversible, unambiguous,
+  free." The checkable shape is a **4-beat bar — Tension → invite a guess → Reveal → Name** (term last).
+  **Piloted on V2's C1/C2/C3; lock into the MASTER CHECKLIST only after V2 proves it reads well** (do not
+  yet mandate course-wide).
 - **Story continuity** — each unit flows from the one before and into the next; read the
   whole top-to-bottom as one story before shipping.
 - **Forward pointers (spiral signposting).** When a card *names* a substantial topic it does **not**
@@ -289,6 +309,10 @@ Rules:
   or a shape that breaks the pattern); explanation sits **below**, at reduced size. Never clutter.
 - **Leader lines** are short, straight or gently curved, and **never cross** each other or other art.
 - **Reduce, don't decorate:** minimize on-image color/text to what teaches (semantic only).
+- **Dual-channel term parity (ADOPTED 2026-07-09 · piloted in V2).** A figure's on-image label = the
+  **same string** as the ochre key term beside it in the prose, verbatim (`$50` / `+0x40` / `SID`, not a
+  paraphrase like "session control"). The label and the bold token are two routes to one memory, so they
+  must read identically. Apply first on V2's byte-box figures.
 
 > Sources: Google *Technical Writing — Illustrations*
 > (developers.google.com/tech-writing/two/illustrations); Saylor *ENGL210 — Labels, Callouts,
@@ -310,6 +334,73 @@ register**, so a reviewer can point at a figure and give feedback without openin
   old shared `c3-addressing.svg`).
 - **The figure register lives in `STRUCTURE.md`** (one table per module: ID · title · card/leg ·
   filename), authored as part of the flow spec (§1e) and kept 1:1 with the actual SVGs.
+
+### 7d. Visual-cast lexicon, motion grammar & staged reveal (ADOPTED 2026-07-09, session 20)
+
+From the exemplar study (`_derive/exemplar-rigors.md` — TLDR · Jigsaw · 3Blue1Brown + Coursera LHTL).
+**§1b defines the palette by *role* (accent/positive/negative), never by *domain object*** — so across
+40+ unbuilt figures the recurring cast (client, ECU, request, reply, byte-box) would drift and, worse,
+already **collides**: the ECU/server is painted olive `grn-s`, the *same* hue that means "positive / OK."
+This section binds each recurring object and each meaning-of-motion once, so a figure can't drift and a
+lint can catch a violation. **First authored under this system: V2** (its 3 byte-figures pilot the whole
+block); shipped V1/H1–H3 figures are repainted to it later (parked backlog).
+
+**(1) Visual-cast lexicon — one object = one class + glyph, everywhere.** Each recurring domain object
+gets a stable `.dgm` class + token + glyph; a figure names an object by that class, never by an ad-hoc
+colour. Bind in `blueprint.css` (`--actor-tester` / `--actor-ecu` tokens, added to the `.dgm` block) and
+list in every module's figure register header:
+
+| object | role in the story | class / token | glyph |
+|--------|-------------------|---------------|-------|
+| **client / tester** | asks | `--actor-tester` (ochre family, *as object identity*) | laptop / hand-unit |
+| **server / ECU** | answers | `--actor-ecu` (a **distinct** hue, NOT the olive `--ok`) | chip / ECU box |
+| **request** | message client→server | direction class `.req` (→, warm) | right-arrow |
+| **reply** | message server→client | direction class `.rsp` (←, cool) | left-arrow |
+| **byte-box** | one byte of a message | the shared generator (see (4)) | boxed hex pair |
+| **bus / wire** | the medium | `.bus` neutral grey | line |
+
+**(2) Semantic overrides thematic — encode pos/neg by GLYPH + STROKE, not by re-using a hue (fixes the
+live §1b violation).** Positive vs negative response is signalled by a **✓ / ✕ glyph + stroke-weight +
+solid-vs-hatched fill**, so the *reply channel's* colour (olive = "the answering side") no longer
+double-encodes "OK." Green `--ok` is reserved for genuine pass/OK states only; red `--ng` for genuine
+danger/NG only. Never-meaning-by-colour-alone still holds (§1b) — the glyph is the label.
+
+**(3) Motion grammar — a fixed vocabulary of meanings-of-motion** (a layer §7a/§1f don't cover; §7a only
+says a dot must *ride the path*). One kind of motion = one meaning, course-wide:
+
+- **left→right travel along the bus** = a message on the wire (§1f byte-box travel).
+- **a token settling into a node** = a state change (session enters; a lock snaps).
+- **a piece lifting out and resolving** = a decode (`00 32` lifts → "50 ms").
+- **a token deflecting/bouncing off a gate** = a rejection (`7F+NRC` born at the failing check).
+- **a bit visibly toggling** = a computed transform (`10` sets bit 6 → `50`).
+
+Emit motions from a shared animation helper so the vocabulary stays literal, not per-figure improvised.
+
+**(4) Object constancy — one shared byte-box generator.** Byte-boxes are drawn by **one** shared SVG
+helper (named constants `BOX_W`, `RADIUS`, role-stroke, gap — per §7a's layout-framework rule), so a given
+byte renders **pixel-identical** across every figure in which it appears. No figure hand-draws its own
+byte-boxes. (Today `renderBytes` in `render.js` handles the `:::bytes` HTML directive only; the SVG
+generator is the figure-side twin.) **First consumer: V2's three `50 03` / `+0x40` figures.**
+
+**(5) Staged / progressive figure reveal — click-to-advance (the strongest cross-exemplar signal; 3 of 4
+exemplars converge).** A high-load static diagram is **built up one element at a time**, each element
+lighting as the prose names it (Mayer segmenting + spatial contiguity). Our medium is silent + self-paced,
+so a reveal is **reader-driven click-to-advance**, never an auto-loop — it obeys the same pace as the
+one-card pager. Mechanism: a `:::figure` **`build-order`** capability in `render.js`; the reveal order is
+recorded in the module's §7c figure register. **Reveal ≠ decoration:** each stage must correspond to one
+naming beat in the prose.
+
+- **Animate the *consequence*, not just the path (3B1B).** Where a figure's whole point is a
+  transformation or a coupled state-change, *show the change at the transition instant* — the bit flips,
+  the lock snaps, the token deflects — not merely a dot travelling a finished line.
+
+**(6) `prefers-reduced-motion` + "the static end-frame must teach" (ADOPTED — a11y gate, prereq for (5)).**
+`blueprint.css` carries `@media (prefers-reduced-motion: reduce)` freezing every `.dgm` animation at its
+**end state**. Binding rule: **the frozen end-frame must teach the whole idea on its own** — animation is
+an accelerant, never the only channel. Verify the frozen frame in §9.
+
+**(7) Lint.** `_template/checkmod.js` grows a cast check: a client box drawn in the ECU's token (or vice
+versa), or pos/neg encoded by hue with no ✓/✕ glyph, is a **lint fail** — same standing as text overflow.
 
 ## 8. Artifact craft — build unit by unit, never by eye
 
@@ -355,6 +446,9 @@ animation frame) — don't judge from the source.
   node (no gap/overshoot), the animated dot rides **on** the line (capture a mid-animation
   frame), icon sub-shapes are flush & centred, labels are anchored. Treat a floating line, a
   chord-cutting dot, or an off-centre glyph label as a **fail**, same as text overflow.
+- **Reduced-motion + static-end-frame audit (per animated figure, ADOPTED 2026-07-09):** confirm
+  `@media (prefers-reduced-motion: reduce)` freezes the figure at its **end state** and that the frozen
+  frame **teaches the whole idea alone** (§7d-6). A figure whose meaning only exists mid-animation is a fail.
 - Reusable scripts per module: `verify.js`, `shots.js`, `navtest.js`.
 
 ---
@@ -459,6 +553,8 @@ Any ❌/uncertain = fix before shipping.
 - [ ] **Forward-pointer `{{→ where}}`** on substantial *named-but-deferred* topics; not on every term (§6)
 - [ ] Section ends with **recap + a retrieval beat** (`:::recall`) **+ a competence beat** ("you can
       now X"); visible progress / opt-in depth intact; SOVD **bridge** on module end (§6, PEDAGOGY 9/12)
+- [ ] **`:::recall` is generative, not recognition** — the reader *produces* the answer, never confirms a
+      shown one; later beats may interleave a prior fact (§4, LHTL)
 - [ ] **Compact `:::reading` footer** — provenance/citations here (not the body); standards get
       **document + clause numbers** (§7b)
 
@@ -471,6 +567,10 @@ Any ❌/uncertain = fix before shipping.
       duplicate channels (§7b, PEDAGOGY 4)
 - [ ] Schematic, **theme-aware `.dgm`**, self-drawn (or a *flagged* user-supplied hard element);
       **animation only if it teaches**
+- [ ] **Visual-cast lexicon obeyed** — each recurring object in its locked class/token/glyph; **pos/neg by
+      ✓/✕ glyph + stroke, not by re-using a hue**; on-image label = the bolded prose token verbatim (§7d)
+- [ ] **If animated:** obeys the **motion grammar** + is **click-to-advance** (not auto-loop); has a
+      `prefers-reduced-motion` freeze whose **static end-frame teaches the whole idea** (§7d)
 - [ ] **Caption BELOW = the takeaway**; prose moved off the image; **labels** name parts, **callouts**
       use leaders, **directional labels** on arrows (§7b)
 - [ ] Built from a **layout framework** (shared fn + named constants) → paired elements **symmetric

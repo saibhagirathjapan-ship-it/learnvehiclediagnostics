@@ -348,20 +348,20 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
 
 **Next up**
 
-> **Session-20 plan (SET BY USER at session-19 wrap, 2026-07-09) — the exemplar⇄course comparison pass, do
-> this NEXT session.** Four exemplars are now studied: TLDR News · Vector "EnginEEring the Jigsaw" F0–F28 ·
-> 3Blue1Brown (**`_derive/exemplar-rigors.md`**) + Coursera's *Learning How to Learn*
-> (**`_derive/exemplar-rigors-learning-how-to-learn.md`**, mostly confirmatory — it's the canon PEDAGOGY
-> cites — plus: `:::recall` generative-not-recognition · a `:::elaborate` learner-analogy beat · interleave
-> prior-module facts into recall · a "space it / sleep on it" hub line). **Session 20 = carefully analyze ALL
-> exemplar findings against the shipped course, decide with the user what to adopt, and scope the adopted
-> improvements to be PILOTED IN V2 FIRST.** Rules set by the user: (a) improvements land in **V2 first** —
-> the V2 *build* itself is the session **after** (session 21); (b) any **course-specific modifications**
-> discovered along the way (retrofits to shipped H1–H3/V1, hub changes, template-wide passes) are **PARKED
-> for later**, not executed in session 20. Nothing is adopted yet — several proposals touch LOCKED
-> conventions and need sign-off. Two live in-code defects noted regardless: the **ochre/olive actor-colour
-> collision** and the **missing `prefers-reduced-motion`** fallback. **Strongest signal: 3 of 4 exemplars
-> converge on staged/progressive figure reveal** — treat as decided-in-principle.
+> **Session-20 DONE (2026-07-09) — the exemplar⇄course comparison pass; adopted set locked, all pilot in V2.**
+> The four exemplar studies (`_derive/exemplar-rigors.md` TLDR·Jigsaw·3B1B + `…-learning-how-to-learn.md`)
+> were analyzed against the shipped course and decided with the user **item-by-item**. **ADOPTED → pilot in
+> V2 (session 21)**, all now written into [[CONVENTIONS]]: (1) **§7d visual-cast lexicon + actor tokens** —
+> fixes the live ochre/olive collision, encodes pos/neg by ✓/✕ glyph+stroke not hue; (2) **§7d staged/
+> progressive figure reveal, click-to-advance** (the 3-of-4-exemplar signal) — pilot on V2-C1 (PDU builds
+> field-by-field) + V2-C2 (`10` sets bit 6 → `50`, "animate the consequence"); (3) **§7d motion grammar +
+> shared byte-box generator** (object constancy); (4) **§7d-6 `prefers-reduced-motion` + static-end-frame
+> teaches** (a11y gate); (5) **§6 motivate-before-define + "you-could-have-invented" + the 4-beat bar**
+> (Tension→guess→Reveal→Name, term last) — piloted, not yet checklist-locked; (6) **§4 generative recall
+> (not recognition)** + the new **`:::elaborate`** learner beat (pilot one in V2); (7) **§7b dual-channel
+> term parity**. Per-card V2 scope + figure register: `uds-foundation/STRUCTURE.md` V2 §. **PARKED / REJECTED**
+> sets are in the backlog below. User steer: *make V2 a visible upgrade — apply everything needed to prove
+> the research.* **The V2 build is session 21** (applies all the above).
 
 1. **V2 (request & positive response) — build in SESSION 21** (after the session-20 comparison pass; it applies
    the rigors adopted there). Continue the V depth
@@ -369,8 +369,12 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
    **STRUCTURE reading order: V1 ✅ → V2 → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9**. Card-level flow for
    every drill is already speced in `uds-foundation/STRUCTURE.md`; author each drill's §7c figure register there
    as it's built. Per-drill cadence: confirm purpose + card plan → build (user review) → verify (`checkmod`,
-   light/dark close-ups) → adversarial pass → update NOTES/STRUCTURE/log → **commit + push** (a drill isn't done until pushed). **Build V2's Brief in the new 3-part
-   format** ([[CONVENTIONS]] §4).
+   light/dark close-ups) → adversarial pass → update NOTES/STRUCTURE/log → **commit + push** (a drill isn't done until pushed). **V2 is the session-20 exemplar-rigor
+   PILOT** — build it to prove the adopted set (a *visible* upgrade, per user): §7d visual-cast lexicon +
+   actor tokens + shared byte-box generator; staged click-to-advance reveal on V2-C1 (PDU builds
+   field-by-field) + V2-C2 (`10` sets bit 6 → `50`); `prefers-reduced-motion` first; §6 motivate-before-
+   define + 4-beat bar; §4 generative recall + one `:::elaborate`; §7b term parity; **Brief in the 3-part
+   format**. Per-card scope + figure register: `uds-foundation/STRUCTURE.md` V2 §.
 2. **Then the H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
    (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.
@@ -388,18 +392,31 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
   ([[CONVENTIONS]] §4) and read as hook-only. Retrofit them (why-this / what's-inside / what-you'll-be-able-to-do,
   derived from each module's STRUCTURE.md card list + *Leaves:* line, `:::key` "By the end"). A small pass; do
   opportunistically, not before V2 (user 2026-07-08).
-- **OP — exemplar-rigor proposals (session 18, 2026-07-09).** Full prioritized set in
-  **`_derive/exemplar-rigors.md`**. Highest-leverage, both studies converged: (1) fix the **ochre/olive
-  actor-colour collision**; (2) write a **visual-cast lexicon `CONVENTIONS §7d`** (client/server/ECU/bus/byte-box
-  = one class+glyph each) + a `checkmod.js` lint; (3) **staged, click-to-advance figure reveal** (element N lights
-  as prose names it); (4) **animate the consequence** not just the path (V5 sessions re-lock, M4 seed→key opens
-  the lock); (5) **`prefers-reduced-motion`** fallback + "static end-frame must teach" rule; (6) name the **ONE
-  deep intuition** ("a diagnostic request is a typed message a state machine agrees to serve; SOVD is that
-  conversation re-dressed as web resources") on hub + STRUCTURE; (7) **surface the SOVD arc + an F0-style "how to
-  read this"** on the hub. Plus: 3B1B **motivate-before-define** beat rewrites (`h2` C1/C2, V5, V3), the UDS→SOVD
-  **"change-of-basis"** M9 signature animation, a **motion grammar** + shared **byte-box generator**, an EN+JP
-  **`GLOSSARY.md`** contract, **between-module `:::recall`**, per-module **level chips**, and a **"what breaks
-  without this"** beat per service card. Most touch LOCKED conventions → **user sign-off required before adopting.**
+- **OP — exemplar-rigor PARKED backlog (triaged & signed off session 20, 2026-07-09).** The *adopted* set is
+  now in [[CONVENTIONS]] §7d/§6/§4/§7b + `uds-foundation/STRUCTURE.md` V2 § (all pilot in V2). These items were
+  deliberately **PARKED** (course-specific — retrofits / hub / template-wide beyond the V2 pilot; not executed
+  in session 20). Full detail in `_derive/exemplar-rigors.md`:
+  - **Repaint / retrofit shipped figures** to §7d actor tokens (V1/H1–H3) + **retrofit-animate** the shipped
+    static bars (`h2-c7` session-life, `h2-c3` decode, `h2-c4` addressing, `h2-c6` reset, `h3-c3`, `h3-c2-f3`).
+  - **Hub package:** road-to-SOVD **spine strip** + "you are here → SOVD" · **F0-style "How this course works"**
+    orientation panel · per-module **level chips** · LHTL's honest **"space it / sleep on it"** line (the one
+    thing our one-sitting framing under-serves) — all in `render-hub.js` + `course.yml`.
+  - **The "Essence" through-line** ("a diagnostic request is a typed message a state machine agrees to serve —
+    and SOVD is that same conversation re-dressed as web resources") on hub + course `STRUCTURE.md`, + a "grows
+    the essence by:" per-module field.
+  - **Doctor↔patient spine** as standalone H1-C1 (already Next-up #2, the H1 rebuild) · **`GLOSSARY.md`** EN+JP
+    canonical-term contract (before M2) · **between-module bridges + cross-module/interleaved recall** (from M2)
+    · **"what breaks without this"** beat on *service* cards (V7a/b/c, M2–M6) · per-module **size budget** ·
+    **"why now" bridge** before SOVD (M9) · **M8-placement** note · **voice-exemplar set** in PEDAGOGY ·
+    **title-grammar** normalization + hooky-title nudge · **motion-grammar** full alignment of V1's 9 figures ·
+    **spatial reification** (NRC address-space strip, V3/V9/M4) · **zoom-continuity** (leg = zoom of bar region)
+    · **3B1B change-of-basis M9** signature animation · **B-roll ≠ schematic** (H1) · **analogy-as-retired-beat**
+    directive · **3-part-Brief retrofit** of H1/H2/H3 (already the OP above).
+  - **REJECTED (session 20):** embodied green-screen instructor / vary-position / bigger-than-life persona /
+    teleprompter voice (all presuppose a talking-head video — we are silent self-paced HTML; LHTL itself flags
+    them non-adoptable) · "graded visual complexity per altitude" (restates the T-model) · "let the reader sit
+    with the crux" (already the pager) · a hub visual-grammar **KEY card** (leverage is the §7d lexicon+lint) ·
+    "practice what you preach" as new machinery (already the MASTER CHECKLIST).
 
 **Open build-phase decisions (unchanged):** V8 density (keep the 5-card stack incl. DoIP vs spin the
 IP/DoIP half to M7) · a `:::table` directive (for M2/M3) · bundle EN fonts base64 (map + modules still

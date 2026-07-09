@@ -393,9 +393,13 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
   derived from each module's STRUCTURE.md card list + *Leaves:* line, `:::key` "By the end"). A small pass; do
   opportunistically, not before V2 (user 2026-07-08).
 - **OP — exemplar-rigor PARKED backlog (triaged & signed off session 20, 2026-07-09).** The *adopted* set is
-  now in [[CONVENTIONS]] §7d/§6/§4/§7b + `uds-foundation/STRUCTURE.md` V2 § (all pilot in V2). These items were
-  deliberately **PARKED** (course-specific — retrofits / hub / template-wide beyond the V2 pilot; not executed
-  in session 20). Full detail in `_derive/exemplar-rigors.md`:
+  now in [[CONVENTIONS]] §7d/§6/§4/§7b + `uds-foundation/STRUCTURE.md` V2 § (all pilot in V2). **PARKED ≠
+  undecided: the user's intent (confirmed 2026-07-09) is that ALL these learnings are applied eventually** —
+  the V2/park split was only *sequencing* (V2 pilots what byte-mechanics can prove; the rest waits for its
+  natural trigger: the shipped-figure repaint after the V2 pilot validates §7d, the hub pass, the H1 rebuild,
+  before-M2 for GLOSSARY, per-module for service beats, M9 for change-of-basis). Work them at their triggers;
+  don't re-litigate. Only the REJECTED list at the bottom is actually dropped. Full detail in
+  `_derive/exemplar-rigors.md`:
   - **Repaint / retrofit shipped figures** to §7d actor tokens (V1/H1–H3) + **retrofit-animate** the shipped
     static bars (`h2-c7` session-life, `h2-c3` decode, `h2-c4` addressing, `h2-c6` reset, `h3-c3`, `h3-c2-f3`).
   - **Hub package:** road-to-SOVD **spine strip** + "you are here → SOVD" · **F0-style "How this course works"**

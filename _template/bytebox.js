@@ -30,7 +30,9 @@ function byteBox({ hex, x, y, role = 'data', cap = '', stage }) {
   const st = stage != null ? ` data-stage="${stage}"` : '';
   let g = `<g${st}>`;
   g += `<rect x="${x}" y="${y}" width="${BOX_W}" height="${BOX_H}" rx="${RADIUS}" class="plate ${r.stroke}" stroke-width="${STROKE}"/>`;
-  g += `<text x="${cx}" y="${y + BOX_H / 2 + HEX_SIZE * 0.34}" text-anchor="middle" class="${r.hex} mono-t" font-size="${HEX_SIZE}">${esc(hex)}</text>`;
+  // hex value with an 'h' suffix (user 2026-07-09: mark every byte as hex explicitly). The 'h' is a
+  // slightly smaller, same-colour unit marker so "50h" reads as one token.
+  g += `<text x="${cx}" y="${y + BOX_H / 2 + HEX_SIZE * 0.34}" text-anchor="middle" class="${r.hex} mono-t" font-size="${HEX_SIZE}">${esc(hex)}<tspan font-size="${(HEX_SIZE * 0.68).toFixed(1)}">h</tspan></text>`;
   // pos/neg glyph: a SMALL badge tucked into the top-right corner, sized + placed to clear the
   // centred hex digit (§7a: nothing touches — verified by close-up). One shared placement for both.
   const gx = x + BOX_W - GLYPH_R - 3, gy = y + GLYPH_R + 3;

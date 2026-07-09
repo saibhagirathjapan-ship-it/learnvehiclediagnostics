@@ -57,8 +57,11 @@ zero prior knowledge. Every line must stand alone and be useful to the reader.
 auto-loaded via CLAUDE.md). Build unit-by-unit, anchor each illustration to its claim,
 worked examples baked in place, order deliberately, story flows top-to-bottom.
 
-**Notation** — hex services written `$10`; bytes shown in byte-box diagrams; positive
-response = SID + 0x40; negative = `7F <SID> <NRC>`.
+**Notation (LEARNER-FACING, LOCKED 2026-07-09 — user)** — **every hex value carries an `h` suffix,
+everywhere**: inline (`10h`, `50h`, `40h`, `7Fh`), in byte-box cells, and in multi-byte traces
+(`50h 03h 00h 32h 01h F4h`). Positive response = SID + `40h`; negative = `7Fh <SID> <NRC>`. Bit values
+(`0`/`1`) stay bare. *(`$XX` used in THIS roadmap / planning docs is internal service shorthand only —
+it renders as `XXh` in a card.)*
 
 **Verification (never declare done from theory)** — drive real Chrome via
 `puppeteer-core` (installed `--no-save`; do not commit package.json). Scripts live in the

@@ -78,8 +78,8 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
     // connectors from the anchor to each outcome (touch anchors exactly)
     `<path d="M ${ax} ${ay} H ${(ax + ox) / 2} V ${topAnchorY} H ${ox} M ${ox - 6} ${topAnchorY - 5} L ${ox} ${topAnchorY} L ${ox - 6} ${topAnchorY + 5}" class="ln" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
     `<path d="M ${ax} ${ay} H ${(ax + ox) / 2} V ${botAnchorY} H ${ox} M ${ox - 6} ${botAnchorY - 5} L ${ox} ${botAnchorY} L ${ox - 6} ${botAnchorY + 5}" class="red-s" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
-    `<text x="${(ax + ox) / 2 + 6}" y="${topAnchorY - 8}" class="mut mono-t" font-size="10.5">≠ 7F</text>` +
-    `<text x="${(ax + ox) / 2 + 6}" y="${botAnchorY + 20}" class="red mono-t" font-size="10.5">= 7F</text>` +
+    `<text x="${(ax + ox) / 2 + 6}" y="${topAnchorY - 8}" class="mut mono-t" font-size="10.5">≠ 7Fh</text>` +
+    `<text x="${(ax + ox) / 2 + 6}" y="${botAnchorY + 20}" class="red mono-t" font-size="10.5">= 7Fh</text>` +
     outB(ox, topY, 'ln', 'normal message', 'read as a service + its data') +
     outB(ox, botY, 'red-s', 'negative response', 'a refusal → V3');
   wr('v2-c1-f3_first-byte-key.svg', svg('578 190', body, 'The first byte decides the format: any value other than 7F is a normal message, 7F alone flags a negative response.'));
@@ -109,7 +109,7 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   order.forEach((sid, r) => {
     const stg = r === 0 ? 1 : 2, y = rowY(r);
     body += `<g data-stage="${stg}">`;
-    body += `<text x="${x0 - 18}" y="${y + ch / 2 + 5}" text-anchor="end" class="acc mono-t w7" font-size="14">${sid}</text>`;
+    body += `<text x="${x0 - 18}" y="${y + ch / 2 + 5}" text-anchor="end" class="acc mono-t w7" font-size="14">${sid}h</text>`;
     bits[sid].forEach((b, i) => {
       const isB6 = i === b6;
       body += `<rect x="${cx(i)}" y="${y}" width="${cw}" height="${ch}" class="${isB6 ? 'acc-s' : 'ln'}" stroke-width="${isB6 ? 1.7 : 1}" fill="none"/>`;
@@ -123,44 +123,58 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   body += `<g data-stage="3">` +
     `<rect x="${cx(b7) - 1}" y="${y85 - 1}" width="${cw + 2}" height="${ch + 2}" class="cross" stroke-width="1.9" fill="none"/>` +
     `<text x="${midX - 98}" y="${bottom + 22}" text-anchor="middle" class="acc mono-t w7" font-size="10.5">bit 6: 0 on all → free</text>` +
-    `<text x="${midX + 98}" y="${bottom + 22}" text-anchor="middle" class="red mono-t w7" font-size="10.5">bit 7: used by 85</text>` +
+    `<text x="${midX + 98}" y="${bottom + 22}" text-anchor="middle" class="red mono-t w7" font-size="10.5">bit 7: used by 85h</text>` +
     `</g>`;
   const W = cx(7) + cw + x0;
   wr('v2-c2-f1_sid-bit6-free.svg', svg(`${W} ${bottom + 36}`, body, 'Service identifiers 10, 22, 3E and 85 in binary: bit 6 is 0 on every one, so +0x40 can claim it; bit 7 is already used by 85 (ControlDTCSetting) so it is not free.'));
 })();
 
-// ---------- V2-C2-F2 — set bit 6: 10 → 50 = +0x40, same every service (static, 1 step) ----------
+// ---------- V2-C2-F2 — WHY +40h: bit 6's place value is 40h; set it on 10h → 50h (evolves, 2 steps) --------
+// Stage 1 makes the arithmetic explicit (0100 0000 = 40h = 64), so stage 2's "set bit 6 = add 40h" lands.
 (function c2f2() {
-  const cw = 38, gy = 5, y = 60, h = 40, x0 = 44, bx = 442;
-  const bits10 = [0,0,0,1,0,0,0,0];
+  const cw = 38, gy = 5, y = 62, h = 40, x0 = 44, bx = 452;
   const cx = i => x0 + i * (cw + gy);
   const midX = (x0 + bx + BOX_W) / 2;
   let cells = '';
   for (let i = 0; i < 8; i++) {
-    const bitNo = 7 - i, x = cx(i), isFlip = (bitNo === 6);
-    cells += `<rect x="${x}" y="${y}" width="${cw}" height="${h}" class="${isFlip ? 'acc-s' : 'ln'}" stroke-width="${isFlip ? 2.2 : 1.3}" fill="none"/>`;
-    if (isFlip) cells += `<rect x="${x + 2}" y="${y + 2}" width="${cw - 4}" height="${h - 4}" class="acc" opacity="0.16"/>`;
-    cells += `<text x="${x + cw / 2}" y="${y + h / 2 + 6}" text-anchor="middle" class="${isFlip ? 'acc' : (bits10[i] ? 'ink' : 'mut')} mono-t ${isFlip ? 'w8' : ''}" font-size="16">${isFlip ? 1 : bits10[i]}</text>`;
+    const bitNo = 7 - i, x = cx(i), isB6 = bitNo === 6, isB4 = bitNo === 4;
+    cells += `<rect x="${x}" y="${y}" width="${cw}" height="${h}" class="${isB6 ? 'acc-s' : 'ln'}" stroke-width="${isB6 ? 2.2 : 1.3}" fill="none"/>`;
+    if (isB6) {   // bit 6 = 1 throughout (the 40h place)
+      cells += `<rect x="${x + 2}" y="${y + 2}" width="${cw - 4}" height="${h - 4}" class="acc" opacity="0.16"/>`;
+      cells += `<text x="${x + cw / 2}" y="${y + h / 2 + 6}" text-anchor="middle" class="acc mono-t w8" font-size="16">1</text>`;
+    } else if (isB4) {   // bit 4 = the 10h part: 0 until stage 2, then lights up
+      cells += `<g data-until="1"><text x="${x + cw / 2}" y="${y + h / 2 + 6}" text-anchor="middle" class="mut mono-t" font-size="16">0</text></g>`;
+      cells += `<g data-stage="2"><rect x="${x + 2}" y="${y + 2}" width="${cw - 4}" height="${h - 4}" class="acc" opacity="0.16"/><text x="${x + cw / 2}" y="${y + h / 2 + 6}" text-anchor="middle" class="acc mono-t w8" font-size="16">1</text></g>`;
+    } else {
+      cells += `<text x="${x + cw / 2}" y="${y + h / 2 + 6}" text-anchor="middle" class="mut mono-t" font-size="16">0</text>`;
+    }
     cells += `<text x="${x + cw / 2}" y="${y + h + 14}" text-anchor="middle" class="mut" font-size="9">bit ${bitNo}</text>`;
   }
-  const b6cx = cx(1) + cw / 2;
-  const callout = `<text x="${b6cx}" y="${y - 8}" text-anchor="middle" class="acc mono-t w7" font-size="11">set bit 6</text>`;
+  const b6cx = cx(1) + cw / 2, b4cx = cx(3) + cw / 2;
+  const b6lbl = `<g data-until="1"><text x="${b6cx}" y="${y - 8}" text-anchor="middle" class="acc mono-t w7" font-size="10.5">the 40h place</text></g>` +
+    `<g data-stage="2"><text x="${b6cx}" y="${y - 8}" text-anchor="middle" class="acc mono-t w7" font-size="10.5">+40h</text></g>`;
+  const b4lbl = `<g data-stage="2"><text x="${b4cx}" y="${y - 8}" text-anchor="middle" class="acc mono-t" font-size="10">10h</text></g>`;
   const hy = y + (h - BOX_H) / 2;
   const eq = `<text x="${bx - 22}" y="${y + h / 2 + 7}" text-anchor="middle" class="mut mono-t w8" font-size="20">=</text>`;
-  const box50 = byteBox({ hex: '50', x: bx, y: hy, role: 'pos' }) +
-    `<text x="${bx + BOX_W / 2}" y="${hy + BOX_H + 16}" text-anchor="middle" class="acc mono-t w7" font-size="12">= 10 + 0x40</text>`;
+  const s1right = `<g data-until="1"><text x="${bx + BOX_W / 2}" y="${y + h / 2 + 1}" text-anchor="middle" class="acc mono-t w8" font-size="19">40h</text>` +
+    `<text x="${bx + BOX_W / 2}" y="${y + h / 2 + 19}" text-anchor="middle" class="mut" font-size="10">= 64</text></g>`;
+  const s2right = `<g data-stage="2">${byteBox({ hex: '50', x: bx, y: hy, role: 'pos' })}` +
+    `<text x="${bx + BOX_W / 2}" y="${hy + BOX_H + 16}" text-anchor="middle" class="acc mono-t w7" font-size="11">10h + 40h</text></g>`;
   const sumY = y + h + 52;
-  const summary = `<path d="M ${x0} ${sumY - 20} H ${bx + BOX_W}" class="ln" stroke-width="1"/>` +
-    `<text x="${midX}" y="${sumY}" text-anchor="middle" class="ink w7" font-size="12.5">the same +0x40 on every service</text>` +
-    `<text x="${midX}" y="${sumY + 20}" text-anchor="middle" class="acc mono-t w7" font-size="12">22 → 62   ·   3E → 7E   ·   85 → C5</text>`;
-  const body = `<text x="${midX}" y="28" text-anchor="middle" class="ink w7" font-size="14.5">Set bit 6: 10 becomes 50</text>` + cells + callout + eq + box50 + summary;
-  wr('v2-c2-f2_plus-0x40-bitflip.svg', svg(`${bx + BOX_W + x0} ${sumY + 32}`, body, 'Setting bit 6 of the request 10 makes 50 — that fixed step is +0x40, and it applies to every service: 22 to 62, 3E to 7E, 85 to C5.'));
+  const summary = `<g data-stage="2"><path d="M ${x0} ${sumY - 20} H ${bx + BOX_W}" class="ln" stroke-width="1"/>` +
+    `<text x="${midX}" y="${sumY}" text-anchor="middle" class="ink w7" font-size="12.5">set bit 6 = add 40h — on every service</text>` +
+    `<text x="${midX}" y="${sumY + 20}" text-anchor="middle" class="acc mono-t w7" font-size="12">22h → 62h   ·   3Eh → 7Eh   ·   85h → C5h</text></g>`;
+  const callout = `<g data-until="1"><text x="${midX}" y="${sumY}" text-anchor="middle" class="mut" font-size="12">binary 0100 0000 = 40h = 64 decimal — bit 6's place value</text></g>`;
+  const hd = (s, t) => `<g data-stage="${s}" data-until="${s}"><text x="${midX}" y="28" text-anchor="middle" class="ink w7" font-size="14.5">${t}</text></g>`;
+  const headline = hd(1, 'Bit 6 is the 40h place') + `<g data-stage="2"><text x="${midX}" y="28" text-anchor="middle" class="ink w7" font-size="14.5">So set bit 6 on 10h → 50h</text></g>`;
+  const body = headline + cells + b6lbl + b4lbl + eq + s1right + s2right + callout + summary;
+  wr('v2-c2-f2_plus-0x40-bitflip.svg', svg(`${bx + BOX_W + x0} ${sumY + 32}`, body, 'Bit 6 is the 40h place value (0100 0000 = 40h = 64); setting it on the request 10h therefore adds 40h to make 50h, and the same +40h holds for every service (22h to 62h, 3Eh to 7Eh, 85h to C5h).'));
 })();
 
 // ---------- V2-C2-F3 — a computed RULE vs a stored type FIELD (static contrast) ----------
-// The deeper why: +0x40 is derived from the request, not a byte the ECU stores. Contrast the two designs
+// The deeper why: +40h is derived from the request, not a byte the ECU stores. Contrast the two designs
 // so the consequences (free · unambiguous · can't lie) are visible, using ✓/✕ glyphs (§7d-2), not hue.
-(function c2f2() {
+(function c2f3() {
   const arrow = (x0, x1, y, cls) => `<path d="M ${x0} ${y} H ${x1} M ${x1 - 6} ${y - 5} L ${x1} ${y} L ${x1 - 6} ${y + 5}" class="${cls}" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
   const mark = (x, y, ok, txt) => {
     const c = ok ? 'tick' : 'cross';
@@ -215,14 +229,14 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   const ax0 = sSubX + BOX_W + 8, ax1 = gSvcX - 8;   // 172 .. 236
   const arrow = `<g data-stage="2"><path d="M ${ax0} ${midY} H ${ax1} M ${ax1 - 6} ${midY - 5} L ${ax1} ${midY} L ${ax1 - 6} ${midY + 5}" class="ln" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`;
   // per-byte mapping labels, above the two get boxes (name each transform on the spot)
-  const plus = `<g data-stage="2"><text x="${gSvcX + BOX_W / 2}" y="${y - 10}" text-anchor="middle" class="acc mono-t" font-size="11">+0x40</text></g>`;
+  const plus = `<g data-stage="2"><text x="${gSvcX + BOX_W / 2}" y="${y - 10}" text-anchor="middle" class="acc mono-t" font-size="11">+40h</text></g>`;
   const echo = `<g data-stage="3"><text x="${gSubX + BOX_W / 2}" y="${y - 10}" text-anchor="middle" class="ecu mono-t" font-size="11">echoed</text></g>`;
   const caps =
     `<text x="${sMid}" y="${y + BOX_H + 22}" text-anchor="middle" class="mut mono-t" font-size="11">request</text>` +
     `<g data-stage="3"><text x="${gMid}" y="${y + BOX_H + 22}" text-anchor="middle" class="mut mono-t" font-size="11">reply</text></g>`;
   const s4 = `<g data-stage="4"><text x="${gMid}" y="${y + BOX_H + 44}" text-anchor="middle" class="acc mono-t" font-size="10.5">top bit → 0 (a flag → V4)</text></g>`;
   const hd = (stg, txt) => `<g data-stage="${stg}" data-until="${stg}"><text x="${cx}" y="28" text-anchor="middle" class="ink w7" font-size="15">${txt}</text></g>`;
-  const headline = hd(1, 'You send 10 03 — what comes back?') + hd(2, '10 returns as 50   (+0x40)') + hd(3, '03 comes straight back — echoed') + hd(4, 'The top bit comes back 0');
+  const headline = hd(1, 'You send 10h 03h — what comes back?') + hd(2, '10h returns as 50h   (+40h)') + hd(3, '03h comes straight back — echoed') + hd(4, 'The top bit comes back 0');
   const body = headline + send + get + arrow + plus + echo + caps + s4;
   wr('v2-c3-f1_echoed-subfn.svg', svg('408 176', body, 'The request 10 03 returns as 50 03: service 10 becomes 50 by +0x40, and the sub-function 03 is echoed back unchanged except its top bit forced to 0.'));
 })();
@@ -237,7 +251,7 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
     `<text x="${x0 + w1 / 2}" y="${y + 40}" text-anchor="middle" class="mut" font-size="10.5">a flag</text>` +
     `<rect x="${x0 + w1}" y="${y}" width="${w2}" height="${h}" class="ecu-s" stroke-width="2" fill="none"/>` +
     `<text x="${x0 + w1 + w2 / 2}" y="${y + 22}" text-anchor="middle" class="ecu mono-t w7" font-size="12">bits 6–0</text>` +
-    `<text x="${x0 + w1 + w2 / 2}" y="${y + 40}" text-anchor="middle" class="mut" font-size="10.5">the value (here 03)</text>` +
+    `<text x="${x0 + w1 + w2 / 2}" y="${y + 40}" text-anchor="middle" class="mut" font-size="10.5">the value (here 03h)</text>` +
     `<text x="252" y="${y + h + 26}" text-anchor="middle" class="mut" font-size="11.5">On the echo the flag is 0; what it means when set is V4's story.</text>`;
   wr('v2-c3-f2_subfn-byte.svg', svg('504 156', body, 'The sub-function byte splits into a top-bit flag and the lower seven value bits; on the echoed reply the flag is 0.'));
 })();

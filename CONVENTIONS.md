@@ -623,6 +623,8 @@ Any ❌/uncertain = fix before shipping.
       against the clause (no plausible-but-wrong) · (4) right actor, no false agency ("**you sent**"→ the
       tester sends) · (5) self-contained, no load-bearing "in H2 …" recall
 - [ ] **Bilingual EN + JP** both present; JP natural register, upright emphasis (§2)
+- [ ] **Hex `h`-suffix everywhere** ([[GLOSSARY]] hex rule): every hex value `NNh` — inline, byte-box
+      cells, and traces (`50h 03h …`); positive = SID+`40h`, negative `7Fh …`; bit values `0`/`1` bare
 - [ ] **No meta-framing** in the body (provenance → the `:::reading` footer, see B) (§2)
 - [ ] **Bullets used consciously** — prose where ≤~3 lines suffice · **numbered** only for a real
       sequence · unnumbered else · **marker matches meaning** (`{key}`/`{warn}`/normal, per SCHEMA.md)

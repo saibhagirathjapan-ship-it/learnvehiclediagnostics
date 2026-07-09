@@ -154,6 +154,27 @@ function revealCtl(){
     `<span class="rv-ar" aria-hidden="true">▸</span></button><span class="rv-lbl"></span>`+
     `<span class="rv-hint"><span class="en">click to advance</span><span class="jp">クリックで進む</span></span></div>`;
 }
+// :::panel — synced narration + staged illustration, stepped together (§7d panel, the "video beat"
+// on static material). Steps are separated by a line of "--"; each step is kv (en:/jp:). The SVG's
+// data-stage / data-until elements advance in lockstep with the narration (step i → stage i).
+function renderPanel(args,raw,assetsDir){
+  const src=(args.match(/src=(\S+)/)||[])[1];
+  const uid='u'+(uidc++);
+  const svg = src ? namespaceSvg(fs.readFileSync(path.join(assetsDir,src),'utf8'),uid) : '';
+  const steps = raw.split(/\n-{2,}\s*\n/).map(s=>kv(s)).filter(o=>o.en||o.jp);
+  const N = steps.length;
+  const stepsHtml = steps.map((o,i)=>
+    `<div class="pn-step${i===0?' pn-on':''}" data-step="${i+1}"><span class="pn-num">Step ${i+1} / ${N} · ステップ${i+1}</span>`+
+    (o.en?`<span class="en">${inline(o.en)}</span>`:'')+(o.jp?`<span class="jp">${inline(o.jp)}</span>`:'')+`</div>`).join('');
+  return `<figure class="panel" data-steps="${N}">`+
+    `<div class="pn-text">${stepsHtml}</div>`+
+    `<div class="pn-stage">${svg}</div>`+
+    `<div class="pn-ctl"><button class="pn-btn pn-prev" type="button" aria-label="Previous step">‹</button>`+
+    `<span class="pn-count">1 / ${N}</span>`+
+    `<button class="pn-btn pn-next" type="button" aria-label="Next step">›</button>`+
+    `<button class="pn-all" type="button"><span class="en">Show all</span><span class="jp">全て表示</span></button></div>`+
+    `</figure>`;
+}
 function renderFigure(args,raw,assetsDir){
   const src=(args.match(/src=(\S+)/)||[])[1];
   const staged=/\bbuild-order\b/.test(args);
@@ -169,6 +190,7 @@ const renderBlocks = (blocks,assetsDir,lead)=> blocks.map(b=>{
   if(b.type==='key'||b.type==='warn') return renderCallout(b.type,b.raw);
   if(b.type==='recall') return renderRecall(b.raw);
   if(b.type==='elaborate') return renderElaborate(b.raw);
+  if(b.type==='panel') return renderPanel(b.args,b.raw,assetsDir);
   if(b.type==='reading') return renderReading(b.raw);
   if(b.type==='figure') return renderFigure(b.args,b.raw,assetsDir);
   return '';
@@ -359,6 +381,40 @@ var mqReduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   paint();
   if(btn)btn.addEventListener('click',function(e){e.preventDefault();adv();});
   var svg=fig.querySelector('svg');if(svg)svg.addEventListener('click',adv);
+});
+
+// PANELS — synced narration + staged illustration stepped together (§7d panel). data-stage = show
+// from step N; data-until = hide after step N (a toggle, e.g. the byte 10 gives way to 50).
+function paintStages(root,cur){
+  [].forEach.call(root.querySelectorAll('[data-stage],[data-until]'),function(el){
+    var mn=+el.getAttribute('data-stage')||1,u=el.getAttribute('data-until'),mx=u?+u:1e9;
+    el.classList.toggle('rv-hide',cur<mn||cur>mx);
+  });
+}
+[].forEach.call(document.querySelectorAll('.panel'),function(pn){
+  var N=+pn.getAttribute('data-steps')||1;
+  var steps=[].slice.call(pn.querySelectorAll('.pn-step')),stg=pn.querySelector('.pn-stage');
+  var count=pn.querySelector('.pn-count'),prev=pn.querySelector('.pn-prev'),next=pn.querySelector('.pn-next'),allb=pn.querySelector('.pn-all');
+  var cur=1,allOn=false;
+  function render(){
+    steps.forEach(function(s,i){s.classList.toggle('pn-on',(i+1)===cur)});
+    if(stg)paintStages(stg,cur);
+    if(count)count.textContent=cur+' / '+N;
+    if(prev)prev.disabled=cur<=1;if(next)next.disabled=cur>=N;
+  }
+  function setAll(on){allOn=on;pn.classList.toggle('pn-all-on',on);
+    if(on&&stg)paintStages(stg,N);else if(!on)render();
+    if(allb){var e=allb.querySelector('.en'),j=allb.querySelector('.jp');
+      if(e)e.textContent=on?'Step through':'Show all';if(j)j.textContent=on?'順に見る':'全て表示';}}
+  function go(d){if(allOn)setAll(false);cur=Math.max(1,Math.min(N,cur+d));render();}
+  render();
+  if(prev)prev.addEventListener('click',function(){go(-1)});
+  if(next)next.addEventListener('click',function(){go(1)});
+  if(allb)allb.addEventListener('click',function(){setAll(!allOn)});
+  var x0=null;
+  pn.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  pn.addEventListener('touchend',function(e){if(x0==null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>44)go(dx<0?1:-1);x0=null},{passive:true});
+  if(mqReduce)setAll(true);
 });
 </script>`;
 function page(mod,cards,stops){

@@ -40,6 +40,6 @@ jp: 応答の各部（中身・制御ヘッダ・長さ）を並べて示せ、`
 :::
 
 :::reading
-ISO 14229-1:2020 | cl.8.2 | The application protocol data unit A_PDU = A_SDU + A_PCI + parameters + Length
+ISO 14229-1:2020 | cl.8.2 | The application protocol data unit A_PDU is constructed from the A_SDU and the control information A_PCI
 ISO 14229-1:2020 | cl.8.4 & cl.9.3 | Service identifier (SI) and the positive response message
 :::

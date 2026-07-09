@@ -120,13 +120,22 @@ place the animation/colour/reveal rigors bite. Apply, per card:
 - **Colour:** all V2 figures are the **first drawn under §7d** — tester = `--actor-tester`, ECU =
   `--actor-ecu` (distinct from olive `--ok`); positive reply marked by a **✓ glyph + stroke**, not green.
 
-**V2 figure register (§7c):**
+**V2 figure register (§7c) — BUILT 2026-07-09.** All from `_template/bytebox.js` (object constancy);
+source = `gen-figures.js`. C2/C3 bars are **`:::panel`s** (synced narration + illustration, stepped).
 
 | ID | title | card/leg | filename | reveal / motion |
 |----|-------|----------|----------|-----------------|
-| V2-C1-F1 | a reply is a PDU: SDU + PCI + params + length | C1 bar | `v2-c1-f1_pdu-layout.svg` | staged build-order (4 fields), click-to-advance |
-| V2-C2-F1 | positive response flips bit 6: `10` → `50` | C2 bar | `v2-c2-f1_plus-0x40-bitflip.svg` | animate the consequence (bit toggles), click-to-advance |
-| V2-C3-F1 | the sub-fn echoes with the top bit cleared: `10 03` → `50 03` | C3 bar | `v2-c3-f1_echoed-subfn.svg` | reuses the shared `50 03` byte-box (object constancy) |
+| V2-B-F1 | a reply that worked, still sealed | brief bar | `v2-b-f1_good-reply.svg` | static (orienting) |
+| V2-C1-F1 | a reply is one wrapped unit (address · A_PCI · params · Length) | C1 bar | `v2-c1-f1_pdu-layout.svg` | **staged build-order** (4 stages), click-to-advance |
+| V2-C1-F2 | the recipe: A_PDU = A_SDU + A_PCI | C1 leg *layout* | `v2-c1-f2_pdu-recipe.svg` | static |
+| V2-C1-F3 | the first byte routes everything (≠7F vs 7F) | C1 leg *pcikey* | `v2-c1-f3_first-byte-key.svg` | static |
+| V2-C2-F1 | positive response flips bit 6: `10` → `50` (+0x40) | C2 bar | `v2-c2-f1_plus-0x40-bitflip.svg` | **panel** (4 steps): bit toggles + box `10`→`50` (data-until/data-stage) |
+| V2-C2-F2 | one rule, every service (`10/50`,`22/62`,`27/67`,`31/71`) | C2 leg *examples* | `v2-c2-f2_plus-0x40-examples.svg` | static |
+| V2-C3-F1 | `10 03` comes back as `50 03` (service +0x40, sub-fn echoed) | C3 bar | `v2-c3-f1_echoed-subfn.svg` | **panel** (4 steps); reuses the shared `50`/`03` sprites |
+| V2-C3-F2 | one byte, two jobs (top-bit flag · value) | C3 leg *topbit* | `v2-c3-f2_subfn-byte.svg` | static |
+
+*(C2 leg* constant *and C3 leg* why *carry no figure — the depth work there is the `:::elaborate` /
+the reasoning; per user "illustrate as much as needed to learn", a forced figure would be decoration.)*
 
 ## V3 — Negative responses & the NRC catalog
 *Enters:* neg = 7F+SID+NRC; 0x78 = busy. *Leaves:* can decode the fixed shape, navigate the global catalog + always-supported set, explain 0x78.
@@ -335,7 +344,8 @@ sketches in reading order). Filename = `<card>-f<k>_<kebab-title>.svg` in `<modu
 globally unique by the `h1-/h2-` prefix. Kept 1:1 with the on-disk SVGs (verified by `checkmod.js`).
 **H3 fully built** (6 cards, 10 figures — real SVGs drawn + geometry-audited 2026-07-08). **V1 fully built
 2026-07-08** (5 cards, 10 figures — all animated where motion teaches, geometry-audited light + dark; §7a clean).
-V2–V9 unbuilt — their registers are authored when each module is built.
+**V2 fully built 2026-07-09** (5 cards, 8 figures — exemplar-rigor pilot: staged reveal + the synced
+`:::panel`; register in the "V2 figure register" table above). V3–V9 unbuilt — registers authored when built.
 
 ### H1 — The diagnostics landscape
 

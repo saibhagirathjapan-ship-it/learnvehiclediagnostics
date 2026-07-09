@@ -25,7 +25,7 @@ const SHOT = path.join(dir, 'assets', '_check'); fs.mkdirSync(SHOT, { recursive:
   const m = await p.evaluate(() => {
     const pages = [...document.querySelectorAll('.stream.pager > .page')];
     const concept = pages.filter(pg => pg.querySelector('.card .barzone'));
-    const noFig = concept.filter(pg => !pg.querySelector('.card .barzone .fig svg')).map(pg => pg.getAttribute('data-id'));
+    const noFig = concept.filter(pg => !pg.querySelector('.card .barzone .fig svg, .card .barzone .panel svg')).map(pg => pg.getAttribute('data-id'));
     const jpVisibleOnEn = [...document.querySelectorAll('.stage[data-lang="en"] .jp')].some(el => el.offsetParent !== null);
     return { pages: pages.length, concept: concept.length, noFig, jpVisibleOnEn,
       lang: document.querySelector('.stage').getAttribute('data-lang') };
@@ -41,7 +41,7 @@ const SHOT = path.join(dir, 'assets', '_check'); fs.mkdirSync(SHOT, { recursive:
     const out = [];
     const pages = [...document.querySelectorAll('.stream.pager > .page')];
     pages.forEach(pg => { pg.classList.add('on'); });
-    document.querySelectorAll('.stream.pager > .page .card, .fig, table, .bytes, .leg').forEach(el => {
+    document.querySelectorAll('.stream.pager > .page .card, .fig, .panel, table, .bytes, .leg').forEach(el => {
       if (el.scrollWidth > el.clientWidth + 2) { const cs = getComputedStyle(el); if (cs.overflowX === 'auto' || cs.overflowX === 'scroll') return; out.push((el.className || el.tagName).split(' ')[0] + ':' + el.scrollWidth + '/' + el.clientWidth); }
     });
     pages.forEach((pg, i) => pg.classList.toggle('on', i === 0));

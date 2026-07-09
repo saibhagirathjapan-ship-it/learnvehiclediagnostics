@@ -363,18 +363,19 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
 > sets are in the backlog below. User steer: *make V2 a visible upgrade — apply everything needed to prove
 > the research.* **The V2 build is session 21** (applies all the above).
 
-1. **V2 (request & positive response) — build in SESSION 21** (after the session-20 comparison pass; it applies
-   the rigors adopted there). Continue the V depth
-   drills via the H3 pipeline (module.yml + `content/*.md` + `.dgm` figures → rendered `index.html`), in
-   **STRUCTURE reading order: V1 ✅ → V2 → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9**. Card-level flow for
-   every drill is already speced in `uds-foundation/STRUCTURE.md`; author each drill's §7c figure register there
-   as it's built. Per-drill cadence: confirm purpose + card plan → build (user review) → verify (`checkmod`,
-   light/dark close-ups) → adversarial pass → update NOTES/STRUCTURE/log → **commit + push** (a drill isn't done until pushed). **V2 is the session-20 exemplar-rigor
-   PILOT** — build it to prove the adopted set (a *visible* upgrade, per user): §7d visual-cast lexicon +
-   actor tokens + shared byte-box generator; staged click-to-advance reveal on V2-C1 (PDU builds
-   field-by-field) + V2-C2 (`10` sets bit 6 → `50`); `prefers-reduced-motion` first; §6 motivate-before-
-   define + 4-beat bar; §4 generative recall + one `:::elaborate`; §7b term parity; **Brief in the 3-part
-   format**. Per-card scope + figure register: `uds-foundation/STRUCTURE.md` V2 §.
+1. **✅ V2 (request & positive response) BUILT — session 21, 2026-07-09 (the exemplar-rigor PILOT).** 5 cards,
+   browser-verified (checkmod incl. cast lint · light/dark/mobile · reduced-motion end-frame teaches), pushed.
+   All §7d infra landed template-side (`bytebox.js` · staged reveal · cast lint · reduced-motion); §6
+   motivate-first + **name-on-the-spot** (new §6 rule from user FB); §4 generative recall + one `:::elaborate`;
+   3-part Brief. **NEW `:::panel`** (user idea, adopted): synced narration+illustration stepper (the "video beat"
+   on static material), degrading to scannable prose; piloted on **C2** (bit-flip) + **C3** (echo). One
+   adversarial pass, 3 fixes folded (C2 `+0x40` `$2A` carve-out; brief formula; C3 "control flag"). Records:
+   `v2-request-and-response/NOTES.md` + STRUCTURE V2 register. **Continue the V drills in STRUCTURE reading
+   order: V1 ✅ → V2 ✅ → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9**, same per-drill cadence (confirm plan →
+   build w/ user review → checkmod + close-ups → adversarial pass → NOTES/STRUCTURE/log → **commit + push**).
+   **OPEN (needs user sign-off before V3):** judge whether the **4-beat bar**, **`:::elaborate`**, and the new
+   **`:::panel`** earn a MASTER-CHECKLIST lock + a course-wide retrofit (shipped figures/cards, and whether C1's
+   staged-reveal should become a panel too).
 2. **Then the H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
    (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.

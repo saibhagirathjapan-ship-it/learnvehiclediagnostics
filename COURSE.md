@@ -373,9 +373,15 @@ able-to-do) — see [[CONVENTIONS]] §4; **H1/H2/H3 briefs predate it and need r
    `v2-request-and-response/NOTES.md` + STRUCTURE V2 register. **Continue the V drills in STRUCTURE reading
    order: V1 ✅ → V2 ✅ → V3 → V4 → V8 → V5 → V6 → V7a → V7b → V7c → V9**, same per-drill cadence (confirm plan →
    build w/ user review → checkmod + close-ups → adversarial pass → NOTES/STRUCTURE/log → **commit + push**).
-   **OPEN (needs user sign-off before V3):** judge whether the **4-beat bar**, **`:::elaborate`**, and the new
-   **`:::panel`** earn a MASTER-CHECKLIST lock + a course-wide retrofit (shipped figures/cards, and whether C1's
-   staged-reveal should become a panel too).
+   **Round-2 user FB folded 2026-07-09 (V2 re-verified):** SVG hygiene praised as a step-change (credit the
+   `bytebox.js` generator + layout-framework). Fixes: `:::panel` nav → **dots + tap-to-advance + swipe** (no
+   "Step N/M", no ‹ › buttons); **figure position fixed** (text region height locked to the tallest step → no
+   jump); byte-box ✓/✕ badge de-collided + `+0x40` moved above the arrow (global `bytebox.js` fix).
+   **Continuous-story pilot ADOPTED (no go-deeper legs):** per user, pilot in V2 (H+V), and **if it lands →
+   default + retrofit all built modules & backlog**; `continuous: true` renders legs as inline `.flowsec`
+   sections (CONVENTIONS §1c PILOT note). **`:::elaborate` → adopt for future sections** (user).
+   **OPEN (sign-off before rolling out):** does the continuous-story model + panel land well? and do the
+   **4-beat bar** / **`:::elaborate`** / **`:::panel`** earn a MASTER-CHECKLIST lock + course-wide retrofit?
 2. **Then the H1 rebuild — the 3→4 re-split** (deferred, bigger design pass): add a "why diagnostics / cars are
    many ECUs" **C1** (workshop/EOL/OTA), split the current C2 into **C3** (14229 family + OSI) + **C4**
    (neighbours: Dcm/Dem, ODX, SOVD, J1939) — to match STRUCTURE.md's 4-card H1.

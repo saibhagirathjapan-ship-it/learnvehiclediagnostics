@@ -7,6 +7,7 @@ title:
   en: "The sub-function comes back echoed"
   jp: "サブファンクションは反射されて返る"
 short: { en: "The echo", jp: "エコー" }
+continuous: true
 legs:
   - id: topbit
     title: { en: "The one thing that changes: the top bit", jp: "唯一変わるもの ― 上位ビット" }

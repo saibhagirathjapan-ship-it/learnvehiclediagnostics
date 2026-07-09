@@ -50,6 +50,16 @@ live in the shared template; the reference prototype is `wiki/learn/_designlab/t
 
 ## 1c. Concept cards are T-shaped (information architecture)
 
+> **PILOT 2026-07-09 — "one continuous story" (may supersede the collapsible stem).** User feedback:
+> since the *course* is already a T (breadth H-spine + depth V-drills as the tree/team view), stacking
+> **collapsible** go-deeper legs *inside* a card adds a second interaction model and fights a continuous
+> read. **Piloting in V2** (H *and* V cards): a concept card with `continuous: true` renders its "legs"
+> as **inline flowing sections** (`.flow`/`.flowsec`, a subheading + body + its figure) — no `<details>`,
+> no Go-Deeper banner — so the card reads as **one continuous story**. Keep a collapsible only for a true
+> aside (a citation, a rare edge-case). **If it lands well → make it the default and retrofit built
+> modules + the backlog** (user 2026-07-09). Until then, the T-with-collapsible-stem below is still the
+> shipped default; the pilot is opt-in per card.
+
 Every **concept** is a **T**: a broad, shallow **bar** (high level) over a narrow, deep **stem**.
 
 - **Horizontal bar** = the high-level claim, self-sufficient alone, carrying the **one**

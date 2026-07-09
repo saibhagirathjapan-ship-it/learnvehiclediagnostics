@@ -7,6 +7,7 @@ title:
   en: "A reply is a wrapped unit, not naked bytes"
   jp: "応答は「包まれた1単位」― むき出しのバイトではない"
 short: { en: "A wrapped unit", jp: "包まれた1単位" }
+continuous: true
 illustration: figures/v2-c1-f1_pdu-layout.svg
 reveal: build-order
 caption:

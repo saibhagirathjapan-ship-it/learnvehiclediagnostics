@@ -139,10 +139,11 @@ const svg = (vb, body, label) => `<svg class="dgm" viewBox="0 0 ${vb}" role="img
   rows.forEach((r, i) => {
     const y = ny + 8 + i * gapY;
     body += byteBox({ hex: r[0], x: rqx, y, role: 'data' });
-    body += `<text x="${rsx - 26}" y="${y + 30}" text-anchor="middle" class="acc mono-t" font-size="12">+40</text>` +
-      `<path d="M ${rqx + 58 + 6} ${y + 25} H ${rsx - 6} M ${rsx - 12} ${y + 20} L ${rsx - 6} ${y + 25} L ${rsx - 12} ${y + 30}" class="ln" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+    const ax0 = rqx + BOX_W + 10, ax1 = rsx - 10, amid = (ax0 + ax1) / 2, ay = y + BOX_H / 2;
+    body += `<path d="M ${ax0} ${ay} H ${ax1} M ${ax1 - 6} ${ay - 5} L ${ax1} ${ay} L ${ax1 - 6} ${ay + 5}" class="ln" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
+      `<text x="${amid}" y="${ay - 9}" text-anchor="middle" class="acc mono-t" font-size="11">+0x40</text>`;
     body += byteBox({ hex: r[1], x: rsx, y, role: 'pos' });
-    body += `<text x="${rsx + 74}" y="${y + 30}" class="mut mono-t" font-size="11.5">${r[2]}</text>`;
+    body += `<text x="${rsx + BOX_W + 16}" y="${ay + 4}" class="mut mono-t" font-size="11.5">${r[2]}</text>`;
   });
   wr('v2-c2-f2_plus-0x40-examples.svg', svg('512 250', body, 'Request to positive-response SIDs all differ by 0x40: 10 to 50, 22 to 62, 27 to 67, 31 to 71.'));
 })();

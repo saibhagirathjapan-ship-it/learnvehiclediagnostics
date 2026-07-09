@@ -46,6 +46,21 @@ cl.9.3.1 Table 16 (SubFunction echoed) · cl.9.2.2 Table 14 (SubFunction byte = 
 `_panelshot.js` (panel step shots), `_legshot.js` (leg figures), `_mobilecheck.js` (mobile +
 reduced-motion). `assets/_check/*.png` gitignored.
 
+## Round-2 revisions (user feedback 2026-07-09)
+
+- **`:::panel` nav redesigned** — dropped the "Step N/M" wording (wrong mental model) and the ‹ ›
+  buttons/counter; now a **dots position-indicator** (clickable) + **tap-the-figure to advance** +
+  swipe on mobile. "Show all" kept.
+- **Figure no longer jumps** — the panel text region's height is **fixed by JS to the tallest step**
+  (re-fit on fonts-ready / resize / language change), so the illustration stays put and elements just
+  add/emphasize on a stable canvas. Verified: figure top offset identical at step 1 vs step 4.
+- **Byte-box ✓/✕ hygiene fixed (global, `bytebox.js`)** — the positive-tick badge was crowding the hex
+  digit; now a small corner badge clear of the digit (HEX_SIZE 21→20, GLYPH_R 9→6). C2 examples: `+0x40`
+  moved **above** each arrow (was on the line). Regenerate: `node gen-figures.js`.
+- **Continuous-story pilot (no go-deeper legs)** — C1/C2/C3 carry `continuous: true`; former legs render
+  as inline `.flowsec` sections (subheading + body + figure), no `<details>`. One continuous read; the
+  `:::elaborate` flows inline. See CONVENTIONS §1c PILOT note. **If it lands → default + retrofit backlog.**
+
 ## Open / follow-ups
 - Judge (with user) whether the **4-beat bar** + **`:::elaborate`** + **`:::panel`** earn a
   MASTER-CHECKLIST lock + a course-wide retrofit of shipped figures/cards.

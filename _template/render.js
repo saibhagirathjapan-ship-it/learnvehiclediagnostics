@@ -164,14 +164,13 @@ function renderPanel(args,raw,assetsDir){
   const steps = raw.split(/\n-{2,}\s*\n/).map(s=>kv(s)).filter(o=>o.en||o.jp);
   const N = steps.length;
   const stepsHtml = steps.map((o,i)=>
-    `<div class="pn-step${i===0?' pn-on':''}" data-step="${i+1}"><span class="pn-num">Step ${i+1} / ${N} · ステップ${i+1}</span>`+
+    `<div class="pn-step${i===0?' pn-on':''}" data-step="${i+1}">`+
     (o.en?`<span class="en">${inline(o.en)}</span>`:'')+(o.jp?`<span class="jp">${inline(o.jp)}</span>`:'')+`</div>`).join('');
+  const dots = steps.map((_,i)=>`<button class="pn-dot${i===0?' on':''}" type="button" data-i="${i+1}" aria-label="Go to part ${i+1}"></button>`).join('');
   return `<figure class="panel" data-steps="${N}">`+
     `<div class="pn-text">${stepsHtml}</div>`+
     `<div class="pn-stage">${svg}</div>`+
-    `<div class="pn-ctl"><button class="pn-btn pn-prev" type="button" aria-label="Previous step">‹</button>`+
-    `<span class="pn-count">1 / ${N}</span>`+
-    `<button class="pn-btn pn-next" type="button" aria-label="Next step">›</button>`+
+    `<div class="pn-ctl"><div class="pn-dots" role="tablist">${dots}</div>`+
     `<button class="pn-all" type="button"><span class="en">Show all</span><span class="jp">全て表示</span></button></div>`+
     `</figure>`;
 }
@@ -217,7 +216,20 @@ function renderConcept(meta,sections,assetsDir){
   }
   bar+=`</div>`;
   let stem='';
-  if(legs.length){
+  // CONTINUOUS mode (pilot 2026-07-09): no collapsible go-deeper legs — the "legs" render as
+  // inline flowing sections, so the card reads as one continuous story (H and V cards alike).
+  if(legs.length && meta.continuous){
+    stem=`<div class="flow">`;
+    legs.forEach(leg=>{
+      let body=renderBlocks(parseBlocks(sections['leg:'+leg.id]||''),assetsDir,false);
+      (leg.cards||[]).forEach(card=>{
+        const cbody=renderBlocks(parseBlocks(sections['leg:'+leg.id+'/card:'+card.id]||''),assetsDir,false);
+        body+=`<div class="subcard"><div class="sc-h"><span class="sc-n">${esc(String(card.id).toUpperCase())}</span><span class="sc-t">${inline(card.title.en)}</span></div><div class="sc-jp jp">${inline(card.title.jp)}</div>${cbody}</div>`;
+      });
+      stem+=`<section class="flowsec"><div class="fs-h"><span class="en">${inline(leg.title.en)}</span><span class="jp">${inline(leg.title.jp)}</span></div><div class="fs-body">${body}</div></section>`;
+    });
+    stem+=`</div>`;
+  } else if(legs.length){
     stem=`<div class="stem"><div class="stem-h">${IC_DEEP}<span class="sh-t"><span class="en">Go deeper</span><span class="jp">もっと詳しく</span></span>`+
       `<span class="stem-n"><span class="en">${legs.length} more</span><span class="jp">あと${legs.length}</span></span>`+
       `<span class="stem-hint"><span class="en">tap a row to expand ↓</span><span class="jp">各行をタップで展開 ↓</span></span></div><div class="legs">`;
@@ -391,31 +403,43 @@ function paintStages(root,cur){
     el.classList.toggle('rv-hide',cur<mn||cur>mx);
   });
 }
+var panelFits=[];
 [].forEach.call(document.querySelectorAll('.panel'),function(pn){
   var N=+pn.getAttribute('data-steps')||1;
   var steps=[].slice.call(pn.querySelectorAll('.pn-step')),stg=pn.querySelector('.pn-stage');
-  var count=pn.querySelector('.pn-count'),prev=pn.querySelector('.pn-prev'),next=pn.querySelector('.pn-next'),allb=pn.querySelector('.pn-all');
+  var txt=pn.querySelector('.pn-text'),dots=[].slice.call(pn.querySelectorAll('.pn-dot')),allb=pn.querySelector('.pn-all');
   var cur=1,allOn=false;
+  // FIX the text region to its tallest step so the figure below never jumps as steps change.
+  function fit(){ if(allOn){txt.style.height='';return;} var m=0;
+    steps.forEach(function(s){ if(s.offsetHeight>m)m=s.offsetHeight; }); if(m)txt.style.height=m+'px'; }
   function render(){
     steps.forEach(function(s,i){s.classList.toggle('pn-on',(i+1)===cur)});
+    dots.forEach(function(d,i){d.classList.toggle('on',(i+1)===cur)});
     if(stg)paintStages(stg,cur);
-    if(count)count.textContent=cur+' / '+N;
-    if(prev)prev.disabled=cur<=1;if(next)next.disabled=cur>=N;
   }
   function setAll(on){allOn=on;pn.classList.toggle('pn-all-on',on);
-    if(on&&stg)paintStages(stg,N);else if(!on)render();
+    if(on){if(stg)paintStages(stg,N);txt.style.height='';}else{render();fit();}
     if(allb){var e=allb.querySelector('.en'),j=allb.querySelector('.jp');
       if(e)e.textContent=on?'Step through':'Show all';if(j)j.textContent=on?'順に見る':'全て表示';}}
-  function go(d){if(allOn)setAll(false);cur=Math.max(1,Math.min(N,cur+d));render();}
-  render();
-  if(prev)prev.addEventListener('click',function(){go(-1)});
-  if(next)next.addEventListener('click',function(){go(1)});
+  function go(to){if(allOn)setAll(false);cur=Math.max(1,Math.min(N,to));render();}
+  render();fit();
+  dots.forEach(function(d){d.addEventListener('click',function(){go(+d.getAttribute('data-i'))})});
   if(allb)allb.addEventListener('click',function(){setAll(!allOn)});
+  if(stg)stg.addEventListener('click',function(){if(!allOn)go(cur>=N?1:cur+1)});   // tap the figure to advance
   var x0=null;
   pn.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
-  pn.addEventListener('touchend',function(e){if(x0==null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>44)go(dx<0?1:-1);x0=null},{passive:true});
+  pn.addEventListener('touchend',function(e){if(x0==null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(dx<0?cur+1:cur-1);x0=null},{passive:true});
+  panelFits.push(fit);
   if(mqReduce)setAll(true);
 });
+// re-fit panel heights after fonts load, on resize, and on language change (EN/JP differ in height)
+if(panelFits.length){
+  var refit=function(){panelFits.forEach(function(f){f()})};
+  addEventListener('resize',refit);addEventListener('load',refit);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(refit);
+  var st=document.querySelector('.stage');
+  if(st&&window.MutationObserver)new MutationObserver(function(){setTimeout(refit,0)}).observe(st,{attributes:true,attributeFilter:['data-lang']});
+}
 </script>`;
 function page(mod,cards,stops){
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">`+

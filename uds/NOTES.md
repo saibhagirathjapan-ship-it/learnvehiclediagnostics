@@ -89,7 +89,7 @@ Verified counts: 7 dividers · 2 briefs · 27 concepts · 27 figures · 7 conclu
 - ⬜ Consider an interactive "byte decoder" widget (type bytes → plain-English) as an
   optional enhancement.
 - ⬜ Optional: add a printable / single-scroll mode.
-- ⬜ If ISO 14229 PDF is added to raw/, replace public-reference citations with clause refs.
+- ⬜ If the source standard becomes available, replace public-reference citations with clause refs.
 
 ## Known-good verification commands
 ```

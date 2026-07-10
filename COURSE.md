@@ -74,14 +74,14 @@ zero overflow in light/dark/mobile, no console errors, lang toggle), `shots.js`
 (close-up card screenshots), `navtest.js` (mobile + TOC nav-landing). Screenshots →
 `assets/`.
 
-**Sources (documents-first — see [[CONVENTIONS]] "Sourcing philosophy")** — `the source standards/`
-now has **UDS ISO 14229** (-1 2020 **and** 2025 FDIS, -2, -3, -4, -5, -6, -7), **AUTOSAR R25-11
-CP** (Dcm, Dem, Dlt, DoIP, J1939 Dcm), **transport: ISO 15765-2:2024** (`CAN/`, DoCAN/ISO-TP) +
-**ISO 13400-2:2012** (`DoIP/`), **SOVD** (ISO 17978/20077/20078/20080), **ODX** (22901),
-**OTX** (13209). Standards are the **source of truth**; internet/domain knowledge is a subordinate
-gap-filler, always reconciled to a cited clause. **Not in vault (fill from training + internet per
-user 2026-07-05):** **ISO 11898-1** (CAN data-link), **ISO 15765-4** (CAN-ID assignment),
-**ISO 14229-4** (UDSonFR — held only as an unreadable `.doc`).
+**Sources (documents-first — see [[CONVENTIONS]] "Sourcing philosophy")** — ground every claim in
+the governing standard (the **UDS ISO 14229** family, the transport standards **ISO 15765-2** /
+**ISO 13400-2**, **SOVD** ISO 17978, **ODX** 22901, **OTX** 13209, **AUTOSAR CP**) and **cite the
+clause**; the standards are the **source of truth**, internet/domain knowledge a subordinate
+gap-filler always reconciled to a cited clause. A few points (**ISO 11898-1** CAN data-link,
+**ISO 15765-4** CAN-ID assignment, **ISO 14229-4** UDSonFR) are filled from training + internet and
+reconciled to the primary clause. *(Operational sourcing notes — the reference set and how to search
+it — are kept locally, untracked.)*
 
 ---
 
@@ -238,11 +238,10 @@ Fig 5, **not** a 14229-1-specified order · **FDIS renumbers clauses DOWN** (202
 only ResponseOnEvent changed.
 
 > **V8 gap-fill policy (user decision 2026-07-05):** ISO 11898-1 (CAN data-link), ISO 15765-4 (CAN-ID
-> assignment) and ISO 14229-4 (UDSonFR — unreadable `.doc`) are **not** in the vault; per user
-> direction, fill those specific points from **training + internet**, reconciled to the primary
-> clauses. `15765-2:2024` + `13400-2:2012` are now present and fully cited.
-> SOVD specifics get grounded from `the source standards/ExVe SOVD/` (ISO 17978 incl. the OpenAPI spec) at
-> build time.
+> assignment) and ISO 14229-4 (UDSonFR) are **not** available locally; per user direction, fill those
+> specific points from **training + internet**, reconciled to the primary clauses. ISO 15765-2:2024 +
+> ISO 13400-2:2012 are available and fully cited. SOVD specifics are grounded from the ISO 17978 set
+> (incl. the OpenAPI spec) at build time.
 
 ---
 
@@ -294,9 +293,6 @@ wiki/learn/
     NOTES.md                M1 card inventory + migration status
     node_modules/           puppeteer-core + js-yaml (--no-save, not committed)
   _designlab/             <- design exploration (playground.html, tcard.html, comparisons)
-  _derive/                <- Foundation derivation (working artifacts; raw/ stays pristine):
-    txt/*.txt               local source notes (grep/read source)
-    foundation-derivation.workflow.js   the 31-agent derivation workflow
-    foundation-derivation.result.json   full clause-verified H/V result (provenance)
+  _derive/                <- local working artifacts (untracked; see _derive/SOURCES.local.md)
 wiki/log.md · wiki/index.md   <- append-only history + wiki TOC
 ```

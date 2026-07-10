@@ -39,7 +39,7 @@ C2/C3 were built before s7 and should be brought up to it when revisited.
   light / dark / EN+JP / mobile. Screenshots in `assets/verify-*.png`.
 
 ## Clause grounding (documents-first re-derivation, session 6 — workflow `rederive-h1`)
-All 25 claims verified against `local notes/`. Key anchors:
+All 25 claims verified against the source standards. Key anchors:
 - UDS = ISO 14229-1 application layer / OSI layer 7; client=tester, server=ECU — **the standard's
   own wording** (14229-1 Intro; "diagnostic tester (client) … ECU, server").
 - Family/OSI map = 14229-1 Introduction **Table 1** (lines ~209–217): -1 app · -2 session (layer 5)
@@ -48,8 +48,8 @@ All 25 claims verified against `local notes/`. Key anchors:
 - Addressing (14229-1 A_TA, cl.~7.4.1.4/8.7.1): physical = point-to-point (1 ECU); functional =
   broadcast (1..n); **A_SA of response = A_TA of request when physical** → responses always physical.
 - Dcm = Diagnostic Communication Manager (runs UDS); Dem = Diagnostic Event Manager (fault memory)
-  — AUTOSAR `AUTOSAR Dcm` / `AUTOSAR Dem`. ODX (ISO 22901) / SOVD (ISO 17978) are
-  **out-of-vault** (no txt sidecar) → training-grounded, flagged.
+  — AUTOSAR CP. ODX (ISO 22901) / SOVD (ISO 17978) are **not in the local set** →
+  training-grounded, flagged.
 
 Corrections applied this session: (1) Part 4 FlexRay restored in C2 (prose + figure); (2) recall
 softened re **ResponseOnEvent ($86)**.

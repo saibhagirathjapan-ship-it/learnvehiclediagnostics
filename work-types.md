@@ -59,7 +59,8 @@ step → into the owning doc).
 
 # Family D — Derive structure *(skeleton, no prose)*
 
-**Shared mechanic:** documents-first (grep the `local notes/` sidecars, cite clauses); the result
+**Shared mechanic:** documents-first (search the local source set, cite clauses — see
+`_derive/SOURCES.local.md`); the result
 is **pressure-tested + double-derived** (a second independent route; agreement = confidence,
 disagreement = a gap); heavyweight multi-agent derivation is reserved for genuine scale per
 [[CONVENTIONS]] §10; the output is a **STRUCTURE.md / roadmap change, never content**; content is
@@ -85,7 +86,7 @@ Any change to already-locked structure is **raised, never silently edited** — 
   enters-with/leaves-with, and the figure register skeleton (the module-scale T).
 - **Trigger:** a pillar (M2–M9) is next to build; or a Foundation-style re-derivation is warranted.
 - **Inputs:** the module's row + locked notes in [[COURSE]]; the governing standard's clauses (via
-  sidecars); `uds-foundation/STRUCTURE.md` as the reference exemplar; the persona.
+  the local source set); `uds-foundation/STRUCTURE.md` as the reference exemplar; the persona.
 - **Outputs:** `<module>/STRUCTURE.md` — ordered card list (type · covers · flows-from/sets-up),
   **bar-coverage map** (every V has an H bar — the invariant, checked bidirectionally), figure
   register skeleton; stub pages regenerated if numbering changes.
@@ -103,7 +104,7 @@ Any change to already-locked structure is **raised, never silently edited** — 
   app-slide model — the only work-type that ships new teaching content.
 - **Trigger:** the page is next in `NEXT.md`'s queue and its module's `STRUCTURE.md` § is final.
 - **Inputs:** [[NEXT]] · the module's `STRUCTURE.md` (this page's §, the build spec) + `NOTES.md` ·
-  [[CONVENTIONS]] + [[PEDAGOGY]] · the cited clauses (sidecars) · the persona.
+  [[CONVENTIONS]] + [[PEDAGOGY]] · the cited clauses (local source set) · the persona.
 - **Outputs:** `content/<id>.md` per card (with the **`load_bearing:`** front-matter, and
   `derivation:` notes on load-bearing cards) · figures per the register · rendered `index.html` ·
   the updated figure register · the NOTES.md **gate scorecard**.

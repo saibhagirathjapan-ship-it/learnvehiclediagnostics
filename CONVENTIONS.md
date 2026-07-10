@@ -611,8 +611,8 @@ the user before building.
   card: G0–G4 ✅/❌ + whether teach-back ran and its faith-list closed).
 - **G5 — Publish.** Append `wiki/log.md`; refresh `NEXT.md`; **`git add -A && git commit && git
   push`** (git root = `wiki/learn/`, branch `main`) — the live site is the deliverable, **not done
-  until pushed**; confirm the push landed ([[reference-github-repo]]). `.gitignore` already excludes
-  `*.png`, `node_modules/`, `_derive/`.
+  until pushed**; confirm the push landed ([[reference-github-repo]]). Local working artifacts +
+  screenshots stay untracked (local ignore rules; not committed).
 
 **Standing build rules (inside G1–G3):** reuse the shared template + renderer, never restyle (§1d/
 §1f); author each concept as a `## story` of `:::step`s (§1c); bilingual EN/JP; notation per
@@ -628,16 +628,15 @@ top-to-bottom as one story; UDS modules end with the **SOVD-bridge card** ([[COU
   **analyse the primary standards → list all topics → scope which are foundation → present each
   topic horizontally *and* vertically (§1c-scale), not partition it** — under the bar-coverage
   invariant. The **primary standards are the source of truth**; the internet / domain knowledge is
-  a **subordinate gap-filler** used only when a needed spec isn't in the vault or for pedagogy, and
+  a **subordinate gap-filler** used only when a needed spec isn't available locally or for pedagogy, and
   it is **always reconciled back to a cited clause**. Pressure-test each claim by double-deriving
   against the actual clause (not the TOC) before it ships.
-- Sources present in `the source standards/`: **UDS ISO 14229** parts -1 (2020 + 2025 FDIS), -2, -3, -4,
-  -5, -6, -7 · **AUTOSAR R25-11 CP** (Dcm, Dem, Dlt, DoIP, J1939 Dcm) · **transport: ISO 15765-2:2024**
-  (`CAN/`) + **ISO 13400-2:2012** (`DoIP/`) · **SOVD** (ISO 17978/…) · **ODX** (22901) · **OTX**
-  (13209). local source notes for grep/read live in `wiki/learn/local notes/` (`raw/`
-  stays pristine). **Not in vault (fill from training + internet per user 2026-07-05, reconciled to
-  the primary clause):** **ISO 11898-1** (CAN data-link), **ISO 15765-4** (CAN-ID assignment),
-  **ISO 14229-4** (UDSonFR, unreadable `.doc`). Ground SOVD from `the source standards/ExVe SOVD/`.
+- Sourcing is **documents-first**: ground every claim in the governing standard (the **UDS ISO
+  14229** family, transport **ISO 15765-2** / **ISO 13400-2**, **SOVD** ISO 17978, **ODX** 22901,
+  **OTX** 13209, **AUTOSAR CP**) and **cite the clause**. A few points (**ISO 11898-1** CAN
+  data-link, **ISO 15765-4** CAN-ID assignment, **ISO 14229-4** UDSonFR) are filled from training +
+  internet and reconciled to the primary clause. *(Operational sourcing notes — the reference set +
+  how to search it — are kept locally and untracked; see `_derive/SOURCES.local.md`.)*
 
 ---
 
@@ -654,9 +653,10 @@ these ban a capability; they say *when* it earns its cost.
     pressure-test is warranted — but **size the fleet to the task** (a few agents, not dozens) and
     **cap rounds**: stop at the first round that returns 0 blockers; never iterate-to-zero over many
     rounds. State an explicit agent budget when launching.
-- **Documents — grep, don't graze.** Default to the `local notes/` sidecar and **grep the specific
-  clause**, not whole-file reads. Open a `raw/` PDF only when the sidecar is garbled for a needed
+- **Documents — grep, don't graze.** Search the **local source set** for the specific clause, not
+  whole-file reads; open a source document only when a quick search is garbled for a needed
   table/figure (and note it). Load a standard only to ground a specific claim — not "just in case."
+  *(Where the local set lives + how to search it: `_derive/SOURCES.local.md`.)*
 - **Checklists run silently.** The master checklist and §8.7 are an **internal** per-card gate; do not
   paste them into chat.
 - **Verify by measuring before screenshotting.** Prefer DOM/text measures (card counts, overflow,

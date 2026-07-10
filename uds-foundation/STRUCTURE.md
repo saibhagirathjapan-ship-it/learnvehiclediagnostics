@@ -204,7 +204,7 @@ Tooling (D-PDU/ODX ComParams) is out-of-scope — footer citation only.
 *(C3-F1 & C4-F1 may be two states of ONE shared "gauntlet" figure for object constancy — decided at G2.)*
 *(B-PAGE research handoff — park in V3 NOTES.md: cited NRC table + explanations · state-effect quotes ·
 retrial framework; **3 flags** — 0x23 is NOT a UDS NRC (transient code is 0x94); security-lockout
-reset-persistence is OEM-config; verify Annex A.1 verbatim vs `raw/` before publishing prose.)*
+reset-persistence is OEM-config; verify Annex A.1 verbatim vs the source standard before publishing prose.)*
 
 ## V4 — Sub-functions & the suppressPosRsp bit
 *Enters:* the sub-fn top bit is a reserved flag (H2-C1); echo clears it (V2); negatives always sent (V3). *Leaves:* can split the byte into suppress bit + value and explain suppression mutes only the positive.

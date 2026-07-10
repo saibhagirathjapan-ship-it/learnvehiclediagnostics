@@ -57,6 +57,23 @@ of blockers; cards were grown from the content rather than derived from a review
 scaffold is derived, never improvised); the V-drill "reference-don't-re-teach" lint
 (`work-types.md` B-PAGE).
 
+## INC-004 — Re-derivation inherited the old thin scope (2026-07-10, V3 D-HV)
+
+**What happened.** Asked to re-derive V3 (negative responses) "with all rigors," the first pass
+reproduced the *existing* thin skeleton (3 cards: shape · catalog · `0x78`) — faithful to the prior
+`STRUCTURE.md` but under-scoped for the learning goal. The user had to push for the real depth: all
+key NRCs explained and grouped by the check that raises them, the ECU state-effects of a negative,
+and the retrial strategies. Only then did V3 grow 3 → 6 cards.
+
+**Root cause.** A re-derivation anchored on "is the prior structure faithfully reproduced?" instead
+of "is the prior *scope* sufficient for what this card must teach?" — the double-derivation checked
+internal consistency but not ambition. Faithfulness to a thin skeleton read as correctness.
+
+**Now caught by.** D-HV should, for a card flagged load-bearing/important, run a scope-sufficiency
+check against the learning goal (does the leaves-with demand more than the prior skeleton delivers?)
+*before* the card-flow derivation — not just reproduce the existing §. Captured as a D-HV habit; the
+[[feedback-nrc-error-content-depth]] memory records the specific depth bar for service/NRC content.
+
 ---
 
-*Next entry: INC-004 (via `/session-wrap`).*
+*Next entry: INC-005 (via `/session-wrap`).*

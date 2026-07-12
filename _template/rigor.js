@@ -19,6 +19,9 @@
 //   A1 (advisory)            bare `0x..` hex in body prose — learner notation is `NNh`
 //   A2 (advisory)            false agency in en: prose ("you sent/saw/learned…", §2b-4)
 //   A3 (advisory)            load-bearing recall of a named module ("In H2 …", §2b-5)
+//   A4 (advisory)            course-structure as actor / meta-framing ("the last chapter read",
+//                            "this is the next step") — a chapter/card/step is not the story (§2b-4)
+//   A5 (advisory)            generic/vague card title (G0 title-directness bar, §2b/OK-NG)
 //
 // Usage:  node _template/rigor.js --all            scan every */content/*.md under wiki/learn
 //         node _template/rigor.js <module-dir...>  scan the given module folder(s)
@@ -63,6 +66,14 @@ function lintCard(file, governed, findings) {
         msg: 'crux card has no `derivation:` block (§2c move 2 — record where each WHY lives on-card + its clause)' });
   }
 
+  // A5 (advisory) — generic/vague card title (G0 title-directness bar; recurred ≥4×). Starter
+  // heuristic: a negation opener, or a vague/filler noun — triage input, may be a legitimate title.
+  const titleEn = (head.match(/^title:\s*\r?\n\s*en:\s*["'](.+?)["']/m) || [])[1] || '';
+  if (titleEn && (/^\s*not\s+/i.test(titleEn)
+      || /\b(overview|basics?|introduction|intro|general|various|several|stages?|things|parts|everything|anything|something|misc|stuff)\b/i.test(titleEn)))
+    findings.push({ level: 'flag', code: 'A5', file: rel,
+      msg: `possibly vague/generic title "${titleEn}" — name the ONE idea concretely, specific to THIS card (G0 title bar, §2b/OK-NG)` });
+
   // advisory prose flags — body text only, skipping fig:/figure paths and fenced code
   const text = body(src).split(/\r?\n/)
     .filter(l => !/^\s*(fig|figure|illustration):/.test(l) && !/\.svg\b/.test(l));
@@ -81,6 +92,14 @@ function lintCard(file, governed, findings) {
     if (/(^|[.!?]\s+|^en:\s*)(In|Back in|As (you )?(saw|learned) in)\s+(H\d|V\d+[abc]?|M\d)\b/.test(line))
       findings.push({ level: 'flag', code: 'A3', file: at,
         msg: 'beat opens on a named earlier module — state the fact directly; back-ref rides as {{→}} (§2b-5)' });
+    // A4 — course-structure as ACTOR / meta-framing. A chapter/card/section is not the story:
+    // narration verbs ("the last chapter read", "the card shows you") or "is the next step". §2b-4.
+    // Deliberately NOT flagging bare "this chapter has …" — a BRIEF legitimately previews its own
+    // contents; the defect is a structure element narrating/acting, not an advance-organizer preview.
+    if (/\b(?:chapter|card|section|drill|lesson)\s+(?:reads?|showed|shows\s+you|sends?|sent|tells?\s+you|told\s+you|teaches?|taught|explains?|explained|says?|said)\b/i.test(line)
+      || /\bis\s+the\s+(?:next|last|previous)\s+step\b/i.test(line))
+      findings.push({ level: 'flag', code: 'A4', file: at,
+        msg: 'course-structure as actor / meta-framing ("the last chapter read", "this is the next step") — a chapter/card/step is not part of the story (§2b-4)' });
   });
 }
 

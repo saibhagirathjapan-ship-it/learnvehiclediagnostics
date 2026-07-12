@@ -76,4 +76,26 @@ check against the learning goal (does the leaves-with demand more than the prior
 
 ---
 
-*Next entry: INC-005 (via `/session-wrap`).*
+## INC-005 — Cryptic/compressed phrasing recurred despite §2b (2026-07-12, V3 C2/C3)
+
+**What happened.** Across C2 (the crux) and C3, several teaching phrasings read fine to me but were
+oblique to a first-time reader — "its **band gives the kind**", "which check … **is the next step**",
+and earlier "**folded** by +40h". The user flagged them pointedly ("why do you falter again and again
+even after so many rigors"). The *words* were simple; the *phrasing* was compressed (nominalised
+proxies) so the reader could not parse the actual action on first read.
+
+**Root cause.** Curse of knowledge ([[feedback-convey-the-core]]): I compress for concision, then my own
+"is this clear?" self-check passes it because I already know what I meant. §2b's lint existed but was
+stated abstractly ("very simple English") + five specific checks — none of which caught *compressed*
+phrasing (only obscure words / term-drift / vagueness / actor / self-containment). The miss recurred
+*despite* the rule → evidence the rule needed a mechanical hook, not repetition.
+
+**Now caught by.** (1) **§2b hardened** with an explicit *plain-not-compressed* check — read each sentence
+literally as a first-timer; any nominalised "X gives/carries/rides/gates the Y" is a red flag → rewrite
+as "the X tells/shows you <the actual thing>". (2) Memory [[feedback-avoid-obscure-words]] broadened from
+words → words **and** phrasing, with that mechanical guard. (3) Candidate `rigor.js` prose flag for
+nominalised-proxy constructions — noted for a future `X-GOV`.
+
+---
+
+*Next entry: INC-006 (via `/session-wrap`).*

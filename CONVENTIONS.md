@@ -226,6 +226,14 @@ MASTER-CHECKLIST item and a pressure-test gate ([[feedback-build-pressure-tests]
    the reader recalling a *named* earlier module. Do **not** open a beat with "In H2 …" / "as you learned
    in V1 …". State the fact the card needs directly; a back-reference may ride as a `{{→}}` pointer, and the
    concept must still land if the reader never followed it.
+6. **Plain, not compressed (LOCKED 2026-07-12, INC-005 — recurred despite 1–5).** Simple *words* are not
+   enough; a phrase can be **compressed** — a nominalised proxy the reader can't unpack on first read.
+   Banned: obscure words ("**folded** by +40h" → "packs into one byte") **and** telescoped constructions
+   — **"its band gives the kind"** → "the band tells you what kind of problem it is"; **"which check is the
+   next step"** → "Next: which check produces which code". **Mechanical guard (don't trust self-judgement —
+   curse of knowledge, §2c):** read each sentence *literally, as a first-timer*; any **"X gives / carries /
+   rides / gates the Y"** nominalisation is a red flag → rewrite as "the X tells/shows you <the actual
+   thing>". Running ban-list grows per session ([[feedback-avoid-obscure-words]]).
 
 ### 2c. Convey the CORE — the derivation gate (THE CENTRAL CREATION DISCIPLINE, LOCKED 2026-07-10)
 

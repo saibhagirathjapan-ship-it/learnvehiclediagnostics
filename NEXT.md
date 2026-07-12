@@ -7,7 +7,19 @@ per-session narrative lives in `wiki/log.md` + git history — this is a **dashb
 
 ---
 
-## Current state (updated 2026-07-10)
+## Current state (updated 2026-07-12)
+
+- **V3 (negative responses) — 5 of 8 cards built** ([B-PAGE], first run fully under the G0–G5 ladder):
+  **Brief · C1 · C2 · C3 · C4** all G0–G4 ✅. C2 (crux) passed its **mandatory `/teach-back`**. Grounded
+  documents-first to Annex A.1; figures audited light+dark; fit ~0. Per-card detail + gate scorecard in
+  `uds-foundation/v3-negative-responses/NOTES.md`. **Remaining: C5 · C6 · Conclusion K.**
+  - **Open C4 decision (user's call):** whether to add a small "(look-alikes, not the full list)" cue to
+    the two-kinds figure — the LEFT column shows the 3 confused-pair partners, *not* an exhaustive
+    request-side list (and not the C3 structural set `11`/`12`/**`13`**). Recorded in V3 NOTES.
+- **INC-005** (cryptic/compressed phrasing recurred despite §2b) → **§2b hardened** (plain-not-compressed
+  check) + memory [[feedback-avoid-obscure-words]] broadened. Candidate `rigor.js` nominalised-proxy flag.
+
+## Prior state (updated 2026-07-10)
 
 - **Breadth spine H1 · H2 · H3 — fully built** to the bar with real, geometry-audited figures
   (H3 figure-review closed session 16). Hub + Foundation T-map live; shell signed off 2026-07-07.
@@ -32,11 +44,15 @@ per-session narrative lives in `wiki/log.md` + git history — this is a **dashb
 
 ## Suggested next session
 
-**V3 — Negative responses & the NRC catalog** (`B·PAGE`, the first build run fully under the
-governance system: G0–G5 ladder + `/teach-back`). **Now a 6-concept build** (STRUCTURE re-derived
-2026-07-10 — read the V3 § first). Load-bearing / teach-back target = **C2 (one global catalog)**;
-C1 gets the §2c derivation gate; C5 (state-effects) is a recommended secondary teach-back. First
-build step G0: open `NOTES.md` and park the B-PAGE research handoff + the 3 flags from the D-HV.
+**Finish V3 — build C5 · C6 · Conclusion K** (`B·PAGE`, continue the run). Brief + C1–C4 are done;
+read `uds-foundation/v3-negative-responses/NOTES.md` (scorecard + FB folds) and the STRUCTURE V3 §
+first. **C5 — what a "no" does inside the ECU** = a **recommended secondary `/teach-back`** (subtle:
+usually nothing changes — session stays, no reset — *except* the wrong-key `35h` → stays locked +
+failed-attempt counter++; grounded in the A.1 `35h` def + cl.10.2 "the current session shall
+continue"). **C6 — retrial** (`78h` wait/P2* · `21h` repeat · `37`/`36` security back-off → V6/M4).
+**K — Conclusion** (recap + generative `:::recall` + bridge to V4). Then the **module-exit checks**
+(bar-coverage; reads top-to-bottom; V4 seam). Decide the C4 "look-alikes cue" at open.
+Object-constancy note: C3's gauntlet gates + C4's confused-pairs contrast are the visual vocabulary.
 
 ## Queue (in order)
 

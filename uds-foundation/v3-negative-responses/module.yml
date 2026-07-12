@@ -1,0 +1,12 @@
+id: v3-negative-responses
+kind: V          # depth drill — the module T-glyph lights the vertical stem
+title: { en: "Negative responses & the NRC catalog", jp: "否定応答とNRCカタログ" }
+standard: "ISO 14229 · Foundation V3"
+governed: true   # governed under the G0–G5 ladder from V3 on (meta-session 2026-07-10)
+tagline:
+  en: "When the answer is no: read a refusal byte by byte, navigate the one global catalog of reasons, learn the checks behind the common codes, and react to a no correctly."
+  jp: "答えが「ノー」のとき：否定応答をバイト単位で読み、理由の唯一の共通カタログをたどり、代表的なコードの背後にあるチェックを学び、ノーに正しく応答する。"
+arc: { pos: 6, total: 12 }
+nav:
+  prev: { id: "v2-request-and-response", label: { en: "Request & positive response", jp: "リクエストと肯定応答" } }
+  next: { id: "v4-subfunctions", label: { en: "Sub-functions & the suppressPosRsp bit", jp: "サブファンクションと肯定応答抑制ビット" } }

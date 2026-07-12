@@ -204,7 +204,8 @@ contract (source of truth = those files):
 
 **The recurring failure is careless prose that "reads fine" but is imprecise, term-drifting, or leans on
 the reader's memory. Run this lint on EVERY teaching sentence, in the reader's persona.** It is a
-MASTER-CHECKLIST item and a pressure-test gate ([[feedback-build-pressure-tests]]). The five checks:
+MASTER-CHECKLIST item and a pressure-test gate ([[feedback-build-pressure-tests]]). The checks (this
+list GROWS each session as new recurring failures surface — 1–5 original, +6 plain, +others folded in):
 
 1. **Canonical term, every time.** Each concept has exactly ONE name, used verbatim throughout — from the
    **[[GLOSSARY]]** (the EN/JP term contract). Never let a synonym drift in ("**service identifier / SID**",
@@ -218,10 +219,25 @@ MASTER-CHECKLIST item and a pressure-test gate ([[feedback-build-pressure-tests]
    fails — the real claim is "**bit 6 is 0 on every request**"). This is also the guard against a
    **plausible-but-wrong** claim: double-derive the fact against the clause before it ships (the C2 catch —
    "all SIDs are small" was false; `85` ControlDTCSetting has bit 7 set).
-4. **Right actor; no false agency.** Protocol actions belong to the **tester** (sends) and the **ECU**
-   (replies), not to the reader. Never attribute a past action *or past learning* to the reader
-   ("**you sent** `10 03`", "you saw in H2"). Present-tense operator "you" is allowed only where it reads
-   literally true; when in doubt name the real actor ("the request goes to the ECU", "the ECU echoes it").
+   **Scope + accuracy discipline (LOCKED 2026-07-12 — recurred: `22h`="busy" was wrong · `22h`="means the
+   same thing everywhere" over-claimed · the C4 column headers were inaccurate · a 3-item column read as
+   exhaustive).** Double-derivation applies to **figure labels, captions, and headings, and to every
+   *reasoning / "why"* statement — not just body prose.** Pressure-test each label/heading for literal
+   accuracy across **all** the items it covers (a header true for 2 of 3 rows is a defect). **Don't imply
+   exhaustiveness:** a label over N examples must not read as "the complete set" unless it is. **Never ship
+   synthesized or guessed reasoning as grounded fact** (tie to §2c): verify it in the sources, or mark it a
+   lens. When the accurate framing is genuinely **uncertain or subjective** (especially a heading/label),
+   **propose 2–4 pressure-tested options to the user before committing** — do not ship a guess.
+4. **Right actor; no false agency — and NO course-structure agency or meta-framing.** Protocol actions
+   belong to the **tester** (sends) and the **ECU** (replies), not to the reader. Never attribute a past
+   action *or past learning* to the reader ("**you sent** `10 03`", "you saw in H2"). Present-tense
+   operator "you" is allowed only where it reads literally true; when in doubt name the real actor.
+   **Additionally (LOCKED 2026-07-12 — recurred ≥3×, "same fb previously"): a chapter / card / step /
+   section is NOT an actor and NOT part of the story.** Never write "**the last chapter read** the yes",
+   "the card sends", "the figure shows you" as narration, and never meta-narrate the course's own
+   scaffolding inside teaching prose — "**this is the next step**", "the next card covers…", "in this
+   section we…". Say the **substance** directly (state the fact / name the mechanism); a real forward/back
+   reference rides ONLY as a `{{→}}` pointer (§2b-5), never as prose about the course's sequence.
 5. **Self-contained; prior modules are optional pointers, never load-bearing.** A card must teach without
    the reader recalling a *named* earlier module. Do **not** open a beat with "In H2 …" / "as you learned
    in V1 …". State the fact the card needs directly; a back-reference may ride as a `{{→}}` pointer, and the
@@ -335,6 +351,11 @@ not the goal. In a rigidly-sequenced course, a later recall may **interleave a p
   free." The checkable shape is a **4-beat bar — Tension → invite a guess → Reveal → Name** (term last).
   **Piloted on V2's C1/C2/C3; lock into the MASTER CHECKLIST only after V2 proves it reads well** (do not
   yet mandate course-wide).
+  - **Keep the invite-a-guess question and its Reveal in the SAME step/screen (LOCKED 2026-07-12 —
+    flagged a "repeated failure").** Never end a step on the setup question and answer it at the top of the
+    *next* step — that splits the beat across a slide change, so the reader reads the question, advances,
+    then gets the payoff. If a step closes on a rhetorical question, **move that question to OPEN the step
+    that answers it** (question + reveal on one slide, per §1f's app-slide model).
 - **Name on the spot — plain idea, then its term, ADJACENT (LOCKED 2026-07-09, user feedback).** The moment
   a plain-language explanation lands, name it **right there** — never explain several parts plainly and then
   batch all the real terms into a later summary paragraph. *"A short control header goes first — it is the
@@ -589,7 +610,12 @@ the user before building.
 - **G0 — Structure (pre-flight).** The card exists in `STRUCTURE.md` with its flow links; its
   **load-bearing sentence is written FIRST** (§2c move 1) into the card's `load_bearing:`
   front-matter — the one sentence the reader must end up able to say, fixed *before* authoring can
-  substitute a weaker proxy.
+  substitute a weaker proxy. **Title-directness check (LOCKED 2026-07-12 — recurred ≥4×, "same fb again
+  and again"): the card `title` MUST pass the OK/NG title bar** ([[feedback-prose-and-wording]]) *before*
+  authoring — it names the **one idea, concretely and specifically** (a reader knows what they'll learn
+  from the title alone), **couldn't be swapped onto another card** (not generic), and is **declarative**
+  (not a vague label). Write the title, then hold it to that bar; a vague/generic/label title is a G0
+  blocker, not a nit. *(Candidate `rigor.js` flag: generic/label titles.)*
 - **G1 — Story pressure-test** (after writing the story, before prose polish/figures).
   **FIRST the §2c derivation gate (the CENTRAL check):** interrogate every claim/label — *why true?
   how known? is the WHY on the card or only in my head?* — add any missing rung (the `40h`

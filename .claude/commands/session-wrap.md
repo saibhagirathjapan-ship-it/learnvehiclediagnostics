@@ -18,10 +18,19 @@ caught by**). Only for a real lesson — never invented to fill the slot. If the
 
 ## Step 2 — Hardening ask (the positive mirror)
 
-Ask: *did this session surface a generic, reusable rigor worth locking?* If yes → the **owning**
-doc, as a deliberate edit: a content/figure/JP/course-derivation standard → its [[CONVENTIONS]]
-section (via the owning S-type's mechanic) · a session-kind step → its JD in
-`wiki/learn/work-types.md`. One-off, phase-specific steps stay out. Reconcile mirrors same-session.
+**Double-derive EVERY feedback the user gave this session — do NOT rely on memory of "did something
+surface" (LOCKED 2026-07-12, INC-006: fixing instances without hardening the rule made the same classes
+recur — anthropomorphism ≥3×, direct titles ≥4×, question-split, label accuracy).** Scan the whole
+conversation, list each distinct piece of user feedback, and for **each** decide: **one-off** (a
+phase-specific application — stays out) or **generic rule** (would prevent a whole *class* of future
+misses — must be hardened). A feedback the user marks recurring ("same fb again", "again and again") is
+**by definition generic → harden it**, and if it recurred *despite* an existing rule, the rule needs
+**teeth** (a G0/`rigor.js`/gate hook), not just repetition (→ an INCIDENT too).
+
+Harden each generic one into its **owning** doc, as a deliberate edit: a content/figure/JP/prose or
+course-derivation standard → its [[CONVENTIONS]] section (via the owning S-type's mechanic; the §2b lint
+list GROWS) · a session-kind step → its JD in `wiki/learn/work-types.md` · a durable user preference →
+memory. Reconcile mirrors same-session. Present the double-derive table to the user so nothing is missed.
 
 ## Step 3 — Scorecard + records
 

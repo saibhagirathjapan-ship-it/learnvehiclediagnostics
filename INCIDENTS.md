@@ -98,4 +98,32 @@ nominalised-proxy constructions — noted for a future `X-GOV`.
 
 ---
 
-*Next entry: INC-006 (via `/session-wrap`).*
+## INC-006 — Feedback fixed as instances, not hardened as rules → whole classes recurred (2026-07-12, V3)
+
+**What happened.** Across V3's build the user repeatedly re-flagged the *same classes* of defect,
+several explicitly marked recurring: **course-structure anthropomorphism / meta-framing** ("the last
+chapter read the yes", "this is the next step" — user: "same fb previously") ≥3×; **vague/indirect
+titles** ("same fb again and again and again and again") ≥4×; a **setup-question split from its answer
+across steps** ("one more failure you repeated"); and **inaccurate labels/reasoning** (`22h`="busy",
+`22h`="same everywhere", the C4 headers, "only 3?"). I fixed each *instance* the user pointed at but did
+not derive and lock the underlying *rule* — so the next card reproduced the same class. The user finally
+asked me to "double-derive every single feedback in this chat" and harden accordingly.
+
+**Root cause.** Two-fold. (a) I treated feedback as one-off edits, not as evidence of a generic rule to
+lock. (b) `/session-wrap` Step 2 (hardening) was **opt-in** — "did anything surface a rigor?" — which my
+curse-of-knowledge self-check answered "no" because each fix felt handled. Nothing forced a systematic
+pass over *every* feedback, so recurring items with no owning rule kept recurring, and rules that existed
+(direct titles) had no teeth.
+
+**Now caught by.** (1) **The rules are locked with teeth:** §2b-4 (no course-structure agency/meta-framing)
+· §2b-3 scope (labels/captions/headings + reasoning double-derived; no implied exhaustiveness; propose
+options when uncertain) · §6 (setup-question + answer on one step) · build-recipe **G0 title-directness
+blocker**. (2) **The root fix — `/session-wrap` Step 2 now REQUIRES double-deriving EVERY feedback** of
+the session (one-off vs generic) and hardening the generic ones, with the table shown to the user;
+"recurring" ⇒ generic ⇒ harden, and recurrence *despite* a rule ⇒ add a hook (G0/`rigor.js`), not
+repetition. (3) Memory [[feedback-prose-and-wording]] carries the consolidated list; the §2b lint is now
+explicitly a **growing** list.
+
+---
+
+*Next entry: INC-007 (via `/session-wrap`).*
